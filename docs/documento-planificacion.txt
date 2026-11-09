@@ -1,0 +1,247 @@
+Aplicación web para gestionar inventario de dispositivos dentro de una
+empresa
+
+-   Información para recopilar:
+
+    -   Dispositivos:
+
+        -   Fecha de compra (Opcional)
+
+        -   Precio de compra (Opcional)
+
+        -   Proveedor (Opcional)
+
+        -   Numero de factura (Opcional)
+
+        -   Identificador de la empresa.
+
+        -   Garantía:
+
+            -   Fecha de fin y tiempo restante (Si esta extendido del
+                extendido) (Opcional)
+
+            -   ¿Garantía extendida?
+
+            -   Si la garantía ha acabado y se desconoce la fecha del
+                fin poder marcar que ha acabado.
+
+        -   Estado:
+
+            -   Disponible
+
+            -   En uso
+
+            -   En reparación
+
+            -   Descartado
+
+                -   Destino
+
+                    -   Reciclado
+
+                    -   Venta
+
+                    -   Donación
+
+                    -   Devuelto a la empresa que lo alquilaba
+
+                -   Certificado de destrucción de datos (Opcional)
+
+            -   Perdido/Robado
+
+            -   Motivo o notas
+
+        -   Averías:
+
+            -   Fecha
+
+            -   Tipo
+
+            -   Descripción
+
+            -   Piezas cambiadas (Opcional)
+
+            -   Coste
+
+        -   Historial de empleados que lo han tenido:
+
+            -   Información del empleado
+
+            -   Fecha de inicio y fin de la posesión del dispositivo
+
+            -   Averías durante su posesión
+
+        -   Tipo de dispositivo:
+
+            -   Portátil
+
+                -   Modelo
+
+                -   Pulgadas
+
+                -   ¿Pantalla táctil?
+
+                -   Número de serie
+
+                -   Batería
+
+                    -   Salud de batería y fecha registrada.
+
+            -   Sobremesa premontado
+
+                -   Modelo
+
+                -   Número de serie
+
+            -   Sobremesa Custom
+
+                -   Nombre (Opcional)
+
+            -   Todo en uno
+
+                -   Pulgadas
+
+                -   ¿Pantalla táctil?
+
+                -   Número de serie
+
+                -   Modelo
+
+        -   Especificaciones técnicas:
+
+            -   Procesador:
+
+                -   Modelo (registrable dentro de la aplicación para
+                    futuro uso)
+
+                -   Frecuencia máxima (MHz/GHz) (Opcional)
+
+                -   Núcleos (Opcional)
+
+                -   ¿Reemplazable? (Opcional)
+
+            -   RAM:
+
+                -   Capacidad (TB/GB/MB)
+
+                -   Generación (registrable dentro de la aplicación para
+                    futuro uso) (Opcional)
+
+                -   Frecuencia (MHz/MTs) (Opcional)
+
+                -   ¿Reemplazable? (Opcional)
+
+                    -   Cantidad de módulos (Opcional)
+
+                    -   capacidad individual (GB/MB) (Opcional)
+
+                    -   Factor de forma (registrable dentro de la
+                        aplicación para futuro uso) (Opcional)
+
+            -   Almacenamiento:
+
+                -   Por disco/Dispositivo de almacenamiento
+
+                    -   Capacidad (GB/TB)
+
+                    -   Tipo (Ex SSD, HDD, eMMC) (registrable dentro de
+                        la aplicación para futuro uso) (Opcional)
+
+                    -   ¿Reemplazable? (Opcional)
+
+                        -   Factor de forma (registrable dentro de la
+                            aplicación para futuro uso) (Opcional)
+
+                        -   Conector (registrable dentro de la
+                            aplicación para futuro uso) (Opcional)
+
+            -   Gráficos:
+
+                -   Modelo (registrable dentro de la aplicación para
+                    futuro uso)
+
+                -   Integrado/dedicado?
+
+                -   VRAM (MB/GB)
+
+            -   Tarjetas de red:
+
+                -   Modelo (registrable dentro de la aplicación para
+                    futuro uso) (Opcional)
+
+                -   Dirección MAC
+
+                -   Tipo:
+
+                    -   Wi-Fi:
+
+                        -   Generación de Wi-Fi (registrable dentro de
+                            la aplicación para futuro uso)
+
+                        -   Versión de Bluetooth (registrable dentro de
+                            la aplicación para futuro uso) (Opcional)
+
+                    -   Ethernet
+
+                        -   Velocidad soportada (Mbps/Gbps) (Opcional)
+
+        -   Software:
+
+            -   Sistema Operativo:
+
+                -   MacOS
+
+                    -   Versión (registrable dentro de la aplicación
+                        para futuro uso)
+
+                    -   ¿Parcheado? (OCLP)
+
+                    -   ¿Hackintosh?
+
+                    -   FileVault
+
+                -   Windows
+
+                    -   Versión (Ex 10, 11) (registrable dentro de la
+                        aplicación para futuro uso)
+
+                    -   Edición (registrable dentro de la aplicación
+                        para futuro uso)
+
+                    -   BitLocker
+
+                -   Linux
+
+                    -   Distribución (registrable dentro de la
+                        aplicación para futuro uso)
+
+                    -   Versión (registrable dentro de la aplicación
+                        para futuro uso y atado a la distribucion)
+
+                    -   LUKS
+
+            -   ¿En directorio activo?
+
+    -   Empleados:
+
+        -   Nombre completo
+
+        -   Email corporativo
+
+        -   Departamento (registrable dentro de la aplicación para
+            futuro uso)
+
+        -   Ubicación (registrable dentro de la aplicación para futuro
+            uso)
+
+        -   Fecha de alta
+
+        -   Dispositivos en posesión
+
+        -   Estado:
+
+            -   Activo
+
+            -   Baja temporal
+
+            -   Despedido/Dimitido

@@ -1,0 +1,2397 @@
+{
+ "settings": {
+  "orgName": "Empresa",
+  "tagPrefix": "INV-",
+  "dateFmt": "dmy",
+  "currency": "EUR",
+  "warrantyDays": 90
+ },
+ "users": [
+  {
+   "id": "u1",
+   "nombre": "Marta Sánchez Vidal",
+   "email": "admin@empresa.es",
+   "rol": "admin",
+   "activo": true,
+   "pass": "demo",
+   "last": "2026-11-05"
+  },
+  {
+   "id": "u2",
+   "nombre": "Iván Ruiz Campos",
+   "email": "it@empresa.es",
+   "rol": "tech",
+   "activo": true,
+   "pass": "demo",
+   "last": "2026-11-04"
+  },
+  {
+   "id": "u3",
+   "nombre": "Carmen López Herrera",
+   "email": "lectura@empresa.es",
+   "rol": "read",
+   "activo": true,
+   "pass": "demo",
+   "last": "2026-10-21"
+  },
+  {
+   "id": "u4",
+   "nombre": "Raúl Iglesias Serrano",
+   "email": "raul.iglesias@empresa.es",
+   "rol": "tech",
+   "activo": false,
+   "pass": "demo",
+   "last": "2026-09-29"
+  }
+ ],
+ "types": [
+  {
+   "id": "t1",
+   "nombre": {
+    "es": "Portátil",
+    "en": "Laptop",
+    "ca": "Portàtil"
+   },
+   "hasScreen": true,
+   "hasBattery": true
+  },
+  {
+   "id": "t2",
+   "nombre": {
+    "es": "Sobremesa premontado",
+    "en": "Prebuilt desktop",
+    "ca": "Sobretaula premuntat"
+   },
+   "hasScreen": false,
+   "hasBattery": false
+  },
+  {
+   "id": "t3",
+   "nombre": {
+    "es": "Sobremesa a medida",
+    "en": "Custom-built desktop",
+    "ca": "Sobretaula a mida"
+   },
+   "hasScreen": false,
+   "hasBattery": false,
+   "usesName": true
+  },
+  {
+   "id": "t4",
+   "nombre": {
+    "es": "Todo en uno",
+    "en": "All-in-one",
+    "ca": "Tot en un"
+   },
+   "hasScreen": true,
+   "hasBattery": false
+  }
+ ],
+ "depts": [
+  {
+   "id": "dp1",
+   "nombre": {
+    "es": "Creatividad",
+    "en": "Creative",
+    "ca": "Creativitat"
+   }
+  },
+  {
+   "id": "dp2",
+   "nombre": {
+    "es": "Cuentas",
+    "en": "Accounts",
+    "ca": "Comptes"
+   }
+  },
+  {
+   "id": "dp3",
+   "nombre": {
+    "es": "Marketing",
+    "en": "Marketing",
+    "ca": "Màrqueting"
+   }
+  },
+  {
+   "id": "dp4",
+   "nombre": {
+    "es": "Tecnología",
+    "en": "Technology",
+    "ca": "Tecnologia"
+   }
+  },
+  {
+   "id": "dp5",
+   "nombre": {
+    "es": "Administración",
+    "en": "Administration",
+    "ca": "Administració"
+   }
+  },
+  {
+   "id": "dp6",
+   "nombre": {
+    "es": "RRHH",
+    "en": "HR",
+    "ca": "RH"
+   }
+  }
+ ],
+ "locations": [
+  {
+   "id": "l1",
+   "nombre": {
+    "es": "Oficina Madrid",
+    "en": "Madrid office",
+    "ca": "Oficina Madrid"
+   },
+   "tipo": "office",
+   "direccion": "Calle de Alcalá 120, 28009 Madrid"
+  },
+  {
+   "id": "l2",
+   "nombre": {
+    "es": "Oficina Barcelona",
+    "en": "Barcelona office",
+    "ca": "Oficina Barcelona"
+   },
+   "tipo": "office",
+   "direccion": "Carrer de Pallars 85, 08018 Barcelona"
+  },
+  {
+   "id": "l3",
+   "nombre": {
+    "es": "Teletrabajo",
+    "en": "Remote",
+    "ca": "Teletreball"
+   },
+   "tipo": "remote",
+   "direccion": ""
+  },
+  {
+   "id": "l4",
+   "nombre": {
+    "es": "Almacén IT",
+    "en": "IT storage",
+    "ca": "Magatzem IT"
+   },
+   "tipo": "storage",
+   "direccion": {
+    "es": "Oficina Madrid, planta -1",
+    "en": "Madrid office, floor -1",
+    "ca": "Oficina Madrid, planta -1"
+   }
+  }
+ ],
+ "models": [
+  {
+   "id": "m1",
+   "fabricante": "Dell",
+   "nombre": "Latitude 5440",
+   "typeId": "t1"
+  },
+  {
+   "id": "m2",
+   "fabricante": "Apple",
+   "nombre": "MacBook Pro 14\"",
+   "typeId": "t1"
+  },
+  {
+   "id": "m3",
+   "fabricante": "Lenovo",
+   "nombre": "ThinkPad T14 Gen 4",
+   "typeId": "t1"
+  },
+  {
+   "id": "m4",
+   "fabricante": "HP",
+   "nombre": "EliteDesk 800 G9 Mini",
+   "typeId": "t2"
+  },
+  {
+   "id": "m5",
+   "fabricante": "Apple",
+   "nombre": "MacBook Air 13\"",
+   "typeId": "t1"
+  },
+  {
+   "id": "m6",
+   "fabricante": "Apple",
+   "nombre": "iMac 24\"",
+   "typeId": "t4"
+  }
+ ],
+ "cpus": [
+  {
+   "id": "c1",
+   "nombre": "Apple M3 Pro",
+   "cores": 11,
+   "speed": 4.05,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c2",
+   "nombre": "Intel Core i7-1365U",
+   "cores": 10,
+   "speed": 5.2,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c3",
+   "nombre": "AMD Ryzen 7 PRO 7840U",
+   "cores": 8,
+   "speed": 5.1,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c4",
+   "nombre": "Intel Core i5-1345U",
+   "cores": 10,
+   "speed": 4.7,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c5",
+   "nombre": "Intel Core i7-13700T",
+   "cores": 16,
+   "speed": 4.9,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c6",
+   "nombre": "Apple M3 Max",
+   "cores": 14,
+   "speed": 4.05,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c7",
+   "nombre": "Apple M2",
+   "cores": 8,
+   "speed": 3.49,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c8",
+   "nombre": "Intel Core i7-1355U",
+   "cores": 10,
+   "speed": 5,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c9",
+   "nombre": "Apple M3",
+   "cores": 8,
+   "speed": 4.05,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c10",
+   "nombre": "AMD Ryzen 5 PRO 7540U",
+   "cores": 6,
+   "speed": 4.9,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c11",
+   "nombre": "Intel Core i5-1145G7",
+   "cores": 4,
+   "speed": 4.4,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c12",
+   "nombre": "Apple M1",
+   "cores": 8,
+   "speed": 3.2,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c13",
+   "nombre": "Intel Core i5-13500T",
+   "cores": 14,
+   "speed": 4.6,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c14",
+   "nombre": "Apple M4 Pro",
+   "cores": 12,
+   "speed": 4.5,
+   "speedUnit": "GHz"
+  },
+  {
+   "id": "c15",
+   "nombre": "AMD Ryzen 9 7950X",
+   "cores": 16,
+   "speed": 5.7,
+   "speedUnit": "GHz"
+  }
+ ],
+ "ramGens": [
+  {
+   "id": "rg1",
+   "nombre": "DDR4"
+  },
+  {
+   "id": "rg2",
+   "nombre": "DDR5"
+  },
+  {
+   "id": "rg3",
+   "nombre": "LPDDR4X"
+  },
+  {
+   "id": "rg4",
+   "nombre": "LPDDR5"
+  },
+  {
+   "id": "rg5",
+   "nombre": "LPDDR5X"
+  }
+ ],
+ "ramForms": [
+  {
+   "id": "rf1",
+   "nombre": "SO-DIMM"
+  },
+  {
+   "id": "rf2",
+   "nombre": "DIMM"
+  },
+  {
+   "id": "rf3",
+   "nombre": "CAMM2"
+  },
+  {
+   "id": "rf4",
+   "nombre": "LPCAMM2"
+  }
+ ],
+ "diskTypes": [
+  {
+   "id": "dt1",
+   "nombre": "SSD"
+  },
+  {
+   "id": "dt2",
+   "nombre": "HDD"
+  },
+  {
+   "id": "dt3",
+   "nombre": "eMMC"
+  }
+ ],
+ "diskForms": [
+  {
+   "id": "df1",
+   "nombre": "M.2 2230"
+  },
+  {
+   "id": "df2",
+   "nombre": "M.2 2242"
+  },
+  {
+   "id": "df3",
+   "nombre": "M.2 2280"
+  },
+  {
+   "id": "df4",
+   "nombre": "2.5\""
+  },
+  {
+   "id": "df5",
+   "nombre": "3.5\""
+  }
+ ],
+ "diskConns": [
+  {
+   "id": "cn1",
+   "nombre": "NVMe PCIe 4.0"
+  },
+  {
+   "id": "cn2",
+   "nombre": "NVMe PCIe 3.0"
+  },
+  {
+   "id": "cn3",
+   "nombre": "SATA III"
+  }
+ ],
+ "wifiGens": [
+  {
+   "id": "wg1",
+   "nombre": "Wi-Fi 5 (802.11ac)"
+  },
+  {
+   "id": "wg2",
+   "nombre": "Wi-Fi 6 (802.11ax)"
+  },
+  {
+   "id": "wg3",
+   "nombre": "Wi-Fi 6E"
+  },
+  {
+   "id": "wg4",
+   "nombre": "Wi-Fi 7 (802.11be)"
+  }
+ ],
+ "btVers": [
+  {
+   "id": "bt1",
+   "nombre": "Bluetooth 5.0"
+  },
+  {
+   "id": "bt2",
+   "nombre": "Bluetooth 5.1"
+  },
+  {
+   "id": "bt3",
+   "nombre": "Bluetooth 5.2"
+  },
+  {
+   "id": "bt4",
+   "nombre": "Bluetooth 5.3"
+  },
+  {
+   "id": "bt5",
+   "nombre": "Bluetooth 5.4"
+  }
+ ],
+ "employees": [
+  {
+   "id": "e1",
+   "nombre": "Lucía Fernández Ruiz",
+   "email": "lucia.fernandez@empresa.es",
+   "dept": "dp1",
+   "loc": "l1",
+   "alta": "2019-09-02",
+   "estado": "activo",
+   "estadoFecha": null
+  },
+  {
+   "id": "e2",
+   "nombre": "Javier Morales Gil",
+   "email": "javier.morales@empresa.es",
+   "dept": "dp2",
+   "loc": "l1",
+   "alta": "2021-02-15",
+   "estado": "activo",
+   "estadoFecha": null
+  },
+  {
+   "id": "e3",
+   "nombre": "Marta Sánchez Vidal",
+   "email": "marta.sanchez@empresa.es",
+   "dept": "dp4",
+   "loc": "l1",
+   "alta": "2020-06-01",
+   "estado": "activo",
+   "estadoFecha": null
+  },
+  {
+   "id": "e4",
+   "nombre": "Pablo Navarro Ortiz",
+   "email": "pablo.navarro@empresa.es",
+   "dept": "dp3",
+   "loc": "l2",
+   "alta": "2022-01-10",
+   "estado": "activo",
+   "estadoFecha": null
+  },
+  {
+   "id": "e5",
+   "nombre": "Carmen López Herrera",
+   "email": "carmen.lopez@empresa.es",
+   "dept": "dp5",
+   "loc": "l1",
+   "alta": "2018-03-12",
+   "estado": "activo",
+   "estadoFecha": null
+  },
+  {
+   "id": "e6",
+   "nombre": "Diego Romero Castro",
+   "email": "diego.romero@empresa.es",
+   "dept": "dp1",
+   "loc": "l2",
+   "alta": "2023-06-05",
+   "estado": "activo",
+   "estadoFecha": null
+  },
+  {
+   "id": "e7",
+   "nombre": "Elena Torres Molina",
+   "email": "elena.torres@empresa.es",
+   "dept": "dp6",
+   "loc": "l1",
+   "alta": "2024-03-04",
+   "estado": "baja",
+   "estadoFecha": "2026-10-15"
+  },
+  {
+   "id": "e8",
+   "nombre": "Sergio Jiménez Prieto",
+   "email": "sergio.jimenez@empresa.es",
+   "dept": "dp2",
+   "loc": "l3",
+   "alta": "2024-01-08",
+   "estado": "activo",
+   "estadoFecha": null
+  },
+  {
+   "id": "e9",
+   "nombre": "Ana Delgado Rubio",
+   "email": "ana.delgado@empresa.es",
+   "dept": "dp3",
+   "loc": "l1",
+   "alta": "2021-11-22",
+   "estado": "activo",
+   "estadoFecha": null
+  },
+  {
+   "id": "e10",
+   "nombre": "Raúl Iglesias Serrano",
+   "email": "raul.iglesias@empresa.es",
+   "dept": "dp4",
+   "loc": "l1",
+   "alta": "2024-01-29",
+   "estado": "salida",
+   "estadoFecha": "2026-09-30"
+  }
+ ],
+ "devices": [
+  {
+   "id": "d1",
+   "tag": "INV-0001",
+   "nombre": "MAD-LT-001",
+   "modelId": "m2",
+   "serial": "C02XK3JHMD6R",
+   "cpuId": "c1",
+   "estado": "uso",
+   "loc": "l1",
+   "compra": "2024-02-12",
+   "garantia": "2027-02-12",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "Apple Business",
+   "factura": "AB-24-00318",
+   "precio": 2449,
+   "notas": "",
+   "typeId": "t1",
+   "ramSize": 18,
+   "ramUnit": "GB",
+   "ramGen": "rg4",
+   "ramSpeed": 6400,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "no",
+   "ramModules": null,
+   "ramModSize": null,
+   "ramModUnit": "GB",
+   "ramForm": "",
+   "disks": [
+    {
+     "size": 512,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "no",
+     "form": "",
+     "conn": ""
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "mac",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "no",
+   "oclp": "no",
+   "hackintosh": "no",
+   "screen": 14.2,
+   "touch": "no",
+   "batHealth": 92,
+   "batDate": "2026-10-01",
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt4",
+     "mac": "F0:18:98:62:3A:9B",
+     "modelId": "nmux4qb4"
+    }
+   ],
+   "osVerId": "mv2",
+   "gpuId": "gffujy2"
+  },
+  {
+   "id": "d2",
+   "tag": "INV-0002",
+   "nombre": "MAD-LT-002",
+   "modelId": "m1",
+   "serial": "7HQ2KX3",
+   "cpuId": "c2",
+   "estado": "uso",
+   "loc": "l1",
+   "compra": "2023-12-04",
+   "garantia": "2026-12-04",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "Dell Technologies",
+   "factura": "DL-23-11872",
+   "precio": 1389,
+   "notas": "",
+   "typeId": "t1",
+   "ramSize": 16,
+   "ramUnit": "GB",
+   "ramGen": "rg2",
+   "ramSpeed": 5200,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "yes",
+   "ramModules": 2,
+   "ramModSize": 8,
+   "ramModUnit": "GB",
+   "ramForm": "rf1",
+   "disks": [
+    {
+     "size": 512,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "yes",
+     "form": "df3",
+     "conn": "cn1"
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "win",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "yes",
+   "screen": 14,
+   "touch": "no",
+   "batHealth": 95,
+   "batDate": "2026-09-15",
+   "batLog": [
+    {
+     "fecha": "2025-05-10",
+     "salud": 62
+    }
+   ],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt4",
+     "mac": "A4:C3:F0:E6:8E:72",
+     "modelId": "nmssncxc"
+    },
+    {
+     "type": "eth",
+     "speed": 1,
+     "speedUnit": "Gbps",
+     "mac": "18:DB:F2:1E:08:23",
+     "modelId": "nmn9bppp"
+    }
+   ],
+   "osVerId": "wv2",
+   "osEditionId": "we1",
+   "gpuId": "grji6ne"
+  },
+  {
+   "id": "d3",
+   "tag": "INV-0003",
+   "nombre": "MAD-LT-003",
+   "modelId": "m3",
+   "serial": "PF4A9Z2B",
+   "cpuId": "c3",
+   "estado": "uso",
+   "loc": "l1",
+   "compra": "2024-06-18",
+   "garantia": "2027-06-18",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "PCComponentes Empresas",
+   "factura": "PCC-24-5521",
+   "precio": 1510,
+   "notas": "",
+   "typeId": "t1",
+   "ramSize": 32,
+   "ramUnit": "GB",
+   "ramGen": "rg5",
+   "ramSpeed": 6400,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "no",
+   "ramModules": null,
+   "ramModSize": null,
+   "ramModUnit": "GB",
+   "ramForm": "",
+   "disks": [
+    {
+     "size": 1,
+     "unit": "TB",
+     "type": "dt1",
+     "rep": "yes",
+     "form": "df3",
+     "conn": "cn1"
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "win",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "yes",
+   "screen": 14,
+   "touch": "no",
+   "batHealth": 90,
+   "batDate": "2026-10-12",
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt3",
+     "mac": "8C:3B:4A:6A:E2:49",
+     "modelId": "nm1hv1b7"
+    },
+    {
+     "type": "eth",
+     "speed": 1,
+     "speedUnit": "Gbps",
+     "mac": "98:FA:9B:A2:5B:FA",
+     "modelId": "nmuen7zs"
+    }
+   ],
+   "osVerId": "wv2",
+   "osEditionId": "we1",
+   "gpuId": "gjrzw28"
+  },
+  {
+   "id": "d4",
+   "tag": "INV-0004",
+   "nombre": "BCN-LT-004",
+   "modelId": "m1",
+   "serial": "9JRT2X3",
+   "cpuId": "c4",
+   "estado": "reparacion",
+   "loc": "l2",
+   "compra": "2023-11-20",
+   "garantia": "2026-11-20",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "Dell Technologies",
+   "factura": "DL-23-11655",
+   "precio": 1149,
+   "notas": "",
+   "typeId": "t1",
+   "ramSize": 16,
+   "ramUnit": "GB",
+   "ramGen": "rg2",
+   "ramSpeed": 5200,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "yes",
+   "ramModules": 2,
+   "ramModSize": 8,
+   "ramModUnit": "GB",
+   "ramForm": "rf1",
+   "disks": [
+    {
+     "size": 256,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "yes",
+     "form": "df3",
+     "conn": "cn1"
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "win",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "yes",
+   "screen": 14,
+   "touch": "no",
+   "batHealth": 84,
+   "batDate": "2026-10-27",
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt4",
+     "mac": "A4:C3:F0:EF:36:20",
+     "modelId": "nmssncxc"
+    },
+    {
+     "type": "eth",
+     "speed": 1,
+     "speedUnit": "Gbps",
+     "mac": "18:DB:F2:26:AF:D1",
+     "modelId": "nmn9bppp"
+    }
+   ],
+   "osVerId": "wv2",
+   "osEditionId": "we1",
+   "gpuId": "grji6ne"
+  },
+  {
+   "id": "d5",
+   "tag": "INV-0005",
+   "nombre": "MAD-DT-005",
+   "modelId": "m4",
+   "serial": "8CG3301KQ7",
+   "cpuId": "c5",
+   "estado": "uso",
+   "loc": "l1",
+   "compra": "2023-03-15",
+   "garantia": "2026-03-15",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "HP Store Empresas",
+   "factura": "HP-23-0442",
+   "precio": 1120,
+   "notas": "",
+   "typeId": "t2",
+   "ramSize": 32,
+   "ramUnit": "GB",
+   "ramGen": "rg2",
+   "ramSpeed": 4800,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "yes",
+   "ramModules": 2,
+   "ramModSize": 16,
+   "ramModUnit": "GB",
+   "ramForm": "rf1",
+   "disks": [
+    {
+     "size": 512,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "yes",
+     "form": "df3",
+     "conn": "cn1"
+    },
+    {
+     "size": 1,
+     "unit": "TB",
+     "type": "dt2",
+     "rep": "yes",
+     "form": "df4",
+     "conn": "cn3"
+    }
+   ],
+   "cpuRep": "yes",
+   "osFamily": "win",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "yes",
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg2",
+     "btVer": "bt3",
+     "mac": "B4:8C:9D:73:89:F7",
+     "modelId": "nmtjsizf"
+    },
+    {
+     "type": "eth",
+     "speed": 1,
+     "speedUnit": "Gbps",
+     "mac": "64:4E:D7:AB:03:A8",
+     "modelId": "nmn9bppp"
+    }
+   ],
+   "osVerId": "wv3",
+   "osEditionId": "we1",
+   "gpuId": "gmv97ui"
+  },
+  {
+   "id": "d6",
+   "tag": "INV-0006",
+   "nombre": "BCN-LT-006",
+   "modelId": "m2",
+   "serial": "FVFH72LMQ6L4",
+   "cpuId": "c6",
+   "estado": "uso",
+   "loc": "l2",
+   "compra": "2024-09-02",
+   "garantia": "2029-09-02",
+   "garantiaExt": "yes",
+   "garantiaEnded": false,
+   "proveedor": "Apple Business",
+   "factura": "AB-24-01107",
+   "precio": 3999,
+   "notas": "",
+   "typeId": "t1",
+   "ramSize": 36,
+   "ramUnit": "GB",
+   "ramGen": "rg4",
+   "ramSpeed": 6400,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "no",
+   "ramModules": null,
+   "ramModSize": null,
+   "ramModUnit": "GB",
+   "ramForm": "",
+   "disks": [
+    {
+     "size": 1,
+     "unit": "TB",
+     "type": "dt1",
+     "rep": "no",
+     "form": "",
+     "conn": ""
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "mac",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "no",
+   "oclp": "no",
+   "hackintosh": "no",
+   "screen": 14.2,
+   "touch": "no",
+   "batHealth": 97,
+   "batDate": "2026-10-01",
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt4",
+     "mac": "F0:18:98:F7:DD:CE",
+     "modelId": "nmux4qb4"
+    }
+   ],
+   "osVerId": "mv2",
+   "gpuId": "gwxgxdt"
+  },
+  {
+   "id": "d7",
+   "tag": "INV-0007",
+   "nombre": "MAD-LT-007",
+   "modelId": "m5",
+   "serial": "C02FK1ZRQ6L5",
+   "cpuId": "c7",
+   "estado": "uso",
+   "loc": "l1",
+   "compra": "2023-01-10",
+   "garantia": "2026-01-10",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "Apple Business",
+   "factura": "AB-23-00021",
+   "precio": 1399,
+   "notas": "",
+   "typeId": "t1",
+   "ramSize": 16,
+   "ramUnit": "GB",
+   "ramGen": "rg4",
+   "ramSpeed": 6400,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "no",
+   "ramModules": null,
+   "ramModSize": null,
+   "ramModUnit": "GB",
+   "ramForm": "",
+   "disks": [
+    {
+     "size": 256,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "no",
+     "form": "",
+     "conn": ""
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "mac",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "no",
+   "oclp": "no",
+   "hackintosh": "no",
+   "screen": 13.6,
+   "touch": "no",
+   "batHealth": 76,
+   "batDate": "2026-10-20",
+   "batLog": [
+    {
+     "fecha": "2025-10-02",
+     "salud": 85
+    }
+   ],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg2",
+     "btVer": "bt1",
+     "mac": "3C:22:FB:7C:31:A5",
+     "modelId": "nmux4qb4"
+    }
+   ],
+   "osVerId": "mv3",
+   "gpuId": "gj4c8uq"
+  },
+  {
+   "id": "d8",
+   "tag": "INV-0008",
+   "nombre": "REM-LT-008",
+   "modelId": "m3",
+   "serial": "PF3XY81C",
+   "cpuId": "c8",
+   "estado": "uso",
+   "loc": "l3",
+   "compra": "2023-12-20",
+   "garantia": "2026-12-20",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "PCComponentes Empresas",
+   "factura": "PCC-23-9910",
+   "precio": 1290,
+   "notas": {
+    "es": "BitLocker pendiente de activar: el equipo no estaba en el dominio al entregarse.",
+    "en": "BitLocker still to be turned on: the laptop was not on the domain when it was handed over.",
+    "ca": "BitLocker pendent d’activar: l’equip no era al domini quan es va lliurar."
+   },
+   "typeId": "t1",
+   "ramSize": 16,
+   "ramUnit": "GB",
+   "ramGen": "rg2",
+   "ramSpeed": 5200,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "",
+   "ramModules": null,
+   "ramModSize": null,
+   "ramModUnit": "GB",
+   "ramForm": "",
+   "disks": [
+    {
+     "size": 512,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "yes",
+     "form": "df3",
+     "conn": "cn1"
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "win",
+   "osVersion": "",
+   "enc": "no",
+   "ad": "no",
+   "screen": 14,
+   "touch": "no",
+   "batHealth": 86,
+   "batDate": "2026-09-30",
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt4",
+     "mac": "A4:C3:F0:00:85:7C",
+     "modelId": "nmssncxc"
+    },
+    {
+     "type": "eth",
+     "speed": 1,
+     "speedUnit": "Gbps",
+     "mac": "98:FA:9B:37:FF:2D",
+     "modelId": "nm7v095q"
+    }
+   ],
+   "osVerId": "wv2",
+   "osEditionId": "we1",
+   "gpuId": "grji6ne"
+  },
+  {
+   "id": "d9",
+   "tag": "INV-0009",
+   "nombre": "MAD-LT-009",
+   "modelId": "m5",
+   "serial": "C02GT5MKQ6L7",
+   "cpuId": "c9",
+   "estado": "disponible",
+   "loc": "l4",
+   "compra": "2025-04-07",
+   "garantia": "2028-04-07",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "Apple Business",
+   "factura": "AB-25-00412",
+   "precio": 1499,
+   "notas": "",
+   "typeId": "t1",
+   "ramSize": 16,
+   "ramUnit": "GB",
+   "ramGen": "rg4",
+   "ramSpeed": 6400,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "no",
+   "ramModules": null,
+   "ramModSize": null,
+   "ramModUnit": "GB",
+   "ramForm": "",
+   "disks": [
+    {
+     "size": 512,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "no",
+     "form": "",
+     "conn": ""
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "mac",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "no",
+   "oclp": "no",
+   "hackintosh": "no",
+   "screen": 13.6,
+   "touch": "no",
+   "batHealth": 99,
+   "batDate": "2026-10-05",
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt4",
+     "mac": "F0:18:98:84:D9:53",
+     "modelId": "nmux4qb4"
+    }
+   ],
+   "osVerId": "mv2",
+   "gpuId": "g4mnj92"
+  },
+  {
+   "id": "d10",
+   "tag": "INV-0010",
+   "nombre": "MAD-LT-010",
+   "modelId": "m1",
+   "serial": "4KDW9Y4",
+   "cpuId": "c4",
+   "estado": "disponible",
+   "loc": "l4",
+   "compra": "2025-10-15",
+   "garantia": "2028-10-15",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "Dell Technologies",
+   "factura": "DL-25-20331",
+   "precio": 1210,
+   "notas": "",
+   "typeId": "t1",
+   "ramSize": 16,
+   "ramUnit": "GB",
+   "ramGen": "rg2",
+   "ramSpeed": 5200,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "yes",
+   "ramModules": 2,
+   "ramModSize": 8,
+   "ramModUnit": "GB",
+   "ramForm": "rf1",
+   "disks": [
+    {
+     "size": 512,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "yes",
+     "form": "df3",
+     "conn": "cn1"
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "win",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "yes",
+   "screen": 14,
+   "touch": "yes",
+   "batHealth": 100,
+   "batDate": "2025-10-20",
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt4",
+     "mac": "A4:C3:F0:09:2D:2A",
+     "modelId": "nmssncxc"
+    },
+    {
+     "type": "eth",
+     "speed": 1,
+     "speedUnit": "Gbps",
+     "mac": "18:DB:F2:40:A6:DB",
+     "modelId": "nmn9bppp"
+    }
+   ],
+   "osVerId": "wv1",
+   "osEditionId": "we1",
+   "gpuId": "grji6ne"
+  },
+  {
+   "id": "d11",
+   "tag": "INV-0011",
+   "nombre": "MAD-DT-011",
+   "modelId": "m6",
+   "serial": "H7QXN2P4JD",
+   "cpuId": "c9",
+   "estado": "uso",
+   "loc": "l1",
+   "compra": "2024-03-01",
+   "garantia": "2027-03-01",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "Apple Business",
+   "factura": "AB-24-00377",
+   "precio": 1899,
+   "notas": "",
+   "typeId": "t4",
+   "ramSize": 16,
+   "ramUnit": "GB",
+   "ramGen": "rg4",
+   "ramSpeed": 6400,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "no",
+   "ramModules": null,
+   "ramModSize": null,
+   "ramModUnit": "GB",
+   "ramForm": "",
+   "disks": [
+    {
+     "size": 512,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "no",
+     "form": "",
+     "conn": ""
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "mac",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "no",
+   "oclp": "no",
+   "hackintosh": "no",
+   "screen": 24,
+   "touch": "no",
+   "batHealth": null,
+   "batDate": null,
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt4",
+     "mac": "F0:18:98:8D:81:01",
+     "modelId": "nmux4qb4"
+    },
+    {
+     "type": "eth",
+     "speed": 1,
+     "speedUnit": "Gbps",
+     "mac": "AC:DE:48:C4:FA:B2"
+    }
+   ],
+   "osVerId": "mv2",
+   "gpuId": "g4mnj92"
+  },
+  {
+   "id": "d12",
+   "tag": "INV-0012",
+   "nombre": "MAD-LT-012",
+   "modelId": "m3",
+   "serial": "PF4B1K7D",
+   "cpuId": "c10",
+   "estado": "uso",
+   "loc": "l1",
+   "compra": "2024-01-22",
+   "garantia": "2027-01-22",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "PCComponentes Empresas",
+   "factura": "PCC-24-0187",
+   "precio": 1180,
+   "notas": "",
+   "typeId": "t1",
+   "ramSize": 16,
+   "ramUnit": "GB",
+   "ramGen": "rg5",
+   "ramSpeed": 6400,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "no",
+   "ramModules": null,
+   "ramModSize": null,
+   "ramModUnit": "GB",
+   "ramForm": "",
+   "disks": [
+    {
+     "size": 512,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "yes",
+     "form": "df3",
+     "conn": "cn1"
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "win",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "yes",
+   "screen": 14,
+   "touch": "no",
+   "batHealth": 89,
+   "batDate": "2026-10-12",
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt3",
+     "mac": "8C:3B:4A:11:D4:D8",
+     "modelId": "nm1hv1b7"
+    },
+    {
+     "type": "eth",
+     "speed": 1,
+     "speedUnit": "Gbps",
+     "mac": "98:FA:9B:49:4E:89",
+     "modelId": "nmuen7zs"
+    }
+   ],
+   "osVerId": "wv2",
+   "osEditionId": "we1",
+   "gpuId": "gn94liw"
+  },
+  {
+   "id": "d13",
+   "tag": "INV-0013",
+   "nombre": "MAD-LT-013",
+   "modelId": "m1",
+   "serial": "3BVN8R3",
+   "cpuId": "c11",
+   "estado": "descartado",
+   "loc": "l4",
+   "compra": "2020-05-11",
+   "garantia": "",
+   "garantiaExt": "",
+   "garantiaEnded": true,
+   "proveedor": "Dell Technologies",
+   "factura": "DL-20-04410",
+   "precio": 980,
+   "notas": {
+    "es": "Retirado en junio de 2026 por batería hinchada. Borrado certificado BR-2026-031. Entregado a gestor RAEE.",
+    "en": "Retired in June 2026 because of a swollen battery. Certified wipe BR-2026-031. Handed to a WEEE recycler.",
+    "ca": "Retirat el juny de 2026 per una bateria inflada. Esborrat certificat BR-2026-031. Lliurat a un gestor de RAEE."
+   },
+   "destino": "recycle",
+   "wipeCert": "BR-2026-031",
+   "typeId": "t1",
+   "ramSize": 8,
+   "ramUnit": "GB",
+   "ramGen": "rg1",
+   "ramSpeed": 3200,
+   "ramSpeedUnit": "MHz",
+   "ramRep": "yes",
+   "ramModules": 1,
+   "ramModSize": 8,
+   "ramModUnit": "GB",
+   "ramForm": "rf1",
+   "disks": [
+    {
+     "size": 256,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "yes",
+     "form": "df1",
+     "conn": "cn2"
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "win",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "yes",
+   "screen": 14,
+   "touch": "no",
+   "batHealth": null,
+   "batDate": null,
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg2",
+     "btVer": "bt2",
+     "mac": "70:9C:D1:96:28:AF",
+     "modelId": "nmiunjtd"
+    },
+    {
+     "type": "eth",
+     "speed": 1,
+     "speedUnit": "Gbps",
+     "mac": "18:DB:F2:CD:A2:60",
+     "modelId": "nmn9bppp"
+    }
+   ],
+   "osVerId": "wv53hurk",
+   "osEditionId": "we1",
+   "gpuId": "grji6ne"
+  },
+  {
+   "id": "d14",
+   "tag": "INV-0014",
+   "nombre": "BCN-LT-014",
+   "modelId": "m5",
+   "serial": "C02DL4ZHQ05N",
+   "cpuId": "c12",
+   "estado": "perdido",
+   "loc": "l2",
+   "compra": "2023-06-05",
+   "garantia": "2026-06-05",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "Apple Business",
+   "factura": "AB-23-00590",
+   "precio": 1199,
+   "notas": {
+    "es": "Robado en febrero de 2024. Denuncia 2024/BCN/08812. Bloqueado en remoto desde el MDM.",
+    "en": "Stolen in February 2024. Police report 2024/BCN/08812. Locked remotely through the MDM.",
+    "ca": "Robat el febrer de 2024. Denúncia 2024/BCN/08812. Bloquejat en remot des de l’MDM."
+   },
+   "typeId": "t1",
+   "ramSize": 8,
+   "ramUnit": "GB",
+   "ramGen": "rg3",
+   "ramSpeed": 4266,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "no",
+   "ramModules": null,
+   "ramModSize": null,
+   "ramModUnit": "GB",
+   "ramForm": "",
+   "disks": [
+    {
+     "size": 256,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "no",
+     "form": "",
+     "conn": ""
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "mac",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "no",
+   "oclp": "no",
+   "hackintosh": "no",
+   "screen": 13.6,
+   "touch": "no",
+   "batHealth": null,
+   "batDate": null,
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg2",
+     "btVer": "bt1",
+     "mac": "3C:22:FB:1A:7C:86",
+     "modelId": "nmux4qb4"
+    }
+   ],
+   "osVerId": "mv3",
+   "gpuId": "gd4iplj"
+  },
+  {
+   "id": "d15",
+   "tag": "INV-0015",
+   "nombre": "MAD-DT-015",
+   "modelId": "m4",
+   "serial": "8CG4417MZT",
+   "cpuId": "c13",
+   "estado": "disponible",
+   "loc": "l4",
+   "compra": "2024-11-11",
+   "garantia": "2027-11-11",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "HP Store Empresas",
+   "factura": "HP-24-1871",
+   "precio": 890,
+   "notas": "",
+   "typeId": "t2",
+   "ramSize": 16,
+   "ramUnit": "GB",
+   "ramGen": "rg2",
+   "ramSpeed": 4800,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "yes",
+   "ramModules": 2,
+   "ramModSize": 8,
+   "ramModUnit": "GB",
+   "ramForm": "rf1",
+   "disks": [
+    {
+     "size": 512,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "yes",
+     "form": "df4",
+     "conn": "cn3"
+    }
+   ],
+   "cpuRep": "yes",
+   "osFamily": "linux",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "no",
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg2",
+     "btVer": "bt3",
+     "mac": "B4:8C:9D:9E:D0:5D",
+     "modelId": "nmtjsizf"
+    },
+    {
+     "type": "eth",
+     "speed": 1,
+     "speedUnit": "Gbps",
+     "mac": "64:4E:D7:D6:4A:0E",
+     "modelId": "nmn9bppp"
+    }
+   ],
+   "osDistroId": "ld1",
+   "osVerId": "lv1",
+   "gpuId": "gmv97ui"
+  },
+  {
+   "id": "d16",
+   "tag": "INV-0016",
+   "nombre": "BCN-LT-016",
+   "modelId": "m2",
+   "serial": "K2W7PX9MQT",
+   "cpuId": "c14",
+   "estado": "uso",
+   "loc": "l2",
+   "compra": "2025-11-03",
+   "garantia": "2028-11-03",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "Apple Business",
+   "factura": "AB-25-01344",
+   "precio": 2599,
+   "notas": "",
+   "typeId": "t1",
+   "ramSize": 24,
+   "ramUnit": "GB",
+   "ramGen": "rg5",
+   "ramSpeed": 8533,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "no",
+   "ramModules": null,
+   "ramModSize": null,
+   "ramModUnit": "GB",
+   "ramForm": "",
+   "disks": [
+    {
+     "size": 512,
+     "unit": "GB",
+     "type": "dt1",
+     "rep": "no",
+     "form": "",
+     "conn": ""
+    }
+   ],
+   "cpuRep": "no",
+   "osFamily": "mac",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "no",
+   "oclp": "no",
+   "hackintosh": "no",
+   "screen": 14.2,
+   "touch": "no",
+   "batHealth": 100,
+   "batDate": "2026-10-28",
+   "batLog": [],
+   "nics": [
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt4",
+     "mac": "F0:18:98:23:24:34",
+     "modelId": "nmux4qb4"
+    }
+   ],
+   "osVerId": "mv2",
+   "gpuId": "g5olzoc"
+  },
+  {
+   "id": "d17",
+   "tag": "INV-0017",
+   "nombre": "MAD-DT-017",
+   "modelId": "",
+   "serial": "CUSTOM-2502-01",
+   "cpuId": "c15",
+   "estado": "uso",
+   "loc": "l1",
+   "compra": "2025-02-10",
+   "garantia": "2027-02-10",
+   "garantiaExt": "no",
+   "garantiaEnded": false,
+   "proveedor": "PCComponentes Empresas",
+   "factura": "PCC-25-0311",
+   "precio": 3240,
+   "notas": "",
+   "typeId": "t3",
+   "customName": "Workstation de vídeo",
+   "ramSize": 64,
+   "ramUnit": "GB",
+   "ramGen": "rg2",
+   "ramSpeed": 6000,
+   "ramSpeedUnit": "MT/s",
+   "ramRep": "yes",
+   "ramModules": 2,
+   "ramModSize": 32,
+   "ramModUnit": "GB",
+   "ramForm": "rf2",
+   "disks": [
+    {
+     "size": 2,
+     "unit": "TB",
+     "type": "dt1",
+     "rep": "yes",
+     "form": "df3",
+     "conn": "cn1"
+    },
+    {
+     "size": 4,
+     "unit": "TB",
+     "type": "dt2",
+     "rep": "yes",
+     "form": "df5",
+     "conn": "cn3"
+    }
+   ],
+   "cpuRep": "yes",
+   "osFamily": "win",
+   "osVersion": "",
+   "enc": "yes",
+   "ad": "yes",
+   "nics": [
+    {
+     "type": "eth",
+     "speed": 2.5,
+     "speedUnit": "Gbps",
+     "mac": "04:42:1A:A7:78:0B",
+     "modelId": "nmt14buz"
+    },
+    {
+     "type": "wifi",
+     "wifiGen": "wg3",
+     "btVer": "bt4",
+     "mac": "A4:C3:F0:DE:F1:BC",
+     "modelId": "nmph9xzx"
+    }
+   ],
+   "osVerId": "wv1",
+   "osEditionId": "we1",
+   "gpuId": "g1njbh4"
+  }
+ ],
+ "assignments": [
+  {
+   "id": "a1",
+   "deviceId": "d13",
+   "employeeId": "e1",
+   "desde": "2020-05-18",
+   "hasta": "2024-09-06",
+   "notas": {
+    "es": "Cargador USB-C 65 W",
+    "en": "65 W USB-C charger",
+    "ca": "Carregador USB-C de 65 W"
+   },
+   "condicion": "worn"
+  },
+  {
+   "id": "a2",
+   "deviceId": "d14",
+   "employeeId": "e6",
+   "desde": "2023-06-12",
+   "hasta": "2024-02-14",
+   "notas": {
+    "es": "Cargador y funda",
+    "en": "Charger and sleeve",
+    "ca": "Carregador i funda"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a3",
+   "deviceId": "d1",
+   "employeeId": "e6",
+   "desde": "2024-02-15",
+   "hasta": "2024-09-05",
+   "notas": {
+    "es": "Sustituye al equipo robado INV-0014",
+    "en": "Replaces stolen device INV-0014",
+    "ca": "Substitueix l’equip robat INV-0014"
+   },
+   "condicion": "good"
+  },
+  {
+   "id": "a4",
+   "deviceId": "d1",
+   "employeeId": "e1",
+   "desde": "2024-09-09",
+   "hasta": null,
+   "notas": {
+    "es": "Cargador 70 W, adaptador USB-C a HDMI",
+    "en": "70 W charger, USB-C to HDMI adapter",
+    "ca": "Carregador de 70 W, adaptador USB-C a HDMI"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a5",
+   "deviceId": "d2",
+   "employeeId": "e2",
+   "desde": "2023-12-11",
+   "hasta": null,
+   "notas": {
+    "es": "Cargador, dock WD19S, ratón",
+    "en": "Charger, WD19S dock, mouse",
+    "ca": "Carregador, dock WD19S, ratolí"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a6",
+   "deviceId": "d3",
+   "employeeId": "e3",
+   "desde": "2024-06-20",
+   "hasta": null,
+   "notas": {
+    "es": "Cargador, dock USB-C",
+    "en": "Charger, USB-C dock",
+    "ca": "Carregador, dock USB-C"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a7",
+   "deviceId": "d4",
+   "employeeId": "e4",
+   "desde": "2023-11-27",
+   "hasta": null,
+   "notas": {
+    "es": "Cargador 65 W",
+    "en": "65 W charger",
+    "ca": "Carregador de 65 W"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a8",
+   "deviceId": "d5",
+   "employeeId": "e5",
+   "desde": "2023-03-20",
+   "hasta": null,
+   "notas": {
+    "es": "Teclado y ratón inalámbricos",
+    "en": "Wireless keyboard and mouse",
+    "ca": "Teclat i ratolí sense fil"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a9",
+   "deviceId": "d6",
+   "employeeId": "e6",
+   "desde": "2024-09-05",
+   "hasta": null,
+   "notas": {
+    "es": "Cargador 140 W",
+    "en": "140 W charger",
+    "ca": "Carregador de 140 W"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a10",
+   "deviceId": "d7",
+   "employeeId": "e9",
+   "desde": "2023-01-16",
+   "hasta": "2024-03-04",
+   "notas": "",
+   "condicion": "good"
+  },
+  {
+   "id": "a11",
+   "deviceId": "d7",
+   "employeeId": "e7",
+   "desde": "2024-03-11",
+   "hasta": null,
+   "notas": {
+    "es": "Cargador 30 W",
+    "en": "30 W charger",
+    "ca": "Carregador de 30 W"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a12",
+   "deviceId": "d8",
+   "employeeId": "e8",
+   "desde": "2024-01-08",
+   "hasta": null,
+   "notas": {
+    "es": "Cargador, mochila",
+    "en": "Charger, backpack",
+    "ca": "Carregador, motxilla"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a13",
+   "deviceId": "d9",
+   "employeeId": "e4",
+   "desde": "2025-04-10",
+   "hasta": "2025-07-31",
+   "notas": {
+    "es": "Préstamo temporal para evento",
+    "en": "Short loan for an event",
+    "ca": "Préstec temporal per a un esdeveniment"
+   },
+   "condicion": "good"
+  },
+  {
+   "id": "a14",
+   "deviceId": "d11",
+   "employeeId": "e9",
+   "desde": "2024-03-04",
+   "hasta": null,
+   "notas": "Magic Keyboard, Magic Mouse",
+   "condicion": ""
+  },
+  {
+   "id": "a15",
+   "deviceId": "d12",
+   "employeeId": "e10",
+   "desde": "2024-01-29",
+   "hasta": null,
+   "notas": {
+    "es": "Cargador 65 W",
+    "en": "65 W charger",
+    "ca": "Carregador de 65 W"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a16",
+   "deviceId": "d16",
+   "employeeId": "e4",
+   "desde": "2026-10-28",
+   "hasta": null,
+   "notas": {
+    "es": "Préstamo mientras INV-0004 está en reparación",
+    "en": "Loan while INV-0004 is in repair",
+    "ca": "Préstec mentre INV-0004 és en reparació"
+   },
+   "condicion": ""
+  },
+  {
+   "id": "a17",
+   "deviceId": "d17",
+   "employeeId": "e1",
+   "desde": "2025-02-17",
+   "hasta": null,
+   "notas": {
+    "es": "Monitor 27\" 4K, tableta gráfica",
+    "en": "27\" 4K monitor, graphics tablet",
+    "ca": "Monitor 27\" 4K, tauleta gràfica"
+   },
+   "condicion": ""
+  }
+ ],
+ "incidents": [
+  {
+   "id": "i1",
+   "deviceId": "d4",
+   "fecha": "2026-10-27",
+   "tipo": "fault",
+   "descripcion": {
+    "es": "Pantalla con líneas verticales tras una caída",
+    "en": "Vertical lines on the screen after a drop",
+    "ca": "Pantalla amb línies verticals després d’una caiguda"
+   },
+   "estado": "abierta",
+   "resuelta": null,
+   "piezas": {
+    "es": "Panel LCD (pendiente de recibir)",
+    "en": "LCD panel (awaiting delivery)",
+    "ca": "Panell LCD (pendent de rebre)"
+   },
+   "coste": 0,
+   "proveedor": {
+    "es": "Dell ProSupport (garantía)",
+    "en": "Dell ProSupport (warranty)",
+    "ca": "Dell ProSupport (garantia)"
+   }
+  },
+  {
+   "id": "i2",
+   "deviceId": "d2",
+   "fecha": "2025-05-14",
+   "tipo": "part",
+   "descripcion": {
+    "es": "Batería degradada al 62 % de capacidad",
+    "en": "Battery down to 62% capacity",
+    "ca": "Bateria degradada al 62 % de capacitat"
+   },
+   "estado": "resuelta",
+   "resuelta": "2025-05-20",
+   "piezas": {
+    "es": "Batería 4 celdas 54 Wh",
+    "en": "4-cell 54 Wh battery",
+    "ca": "Bateria de 4 cel·les de 54 Wh"
+   },
+   "coste": 0,
+   "proveedor": {
+    "es": "Dell ProSupport (garantía)",
+    "en": "Dell ProSupport (warranty)",
+    "ca": "Dell ProSupport (garantia)"
+   }
+  },
+  {
+   "id": "i3",
+   "deviceId": "d5",
+   "fecha": "2026-04-08",
+   "tipo": "repair",
+   "descripcion": {
+    "es": "No arranca tras actualizar la BIOS",
+    "en": "Does not boot after a BIOS update",
+    "ca": "No arrenca després d’actualitzar la BIOS"
+   },
+   "estado": "resuelta",
+   "resuelta": "2026-04-10",
+   "piezas": {
+    "es": "Placa base",
+    "en": "Motherboard",
+    "ca": "Placa base"
+   },
+   "coste": 185,
+   "proveedor": {
+    "es": "HP Servicio Técnico",
+    "en": "HP Service",
+    "ca": "Servei Tècnic HP"
+   }
+  },
+  {
+   "id": "i4",
+   "deviceId": "d1",
+   "fecha": "2025-11-19",
+   "tipo": "part",
+   "descripcion": {
+    "es": "Tecla atascada en el teclado",
+    "en": "Stuck key on the keyboard",
+    "ca": "Tecla encallada al teclat"
+   },
+   "estado": "resuelta",
+   "resuelta": "2025-11-26",
+   "piezas": {
+    "es": "Top case con teclado ES",
+    "en": "Top case with Spanish keyboard",
+    "ca": "Top case amb teclat ES"
+   },
+   "coste": 0,
+   "proveedor": "AppleCare"
+  },
+  {
+   "id": "i5",
+   "deviceId": "d13",
+   "fecha": "2026-06-02",
+   "tipo": "fault",
+   "descripcion": {
+    "es": "Batería hinchada, carcasa deformada",
+    "en": "Swollen battery, bent casing",
+    "ca": "Bateria inflada, carcassa deformada"
+   },
+   "estado": "resuelta",
+   "resuelta": "2026-06-05",
+   "piezas": "",
+   "coste": 0,
+   "proveedor": {
+    "es": "IT interno",
+    "en": "In-house IT",
+    "ca": "IT intern"
+   }
+  },
+  {
+   "id": "i6",
+   "deviceId": "d14",
+   "fecha": "2024-02-14",
+   "tipo": "loss",
+   "descripcion": {
+    "es": "Robado en el tren. Denuncia 2024/BCN/08812",
+    "en": "Stolen on the train. Police report 2024/BCN/08812",
+    "ca": "Robat al tren. Denúncia 2024/BCN/08812"
+   },
+   "estado": "resuelta",
+   "resuelta": "2024-02-14",
+   "piezas": "",
+   "coste": 0,
+   "proveedor": ""
+  },
+  {
+   "id": "i7",
+   "deviceId": "d8",
+   "fecha": "2026-10-30",
+   "tipo": "fault",
+   "descripcion": {
+    "es": "Ventilador hace ruido con carga alta",
+    "en": "Fan is noisy under heavy load",
+    "ca": "El ventilador fa soroll amb càrrega alta"
+   },
+   "estado": "abierta",
+   "resuelta": null,
+   "piezas": "",
+   "coste": 0,
+   "proveedor": ""
+  },
+  {
+   "id": "i8",
+   "deviceId": "d1",
+   "fecha": "2024-06-03",
+   "tipo": "repair",
+   "descripcion": {
+    "es": "Bisagra de la pantalla floja",
+    "en": "Loose screen hinge",
+    "ca": "Frontissa de la pantalla fluixa"
+   },
+   "estado": "resuelta",
+   "resuelta": "2024-06-10",
+   "piezas": {
+    "es": "Bisagra",
+    "en": "Hinge",
+    "ca": "Frontissa"
+   },
+   "coste": 0,
+   "proveedor": "AppleCare"
+  }
+ ],
+ "log": [
+  {
+   "fecha": "2026-10-30",
+   "k": "log_incident",
+   "a": {
+    "tag": "INV-0008",
+    "desc": {
+     "es": "ventilador ruidoso",
+     "en": "noisy fan",
+     "ca": "ventilador sorollós"
+    }
+   },
+   "deviceId": "d8",
+   "by": "u2"
+  },
+  {
+   "fecha": "2026-10-28",
+   "k": "log_loan",
+   "a": {
+    "tag": "INV-0016",
+    "name": "Pablo Navarro Ortiz"
+   },
+   "deviceId": "d16",
+   "by": "u2"
+  },
+  {
+   "fecha": "2026-10-27",
+   "k": "log_repair",
+   "a": {
+    "tag": "INV-0004",
+    "desc": {
+     "es": "pantalla dañada",
+     "en": "damaged screen",
+     "ca": "pantalla malmesa"
+    }
+   },
+   "deviceId": "d4",
+   "by": "u2"
+  },
+  {
+   "fecha": "2026-10-15",
+   "k": "log_onleave",
+   "a": {
+    "name": "Elena Torres Molina"
+   },
+   "by": "u1"
+  },
+  {
+   "fecha": "2026-09-30",
+   "k": "log_left",
+   "a": {
+    "name": "Raúl Iglesias Serrano",
+    "tags": "INV-0012"
+   },
+   "deviceId": "d12",
+   "by": "u1"
+  },
+  {
+   "fecha": "2026-06-05",
+   "k": "log_disposed",
+   "a": {
+    "tag": "INV-0013"
+   },
+   "deviceId": "d13",
+   "by": "u1"
+  }
+ ],
+ "macVersions": [
+  {
+   "id": "mv1",
+   "nombre": "26 Tahoe"
+  },
+  {
+   "id": "mv2",
+   "nombre": "15 Sequoia"
+  },
+  {
+   "id": "mv3",
+   "nombre": "14 Sonoma"
+  },
+  {
+   "id": "mv4",
+   "nombre": "13 Ventura"
+  }
+ ],
+ "winVersions": [
+  {
+   "id": "wv1",
+   "nombre": "11 24H2"
+  },
+  {
+   "id": "wv2",
+   "nombre": "11 23H2"
+  },
+  {
+   "id": "wv3",
+   "nombre": "11 22H2"
+  },
+  {
+   "id": "wv4",
+   "nombre": "10 22H2"
+  },
+  {
+   "id": "wv53hurk",
+   "nombre": "10"
+  }
+ ],
+ "winEditions": [
+  {
+   "id": "we1",
+   "nombre": "Pro"
+  },
+  {
+   "id": "we2",
+   "nombre": "Home"
+  },
+  {
+   "id": "we3",
+   "nombre": "Enterprise"
+  },
+  {
+   "id": "we4",
+   "nombre": "Education"
+  },
+  {
+   "id": "we5",
+   "nombre": "Pro for Workstations"
+  }
+ ],
+ "linuxDistros": [
+  {
+   "id": "ld1",
+   "nombre": "Ubuntu"
+  },
+  {
+   "id": "ld2",
+   "nombre": "Debian"
+  },
+  {
+   "id": "ld3",
+   "nombre": "Fedora"
+  },
+  {
+   "id": "ld4",
+   "nombre": "Linux Mint"
+  }
+ ],
+ "linuxVersions": [
+  {
+   "id": "lv1",
+   "nombre": "24.04 LTS",
+   "distroId": "ld1"
+  },
+  {
+   "id": "lv2",
+   "nombre": "22.04 LTS",
+   "distroId": "ld1"
+  },
+  {
+   "id": "lv3",
+   "nombre": "12",
+   "distroId": "ld2"
+  },
+  {
+   "id": "lv4",
+   "nombre": "41",
+   "distroId": "ld3"
+  },
+  {
+   "id": "lv5",
+   "nombre": "22",
+   "distroId": "ld4"
+  }
+ ],
+ "gpus": [
+  {
+   "id": "gffujy2",
+   "nombre": "Apple M3 Pro GPU",
+   "kind": "integrated",
+   "vram": null,
+   "vramUnit": "GB"
+  },
+  {
+   "id": "grji6ne",
+   "nombre": "Intel Iris Xe Graphics",
+   "kind": "integrated",
+   "vram": null,
+   "vramUnit": "GB"
+  },
+  {
+   "id": "gjrzw28",
+   "nombre": "AMD Radeon 780M",
+   "kind": "integrated",
+   "vram": null,
+   "vramUnit": "GB"
+  },
+  {
+   "id": "gmv97ui",
+   "nombre": "Intel UHD Graphics 770",
+   "kind": "integrated",
+   "vram": null,
+   "vramUnit": "GB"
+  },
+  {
+   "id": "gwxgxdt",
+   "nombre": "Apple M3 Max GPU",
+   "kind": "integrated",
+   "vram": null,
+   "vramUnit": "GB"
+  },
+  {
+   "id": "gj4c8uq",
+   "nombre": "Apple M2 GPU",
+   "kind": "integrated",
+   "vram": null,
+   "vramUnit": "GB"
+  },
+  {
+   "id": "g4mnj92",
+   "nombre": "Apple M3 GPU",
+   "kind": "integrated",
+   "vram": null,
+   "vramUnit": "GB"
+  },
+  {
+   "id": "gn94liw",
+   "nombre": "AMD Radeon 740M",
+   "kind": "integrated",
+   "vram": null,
+   "vramUnit": "GB"
+  },
+  {
+   "id": "gd4iplj",
+   "nombre": "Apple M1 GPU",
+   "kind": "integrated",
+   "vram": null,
+   "vramUnit": "GB"
+  },
+  {
+   "id": "g5olzoc",
+   "nombre": "Apple M4 Pro GPU",
+   "kind": "integrated",
+   "vram": null,
+   "vramUnit": "GB"
+  },
+  {
+   "id": "g1njbh4",
+   "nombre": "NVIDIA GeForce RTX 4070",
+   "kind": "dedicated",
+   "vram": 12,
+   "vramUnit": "GB"
+  }
+ ],
+ "nicModels": [
+  {
+   "id": "nmux4qb4",
+   "nombre": "Apple (SoC)",
+   "type": "wifi"
+  },
+  {
+   "id": "nmssncxc",
+   "nombre": "Intel Wi-Fi 6E AX211",
+   "type": "wifi"
+  },
+  {
+   "id": "nmn9bppp",
+   "nombre": "Intel I219-LM",
+   "type": "eth"
+  },
+  {
+   "id": "nm1hv1b7",
+   "nombre": "Qualcomm WCN6855",
+   "type": "wifi"
+  },
+  {
+   "id": "nmuen7zs",
+   "nombre": "Realtek RTL8111",
+   "type": "eth"
+  },
+  {
+   "id": "nmtjsizf",
+   "nombre": "Realtek RTL8852BE",
+   "type": "wifi"
+  },
+  {
+   "id": "nm7v095q",
+   "nombre": "Intel I219-V",
+   "type": "eth"
+  },
+  {
+   "id": "nmiunjtd",
+   "nombre": "Intel Wi-Fi 6 AX201",
+   "type": "wifi"
+  },
+  {
+   "id": "nmt14buz",
+   "nombre": "Realtek RTL8125",
+   "type": "eth"
+  },
+  {
+   "id": "nmph9xzx",
+   "nombre": "Intel Wi-Fi 6E AX210",
+   "type": "wifi"
+  }
+ ]
+}

@@ -1,0 +1,93 @@
+{% load static %}<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inventario de equipos</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="{% static 'inventory/app.css' %}">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><span class="mark"><i></i></span><span id="brandName">Inventario de equipos</span></div>
+    <nav class="tabs" id="tabs" hidden>
+      <a href="#panel" data-r="panel"><svg class="i navi" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg><span data-i="nav_summary">Resumen</span></a>
+      <a href="#dispositivos" data-r="dispositivos"><svg class="i navi" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M2 19h20"/></svg><span data-i="nav_devices">Dispositivos</span></a>
+      <a href="#empleados" data-r="empleados"><svg class="i navi" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.2.6 3.5 2.6 3.5 6"/></svg><span data-i="nav_people">Empleados</span></a>
+      <div class="menuwrap" id="addWrap" hidden>
+        <button class="iconbtn addbtn" type="button" id="addBtn" aria-haspopup="true" aria-expanded="false"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span class="addlbl" data-i="add_menu">Añadir</span></button>
+        <div class="menu left" id="addMenu" hidden>
+          <button class="mi" type="button" data-add="device"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></svg><span class="txt"><span id="miAddDev"></span><small id="miAddDevD"></small></span></button>
+          <button class="mi" type="button" data-add="person"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><span class="txt"><span id="miAddPer"></span><small id="miAddPerD"></small></span></button>
+        </div>
+      </div>
+    </nav>
+    <div class="prefs">
+      <div id="prefSlot">
+        <div class="row">
+        <div class="seg" id="langSeg" role="group">
+          <button type="button" data-lang="es" lang="es">ES</button>
+          <button type="button" data-lang="ca" lang="ca">CA</button>
+          <button type="button" data-lang="en" lang="en">EN</button>
+        </div>
+        <div class="seg" id="uiSeg" role="group">
+          <button type="button" data-ui-set="classic" data-i="ui_classic">Clásico</button>
+          <button type="button" data-ui-set="glass" data-i="ui_glass">Cristal</button>
+        </div>
+        <div class="seg" id="themeSeg" role="group">
+          <button type="button" data-theme-set="auto"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button>
+          <button type="button" data-theme-set="light"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></button>
+          <button type="button" data-theme-set="dark"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+        </div>
+        </div>
+      </div>
+      <div class="menuwrap" id="userWrap" hidden>
+        <button class="userbtn" type="button" id="userBtn" aria-haspopup="true" aria-expanded="false">
+          <span class="avatar" id="whoAvatar"></span>
+          <span class="nm"><b id="whoName"></b><small id="whoRole"></small></span>
+          <svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px;color:var(--muted)"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="menu" id="userMenu" hidden>
+          <div class="menu-head"><b id="mName"></b><small id="mEmail"></small></div>
+          <a class="mi" href="#ajustes" id="miSettings"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span id="miSettingsTxt"></span></a>
+          <div class="mi-row"><span id="mLangLbl"></span><div id="langSlot"></div></div>
+          <div class="mi-row"><span id="mThemeLbl"></span><div id="themeSlot"></div></div>
+          <div class="mi-row"><span id="mUiLbl"></span><div id="uiSlot"></div></div>
+          <hr>
+          <button class="mi danger" type="button" id="logoutBtn"><svg class="i" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg><span id="logoutTxt"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="view"></main>
+
+<dialog id="dlg">
+  <form id="dlgForm" novalidate>
+    <h2 id="dlgTitle"></h2>
+    <div id="dlgBody"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn" id="dlgCancel"></button>
+      <button type="submit" class="btn primary" id="dlgOk"></button>
+    </div>
+  </form>
+</dialog>
+<dialog id="dlg2" class="small">
+  <form id="dlg2Form" novalidate>
+    <h2 id="dlg2Title"></h2>
+    <div id="dlg2Body"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn" id="dlg2Cancel"></button>
+      <button type="submit" class="btn primary" id="dlg2Ok"></button>
+    </div>
+  </form>
+</dialog>
+<div class="toast" id="toast" hidden></div>
+<script src="{% static 'inventory/app.js' %}"></script>
+</body>
+</html>
