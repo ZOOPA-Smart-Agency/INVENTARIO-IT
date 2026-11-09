@@ -5,8 +5,8 @@ import re
 from decimal import Decimal, InvalidOperation
 from functools import wraps
 
+from django.conf import settings as django_settings
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.password_validation import validate_password
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -14,15 +14,18 @@ from django.db import IntegrityError, transaction
 from django.db.models import ProtectedError
 from django.http import JsonResponse
 from django.utils import timezone
+from django.utils.crypto import constant_time_compare
 
 from . import models as m
+from .catalog import load_catalog
 from .models import Assignment, AuditEvent, Device, Employee, Incident, User
 from .registry import LISTS
 from .state import (assignment_json, device_json, employee_json, full_state, incident_json, list_item_json,
-                    me_json, settings_json)
+                    me_json, password_policy_json, settings_json)
 
 LOGIN_MAX_ATTEMPTS = 10
 LOGIN_WINDOW_SECONDS = 15 * 60
+PASSWORD_MAX_LENGTH = 128
 MAC_RE = re.compile(r"^([0-9A-F]{2}:){5}[0-9A-F]{2}$")
 TRI_VALUES = {"", "yes", "no"}
 UNIT_VALUES = {"GHz", "MHz", "GB", "MB", "TB", "MT/s", "Mbps", "Gbps"}
@@ -196,7 +199,11 @@ def bootstrap(request, body):
     """What the page needs at start-up, signed in or not."""
     if request.user.is_authenticated:
         return {"me": me_json(request.user), "state": full_state(request.user)}
-    return {"me": None, "settings": settings_json()}
+    out = {"me": None, "settings": settings_json()}
+    if not User.objects.exists():
+        required = _setup_token_required()
+        out["setup"] = {"tokenRequired": required, "blocked": required and not django_settings.SETUP_TOKEN}
+    return out
 
 
 @endpoint("GET")
@@ -478,9 +485,7 @@ def employee_status(request, body, pk):
 # ---- settings (administrators) -------------------------------------------------
 
 
-@endpoint("PUT", role="admin")
-def settings_update(request, body):
-    s = m.AppSettings.load()
+def _apply_settings(s, body):
     s.org_name = text(body, "orgName", 200) or s.org_name
     s.tag_prefix = text(body, "tagPrefix", 20)
     s.date_fmt = choice(body, "dateFmt", {"dmy", "mdy", "ymd", "dmydot"})
@@ -488,8 +493,48 @@ def settings_update(request, body):
     s.warranty_days = int(number(body, "warrantyDays", 0, 3650) or 0)
     s.hostname_is_tag = bool(body.get("hostnameIsTag"))
     s.save()
+
+
+@endpoint("PUT", role="admin")
+def settings_update(request, body):
+    s = m.AppSettings.load()
+    _apply_settings(s, body)
     audit(request, "log_setting", {"xKey": "set_region"})
     return {"settings": settings_json(s)}
+
+
+def _apply_password_policy(s, p):
+    if not isinstance(p, dict):
+        raise ApiError("err_invalid")
+    s.pw_enforce, s.pw_min_enabled = bool(p.get("enforce")), bool(p.get("minOn"))
+    s.pw_upper, s.pw_number, s.pw_symbol = bool(p.get("upper")), bool(p.get("number")), bool(p.get("symbol"))
+    if s.pw_min_enabled:
+        length = number(p, "minLen", 1, PASSWORD_MAX_LENGTH)
+        if length is None or length != int(length):
+            raise ApiError("err_pw_minlen")
+        s.pw_min_length = int(length)
+    s.save()
+
+
+def _password_allowed(password, s):
+    if not password or len(password) > PASSWORD_MAX_LENGTH:
+        return False
+    if not s.pw_enforce:
+        return True
+    return not (
+        (s.pw_min_enabled and len(password) < s.pw_min_length)
+        or (s.pw_upper and not any(c.isupper() for c in password))
+        or (s.pw_number and not any(c.isdecimal() for c in password))
+        or (s.pw_symbol and not any(not c.isalnum() and not c.isspace() for c in password))
+    )
+
+
+@endpoint("PUT", role="admin")
+def password_policy_update(request, body):
+    s = m.AppSettings.load()
+    _apply_password_policy(s, body)
+    audit(request, "log_setting", {"xKey": "set_pwpolicy"})
+    return {"pwPolicy": password_policy_json(s)}
 
 
 def _spec(coll):
@@ -569,9 +614,7 @@ def _apply_user(request, user, b):
     if not user.pk and not password:
         raise ApiError("err_pass")
     if password:
-        try:
-            validate_password(password, user)
-        except ValidationError:
+        if not _password_allowed(password, m.AppSettings.load()):
             raise ApiError("err_pass_weak")
         user.set_password(password)
     user.save()
@@ -601,3 +644,78 @@ def user_toggle(request, body, pk):
     user.save()
     audit(request, "log_setting", {"xKey": "set_users"})
     return {"activo": user.is_active}
+
+
+# ---- first-run setup ----------------------------------------------------------
+
+
+def _setup_token_required():
+    return not django_settings.DEBUG or bool(django_settings.SETUP_TOKEN)
+
+
+def _translated_name(value, error):
+    """Accepts one name for every language, or {es, en, ca}."""
+    if isinstance(value, dict):
+        spanish = str(value.get("es") or "").strip()
+        names = {lang: str(value.get(lang) or spanish).strip()[:200] for lang in ("es", "en", "ca")}
+    else:
+        spanish = str(value or "").strip()
+        names = {lang: spanish[:200] for lang in ("es", "en", "ca")}
+    if not spanish:
+        raise ApiError(error)
+    return names
+
+
+@endpoint("POST", auth=False)
+def setup(request, body):
+    """Creates the organisation and first administrator. Works once, on an empty install."""
+    m.AppSettings.load()
+    settings_row = m.AppSettings.objects.select_for_update().get(pk=1)  # two people cannot finish at once
+    if User.objects.exists():
+        raise ApiError("err_setup_done", 409)
+
+    if _setup_token_required():
+        key = _throttle_key(request, "setup")
+        if cache.get(key, 0) >= LOGIN_MAX_ATTEMPTS:
+            raise ApiError("login_locked", 429)
+        expected = django_settings.SETUP_TOKEN
+        if not expected or not constant_time_compare(str(body.get("token") or ""), expected):
+            cache.set(key, cache.get(key, 0) + 1, LOGIN_WINDOW_SECONDS)
+            raise ApiError("err_setup_token", 403)
+
+    if not text(body, "orgName", 200):
+        raise ApiError("err_su_org")
+    _apply_settings(settings_row, body)
+    if "pwPolicy" in body:
+        _apply_password_policy(settings_row, body["pwPolicy"])
+
+    locations = body.get("locations") or []
+    if not isinstance(locations, list) or not locations:
+        raise ApiError("err_su_loc")
+    for row in locations:
+        tipo = row.get("tipo") if isinstance(row, dict) else None
+        if tipo not in {"office", "remote", "storage"}:
+            raise ApiError("err_invalid")
+        m.Location.objects.create(nombre=_translated_name(row.get("nombre"), "err_su_loc"), tipo=tipo)
+    for name in body.get("depts") or []:
+        m.Department.objects.create(nombre=_translated_name(name, "err_name"))
+    load_catalog()
+
+    admin = body.get("admin")
+    if not isinstance(admin, dict):
+        raise ApiError("err_su_admin")
+    nombre = text(admin, "nombre", 200, required=True, error="err_su_admin")
+    email = text(admin, "email", 254, required=True, error="err_su_admin").lower()
+    password = str(admin.get("pass") or "")
+    try:
+        validate_email(email)
+    except ValidationError:
+        raise ApiError("err_su_admin")
+    if not password:
+        raise ApiError("err_pass")
+    if not _password_allowed(password, settings_row):
+        raise ApiError("err_pass_weak")
+    user = User.objects.create_user(email, password, nombre=nombre, rol=User.Role.ADMIN)
+    AuditEvent.objects.create(key="log_setup", args={}, user=user)
+    login(request, user)
+    return {"me": me_json(user), "state": full_state(user)}

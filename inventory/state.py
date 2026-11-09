@@ -24,6 +24,14 @@ def settings_json(s=None):
     }
 
 
+def password_policy_json(s=None):
+    s = s or AppSettings.load()
+    return {
+        "enforce": s.pw_enforce, "minOn": s.pw_min_enabled, "minLen": s.pw_min_length,
+        "upper": s.pw_upper, "number": s.pw_number, "symbol": s.pw_symbol,
+    }
+
+
 def list_item_json(spec, obj):
     out = {"id": str(obj.pk), "nombre": obj.nombre}
     for key, attr in spec.fields.items():
@@ -115,6 +123,8 @@ def full_state(user):
     for coll, spec in LISTS.items():
         state[coll] = [list_item_json(spec, o) for o in spec.model.objects.all()]
     is_admin = user.rol == User.Role.ADMIN
+    if is_admin:  # only administrators set passwords
+        state["settings"]["pwPolicy"] = password_policy_json()
     state["users"] = [user_json(u, is_admin) for u in User.objects.order_by("id")]
     state["employees"] = [employee_json(e) for e in Employee.objects.all()]
     devices = Device.objects.prefetch_related("disks", "nics", "battery_readings")

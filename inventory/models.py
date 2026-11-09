@@ -46,6 +46,14 @@ class AppSettings(models.Model):
     warranty_days = models.PositiveIntegerField(default=90)
     hostname_is_tag = models.BooleanField(default=False)
 
+    # Password rules, applied to new and changed passwords.
+    pw_enforce = models.BooleanField(default=True)
+    pw_min_enabled = models.BooleanField(default=True)
+    pw_min_length = models.PositiveIntegerField(default=10)
+    pw_upper = models.BooleanField(default=True)
+    pw_number = models.BooleanField(default=True)
+    pw_symbol = models.BooleanField(default=True)
+
     @classmethod
     def load(cls):
         return cls.objects.get_or_create(pk=1)[0]

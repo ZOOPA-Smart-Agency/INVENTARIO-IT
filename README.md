@@ -30,6 +30,8 @@ createdb inventario
 
 Open <http://localhost:8000> and sign in as `admin@empresa.es`, `it@empresa.es` or `lectura@empresa.es`.
 
+To see the first-install wizard, skip `load_demo_data` or point `DATABASE_URL` at a new empty database. In development it does not ask for a code.
+
 Run the tests with `.venv/bin/python manage.py test`.
 
 ## Deployment
@@ -42,20 +44,24 @@ The app is one container (`Dockerfile`) plus a PostgreSQL database, and suits an
 | `DJANGO_SECRET_KEY` | Yes | Long random value, unique to each environment |
 | `DJANGO_ALLOWED_HOSTS` | Yes | Comma-separated host names, such as `inventario.example.com` |
 | `DJANGO_CSRF_TRUSTED_ORIGINS` | Yes | Comma-separated origins, such as `https://inventario.example.com` |
+| `DJANGO_SETUP_TOKEN` | For first install | Code the setup wizard asks for |
 | `DJANGO_DEBUG` | No | Leave unset in production |
 | `DJANGO_SSL_REDIRECT` | No | Set to `0` only if the host already forces HTTPS and redirects loop |
 | `PORT`, `WEB_CONCURRENCY` | No | Listening port (8000) and worker count (3) |
 
 The app must be served over HTTPS, because its cookies are marked secure. The health check is at `/healthz`; include the host name the check uses in `DJANGO_ALLOWED_HOSTS`.
 
-First deployment, run once inside the container:
+### First install
 
-```bash
-python manage.py load_demo_data --catalog-only   # device types, components, software lists
-python manage.py createsuperuser                 # the first administrator
-```
+Set `DJANGO_SETUP_TOKEN` to a long random value, deploy, and open the site. On an empty database the app shows a three-step wizard: organisation, locations and departments, then the first administrator. It asks for that code, works only once, and also loads the standard device types, components and software lists. Remove the variable afterwards if you like.
 
-Departments and locations are then added in Settings. Do not run `load_demo_data` without `--catalog-only` in production: it creates fictional people and devices.
+Without a code configured, production keeps the wizard closed so nobody else can claim a fresh install. To create the first administrator from the command line instead, run `python manage.py load_demo_data --catalog-only` and then `python manage.py createsuperuser`.
+
+Do not run `load_demo_data` without `--catalog-only` in production: it creates fictional people and devices.
+
+## Password rules
+
+The wizard, and later **Settings > Passwords**, control whether password requirements are enforced and which ones apply: minimum length, an uppercase letter, a number and a symbol. The server enforces them for new and changed passwords made in the app; existing passwords keep working. Passwords set from the command line with `createsuperuser` follow Django's own validators instead.
 
 ## Project layout
 

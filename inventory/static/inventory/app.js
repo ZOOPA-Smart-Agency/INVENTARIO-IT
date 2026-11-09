@@ -1,7 +1,9 @@
 /* ================= i18n ================= */
 const I18N = {
   es: {
-    err_network: 'No se ha podido conectar con el servidor. Inténtalo de nuevo.', err_forbidden: 'No tienes permiso para hacer esto.', err_invalid: 'Hay datos no válidos. Revisa el formulario.', err_conflict: 'El dispositivo ha cambiado. Recarga la página e inténtalo de nuevo.', err_not_found: 'Este registro ya no existe.', err_dates: 'La fecha de fin no puede ser anterior a la de inicio.', err_auth: 'Tu sesión ha caducado. Vuelve a iniciar sesión.', err_pass_weak: 'La contraseña es demasiado débil: usa al menos 10 caracteres y evita las más comunes.', login_locked: 'Demasiados intentos. Espera 15 minutos e inténtalo de nuevo.',
+    pw_h: 'Seguridad de las contraseñas', pw_enforce: 'Exigir requisitos de seguridad', pw_enforce_d: 'Las contraseñas que no los cumplan no se aceptarán.', pw_off: 'Sin requisitos: se aceptará cualquier contraseña.', pw_minlabel: 'Longitud mínima', pw_chars: 'caracteres', pw_c_upper: 'Al menos una mayúscula', pw_c_number: 'Al menos un número', pw_c_symbol: 'Al menos un símbolo', pw_c_min: 'Al menos {n} caracteres', pw_weak: 'Contraseña insegura', pw_ok: 'Contraseña aceptable', pw_strong: 'Contraseña segura', pw_empty: 'Escribe una contraseña para ver su seguridad', pw_applies: 'Se aplica a las contraseñas nuevas o cambiadas. Las actuales siguen funcionando.', set_pwpolicy: 'Contraseñas', set_pwpolicy_sub: 'Elige qué requisitos deben cumplir las contraseñas.', err_pw_minlen: 'La longitud mínima debe ser un número entre 1 y 128.',
+    su_title: 'Configuración inicial', su_sub: 'Deja la aplicación lista en tres pasos.', su_step: 'Paso {n} de 3', su_org_h: 'Tu organización', su_org: 'Nombre de la organización', su_prefix: 'Prefijo de las etiquetas', su_date: 'Formato de fecha', su_currency: 'Moneda', su_token: 'Código de instalación', su_token_hint: 'Lo define quien ha desplegado la aplicación (DJANGO_SETUP_TOKEN).', su_places_h: 'Oficinas y departamentos', su_locs: 'Ubicaciones', su_locs_hint: 'Dónde están los equipos. Marca un almacén para que los equipos devueltos vuelvan allí.', su_depts: 'Departamentos', su_depts_hint: 'Opcional: también puedes añadirlos después en Ajustes.', su_add_loc: 'Añadir ubicación', su_add_dept: 'Añadir departamento', su_name: 'Nombre', su_remove: 'Quitar', su_admin_h: 'Tu cuenta de administrador', su_admin_sub: 'Con esta cuenta entrarás y podrás crear las del resto del equipo.', su_fullname: 'Nombre completo', su_email: 'Correo electrónico', su_pass: 'Contraseña', su_pass2: 'Repite la contraseña', su_back: 'Atrás', su_next: 'Siguiente', su_finish: 'Terminar', su_blocked_t: 'Falta el código de instalación', su_blocked_b: 'La instalación no se puede completar todavía: define la variable DJANGO_SETUP_TOKEN en el servidor y recarga esta página.', su_done: '¡Todo listo! Ya puedes añadir tus dispositivos.', err_su_org: 'Indica el nombre de la organización.', err_su_loc: 'Añade al menos una ubicación con nombre.', err_su_admin: 'Rellena tu nombre y un correo válido.', err_su_mismatch: 'Las contraseñas no coinciden.', err_setup_token: 'El código de instalación no es correcto.', err_setup_done: 'La aplicación ya está configurada. Inicia sesión.', log_setup: 'Instalación inicial completada',
+    err_network: 'No se ha podido conectar con el servidor. Inténtalo de nuevo.', err_forbidden: 'No tienes permiso para hacer esto.', err_invalid: 'Hay datos no válidos. Revisa el formulario.', err_conflict: 'El dispositivo ha cambiado. Recarga la página e inténtalo de nuevo.', err_not_found: 'Este registro ya no existe.', err_dates: 'La fecha de fin no puede ser anterior a la de inicio.', err_auth: 'Tu sesión ha caducado. Vuelve a iniciar sesión.', err_pass_weak: 'La contraseña no cumple los requisitos de seguridad.', login_locked: 'Demasiados intentos. Espera 15 minutos e inténtalo de nuevo.',
     brand: 'Inventario de equipos', nav_summary: 'Resumen', nav_devices: 'Dispositivos', nav_people: 'Empleados',
     cancel: 'Cancelar', save: 'Guardar', close: 'Cerrar', lang_group: 'Idioma', theme_group: 'Tema', theme_auto: 'Usar el tema del sistema', theme_light: 'Tema claro', theme_dark: 'Tema oscuro',
     yes: 'Sí', no: 'No', none: 'Ninguno', plus_aria: 'Añadir {x}',
@@ -243,7 +245,9 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     ok_resolve: 'Resolver',
   },
   en: {
-    err_network: 'Could not reach the server. Please try again.', err_forbidden: 'You do not have permission to do this.', err_invalid: 'Some data is not valid. Please check the form.', err_conflict: 'This device has changed. Reload the page and try again.', err_not_found: 'This record no longer exists.', err_dates: 'The end date cannot be before the start date.', err_auth: 'Your session has expired. Please sign in again.', err_pass_weak: 'That password is too weak: use at least 10 characters and avoid common ones.', login_locked: 'Too many attempts. Wait 15 minutes and try again.',
+    pw_h: 'Password security', pw_enforce: 'Enforce security requirements', pw_enforce_d: 'Passwords that do not meet them will not be accepted.', pw_off: 'No requirements: any password will be accepted.', pw_minlabel: 'Minimum length', pw_chars: 'characters', pw_c_upper: 'At least one uppercase letter', pw_c_number: 'At least one number', pw_c_symbol: 'At least one symbol', pw_c_min: 'At least {n} characters', pw_weak: 'Insecure password', pw_ok: 'Acceptable password', pw_strong: 'Secure password', pw_empty: 'Type a password to see how secure it is', pw_applies: 'Applies to new or changed passwords. Current ones keep working.', set_pwpolicy: 'Passwords', set_pwpolicy_sub: 'Choose which requirements passwords must meet.', err_pw_minlen: 'The minimum length must be a number from 1 to 128.',
+    su_title: 'Initial setup', su_sub: 'Get the app ready in three steps.', su_step: 'Step {n} of 3', su_org_h: 'Your organisation', su_org: 'Organisation name', su_prefix: 'Asset tag prefix', su_date: 'Date format', su_currency: 'Currency', su_token: 'Setup code', su_token_hint: 'Set by whoever deployed the app (DJANGO_SETUP_TOKEN).', su_places_h: 'Offices and departments', su_locs: 'Locations', su_locs_hint: 'Where your devices are. Mark one as storage so returned devices go back there.', su_depts: 'Departments', su_depts_hint: 'Optional: you can also add them later in Settings.', su_add_loc: 'Add location', su_add_dept: 'Add department', su_name: 'Name', su_remove: 'Remove', su_admin_h: 'Your administrator account', su_admin_sub: 'You will sign in with this account and create everyone else’s.', su_fullname: 'Full name', su_email: 'Email', su_pass: 'Password', su_pass2: 'Repeat the password', su_back: 'Back', su_next: 'Next', su_finish: 'Finish', su_blocked_t: 'Setup code missing', su_blocked_b: 'Setup cannot be completed yet: set the DJANGO_SETUP_TOKEN variable on the server and reload this page.', su_done: 'All set! You can start adding your devices.', err_su_org: 'Enter the organisation’s name.', err_su_loc: 'Add at least one location with a name.', err_su_admin: 'Enter your name and a valid email.', err_su_mismatch: 'The passwords do not match.', err_setup_token: 'That setup code is not correct.', err_setup_done: 'The app is already set up. Please sign in.', log_setup: 'Initial setup completed',
+    err_network: 'Could not reach the server. Please try again.', err_forbidden: 'You do not have permission to do this.', err_invalid: 'Some data is not valid. Please check the form.', err_conflict: 'This device has changed. Reload the page and try again.', err_not_found: 'This record no longer exists.', err_dates: 'The end date cannot be before the start date.', err_auth: 'Your session has expired. Please sign in again.', err_pass_weak: 'That password does not meet the security requirements.', login_locked: 'Too many attempts. Wait 15 minutes and try again.',
     brand: 'Device inventory', nav_summary: 'Overview', nav_devices: 'Devices', nav_people: 'Employees',
     cancel: 'Cancel', save: 'Save', close: 'Close', lang_group: 'Language', theme_group: 'Theme', theme_auto: 'Use system theme', theme_light: 'Light theme', theme_dark: 'Dark theme',
     yes: 'Yes', no: 'No', none: 'None', plus_aria: 'Add {x}',
@@ -485,7 +489,9 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     ok_resolve: 'Resolve',
   },
   ca: {
-    err_network: 'No s’ha pogut connectar amb el servidor. Torna-ho a provar.', err_forbidden: 'No tens permís per fer això.', err_invalid: 'Hi ha dades no vàlides. Revisa el formulari.', err_conflict: 'El dispositiu ha canviat. Recarrega la pàgina i torna-ho a provar.', err_not_found: 'Aquest registre ja no existeix.', err_dates: 'La data de fi no pot ser anterior a la d’inici.', err_auth: 'La sessió ha caducat. Torna a iniciar sessió.', err_pass_weak: 'La contrasenya és massa feble: fes servir almenys 10 caràcters i evita les més comunes.', login_locked: 'Massa intents. Espera 15 minuts i torna-ho a provar.',
+    pw_h: 'Seguretat de les contrasenyes', pw_enforce: 'Exigeix requisits de seguretat', pw_enforce_d: 'Les contrasenyes que no els compleixin no s’acceptaran.', pw_off: 'Sense requisits: s’acceptarà qualsevol contrasenya.', pw_minlabel: 'Longitud mínima', pw_chars: 'caràcters', pw_c_upper: 'Almenys una majúscula', pw_c_number: 'Almenys un número', pw_c_symbol: 'Almenys un símbol', pw_c_min: 'Almenys {n} caràcters', pw_weak: 'Contrasenya insegura', pw_ok: 'Contrasenya acceptable', pw_strong: 'Contrasenya segura', pw_empty: 'Escriu una contrasenya per veure’n la seguretat', pw_applies: 'S’aplica a les contrasenyes noves o canviades. Les actuals continuen funcionant.', set_pwpolicy: 'Contrasenyes', set_pwpolicy_sub: 'Tria quins requisits han de complir les contrasenyes.', err_pw_minlen: 'La longitud mínima ha de ser un número entre 1 i 128.',
+    su_title: 'Configuració inicial', su_sub: 'Deixa l’aplicació a punt en tres passos.', su_step: 'Pas {n} de 3', su_org_h: 'La teva organització', su_org: 'Nom de l’organització', su_prefix: 'Prefix de les etiquetes', su_date: 'Format de data', su_currency: 'Moneda', su_token: 'Codi d’instal·lació', su_token_hint: 'El defineix qui ha desplegat l’aplicació (DJANGO_SETUP_TOKEN).', su_places_h: 'Oficines i departaments', su_locs: 'Ubicacions', su_locs_hint: 'On són els equips. Marca’n una com a magatzem perquè els equips retornats hi tornin.', su_depts: 'Departaments', su_depts_hint: 'Opcional: també els pots afegir després a Configuració.', su_add_loc: 'Afegeix una ubicació', su_add_dept: 'Afegeix un departament', su_name: 'Nom', su_remove: 'Treu', su_admin_h: 'El teu compte d’administrador', su_admin_sub: 'Amb aquest compte entraràs i podràs crear els de la resta de l’equip.', su_fullname: 'Nom complet', su_email: 'Correu electrònic', su_pass: 'Contrasenya', su_pass2: 'Repeteix la contrasenya', su_back: 'Enrere', su_next: 'Següent', su_finish: 'Acaba', su_blocked_t: 'Falta el codi d’instal·lació', su_blocked_b: 'La instal·lació encara no es pot completar: defineix la variable DJANGO_SETUP_TOKEN al servidor i recarrega aquesta pàgina.', su_done: 'Tot a punt! Ja pots afegir els teus dispositius.', err_su_org: 'Indica el nom de l’organització.', err_su_loc: 'Afegeix almenys una ubicació amb nom.', err_su_admin: 'Omple el teu nom i un correu vàlid.', err_su_mismatch: 'Les contrasenyes no coincideixen.', err_setup_token: 'El codi d’instal·lació no és correcte.', err_setup_done: 'L’aplicació ja està configurada. Inicia sessió.', log_setup: 'Instal·lació inicial completada',
+    err_network: 'No s’ha pogut connectar amb el servidor. Torna-ho a provar.', err_forbidden: 'No tens permís per fer això.', err_invalid: 'Hi ha dades no vàlides. Revisa el formulari.', err_conflict: 'El dispositiu ha canviat. Recarrega la pàgina i torna-ho a provar.', err_not_found: 'Aquest registre ja no existeix.', err_dates: 'La data de fi no pot ser anterior a la d’inici.', err_auth: 'La sessió ha caducat. Torna a iniciar sessió.', err_pass_weak: 'La contrasenya no compleix els requisits de seguretat.', login_locked: 'Massa intents. Espera 15 minuts i torna-ho a provar.',
     brand: 'Inventari d’equips', nav_summary: 'Resum', nav_devices: 'Dispositius', nav_people: 'Empleats',
     cancel: 'Cancel·la', save: 'Desa', close: 'Tanca', lang_group: 'Idioma', theme_group: 'Tema', theme_auto: 'Fes servir el tema del sistema', theme_light: 'Tema clar', theme_dark: 'Tema fosc',
     yes: 'Sí', no: 'No', none: 'Cap', plus_aria: 'Afegeix {x}',
@@ -1170,6 +1176,171 @@ function bindLogin() {
     route(); applyChrome(); enter();
   });
 }
+/* ================= passwords ================= */
+const PW_DEFAULT = { enforce: true, minOn: true, minLen: 10, upper: true, number: true, symbol: true };
+const PW_YES = '<svg class="i" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>', PW_NO = '<svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+/* the rules the policy currently asks for, each with whether this password meets it (same rules as the server) */
+function pwChecks(pw, p) {
+  if (!p.enforce) return [];
+  const out = [];
+  if (p.minOn) out.push([t('pw_c_min', { n: p.minLen }), pw.length >= Number(p.minLen)]);
+  if (p.upper) out.push([t('pw_c_upper'), /\p{Lu}/u.test(pw)]);
+  if (p.number) out.push([t('pw_c_number'), /\p{Nd}/u.test(pw)]);
+  if (p.symbol) out.push([t('pw_c_symbol'), /[^\p{L}\p{N}\s]/u.test(pw)]);
+  return out;
+}
+const pwMeets = (pw, p) => !!pw && pwChecks(pw, p).every(c => c[1]);
+const validMinLen = p => !p.enforce || !p.minOn || (Number.isInteger(Number(p.minLen)) && Number(p.minLen) >= 1 && Number(p.minLen) <= 128);
+/* 0 insecure, 1 acceptable, 2 secure; a password that breaks an enforced rule is always insecure */
+function pwLevel(pw, p) {
+  if (!pwMeets(pw, p) || /password|contrase|qwerty|123456|abc123|letmein|admin/i.test(pw) || /^(.)\1*$/.test(pw)) return 0;
+  const classes = [/\p{Ll}/u, /\p{Lu}/u, /\p{Nd}/u, /[^\p{L}\p{N}\s]/u].filter(r => r.test(pw)).length;
+  const score = [pw.length >= 8, pw.length >= 12, pw.length >= 16, classes >= 2, classes >= 3, classes >= 4].filter(Boolean).length;
+  return score >= 5 ? 2 : score >= 3 ? 1 : 0;
+}
+function drawMeter(el, pw, p) {
+  if (!el) return;
+  const level = pw ? pwLevel(pw, p) : -1, checks = pwChecks(pw, p);
+  el.className = 'pw-meter' + (level >= 0 ? ' l' + level : '');
+  el.innerHTML = `<div class="pw-bars" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="pw-label" role="status">${level < 0 ? T('pw_empty') : T(['pw_weak', 'pw_ok', 'pw_strong'][level])}</div>
+    ${checks.length ? `<ul class="pw-list">${checks.map(([label, ok]) => `<li class="${pw ? (ok ? 'yes' : 'no') : ''}">${ok ? PW_YES : PW_NO}${esc(label)}</li>`).join('')}</ul>` : `<p class="pw-d" style="margin:0">${T('pw_off')}</p>`}`;
+}
+function pwPolicyFields(p) {
+  const rule = (key, label) => `<label class="check"><input type="checkbox" data-pw="${key}"${p[key] ? ' checked' : ''}> ${T(label)}</label>`;
+  return `<div class="pw-policy">
+    <h2>${T('pw_h')}</h2>
+    <label class="check"><input type="checkbox" data-pw="enforce"${p.enforce ? ' checked' : ''}> ${T('pw_enforce')}</label>
+    <p class="pw-d">${T('pw_enforce_d')}</p>
+    <div class="pw-rules"${p.enforce ? '' : ' hidden'}>
+      <div class="pw-minrow">${rule('minOn', 'pw_minlabel')}<input type="number" min="1" max="128" step="1" data-pw="minLen" value="${esc(p.minLen)}" aria-label="${T('pw_minlabel')}"${p.minOn ? '' : ' disabled'}><span>${T('pw_chars')}</span></div>
+      ${rule('upper', 'pw_c_upper')}${rule('number', 'pw_c_number')}${rule('symbol', 'pw_c_symbol')}
+    </div></div>`;
+}
+function bindPolicy(root, p, onChange) {
+  root.addEventListener('input', e => {
+    const key = e.target.dataset.pw; if (!key) return;
+    p[key] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    root.querySelector('.pw-rules').hidden = !p.enforce;
+    root.querySelector('[data-pw="minLen"]').disabled = !p.minOn;
+    if (onChange) onChange();
+  });
+}
+let pwDraft = null;
+function settingsPasswords() {
+  pwDraft = { ...PW_DEFAULT, ...S.settings.pwPolicy };
+  return `<section class="panel"><div class="head"><div><h2>${T('set_pwpolicy')}</h2><p class="sub">${T('set_pwpolicy_sub')}</p></div></div>
+    <form id="pwForm" class="regionform" novalidate>${pwPolicyFields(pwDraft)}<p class="muted" style="margin:0;font-size:13px">${T('pw_applies')}</p>
+    <div><button class="btn primary" type="submit">${T('save')}</button></div></form></section>`;
+}
+function bindPwForm() {
+  const f = $('#pwForm'); if (!f) return;
+  bindPolicy(f, pwDraft);
+  f.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!validMinLen(pwDraft)) { toast(t('err_pw_minlen')); shake('#pwForm'); return; }
+    try { await mutate('PUT', 'settings/password-policy', { ...pwDraft, minLen: Number(pwDraft.minLen) }); } catch (err) { if (err.status !== 401) toast(t(err.code)); return; }
+    route(); toast(t('saved'), true);
+  });
+}
+
+/* ================= first-run setup ================= */
+let setupInfo = null, SU = null;
+function setupDefaults() {
+  return { step: 0, token: '', orgName: '', tagPrefix: 'INV-', dateFmt: 'dmy', currency: 'EUR',
+    locations: [{ nombre: '', tipo: 'office' }], depts: [''], policy: { ...PW_DEFAULT }, admin: { nombre: '', email: '', pass: '', pass2: '' } };
+}
+const TRASH_SVG = '<svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+function setupStep() {
+  const h = (k, sub) => `<div><h1>${T(k)}</h1>${sub ? `<p class="sub">${T(sub)}</p>` : ''}</div>`;
+  if (SU.step === 0) return h('su_title', 'su_sub') + `<h2>${T('su_org_h')}</h2><div class="fields">
+    ${setupInfo.tokenRequired ? `<label class="full">${T('su_token')}<input type="password" data-su="token" value="${esc(SU.token)}" autocomplete="off"><span class="hint">${T('su_token_hint')}</span></label>` : ''}
+    <label class="full">${T('su_org')}<input data-su="orgName" value="${esc(SU.orgName)}" autocomplete="organization"></label>
+    <label class="full">${T('su_prefix')}<input data-su="tagPrefix" value="${esc(SU.tagPrefix)}"></label>
+    <label>${T('su_date')}<select data-su="dateFmt">${opts(DATE_FMTS.map(k => [k, fmt(today(), k)]), SU.dateFmt)}</select></label>
+    <label>${T('su_currency')}<select data-su="currency">${opts(CURRENCIES, SU.currency)}</select></label></div>`;
+  if (SU.step === 1) return h('su_places_h') + `<div class="su-group"><h2>${T('su_locs')}</h2><p class="hint">${T('su_locs_hint')}</p>
+      ${SU.locations.map((l, i) => `<div class="su-row"><input data-loc="${i}" value="${esc(tx(l.nombre))}" aria-label="${T('su_name')}"><select data-loctype="${i}" aria-label="${T('su_locs')}">${kopts(LOC_KINDS, lk, l.tipo)}</select><button type="button" class="iconbtn" data-del-loc="${i}" aria-label="${T('su_remove')}" title="${T('su_remove')}">${TRASH_SVG}</button></div>`).join('')}
+      <div><button type="button" class="btn small" id="suAddLoc">${T('su_add_loc')}</button></div></div>
+    <div class="su-group"><h2>${T('su_depts')}</h2><p class="hint">${T('su_depts_hint')}</p>
+      ${SU.depts.map((d, i) => `<div class="su-row"><input data-dept="${i}" value="${esc(d)}" aria-label="${T('su_name')}"><button type="button" class="iconbtn" data-del-dept="${i}" aria-label="${T('su_remove')}" title="${T('su_remove')}">${TRASH_SVG}</button></div>`).join('')}
+      <div><button type="button" class="btn small" id="suAddDept">${T('su_add_dept')}</button></div></div>`;
+  return h('su_admin_h', 'su_admin_sub') + `<div class="fields">
+    <label class="full">${T('su_fullname')}<input data-admin="nombre" value="${esc(SU.admin.nombre)}" autocomplete="name"></label>
+    <label class="full">${T('su_email')}<input type="email" data-admin="email" value="${esc(SU.admin.email)}" autocomplete="username"></label>
+    <div class="full">${pwPolicyFields(SU.policy)}</div>
+    <label>${T('su_pass')}<input type="password" data-admin="pass" value="${esc(SU.admin.pass)}" autocomplete="new-password"></label>
+    <label>${T('su_pass2')}<input type="password" data-admin="pass2" value="${esc(SU.admin.pass2)}" autocomplete="new-password"></label>
+    <div class="full"><div id="suMeter"></div></div></div>`;
+}
+function renderSetup() {
+  if (setupInfo.blocked) {
+    view.innerHTML = `<div class="login"><div class="card setup"><h1>${T('su_blocked_t')}</h1><p class="notice">${T('su_blocked_b')}</p></div></div>`;
+    return;
+  }
+  SU = SU || setupDefaults();
+  const last = SU.step === 2;
+  view.innerHTML = `<div class="login"><div class="card setup">
+    <div class="su-steps" aria-hidden="true">${[0, 1, 2].map(i => `<i class="${i <= SU.step ? 'on' : ''}"></i>`).join('')}</div>
+    <p class="su-count">${T('su_step', { n: SU.step + 1 })}</p>
+    <form id="setupForm" novalidate style="display:grid;gap:18px">${setupStep()}
+      <div class="su-actions">${SU.step ? `<button type="button" class="btn" id="suBack">${T('su_back')}</button>` : ''}<button class="btn primary" type="submit" id="suNext">${T(last ? 'su_finish' : 'su_next')}</button></div>
+    </form></div></div>`;
+  const form = $('#setupForm');
+  form.addEventListener('input', e => {
+    const x = e.target, d = x.dataset;
+    if (d.su) SU[d.su] = x.value;
+    else if (d.admin) { SU.admin[d.admin] = x.value; if (d.admin === 'pass') suMeter(); }
+    else if (d.loc) SU.locations[+d.loc].nombre = x.value;   // once edited, the same name is used in every language
+    else if (d.loctype) SU.locations[+d.loctype].tipo = x.value;
+    else if (d.dept) SU.depts[+d.dept] = x.value;
+  });
+  form.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.id === 'suBack') { SU.step--; renderSetup(); }
+    else if (b.id === 'suAddLoc') { SU.locations.push({ nombre: '', tipo: 'office' }); renderSetup(); $(`[data-loc="${SU.locations.length - 1}"]`).focus(); }
+    else if (b.id === 'suAddDept') { SU.depts.push(''); renderSetup(); $(`[data-dept="${SU.depts.length - 1}"]`).focus(); }
+    else if (b.dataset.delLoc) { SU.locations.splice(+b.dataset.delLoc, 1); renderSetup(); }
+    else if (b.dataset.delDept) { SU.depts.splice(+b.dataset.delDept, 1); renderSetup(); }
+  });
+  form.addEventListener('submit', setupNext);
+  if (SU.step === 2) { bindPolicy(form.querySelector('.pw-policy'), SU.policy, suMeter); suMeter(); }
+  form.querySelector('input')?.focus();
+}
+const suMeter = () => drawMeter($('#suMeter'), SU.admin.pass, SU.policy);
+const setupError = key => { toast(t(key)); shake('.login .card'); };
+async function setupNext(e) {
+  e.preventDefault();
+  const named = SU.locations.filter(l => tx(l.nombre).trim());
+  if (SU.step === 0) {
+    if (setupInfo.tokenRequired && !SU.token) return setupError('err_setup_token');
+    if (!SU.orgName.trim()) return setupError('err_su_org');
+  } else if (SU.step === 1) {
+    if (!named.length) return setupError('err_su_loc');
+  }
+  if (SU.step < 2) { SU.step++; renderSetup(); return; }
+  const a = SU.admin;
+  if (!a.nombre.trim() || !a.email.trim()) return setupError('err_su_admin');
+  if (a.pass !== a.pass2) return setupError('err_su_mismatch');
+  if (!validMinLen(SU.policy)) return setupError('err_pw_minlen');
+  if (!a.pass) return setupError('err_pass');
+  if (!pwMeets(a.pass, SU.policy)) return setupError('err_pass_weak');
+  const btn = $('#suNext'); btn.disabled = true;
+  try {
+    adopt(await api('POST', 'setup', { token: SU.token, orgName: SU.orgName.trim(), tagPrefix: SU.tagPrefix.trim(), dateFmt: SU.dateFmt, currency: SU.currency, warrantyDays: 90, hostnameIsTag: false, pwPolicy: { ...SU.policy, minLen: Number(SU.policy.minLen) },
+      locations: named, depts: SU.depts.map(d => d.trim()).filter(Boolean), admin: { nombre: a.nombre.trim(), email: a.email.trim(), pass: a.pass } }));
+  } catch (err) {
+    if (!(err instanceof ApiFail)) throw err;
+    if (err.code === 'err_setup_done') { setupInfo = null; SU = null; renderLogin(t(err.code)); return; }
+    if (err.code === 'err_setup_token' || err.code === 'err_su_org') { SU.step = 0; renderSetup(); }
+    else if (err.code === 'err_su_loc') { SU.step = 1; renderSetup(); }
+    else btn.disabled = false;
+    setupError(err.code);
+    return;
+  }
+  setupInfo = null; SU = null; location.hash = 'panel'; applyChrome(); route(); enter(); toast(t('su_done'), true);
+}
+
 function renderLogin(err, email) { view.innerHTML = viewLogin(err); bindLogin(); const em = $('#login-email'); if (email) { em.value = email; $('#login-pass').focus(); } else em.focus(); }
 
 function viewPanel() {
@@ -1383,7 +1554,7 @@ function viewEmployee(id) {
 /* ================= settings ================= */
 const SET_GROUPS = [
   { id: 'general', items: [['region', 'set_region', null]] },
-  { id: 'access', items: [['usuarios', 'set_users', () => S.users.filter(u => u.activo).length]] },
+  { id: 'access', items: [['usuarios', 'set_users', () => S.users.filter(u => u.activo).length], ['contrasenas', 'set_pwpolicy', null]] },
   { id: 'org', items: [['departamentos', 'set_depts', () => S.depts.length], ['ubicaciones', 'set_locs', () => S.locations.length]] },
   { id: 'catalog', items: [['tipos', 'set_types', () => S.types.length], ['modelos', 'set_models', () => S.models.length]] },
   { id: 'parts', items: [['procesadores', 'set_cpus', () => S.cpus.length], ['graficas', 'set_gpus', () => S.gpus.length], ['memoria', 'set_ram', () => S.ramGens.length], ['formatosram', 'set_ramforms', () => S.ramForms.length],
@@ -1411,6 +1582,7 @@ function viewSettings(sec) {
   if (!found) body = settingsHome();
   else if (sec === 'usuarios') body = settingsUsers();
   else if (sec === 'region') body = settingsRegion();
+  else if (sec === 'contrasenas') body = settingsPasswords();
   else body = settingsList(sec);
   const crumb = found ? `<p class="crumb"><a href="#ajustes">${T('set_title')}</a> <span>/</span> ${T('grp_' + found[3])}</p>` : '';
   return `<div class="head"><div><h1>${T('set_title')}</h1><p class="sub">${T('set_sub', { org: S.settings.orgName })}</p></div></div>
@@ -1479,6 +1651,7 @@ function userForm(u) {
     <label class="full">${T('f_email')}<input name="email" id="u-email" type="email" value="${esc(u?.email)}"></label>
     <label>${T('f_role')}<select name="rol" id="u-rol">${kopts(ROLES, rl, u?.rol || 'tech')}</select></label>
     <label>${u ? T('f_pass_new') : T('f_pass_tmp')}<input name="pass" id="u-pass" type="password" autocomplete="new-password">${u ? `<span class="hint">${T('f_pass_hint')}</span>` : ''}</label>
+    <div class="full"><div id="u-meter"></div></div>
     <div class="full" id="u-roledesc"></div></div>`;
 }
 function readUser(v, u) {
@@ -1486,6 +1659,7 @@ function readUser(v, u) {
   if (!nombre || !email) { toast(t('err_user')); return null; }
   if (S.users.some(x => x.email.toLowerCase() === email && x !== u)) { toast(t('err_email_dup')); return null; }
   if (!u && !v.pass) { toast(t('err_pass')); return null; }
+  if (v.pass && !pwMeets(v.pass, S.settings.pwPolicy)) { toast(t('err_pass_weak')); return null; }
   if (u && u.rol === 'admin' && v.rol !== 'admin' && u.activo && activeAdmins() === 1) { toast(t('err_last_admin')); return null; }
   return { nombre, email, rol: v.rol, ...(v.pass ? { pass: v.pass } : {}) };
 }
@@ -1507,7 +1681,7 @@ const SET_ACTIONS = {
     route(); toast(d.activo ? t('user_on') : t('user_off'), true);
   },
 };
-function bindRoleDesc() { const s = $('#u-rol'), o = $('#u-roledesc'); const f = () => o.innerHTML = `<p class="muted" style="margin:0;font-size:13px">${T('role_' + s.value + '_d')}</p>`; s.onchange = f; f(); }
+function bindRoleDesc() { const pw = $('#u-pass'), m = () => drawMeter($('#u-meter'), pw.value, S.settings.pwPolicy); pw.oninput = m; m(); const s = $('#u-rol'), o = $('#u-roledesc'); const f = () => o.innerHTML = `<p class="muted" style="margin:0;font-size:13px">${T('role_' + s.value + '_d')}</p>`; s.onchange = f; f(); }
 
 /* ================= inventory actions ================= */
 function deviceForm(d) {
@@ -1880,7 +2054,7 @@ view.addEventListener('click', ev => {
   if (go) location.hash = go.dataset.go;
 });
 function route() {
-  if (!cur) { renderLogin(); document.querySelectorAll('#tabs a').forEach(a => a.classList.remove('on')); return; }
+  if (!cur) { setupInfo ? renderSetup() : renderLogin(); document.querySelectorAll('#tabs a').forEach(a => a.classList.remove('on')); return; }
   const h = location.hash.slice(1) || 'panel';
   const sec = h.startsWith('dispositivo') ? 'dispositivos' : h.startsWith('empleado') ? 'empleados' : h.startsWith('ajustes') ? 'ajustes' : 'panel';
   document.querySelectorAll('#tabs a').forEach(a => a.classList.toggle('on', a.dataset.r === sec));
@@ -1896,7 +2070,7 @@ function route() {
     $('#eq').oninput = e => { FE.q = e.target.value; drawEmpRows(); };
     $('#eactivos').onchange = e => { FE.activos = e.target.value; drawEmpRows(); };
   } else if (h.startsWith('empleado-')) view.innerHTML = viewEmployee(h.slice(9));
-  else if (sec === 'ajustes') { view.innerHTML = viewSettings(h.slice(8)); bindRegion(); }
+  else if (sec === 'ajustes') { view.innerHTML = viewSettings(h.slice(8)); bindRegion(); bindPwForm(); }
   else view.innerHTML = viewPanel();
   requestAnimationFrame(moveTabInd);
 }
@@ -1908,6 +2082,6 @@ document.addEventListener('visibilitychange', async () => {
 });
 (async () => {
   applyUi(); applyTheme();
-  try { const d = await api('GET', 'bootstrap'); if (d.me) adopt(d); else S = emptyState(d.settings); } catch (e) { toast(t('err_network')); }
+  try { const d = await api('GET', 'bootstrap'); if (d.me) adopt(d); else { S = emptyState(d.settings); setupInfo = d.setup || null; } } catch (e) { toast(t('err_network')); }
   applyChrome(); route(); enter();
 })();

@@ -9,10 +9,10 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
 from inventory import models as m
+from inventory.catalog import load_catalog
 from inventory.registry import LISTS
 
 SEED = Path(__file__).resolve().parents[2] / "demo" / "seed.json"
-CATALOG_ONLY_SKIP = {"depts", "locations", "models"}
 
 
 def plain(value):
@@ -33,11 +33,15 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **opts):
+        if opts["catalog_only"]:
+            if not load_catalog():
+                raise CommandError("The catalogue lists already have data.")
+            self.stdout.write(self.style.SUCCESS("Catalogue lists loaded."))
+            return
+
         data = json.loads(SEED.read_text(encoding="utf8"))
         ids = {}
         for coll, spec in LISTS.items():
-            if opts["catalog_only"] and coll in CATALOG_ONLY_SKIP:
-                continue
             if spec.model.objects.exists():
                 raise CommandError(f"{coll} already has data; this command only fills an empty database.")
             ids[coll] = {}
@@ -52,10 +56,6 @@ class Command(BaseCommand):
                     setattr(item, attr + "_id", ids[parent][row[key]])
                 item.save()
                 ids[coll][row["id"]] = item.pk
-        if opts["catalog_only"]:
-            self.stdout.write(self.style.SUCCESS("Catalogue lists loaded."))
-            return
-
         password = opts["password"]
         if not password:
             raise CommandError("--password is required for example accounts.")

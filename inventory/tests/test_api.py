@@ -8,7 +8,7 @@ from django.test import Client, TestCase
 from inventory import models as m
 from inventory.models import Assignment, AuditEvent, Device, Employee, User
 
-PASSWORD = "correct-horse-battery"
+PASSWORD = "Correct-Horse-Battery-7"
 
 
 class ApiTestCase(TestCase):

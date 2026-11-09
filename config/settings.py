@@ -38,6 +38,9 @@ if not SECRET_KEY:
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS") or (["localhost", "127.0.0.1"] if DEBUG else [])
 CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")
 
+# Required by the first-run wizard in production, so a stranger cannot claim a fresh install.
+SETUP_TOKEN = os.environ.get("DJANGO_SETUP_TOKEN", "")
+
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
