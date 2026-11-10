@@ -48,6 +48,7 @@ The app is one container (`Dockerfile`) plus a PostgreSQL database, and suits an
 | `DJANGO_DEBUG` | No | Leave unset in production |
 | `DJANGO_SSL_REDIRECT` | No | Set to `0` only if the host already forces HTTPS and redirects loop |
 | `PORT`, `WEB_CONCURRENCY` | No | Listening port (8000) and worker count (3) |
+| `GUNICORN_TIMEOUT` | No | Seconds a request may take before it is stopped (180). Large backups and restores need the time; raise it if a restore is cut off. A restore that is stopped changes nothing. |
 
 The app must be served over HTTPS, because its cookies are marked secure. The health check is at `/healthz`; include the host name the check uses in `DJANGO_ALLOWED_HOSTS`.
 
@@ -58,6 +59,16 @@ Set `DJANGO_SETUP_TOKEN` to a long random value, deploy, and open the site. On a
 Without a code configured, production keeps the wizard closed so nobody else can claim a fresh install. To create the first administrator from the command line instead, run `python manage.py load_demo_data --catalog-only` and then `python manage.py createsuperuser`.
 
 Do not run `load_demo_data` without `--catalog-only` in production: it creates fictional people and devices.
+
+## Backups
+
+Administrators export and restore everything in **Settings > Data > Backups**. A backup is one `.invbackup` file (a zip) holding every record, setting, the activity history, user accounts with their encrypted passwords, and the logo. It can be protected with a password, which encrypts the contents with AES-256-GCM, with the key derived from the password using scrypt. Without that password the backup cannot be restored, and nobody can recover it.
+
+Restoring replaces all data in a single transaction, so a failed restore changes nothing, and it signs everyone out. Backups without an active administrator are refused. The file format is described at the top of `inventory/backup.py`.
+
+While a restore runs, the app is in maintenance mode: every request from anyone else is turned away. Administrators who open the app follow the restore's live progress, and everyone else sees a maintenance page; both clear by themselves when it ends. The state is published through a second connection to the same database (`side` in `config/settings.py`), so all server processes see it immediately. If the process doing the restore dies, maintenance mode lifts itself after 5 minutes.
+
+These backups are for moving or recovering the app's data. The hosting database should still have its own regular backups.
 
 ## Password rules
 

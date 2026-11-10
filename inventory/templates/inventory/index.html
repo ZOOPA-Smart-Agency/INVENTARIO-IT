@@ -89,6 +89,14 @@
 </dialog>
 <div class="toast" id="toast" popover="manual" hidden></div>
 <div class="tip" id="tip" role="tooltip" hidden></div>
+<div class="prog" id="prog" popover="manual" role="status" aria-live="polite" hidden>
+  <div class="prog-head"><span class="prog-icon" id="progIcon" aria-hidden="true"></span><b id="progTitle"></b><span class="prog-step" id="progStep"></span></div>
+  <div class="prog-label" id="progLabel"></div>
+  <div class="prog-track"><i id="progFill"></i></div>
+  <div class="prog-meta"><span id="progPct"></span><span id="progTime"></span></div>
+  <div class="prog-note" id="progNote" hidden></div>
+</div>
+<dialog id="busy" aria-labelledby="progTitle"><div id="busyBox"></div><div id="maintBox" class="maint" role="status" hidden></div></dialog>
 <script src="{% static 'inventory/app.js' %}?v={{ v }}"></script>
 </body>
 </html>

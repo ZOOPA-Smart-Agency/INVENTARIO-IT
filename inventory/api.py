@@ -2,6 +2,7 @@
 import base64
 import binascii
 import datetime as dt
+import contextlib
 import json
 import re
 from decimal import Decimal, InvalidOperation
@@ -14,10 +15,12 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import IntegrityError, transaction
 from django.db.models import ProtectedError
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from django.utils.crypto import constant_time_compare
 
+from . import backup as backups
+from . import maintenance as maint
 from . import models as m
 from .catalog import load_catalog
 from .models import Assignment, AuditEvent, Device, Employee, Incident, User
@@ -46,8 +49,8 @@ class ApiError(Exception):
         self.status = status
 
 
-def endpoint(*methods, role="any", auth=True, allow_pending=False):
-    """Wraps a view: method check, sign-in, role, JSON body, one transaction, errors."""
+def endpoint(*methods, role="any", auth=True, allow_pending=False, form=False, during_maintenance=False, atomic=True):
+    """Wraps a view: method check, maintenance, sign-in, role, JSON body, one transaction, errors."""
 
     def decorate(view):
         @wraps(view)
@@ -55,6 +58,10 @@ def endpoint(*methods, role="any", auth=True, allow_pending=False):
             if request.method not in methods:
                 return JsonResponse({"error": "err_invalid"}, status=405)
             user = request.user
+            if not during_maintenance:
+                state = maint.current()
+                if state is not None:  # a restore is replacing the data: nobody else may read or change it
+                    return JsonResponse({"error": "maintenance", "maintenance": maint.info(state, user)}, status=503)
             if auth and not user.is_authenticated:
                 return JsonResponse({"error": "err_auth"}, status=401)
             if auth and user.must_change_password and not allow_pending:
@@ -62,13 +69,13 @@ def endpoint(*methods, role="any", auth=True, allow_pending=False):
             if role == "edit" and user.rol == User.Role.READ or role == "admin" and user.rol != User.Role.ADMIN:
                 return JsonResponse({"error": "err_forbidden"}, status=403)
             try:
-                body = json.loads(request.body or b"{}")
-                if not isinstance(body, dict):
+                body = request.POST if form else json.loads(request.body or b"{}")  # form: file uploads
+                if not form and not isinstance(body, dict):
                     raise ValueError
             except ValueError:
                 return JsonResponse({"error": "err_invalid"}, status=400)
             try:
-                with transaction.atomic():
+                with transaction.atomic() if atomic else contextlib.nullcontext():
                     result = view(request, body, *args, **kwargs)
             except ApiError as e:
                 return JsonResponse({"error": e.code}, status=e.status)
@@ -76,6 +83,8 @@ def endpoint(*methods, role="any", auth=True, allow_pending=False):
                 return JsonResponse({"error": "in_use_cant"}, status=409)
             except (IntegrityError, ValidationError):
                 return JsonResponse({"error": "err_invalid"}, status=400)
+            if isinstance(result, HttpResponse):  # files, such as backups
+                return result
             return JsonResponse(result if result is not None else {})
 
         return wrapper
@@ -195,14 +204,18 @@ def session_login(request, body):
     return {"me": me_json(user), "state": full_state(user)}
 
 
-@endpoint("POST", allow_pending=True)
+@endpoint("POST", allow_pending=True, during_maintenance=True)
 def session_logout(request, body):
     logout(request)
 
 
-@endpoint("GET", auth=False)
+@endpoint("GET", auth=False, during_maintenance=True)
 def bootstrap(request, body):
     """What the page needs at start-up, signed in or not."""
+    state = maint.current()
+    if state is not None:
+        me = me_json(request.user) if request.user.is_authenticated else None
+        return {"me": me, "settings": settings_json(), "maintenance": maint.info(state, request.user)}
     if request.user.is_authenticated:
         if request.user.must_change_password:
             return {"me": me_json(request.user), "settings": settings_json()}
@@ -804,3 +817,66 @@ def logo_update(request, body):
     s.save()
     audit(request, "log_setting", {"xKey": "set_brand"})
     return {"logo": s.logo_version if s.logo_type else 0}
+
+
+# ---- backups ----------------------------------------------------------------------
+
+
+@endpoint("POST", role="admin")
+def backup_export(request, body):
+    password = str(body.get("password") or "")
+    if password and len(password) < backups.MIN_PASSWORD:
+        raise ApiError("err_bk_pw_short")
+    audit(request, "log_backup_export")
+    content = backups.build(request.user, password or None)
+    response = HttpResponse(content, content_type="application/octet-stream")
+    name = f"inventario-copia-{timezone.localdate().isoformat()}{backups.EXTENSION}"
+    response["Content-Disposition"] = f'attachment; filename="{name}"'
+    return response
+
+
+def _uploaded_backup(request):
+    upload = request.FILES.get("file")
+    if upload is None:
+        raise ApiError("err_backup_invalid")
+    if upload.size > backups.MAX_BYTES:
+        raise ApiError("err_backup_size", 413)
+    return upload.read(), str(request.POST.get("password") or "") or None
+
+
+@endpoint("POST", role="admin", form=True)
+def backup_inspect(request, body):
+    """Opens a backup without changing anything, so the person can see what it holds first."""
+    raw, password = _uploaded_backup(request)
+    try:
+        summary, _, _ = backups.read(raw, password)
+    except backups.BackupError as e:
+        raise ApiError(e.code)
+    return {"summary": summary}
+
+
+@endpoint("POST", role="admin", form=True, atomic=False)
+def backup_restore(request, body):
+    """Replaces all data with the backup's and signs everyone out, including you.
+
+    While it runs the app is in maintenance: other administrators follow the progress, everyone else waits.
+    """
+    raw, password = _uploaded_backup(request)
+    email = request.user.email
+    if not maint.claim("restore", request.user):
+        raise ApiError("err_maintenance_busy", 409)
+    try:
+        with transaction.atomic():
+            backups.restore(raw, password, report=maint.Reporter())
+            AuditEvent.objects.create(key="log_backup_restore", args={}, user=User.objects.filter(email=email).first())
+    except backups.BackupError as e:
+        raise ApiError(e.code)
+    finally:
+        maint.release()  # only after the new data is committed, so nobody sees it half-done
+    logout(request)
+
+
+@endpoint("GET", auth=False, during_maintenance=True)
+def maintenance_status(request, body):
+    state = maint.current()
+    return {"active": False} if state is None else {"active": True, **maint.info(state, request.user)}

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 
 TRI = [("", "Not defined"), ("yes", "Yes"), ("no", "No")]
 
@@ -326,7 +327,7 @@ class Incident(models.Model):
 class AuditEvent(models.Model):
     """Append-only history. `key` and `args` are rendered in each viewer's language."""
 
-    at = models.DateTimeField(auto_now_add=True)
+    at = models.DateTimeField(default=timezone.now, editable=False)  # restores keep the original time
     key = models.CharField(max_length=40)
     args = models.JSONField(default=dict)
     device = models.ForeignKey(Device, null=True, blank=True, on_delete=models.SET_NULL)
@@ -334,3 +335,16 @@ class AuditEvent(models.Model):
 
     class Meta:
         ordering = ["-id"]
+
+
+class Maintenance(models.Model):
+    """Single row (pk=1): set while a restore runs, so everyone else sees a maintenance page. Not part of backups."""
+
+    active = models.BooleanField(default=False)
+    kind = models.CharField(max_length=20, blank=True)
+    started_at = models.DateTimeField(null=True, blank=True)
+    started_by = models.CharField(max_length=200, blank=True)
+    phase = models.CharField(max_length=20, blank=True)
+    done = models.PositiveIntegerField(default=0)
+    total = models.PositiveIntegerField(default=0)
+    updated_at = models.DateTimeField(null=True, blank=True)

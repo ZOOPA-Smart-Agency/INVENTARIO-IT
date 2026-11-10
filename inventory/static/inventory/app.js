@@ -1,6 +1,11 @@
 /* ================= i18n ================= */
 const I18N = {
   es: {
+    mt_title: 'Estamos haciendo tareas de mantenimiento', mt_body: 'La aplicación de {org} no está disponible durante unos minutos.', mt_auto: 'Esta página se actualizará sola cuando vuelva a estar disponible.', mt_watch: '{name} está restaurando una copia de seguridad. Cuando termine, se cerrará la sesión de todos los usuarios.', mt_done: 'Restauración terminada. Vuelve a iniciar sesión.', mt_back: 'La aplicación vuelve a estar disponible.', maintenance: 'La aplicación está en mantenimiento.', err_maintenance_busy: 'Ya hay otra restauración en curso.', pr_finishing: 'Comprobando los datos restaurados…',
+    pr_keep_open: 'No cierres ni recargues esta página hasta que termine.',
+    pr_export: 'Exportando copia', pr_prepare: 'Preparando los datos…', pr_prepare_enc: 'Preparando y cifrando los datos…', pr_download: 'Descargando el archivo…', pr_check: 'Comprobando la copia', pr_upload: 'Subiendo el archivo…', pr_read: 'Leyendo la copia…', pr_restore: 'Restaurando copia', pr_restoring: 'Sustituyendo los datos…', pr_step: 'Paso {n} de {total}', pr_left: 'Quedan unos {t}', pr_elapsed: '{t} en curso', pr_leave: 'Hay una copia de seguridad en curso.',
+    bk_encrypt: 'Proteger con contraseña (recomendado)', bk_encrypt_d: 'La copia se cifra con AES-256 y solo se puede abrir con esta contraseña.', bk_pw: 'Contraseña de la copia', bk_pw2: 'Repite la contraseña', bk_pw_lost: 'Guárdala en un lugar seguro: si la pierdes, no habrá forma de restaurar esta copia.', bk_plain_warn: 'Sin contraseña, cualquiera que tenga el archivo podrá leer todos los datos.', bk_pw_t: 'Copia protegida', bk_pw_d: 'Esta copia está protegida con contraseña. Escríbela para ver qué contiene.', bk_unlock: 'Abrir', bk_enc_yes: 'Protegida con contraseña', err_bk_pw_short: 'La contraseña de la copia debe tener al menos 10 caracteres.', err_backup_password: 'La contraseña no es correcta o el archivo está dañado.', err_backup_password_required: 'Esta copia está protegida con contraseña.',
+    grp_data: 'Datos', grp_data_d: 'Copias de seguridad y restauración', set_data: 'Copias de seguridad', set_data_sub: 'Exporta todos los datos o restaura una copia anterior', bk_export_h: 'Exportar una copia', bk_export_d: 'Descarga un archivo .invbackup con todos los datos y ajustes: dispositivos, empleados, historial, averías, usuarios, listas, logotipo y configuración.', bk_export_warn: 'Contiene datos personales y las contraseñas de los usuarios (cifradas). Guarda el archivo en un lugar seguro.', bk_export_btn: 'Descargar copia', bk_exported: 'Copia descargada', bk_restore_h: 'Restaurar una copia', bk_restore_d: 'Carga un archivo .invbackup exportado desde esta aplicación.', bk_restore_warn: 'Se sustituirán todos los datos y ajustes actuales por los de la copia y se cerrará la sesión de todos los usuarios, incluida la tuya. No se puede deshacer.', bk_restore_btn: 'Restaurar desde un archivo', bk_confirm_t: 'Restaurar copia', bk_confirm_b: 'Copia del {d}, hecha por {by}. Contiene:', bk_n_devices: '{n} dispositivos', bk_n_employees: '{n} empleados', bk_n_users: '{n} usuarios', bk_n_log: '{n} entradas del historial', bk_first: 'Descargar antes una copia de los datos actuales', bk_restore_ok: 'Restaurar', bk_restored: 'Copia restaurada. Vuelve a iniciar sesión.', err_backup_invalid: 'El archivo no es una copia válida de esta aplicación.', err_backup_version: 'Esta copia es de otra versión de la aplicación y no se puede restaurar aquí.', err_backup_no_admin: 'La copia no tiene ningún administrador activo, así que nadie podría entrar.', err_backup_size: 'El archivo es demasiado grande (máximo 50 MB).', log_backup_export: 'Copia de seguridad exportada', log_backup_restore: 'Copia de seguridad restaurada',
     set_brand: 'Logotipo', set_brand_sub: 'Sustituye el icono de la aplicación por el de tu empresa.', brand_upload: 'Subir imagen', brand_change: 'Cambiar imagen', brand_remove: 'Quitar logotipo', brand_formats: 'PNG, JPG, WebP, GIF o SVG de hasta 512 KB. Mejor si es cuadrada y con fondo transparente.', brand_where: 'Se verá en el menú, en la pantalla de inicio de sesión y en la pestaña del navegador.', brand_saved: 'Logotipo actualizado', brand_removed: 'Se ha vuelto al icono original', err_logo_type: 'Ese archivo no es una imagen compatible.', err_logo_size: 'La imagen pesa más de 512 KB.', go_home: 'Ir al resumen', pc_title: 'Cambia tu contraseña', pc_sub: 'Por seguridad, elige una contraseña nueva antes de continuar.', pc_current: 'Contraseña actual', pc_new: 'Contraseña nueva', pc_repeat: 'Repite la contraseña nueva', pc_btn: 'Cambiar', pc_done: 'Contraseña cambiada', err_pw_current: 'La contraseña actual no es correcta.', err_pw_same: 'La contraseña nueva debe ser distinta de la actual.', err_must_change: 'Antes de seguir, cambia tu contraseña.', f_must_change: 'Pedir que cambie la contraseña al iniciar sesión', f_must_change_d: 'Útil cuando le das una contraseña temporal.', chip_must_change: 'Debe cambiar la contraseña', chip_must_change_d: 'Tendrá que elegir una contraseña nueva la próxima vez que inicie sesión.', log_pwchanged: '{name} ha cambiado su contraseña',
     pw_h: 'Seguridad de las contraseñas', pw_enforce: 'Exigir requisitos de seguridad', pw_enforce_d: 'Las contraseñas que no los cumplan no se aceptarán.', pw_off: 'Sin requisitos: se aceptará cualquier contraseña.', pw_minlabel: 'Longitud mínima', pw_chars: 'caracteres', pw_c_upper: 'Al menos una mayúscula', pw_c_number: 'Al menos un número', pw_c_symbol: 'Al menos un símbolo', pw_c_min: 'Al menos {n} caracteres', pw_weak: 'Contraseña insegura', pw_ok: 'Contraseña aceptable', pw_strong: 'Contraseña segura', pw_empty: 'Escribe una contraseña para ver su seguridad', pw_applies: 'Se aplica a las contraseñas nuevas o cambiadas. Las actuales siguen funcionando.', set_pwpolicy: 'Contraseñas', set_pwpolicy_sub: 'Elige qué requisitos deben cumplir las contraseñas.', err_pw_minlen: 'La longitud mínima debe ser un número entre 1 y 128.',
     su_title: 'Configuración inicial', su_sub: 'Deja la aplicación lista en tres pasos.', su_step: 'Paso {n} de 3', su_org_h: 'Tu organización', su_org: 'Nombre de la organización', su_prefix: 'Prefijo de las etiquetas', su_date: 'Formato de fecha', su_currency: 'Moneda', su_token: 'Código de instalación', su_token_hint: 'Lo define quien ha desplegado la aplicación (DJANGO_SETUP_TOKEN).', su_places_h: 'Oficinas y departamentos', su_locs: 'Ubicaciones', su_locs_hint: 'Dónde están los equipos. Marca un almacén para que los equipos devueltos vuelvan allí.', su_depts: 'Departamentos', su_depts_hint: 'Opcional: también puedes añadirlos después en Ajustes.', su_add_loc: 'Añadir ubicación', su_add_dept: 'Añadir departamento', su_name: 'Nombre', su_remove: 'Quitar', su_admin_h: 'Tu cuenta de administrador', su_admin_sub: 'Con esta cuenta entrarás y podrás crear las del resto del equipo.', su_fullname: 'Nombre completo', su_email: 'Correo electrónico', su_pass: 'Contraseña', su_pass2: 'Repite la contraseña', su_back: 'Atrás', su_next: 'Siguiente', su_finish: 'Terminar', su_blocked_t: 'Falta el código de instalación', su_blocked_b: 'La instalación no se puede completar todavía: define la variable DJANGO_SETUP_TOKEN en el servidor y recarga esta página.', su_done: '¡Todo listo! Ya puedes añadir tus dispositivos.', err_su_org: 'Indica el nombre de la organización.', err_su_loc: 'Añade al menos una ubicación con nombre.', err_su_admin: 'Rellena tu nombre y un correo válido.', err_su_mismatch: 'Las contraseñas no coinciden.', err_setup_token: 'El código de instalación no es correcto.', err_setup_done: 'La aplicación ya está configurada. Inicia sesión.', log_setup: 'Instalación inicial completada',
@@ -246,6 +251,11 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     ok_resolve: 'Resolver',
   },
   en: {
+    mt_title: 'Maintenance in progress', mt_body: 'The {org} app is unavailable for a few minutes.', mt_auto: 'This page will refresh by itself when the app is available again.', mt_watch: '{name} is restoring a backup. When it finishes, every user will be signed out.', mt_done: 'Restore finished. Please sign in again.', mt_back: 'The app is available again.', maintenance: 'The app is under maintenance.', err_maintenance_busy: 'Another restore is already running.', pr_finishing: 'Checking the restored data…',
+    pr_keep_open: 'Do not close or reload this page until it finishes.',
+    pr_export: 'Exporting backup', pr_prepare: 'Preparing the data…', pr_prepare_enc: 'Preparing and encrypting the data…', pr_download: 'Downloading the file…', pr_check: 'Checking the backup', pr_upload: 'Uploading the file…', pr_read: 'Reading the backup…', pr_restore: 'Restoring backup', pr_restoring: 'Replacing the data…', pr_step: 'Step {n} of {total}', pr_left: 'About {t} left', pr_elapsed: '{t} so far', pr_leave: 'A backup is in progress.',
+    bk_encrypt: 'Protect with a password (recommended)', bk_encrypt_d: 'The backup is encrypted with AES-256 and can only be opened with this password.', bk_pw: 'Backup password', bk_pw2: 'Repeat the password', bk_pw_lost: 'Keep it somewhere safe: if you lose it, there is no way to restore this backup.', bk_plain_warn: 'Without a password, anyone who has the file can read all the data.', bk_pw_t: 'Protected backup', bk_pw_d: 'This backup is protected with a password. Enter it to see what it contains.', bk_unlock: 'Open', bk_enc_yes: 'Password protected', err_bk_pw_short: 'The backup password must be at least 10 characters.', err_backup_password: 'The password is not correct, or the file is damaged.', err_backup_password_required: 'This backup is protected with a password.',
+    grp_data: 'Data', grp_data_d: 'Backups and restore', set_data: 'Backups', set_data_sub: 'Export all data or restore an earlier backup', bk_export_h: 'Export a backup', bk_export_d: 'Downloads one .invbackup file with all data and settings: devices, employees, history, faults, users, lists, logo and configuration.', bk_export_warn: 'It contains personal data and users’ passwords (encrypted). Keep the file somewhere safe.', bk_export_btn: 'Download backup', bk_exported: 'Backup downloaded', bk_restore_h: 'Restore a backup', bk_restore_d: 'Load an .invbackup file exported from this app.', bk_restore_warn: 'All current data and settings will be replaced with the backup’s, and every user will be signed out, including you. This cannot be undone.', bk_restore_btn: 'Restore from a file', bk_confirm_t: 'Restore backup', bk_confirm_b: 'Backup from {d}, made by {by}. It contains:', bk_n_devices: '{n} devices', bk_n_employees: '{n} employees', bk_n_users: '{n} users', bk_n_log: '{n} history entries', bk_first: 'Download a backup of the current data first', bk_restore_ok: 'Restore', bk_restored: 'Backup restored. Please sign in again.', err_backup_invalid: 'That file is not a valid backup of this app.', err_backup_version: 'This backup is from a different version of the app and cannot be restored here.', err_backup_no_admin: 'The backup has no active administrator, so nobody could sign in.', err_backup_size: 'The file is too large (50 MB maximum).', log_backup_export: 'Backup exported', log_backup_restore: 'Backup restored',
     set_brand: 'Logo', set_brand_sub: 'Replace the app icon with your company’s.', brand_upload: 'Upload image', brand_change: 'Change image', brand_remove: 'Remove logo', brand_formats: 'PNG, JPG, WebP, GIF or SVG up to 512 KB. Square with a transparent background works best.', brand_where: 'It appears in the menu, on the sign-in page and in the browser tab.', brand_saved: 'Logo updated', brand_removed: 'Back to the original icon', err_logo_type: 'That file is not a supported image.', err_logo_size: 'The image is larger than 512 KB.', go_home: 'Go to the overview', pc_title: 'Change your password', pc_sub: 'For security, choose a new password before you continue.', pc_current: 'Current password', pc_new: 'New password', pc_repeat: 'Repeat the new password', pc_btn: 'Change', pc_done: 'Password changed', err_pw_current: 'The current password is not correct.', err_pw_same: 'The new password must be different from the current one.', err_must_change: 'Please change your password before continuing.', f_must_change: 'Ask them to change the password at sign-in', f_must_change_d: 'Useful when you give them a temporary password.', chip_must_change: 'Must change password', chip_must_change_d: 'They will have to choose a new password the next time they sign in.', log_pwchanged: '{name} changed their password',
     pw_h: 'Password security', pw_enforce: 'Enforce security requirements', pw_enforce_d: 'Passwords that do not meet them will not be accepted.', pw_off: 'No requirements: any password will be accepted.', pw_minlabel: 'Minimum length', pw_chars: 'characters', pw_c_upper: 'At least one uppercase letter', pw_c_number: 'At least one number', pw_c_symbol: 'At least one symbol', pw_c_min: 'At least {n} characters', pw_weak: 'Insecure password', pw_ok: 'Acceptable password', pw_strong: 'Secure password', pw_empty: 'Type a password to see how secure it is', pw_applies: 'Applies to new or changed passwords. Current ones keep working.', set_pwpolicy: 'Passwords', set_pwpolicy_sub: 'Choose which requirements passwords must meet.', err_pw_minlen: 'The minimum length must be a number from 1 to 128.',
     su_title: 'Initial setup', su_sub: 'Get the app ready in three steps.', su_step: 'Step {n} of 3', su_org_h: 'Your organisation', su_org: 'Organisation name', su_prefix: 'Asset tag prefix', su_date: 'Date format', su_currency: 'Currency', su_token: 'Setup code', su_token_hint: 'Set by whoever deployed the app (DJANGO_SETUP_TOKEN).', su_places_h: 'Offices and departments', su_locs: 'Locations', su_locs_hint: 'Where your devices are. Mark one as storage so returned devices go back there.', su_depts: 'Departments', su_depts_hint: 'Optional: you can also add them later in Settings.', su_add_loc: 'Add location', su_add_dept: 'Add department', su_name: 'Name', su_remove: 'Remove', su_admin_h: 'Your administrator account', su_admin_sub: 'You will sign in with this account and create everyone else’s.', su_fullname: 'Full name', su_email: 'Email', su_pass: 'Password', su_pass2: 'Repeat the password', su_back: 'Back', su_next: 'Next', su_finish: 'Finish', su_blocked_t: 'Setup code missing', su_blocked_b: 'Setup cannot be completed yet: set the DJANGO_SETUP_TOKEN variable on the server and reload this page.', su_done: 'All set! You can start adding your devices.', err_su_org: 'Enter the organisation’s name.', err_su_loc: 'Add at least one location with a name.', err_su_admin: 'Enter your name and a valid email.', err_su_mismatch: 'The passwords do not match.', err_setup_token: 'That setup code is not correct.', err_setup_done: 'The app is already set up. Please sign in.', log_setup: 'Initial setup completed',
@@ -491,6 +501,11 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     ok_resolve: 'Resolve',
   },
   ca: {
+    mt_title: 'Estem fent tasques de manteniment', mt_body: 'L’aplicació de {org} no està disponible durant uns minuts.', mt_auto: 'Aquesta pàgina s’actualitzarà sola quan torni a estar disponible.', mt_watch: '{name} està restaurant una còpia de seguretat. Quan acabi, es tancarà la sessió de tots els usuaris.', mt_done: 'Restauració acabada. Torna a iniciar sessió.', mt_back: 'L’aplicació torna a estar disponible.', maintenance: 'L’aplicació està en manteniment.', err_maintenance_busy: 'Ja hi ha una altra restauració en curs.', pr_finishing: 'Comprovant les dades restaurades…',
+    pr_keep_open: 'No tanquis ni recarreguis aquesta pàgina fins que acabi.',
+    pr_export: 'Exportant la còpia', pr_prepare: 'Preparant les dades…', pr_prepare_enc: 'Preparant i xifrant les dades…', pr_download: 'Descarregant el fitxer…', pr_check: 'Comprovant la còpia', pr_upload: 'Pujant el fitxer…', pr_read: 'Llegint la còpia…', pr_restore: 'Restaurant la còpia', pr_restoring: 'Substituint les dades…', pr_step: 'Pas {n} de {total}', pr_left: 'Queden uns {t}', pr_elapsed: '{t} en curs', pr_leave: 'Hi ha una còpia de seguretat en curs.',
+    bk_encrypt: 'Protegeix amb contrasenya (recomanat)', bk_encrypt_d: 'La còpia es xifra amb AES-256 i només es pot obrir amb aquesta contrasenya.', bk_pw: 'Contrasenya de la còpia', bk_pw2: 'Repeteix la contrasenya', bk_pw_lost: 'Desa-la en un lloc segur: si la perds, no hi haurà manera de restaurar aquesta còpia.', bk_plain_warn: 'Sense contrasenya, qualsevol que tingui el fitxer podrà llegir totes les dades.', bk_pw_t: 'Còpia protegida', bk_pw_d: 'Aquesta còpia està protegida amb contrasenya. Escriu-la per veure què conté.', bk_unlock: 'Obre', bk_enc_yes: 'Protegida amb contrasenya', err_bk_pw_short: 'La contrasenya de la còpia ha de tenir almenys 10 caràcters.', err_backup_password: 'La contrasenya no és correcta o el fitxer està malmès.', err_backup_password_required: 'Aquesta còpia està protegida amb contrasenya.',
+    grp_data: 'Dades', grp_data_d: 'Còpies de seguretat i restauració', set_data: 'Còpies de seguretat', set_data_sub: 'Exporta totes les dades o restaura una còpia anterior', bk_export_h: 'Exporta una còpia', bk_export_d: 'Descarrega un fitxer .invbackup amb totes les dades i la configuració: dispositius, empleats, historial, avaries, usuaris, llistes, logotip i ajustos.', bk_export_warn: 'Conté dades personals i les contrasenyes dels usuaris (xifrades). Desa el fitxer en un lloc segur.', bk_export_btn: 'Descarrega la còpia', bk_exported: 'Còpia descarregada', bk_restore_h: 'Restaura una còpia', bk_restore_d: 'Carrega un fitxer .invbackup exportat des d’aquesta aplicació.', bk_restore_warn: 'Se substituiran totes les dades i la configuració actuals per les de la còpia i es tancarà la sessió de tots els usuaris, inclosa la teva. No es pot desfer.', bk_restore_btn: 'Restaura des d’un fitxer', bk_confirm_t: 'Restaura la còpia', bk_confirm_b: 'Còpia del {d}, feta per {by}. Conté:', bk_n_devices: '{n} dispositius', bk_n_employees: '{n} empleats', bk_n_users: '{n} usuaris', bk_n_log: '{n} entrades de l’historial', bk_first: 'Descarrega abans una còpia de les dades actuals', bk_restore_ok: 'Restaura', bk_restored: 'Còpia restaurada. Torna a iniciar sessió.', err_backup_invalid: 'Aquest fitxer no és una còpia vàlida d’aquesta aplicació.', err_backup_version: 'Aquesta còpia és d’una altra versió de l’aplicació i no es pot restaurar aquí.', err_backup_no_admin: 'La còpia no té cap administrador actiu, així que ningú no podria entrar.', err_backup_size: 'El fitxer és massa gran (màxim 50 MB).', log_backup_export: 'Còpia de seguretat exportada', log_backup_restore: 'Còpia de seguretat restaurada',
     set_brand: 'Logotip', set_brand_sub: 'Substitueix la icona de l’aplicació per la de la teva empresa.', brand_upload: 'Puja una imatge', brand_change: 'Canvia la imatge', brand_remove: 'Treu el logotip', brand_formats: 'PNG, JPG, WebP, GIF o SVG de fins a 512 KB. Millor si és quadrada i amb fons transparent.', brand_where: 'Es veurà al menú, a la pantalla d’inici de sessió i a la pestanya del navegador.', brand_saved: 'Logotip actualitzat', brand_removed: 'S’ha tornat a la icona original', err_logo_type: 'Aquest fitxer no és una imatge compatible.', err_logo_size: 'La imatge pesa més de 512 KB.', go_home: 'Ves al resum', pc_title: 'Canvia la contrasenya', pc_sub: 'Per seguretat, tria una contrasenya nova abans de continuar.', pc_current: 'Contrasenya actual', pc_new: 'Contrasenya nova', pc_repeat: 'Repeteix la contrasenya nova', pc_btn: 'Canvia', pc_done: 'Contrasenya canviada', err_pw_current: 'La contrasenya actual no és correcta.', err_pw_same: 'La contrasenya nova ha de ser diferent de l’actual.', err_must_change: 'Abans de continuar, canvia la contrasenya.', f_must_change: 'Demana que canviï la contrasenya en iniciar sessió', f_must_change_d: 'Útil quan li dones una contrasenya temporal.', chip_must_change: 'Ha de canviar la contrasenya', chip_must_change_d: 'Haurà de triar una contrasenya nova la propera vegada que iniciï sessió.', log_pwchanged: '{name} ha canviat la contrasenya',
     pw_h: 'Seguretat de les contrasenyes', pw_enforce: 'Exigeix requisits de seguretat', pw_enforce_d: 'Les contrasenyes que no els compleixin no s’acceptaran.', pw_off: 'Sense requisits: s’acceptarà qualsevol contrasenya.', pw_minlabel: 'Longitud mínima', pw_chars: 'caràcters', pw_c_upper: 'Almenys una majúscula', pw_c_number: 'Almenys un número', pw_c_symbol: 'Almenys un símbol', pw_c_min: 'Almenys {n} caràcters', pw_weak: 'Contrasenya insegura', pw_ok: 'Contrasenya acceptable', pw_strong: 'Contrasenya segura', pw_empty: 'Escriu una contrasenya per veure’n la seguretat', pw_applies: 'S’aplica a les contrasenyes noves o canviades. Les actuals continuen funcionant.', set_pwpolicy: 'Contrasenyes', set_pwpolicy_sub: 'Tria quins requisits han de complir les contrasenyes.', err_pw_minlen: 'La longitud mínima ha de ser un número entre 1 i 128.',
     su_title: 'Configuració inicial', su_sub: 'Deixa l’aplicació a punt en tres passos.', su_step: 'Pas {n} de 3', su_org_h: 'La teva organització', su_org: 'Nom de l’organització', su_prefix: 'Prefix de les etiquetes', su_date: 'Format de data', su_currency: 'Moneda', su_token: 'Codi d’instal·lació', su_token_hint: 'El defineix qui ha desplegat l’aplicació (DJANGO_SETUP_TOKEN).', su_places_h: 'Oficines i departaments', su_locs: 'Ubicacions', su_locs_hint: 'On són els equips. Marca’n una com a magatzem perquè els equips retornats hi tornin.', su_depts: 'Departaments', su_depts_hint: 'Opcional: també els pots afegir després a Configuració.', su_add_loc: 'Afegeix una ubicació', su_add_dept: 'Afegeix un departament', su_name: 'Nom', su_remove: 'Treu', su_admin_h: 'El teu compte d’administrador', su_admin_sub: 'Amb aquest compte entraràs i podràs crear els de la resta de l’equip.', su_fullname: 'Nom complet', su_email: 'Correu electrònic', su_pass: 'Contrasenya', su_pass2: 'Repeteix la contrasenya', su_back: 'Enrere', su_next: 'Següent', su_finish: 'Acaba', su_blocked_t: 'Falta el codi d’instal·lació', su_blocked_b: 'La instal·lació encara no es pot completar: defineix la variable DJANGO_SETUP_TOKEN al servidor i recarrega aquesta pàgina.', su_done: 'Tot a punt! Ja pots afegir els teus dispositius.', err_su_org: 'Indica el nom de l’organització.', err_su_loc: 'Afegeix almenys una ubicació amb nom.', err_su_admin: 'Omple el teu nom i un correu vàlid.', err_su_mismatch: 'Les contrasenyes no coincideixen.', err_setup_token: 'El codi d’instal·lació no és correcte.', err_setup_done: 'L’aplicació ja està configurada. Inicia sessió.', log_setup: 'Instal·lació inicial completada',
@@ -805,14 +820,19 @@ let S = emptyState();
 /* ================= server ================= */
 class ApiFail extends Error { constructor(code, status) { super(code); this.code = code; this.status = status; } }
 const csrfToken = () => (document.cookie.split('; ').find(c => c.startsWith('csrftoken=')) || '').split('=')[1] || '';
-async function api(method, url, body) {
+async function api(method, url, body, opts = {}) {
+  const form = body instanceof FormData;   // file uploads go as a form, everything else as JSON
   let r;
   try {
-    r = await fetch('/api/' + url, { method, credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken() }, body: body === undefined ? undefined : JSON.stringify(body) });
+    r = await fetch('/api/' + url, { method, credentials: 'same-origin',
+      headers: form ? { 'X-CSRFToken': csrfToken() } : { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken() },
+      body: body === undefined ? undefined : form ? body : JSON.stringify(body) });
   } catch (e) { throw new ApiFail('err_network', 0); }
+  if (r.ok && opts.file) return { blob: await r.blob(), name: ((r.headers.get('Content-Disposition') || '').match(/filename="([^"]+)"/) || [])[1] || 'download' };
   const data = await r.json().catch(() => ({}));
   if (!r.ok) {
     if (r.status === 401 && cur) signedOut();   // the session expired while the page was open
+    if (r.status === 503 && data.error === 'maintenance') enterMaintenance(data.maintenance);
     if (data.error === 'err_must_change' && cur && !cur.mustChange) { cur.mustChange = true; document.querySelectorAll('dialog[open]').forEach(x => x.close()); applyChrome(); route(); }
     throw new ApiFail(data.error || 'err_invalid', r.status);
   }
@@ -994,6 +1014,7 @@ function openDialog(title, body, onSubmit, okLabel, danger = false) {
   if (first) first.focus();
 }
 $('#dlgCancel').onclick = () => closeDlg('#dlg');
+$('#dlg').addEventListener('cancel', e => { if (dlgBusy) e.preventDefault(); });
 let dlgBusy = false;
 $('#dlgForm').addEventListener('submit', async e => {
   e.preventDefault();
@@ -1001,10 +1022,11 @@ $('#dlgForm').addEventListener('submit', async e => {
   if (!dlgSubmit) { closeDlg('#dlg'); return; }
   const fd = new FormData(e.target);
   let res;
-  dlgBusy = true; $('#dlgOk').disabled = true;
+  dlgBusy = true; $('#dlgOk').disabled = true; $('#dlgCancel').disabled = true;
   try { res = await dlgSubmit(Object.fromEntries(fd), fd); }
   catch (err) { if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); res = false; }
-  finally { dlgBusy = false; $('#dlgOk').disabled = false; }
+  finally { dlgBusy = false; $('#dlgOk').disabled = false; $('#dlgCancel').disabled = false; }
+  if (res === null) return;   // the dialog moved on to its next step
   if (res === false) { shake('#dlgForm'); return; }
   closeDlg('#dlg'); route();
   if (typeof res === 'string') toast(res, true);
@@ -1348,6 +1370,269 @@ async function setupNext(e) {
   setupInfo = null; SU = null; location.hash = 'panel'; applyChrome(); route(); enter(); toast(t('su_done'), true);
 }
 
+/* ================= progress notification ================= */
+/* Real percentages and time left while bytes move between browser and server; while the server itself works
+   it reports nothing, so the bar slides and shows the time elapsed instead of a guess. */
+const prog = {
+  start(title, steps, fullScreen = false) {
+    const el = $('#prog');
+    this.steps = steps; this.n = 0; this.running = true; this.full = fullScreen; clearTimeout(this.hideT); clearInterval(this.tick);
+    el.className = 'prog'; el.hidden = false; $('#progTitle').textContent = title;
+    $('#progNote').hidden = !fullScreen; $('#progNote').textContent = t('pr_keep_open');
+    if (el.matches(':popover-open')) { try { el.hidePopover(); } catch (e) {} }
+    if (fullScreen) {   // a modal cover: everything else on the page becomes unreachable, keyboard included
+      $('#busyBox').appendChild(el); $('#busyBox').hidden = false; $('#maintBox').hidden = true;
+      if (!$('#busy').open) $('#busy').showModal();
+      el.tabIndex = -1; el.focus();
+    } else if (el.showPopover) { try { el.showPopover(); } catch (e) {} }
+    this.tick = setInterval(() => { this.keepCover(); this.draw(); }, 500);
+    window.onbeforeunload = e => { e.preventDefault(); e.returnValue = t('pr_leave'); return t('pr_leave'); };
+  },
+  phase(label) {   // a new step; its progress is unknown until bytes() reports some
+    this.n = Math.min(this.n + 1, this.steps); this.label = label; this.frac = null; this.eta = null; this.t0 = performance.now(); this.draw();
+  },
+  server(m) {   // progress the server publishes while it restores
+    const label = t(m.phase === 'replacing' ? 'pr_restoring' : m.phase === 'finishing' ? 'pr_finishing' : 'pr_read');
+    if (label !== this.label) { this.label = label; this.frac = null; this.eta = null; this.t0 = performance.now(); }
+    if (m.phase === 'replacing' && m.total) this.bytes(m.done, m.total); else this.draw();
+  },
+  bytes(loaded, total) {
+    if (!total) return;
+    this.frac = Math.min(1, loaded / total);
+    const secs = (performance.now() - this.t0) / 1000;
+    this.eta = secs > 0.4 && loaded > 0 ? (total - loaded) / (loaded / secs) : null;
+    this.draw();
+  },
+  draw() {
+    const el = $('#prog'); if (el.hidden || el.classList.contains('done')) return;
+    const known = this.frac !== null, secs = (performance.now() - this.t0) / 1000;
+    el.classList.toggle('unknown', !known);
+    $('#progStep').textContent = this.steps > 1 ? t('pr_step', { n: this.n, total: this.steps }) : '';
+    $('#progLabel').textContent = this.label;
+    $('#progFill').style.width = known ? (this.frac * 100).toFixed(1) + '%' : '';
+    $('#progPct').textContent = known ? Math.floor(this.frac * 100) + ' %' : '';
+    $('#progTime').textContent = known ? (this.eta > 1 ? t('pr_left', { t: duration(this.eta) }) : '') : (secs >= 1 ? t('pr_elapsed', { t: duration(secs) }) : '');
+  },
+  finish(message) {   // success: stays a moment so it can be read
+    const el = $('#prog'); this.stop();
+    el.classList.remove('unknown'); el.classList.add('done');
+    $('#progFill').style.width = '100%'; $('#progLabel').textContent = message; $('#progPct').textContent = '100 %'; $('#progTime').textContent = '';
+    $('#progNote').hidden = true;
+    this.hideT = setTimeout(() => this.hide(), this.full ? 2200 : 3200);
+  },
+  keepCover() { if (this.running && this.full && !$('#busy').open) $('#busy').showModal(); },   // nothing may close it while working
+  stop() { clearInterval(this.tick); this.running = false; window.onbeforeunload = null; },
+  hide() {
+    const el = $('#prog'); this.stop(); el.hidden = true;
+    if (el.hidePopover) { try { el.hidePopover(); } catch (e) {} }
+    if ($('#busy').open) { $('#busy').close(); document.body.appendChild(el); }
+  },
+};
+// the cover cannot be dismissed while work is running (Escape, or the browser closing it anyway)
+$('#busy').addEventListener('cancel', e => e.preventDefault());
+$('#busy').addEventListener('close', () => { prog.keepCover(); if (maint && !maint.canWatch && !$('#busy').open) $('#busy').showModal(); });
+function duration(secs) {
+  secs = Math.max(1, Math.round(secs));
+  return secs < 60 ? `${secs} s` : `${Math.floor(secs / 60)} min${secs % 60 ? ` ${secs % 60} s` : ''}`;
+}
+/* downloads with progress: `onBytes(loaded, total)` is called from the moment the server starts sending */
+async function apiDownload(url, body, onBytes) {
+  let r;
+  try { r = await fetch('/api/' + url, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken() }, body: JSON.stringify(body) }); }
+  catch (e) { throw new ApiFail('err_network', 0); }
+  if (!r.ok) {
+    const data = await r.json().catch(() => ({}));
+    if (r.status === 401 && cur) signedOut();
+    throw new ApiFail(data.error || 'err_invalid', r.status);
+  }
+  const total = Number(r.headers.get('Content-Length')) || 0, parts = [];
+  let loaded = 0;
+  onBytes(0, total);
+  const reader = r.body.getReader();
+  try {
+    for (;;) { const { done, value } = await reader.read(); if (done) break; parts.push(value); loaded += value.length; onBytes(loaded, total); }
+  } catch (e) { throw new ApiFail('err_network', 0); }
+  const name = ((r.headers.get('Content-Disposition') || '').match(/filename="([^"]+)"/) || [])[1] || 'download';
+  return { blob: new Blob(parts), name };
+}
+/* uploads with progress: `onBytes` while sending, `onSent` once the server has everything and starts working */
+function apiUpload(url, form, onBytes, onSent) {
+  return new Promise((resolve, reject) => {
+    const x = new XMLHttpRequest();
+    x.open('POST', '/api/' + url); x.withCredentials = true; x.setRequestHeader('X-CSRFToken', csrfToken());
+    x.upload.onprogress = e => { if (e.lengthComputable && onBytes) onBytes(e.loaded, e.total); };
+    x.upload.onload = () => { if (onSent) onSent(); };
+    x.onload = () => {
+      let data = {}; try { data = JSON.parse(x.responseText || '{}'); } catch (e) {}
+      if (x.status >= 200 && x.status < 300) { resolve(data); return; }
+      if (x.status === 401 && cur) signedOut();
+      if (x.status === 503 && data.error === 'maintenance') enterMaintenance(data.maintenance);
+      reject(new ApiFail(data.error || 'err_invalid', x.status));
+    };
+    x.onerror = () => reject(new ApiFail('err_network', 0));
+    x.send(form);
+  });
+}
+
+/* ================= maintenance ================= */
+/* While someone restores a backup the server answers everyone else with "maintenance". Administrators
+   follow the restore on the full-screen progress view; everyone else sees a maintenance page. Both check
+   back every couple of seconds and step aside when the restore ends. */
+let maint = null, maintTimer = null;
+function enterMaintenance(m) {
+  if (prog.running && prog.full && !maint) return;   // this browser is the one doing the restore
+  maint = m;
+  document.querySelectorAll('dialog[open]').forEach(d => { if (d.id !== 'busy') d.close(); });
+  if (m.canWatch) {
+    if (!prog.running) { prog.start(t('pr_restore'), 1, true); prog.phase(t('pr_read')); window.onbeforeunload = null; }
+    $('#progNote').hidden = false; $('#progNote').textContent = t('mt_watch', { name: m.startedBy || '—' });
+    prog.server(m);
+  } else {
+    $('#maintBox').innerHTML = `${appIcon()}<h1>${T('mt_title')}</h1><p class="sub">${T('mt_body', { org: S.settings.orgName })}</p>
+      <p class="mt-auto"><span class="prog-icon" aria-hidden="true"></span>${T('mt_auto')}</p>`;
+    $('#maintBox').hidden = false; $('#busyBox').hidden = true;
+    if (!$('#busy').open) $('#busy').showModal();
+  }
+  if (!maintTimer) maintTimer = setInterval(pollMaintenance, 2000);
+}
+async function pollMaintenance() {
+  let d;
+  try { d = await api('GET', 'maintenance'); } catch (e) { return; }
+  if (d.active) {
+    maint = d;
+    if (d.canWatch && prog.running) prog.server(d);
+    if (!$('#busy').open) $('#busy').showModal();
+    return;
+  }
+  clearInterval(maintTimer); maintTimer = null;
+  const watched = maint && maint.canWatch; maint = null;
+  if (watched) prog.finish(t('mt_done'));
+  else { $('#busy').close(); $('#maintBox').hidden = true; $('#busyBox').hidden = false; }
+  const boot = await api('GET', 'bootstrap').catch(() => null);
+  if (boot && boot.me && boot.state) adopt(boot);
+  else { cur = null; S = emptyState(boot ? boot.settings : S.settings); setupInfo = boot && boot.setup || null; }
+  applyChrome(); route();
+  if (!watched) toast(t('mt_back'), true);
+}
+
+/* ================= backups ================= */
+const BK_POLICY = { enforce: true, minOn: true, minLen: 10, upper: false, number: false, symbol: false };
+async function downloadBackup(btn, password) {
+  if (btn) btn.disabled = true;
+  prog.start(t('pr_export'), 2); prog.phase(t(password ? 'pr_prepare_enc' : 'pr_prepare'));
+  try {
+    let downloading = false;
+    const { blob, name } = await apiDownload('backup/export', { password }, (loaded, total) => {
+      if (!downloading) { downloading = true; prog.phase(t('pr_download')); }
+      prog.bytes(loaded, total);
+    });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+    prog.finish(t('bk_exported'));
+    reload().catch(() => {});
+  } catch (err) { prog.hide(); if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); }
+  finally { if (btn) btn.disabled = false; }
+}
+/* opens a backup on the server without changing anything; shows its own progress */
+async function inspectBackup(f, password) {
+  prog.start(t('pr_check'), 2); prog.phase(t('pr_upload'));
+  try {
+    const d = await apiUpload('backup/inspect', backupForm(f, password), (l, n) => prog.bytes(l, n), () => prog.phase(t('pr_read')));
+    prog.hide();
+    return d.summary;
+  } catch (err) { prog.hide(); throw err; }
+}
+/* uses the choices in the export form; false if the password there is not usable yet */
+function exportFromForm(btn) {
+  let password = '';
+  if ($('#bkEncrypt').checked) {
+    password = $('#bk-pw1').value;
+    if (password.length < 10) { toast(t('err_bk_pw_short')); shake('#bkForm'); return false; }
+    if (password !== $('#bk-pw2').value) { toast(t('err_su_mismatch')); shake('#bkForm'); return false; }
+  }
+  downloadBackup(btn, password);
+  return true;
+}
+function settingsData() {
+  return `<section class="panel"><div><h2>${T('bk_export_h')}</h2><p class="sub">${T('bk_export_d')}</p></div>
+      <form id="bkForm" class="regionform" novalidate>
+        <label class="check"><input type="checkbox" id="bkEncrypt" checked> ${T('bk_encrypt')}</label>
+        <div id="bkPw" style="display:grid;gap:12px"><p class="muted" style="margin:0;font-size:13px">${T('bk_encrypt_d')}</p>
+          <div class="fields"><label>${T('bk_pw')}<input type="password" id="bk-pw1" autocomplete="new-password"></label><label>${T('bk_pw2')}<input type="password" id="bk-pw2" autocomplete="new-password"></label>
+          <div class="full"><div id="bkMeter"></div></div></div>
+          <p class="notice" style="margin:0">${T('bk_pw_lost')}</p></div>
+        <p class="notice bad" id="bkPlain" style="margin:0" hidden>${T('bk_plain_warn')}</p>
+        <p class="muted" style="margin:0;font-size:13px">${T('bk_export_warn')}</p>
+        <div><button class="btn primary" type="submit" id="bkExport">${T('bk_export_btn')}</button></div></form></section>
+    <section class="panel"><div><h2>${T('bk_restore_h')}</h2><p class="sub">${T('bk_restore_d')}</p></div>
+      <p class="notice bad" style="margin:0">${T('bk_restore_warn')}</p>
+      <div><button class="btn danger" type="button" id="bkRestore">${T('bk_restore_btn')}</button><input type="file" id="bkFile" accept=".invbackup" hidden></div></section>`;
+}
+const backupForm = (f, password) => { const fd = new FormData(); fd.append('file', f); if (password) fd.append('password', password); return fd; };
+function backupSummary(s) {
+  const n = k => Number((s.counts || {})[k] ?? 0).toLocaleString(locale());
+  return `<div style="display:grid;gap:12px">
+    <p style="margin:0">${T('bk_confirm_b', { d: fmt(String(s.created || '').slice(0, 10)), by: s.createdBy || '—' })}</p>
+    <ul class="bk-sum"><li>${T('bk_n_devices', { n: n('devices') })}</li><li>${T('bk_n_employees', { n: n('employees') })}</li><li>${T('bk_n_users', { n: n('users') })}</li><li>${T('bk_n_log', { n: n('log') })}</li></ul>
+    ${s.encrypted ? `<span class="chip yes" style="justify-self:start">${T('bk_enc_yes')}</span>` : ''}
+    <p class="notice bad" style="margin:0">${T('bk_restore_warn')}</p>
+    <button type="button" class="btn small bk-first" id="bkFirst">${T('bk_first')}</button></div>`;
+}
+function bindData() {
+  const form = $('#bkForm'); if (!form) return;
+  const enc = $('#bkEncrypt'), meter = () => drawMeter($('#bkMeter'), $('#bk-pw1').value, BK_POLICY);
+  const sync = () => { $('#bkPw').hidden = !enc.checked; $('#bkPlain').hidden = enc.checked; };
+  enc.onchange = sync; $('#bk-pw1').oninput = meter; sync(); meter();
+  form.onsubmit = e => { e.preventDefault(); exportFromForm($('#bkExport')); };
+  const file = $('#bkFile');
+  $('#bkRestore').onclick = () => file.click();
+  file.onchange = async () => {
+    const f = file.files[0]; file.value = ''; if (!f) return;
+    if (f.size > 50 * 1024 * 1024) { toast(t('err_backup_size')); return; }
+    let summary = null, password = '';
+    try { summary = await inspectBackup(f); }
+    catch (err) {
+      if (!(err instanceof ApiFail)) throw err;
+      if (err.code !== 'err_backup_password_required') { if (err.status !== 401) toast(t(err.code)); return; }
+    }
+    const bindFirst = () => { $('#bkFirst').onclick = () => exportFromForm($('#bkFirst')); };
+    // a protected backup first asks for its password, then shows what it holds
+    const locked = `<div style="display:grid;gap:12px"><p style="margin:0">${T('bk_pw_d')}</p>
+      <div class="fields"><label class="full">${T('bk_pw')}<input type="password" name="bkpass" id="bk-open" autocomplete="off"></label></div></div>`;
+    openDialog(t(summary ? 'bk_confirm_t' : 'bk_pw_t'), summary ? backupSummary(summary) : locked, async v => {
+      if (!summary) {
+        password = v.bkpass || '';
+        if (!password) { toast(t('err_backup_password_required')); return false; }
+        summary = await inspectBackup(f, password);
+        $('#dlgTitle').textContent = t('bk_confirm_t');
+        $('#dlgBody').innerHTML = backupSummary(summary); bindFirst();
+        $('#dlgOk').textContent = t('bk_restore_ok'); $('#dlgOk').className = 'btn primary danger';
+        return null;
+      }
+      $('#bkFirst').disabled = true;   // nothing else may start while the data is being replaced
+      prog.start(t('pr_restore'), 2, true); prog.phase(t('pr_upload'));
+      let follow = null;   // once uploaded, follow the server's own progress
+      const sent = () => {
+        prog.phase(t('pr_read'));
+        follow = setInterval(() => api('GET', 'maintenance').then(d => { if (d.active && d.canWatch) prog.server(d); }).catch(() => {}), 700);
+      };
+      try { await apiUpload('backup/restore', backupForm(f, password), (l, n) => prog.bytes(l, n), sent); }
+      catch (err) { prog.hide(); $('#bkFirst').disabled = false; throw err; }
+      finally { clearInterval(follow); }
+      prog.finish(t('bk_restored'));
+      // the server has signed everyone out: show the sign-in page with the restored organisation's name and logo
+      cur = null;
+      const boot = await api('GET', 'bootstrap').catch(() => null);
+      S = emptyState(boot ? boot.settings : S.settings); setupInfo = boot && boot.setup || null;
+      location.hash = ''; applyChrome();
+      return true;
+    }, t(summary ? 'bk_restore_ok' : 'bk_unlock'), !!summary);
+    if (summary) bindFirst();
+  };
+}
+
 /* ================= company logo ================= */
 const APP_SVG = '<svg class="i" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M2 19h20"/></svg>';
 const logoUrl = () => S.settings.logo ? '/api/logo?v=' + S.settings.logo : '';
@@ -1662,6 +1947,7 @@ const SET_GROUPS = [
     ['almacenamiento', 'set_disk', () => S.diskTypes.length], ['formatosdisco', 'set_diskforms', () => S.diskForms.length], ['conectores', 'set_conns', () => S.diskConns.length]] },
   { id: 'software', items: [['macos', 'set_macver', () => S.macVersions.length], ['winver', 'set_winver', () => S.winVersions.length], ['winedition', 'set_wined', () => S.winEditions.length], ['distros', 'set_distros', () => S.linuxDistros.length], ['linuxver', 'set_linuxver', () => S.linuxVersions.length]] },
   { id: 'network', items: [['tarjetas', 'set_nicmodels', () => S.nicModels.length], ['wifigen', 'set_wifigens', () => S.wifiGens.length], ['bluetooth', 'set_bt', () => S.btVers.length]] },
+  { id: 'data', items: [['datos', 'set_data', null]] },
 ];
 const SET_SECTIONS = SET_GROUPS.flatMap(g => g.items.map(i => [...i, g.id]));
 const GROUP_ICONS = {
@@ -1671,6 +1957,7 @@ const GROUP_ICONS = {
   catalog: '<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>',
   software: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/>',
   network: '<path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"/><circle cx="12" cy="19.5" r="1"/>',
+  data: '<ellipse cx="12" cy="5.5" rx="7.5" ry="2.5"/><path d="M4.5 5.5v13c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5v-13M4.5 12c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5"/>',
   parts: '<rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>',
 };
 const gIcon = id => `<svg class="i" viewBox="0 0 24 24">${GROUP_ICONS[id]}</svg>`;
@@ -1685,6 +1972,7 @@ function viewSettings(sec) {
   else if (sec === 'region') body = settingsRegion();
   else if (sec === 'contrasenas') body = settingsPasswords();
   else if (sec === 'marca') body = settingsBrand();
+  else if (sec === 'datos') body = settingsData();
   else body = settingsList(sec);
   const crumb = found ? `<p class="crumb"><a href="#ajustes">${T('set_title')}</a> <span>/</span> ${T('grp_' + found[3])}</p>` : '';
   return `<div class="head"><div><h1>${T('set_title')}</h1><p class="sub">${T('set_sub', { org: S.settings.orgName })}</p></div></div>
@@ -2175,7 +2463,7 @@ function route() {
     $('#eq').oninput = e => { FE.q = e.target.value; drawEmpRows(); };
     $('#eactivos').onchange = e => { FE.activos = e.target.value; drawEmpRows(); };
   } else if (h.startsWith('empleado-')) view.innerHTML = viewEmployee(h.slice(9));
-  else if (sec === 'ajustes') { view.innerHTML = viewSettings(h.slice(8)); bindRegion(); bindPwForm(); bindBrand(); }
+  else if (sec === 'ajustes') { view.innerHTML = viewSettings(h.slice(8)); bindRegion(); bindPwForm(); bindBrand(); bindData(); }
   else view.innerHTML = viewPanel();
   requestAnimationFrame(moveTabInd);
 }
@@ -2187,6 +2475,12 @@ document.addEventListener('visibilitychange', async () => {
 });
 (async () => {
   applyUi(); applyTheme();
-  try { const d = await api('GET', 'bootstrap'); if (d.me) adopt(d); else { S = emptyState(d.settings); setupInfo = d.setup || null; } } catch (e) { toast(t('err_network')); }
+  let underMaintenance = null;
+  try {
+    const d = await api('GET', 'bootstrap');
+    if (d.maintenance) { underMaintenance = d.maintenance; S = emptyState(d.settings); }
+    else if (d.me) adopt(d); else { S = emptyState(d.settings); setupInfo = d.setup || null; }
+  } catch (e) { toast(t('err_network')); }
   applyChrome(); route(); enter();
+  if (underMaintenance) enterMaintenance(underMaintenance);
 })();

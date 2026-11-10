@@ -72,6 +72,9 @@ TEMPLATES = [
 DATABASES = {"default": dj_database_url.config(conn_max_age=60)}
 if not DATABASES["default"]:
     raise ImproperlyConfigured("DATABASE_URL must be set, see .env.example.")
+# A second connection to the same database, used to publish maintenance state and restore progress
+# while the restore's own transaction is still open (see inventory/maintenance.py).
+DATABASES["side"] = {**DATABASES["default"], "TEST": {"MIRROR": "default"}}
 
 AUTH_USER_MODEL = "inventory.User"
 AUTH_PASSWORD_VALIDATORS = [
