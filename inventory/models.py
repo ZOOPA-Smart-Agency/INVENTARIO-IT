@@ -30,6 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     rol = models.CharField(max_length=10, choices=Role.choices, default=Role.TECH)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    must_change_password = models.BooleanField(default=False)
 
     objects = UserManager()
     USERNAME_FIELD = "email"
@@ -53,6 +54,11 @@ class AppSettings(models.Model):
     pw_upper = models.BooleanField(default=True)
     pw_number = models.BooleanField(default=True)
     pw_symbol = models.BooleanField(default=True)
+
+    # Company logo shown instead of the app icon. Kept in the database so it survives redeploys.
+    logo = models.BinaryField(null=True, blank=True)
+    logo_type = models.CharField(max_length=40, blank=True)
+    logo_version = models.PositiveIntegerField(default=0)
 
     @classmethod
     def load(cls):

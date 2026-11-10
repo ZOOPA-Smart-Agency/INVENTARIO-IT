@@ -1,4 +1,6 @@
 """JSON API. Every rule that matters (roles, validation, audit) is enforced here."""
+import base64
+import binascii
 import datetime as dt
 import json
 import re
@@ -44,7 +46,7 @@ class ApiError(Exception):
         self.status = status
 
 
-def endpoint(*methods, role="any", auth=True):
+def endpoint(*methods, role="any", auth=True, allow_pending=False):
     """Wraps a view: method check, sign-in, role, JSON body, one transaction, errors."""
 
     def decorate(view):
@@ -55,6 +57,8 @@ def endpoint(*methods, role="any", auth=True):
             user = request.user
             if auth and not user.is_authenticated:
                 return JsonResponse({"error": "err_auth"}, status=401)
+            if auth and user.must_change_password and not allow_pending:
+                return JsonResponse({"error": "err_must_change"}, status=403)
             if role == "edit" and user.rol == User.Role.READ or role == "admin" and user.rol != User.Role.ADMIN:
                 return JsonResponse({"error": "err_forbidden"}, status=403)
             try:
@@ -186,10 +190,12 @@ def session_login(request, body):
         raise ApiError("login_err", 401)
     cache.delete(key)
     login(request, user)
+    if user.must_change_password:  # nothing else until a new password is chosen
+        return {"me": me_json(user), "settings": settings_json()}
     return {"me": me_json(user), "state": full_state(user)}
 
 
-@endpoint("POST")
+@endpoint("POST", allow_pending=True)
 def session_logout(request, body):
     logout(request)
 
@@ -198,6 +204,8 @@ def session_logout(request, body):
 def bootstrap(request, body):
     """What the page needs at start-up, signed in or not."""
     if request.user.is_authenticated:
+        if request.user.must_change_password:
+            return {"me": me_json(request.user), "settings": settings_json()}
         return {"me": me_json(request.user), "state": full_state(request.user)}
     out = {"me": None, "settings": settings_json()}
     if not User.objects.exists():
@@ -610,6 +618,8 @@ def _apply_user(request, user, b):
     if was_active_admin and b["rol"] != User.Role.ADMIN and _active_admins() == 1:
         raise ApiError("err_last_admin", 409)
     user.rol = b["rol"]
+    if user.pk != request.user.pk:  # you cannot lock yourself into a password change
+        user.must_change_password = bool(b.get("mustChange"))
     password = str(b.get("pass") or "")
     if not user.pk and not password:
         raise ApiError("err_pass")
@@ -719,3 +729,78 @@ def setup(request, body):
     AuditEvent.objects.create(key="log_setup", args={}, user=user)
     login(request, user)
     return {"me": me_json(user), "state": full_state(user)}
+
+
+# ---- own account ---------------------------------------------------------------
+
+
+@endpoint("POST", allow_pending=True)
+def account_password(request, body):
+    """Changes your own password; also how a required change is completed."""
+    user = request.user
+    key = _throttle_key(request, "pw:" + user.email)
+    if cache.get(key, 0) >= LOGIN_MAX_ATTEMPTS:
+        raise ApiError("login_locked", 429)
+    current, new = str(body.get("current") or ""), str(body.get("new") or "")
+    if not user.check_password(current):
+        cache.set(key, cache.get(key, 0) + 1, LOGIN_WINDOW_SECONDS)
+        raise ApiError("err_pw_current", 403)
+    if not new:
+        raise ApiError("err_pass")
+    if new == current:
+        raise ApiError("err_pw_same")
+    if not _password_allowed(new, m.AppSettings.load()):
+        raise ApiError("err_pass_weak")
+    user.set_password(new)
+    user.must_change_password = False
+    user.save()
+    update_session_auth_hash(request, user)
+    cache.delete(key)
+    audit(request, "log_pwchanged", {"name": user.nombre})
+    return {"me": me_json(user), "state": full_state(user)}
+
+
+# ---- company logo ----------------------------------------------------------------
+
+LOGO_MAX_BYTES = 512 * 1024
+LOGO_DATA_URL = re.compile(r"^data:(image/(?:png|jpeg|webp|gif|svg\+xml));base64,([A-Za-z0-9+/=\s]+)$")
+
+
+def _logo_matches(kind, data):
+    """Checks the file really is the image type it claims to be."""
+    if kind == "image/png":
+        return data.startswith(b"\x89PNG\r\n\x1a\n")
+    if kind == "image/jpeg":
+        return data.startswith(b"\xff\xd8\xff")
+    if kind == "image/gif":
+        return data[:6] in (b"GIF87a", b"GIF89a")
+    if kind == "image/webp":
+        return data[:4] == b"RIFF" and data[8:12] == b"WEBP"
+    try:
+        return "<svg" in data.decode("utf-8")
+    except UnicodeDecodeError:
+        return False
+
+
+@endpoint("PUT", "DELETE", role="admin")
+def logo_update(request, body):
+    s = m.AppSettings.load()
+    if request.method == "DELETE":
+        s.logo, s.logo_type = None, ""
+    else:
+        match = LOGO_DATA_URL.match(str(body.get("data") or ""))
+        if not match:
+            raise ApiError("err_logo_type")
+        try:
+            data = base64.b64decode("".join(match.group(2).split()), validate=True)
+        except (binascii.Error, ValueError):
+            raise ApiError("err_logo_type")
+        if len(data) > LOGO_MAX_BYTES:
+            raise ApiError("err_logo_size")
+        if not _logo_matches(match.group(1), data):
+            raise ApiError("err_logo_type")
+        s.logo, s.logo_type = data, match.group(1)
+    s.logo_version += 1
+    s.save()
+    audit(request, "log_setting", {"xKey": "set_brand"})
+    return {"logo": s.logo_version if s.logo_type else 0}

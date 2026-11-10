@@ -8,12 +8,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="{% static 'inventory/app.css' %}">
+<link rel="stylesheet" href="{% static 'inventory/app.css' %}?v={{ v }}">
 </head>
 <body>
 <header class="top">
   <div class="wrap">
-    <div class="brand"><span class="mark"><i></i></span><span id="brandName">Inventario de equipos</span></div>
+    <a class="brand" href="#panel" id="brandLink"><span class="mark"><i></i></span><span id="brandName">Inventario de equipos</span></a>
     <nav class="tabs" id="tabs" hidden>
       <a href="#panel" data-r="panel"><svg class="i navi" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg><span data-i="nav_summary">Resumen</span></a>
       <a href="#dispositivos" data-r="dispositivos"><svg class="i navi" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M2 19h20"/></svg><span data-i="nav_devices">Dispositivos</span></a>
@@ -87,7 +87,8 @@
     </div>
   </form>
 </dialog>
-<div class="toast" id="toast" hidden></div>
-<script src="{% static 'inventory/app.js' %}"></script>
+<div class="toast" id="toast" popover="manual" hidden></div>
+<div class="tip" id="tip" role="tooltip" hidden></div>
+<script src="{% static 'inventory/app.js' %}?v={{ v }}"></script>
 </body>
 </html>

@@ -652,3 +652,29 @@ footer { color: var(--muted); font-size: 12.5px; padding-block: 0 32px; display:
 .pw-list li.yes { color: var(--ok); font-weight: 600; }
 .pw-list li.no { color: var(--bad); font-weight: 600; }
 .pw-list svg.i { width: 15px; height: 15px; stroke-width: 2.6; }
+
+/* messages sit in the top layer (popover) so they show above open forms and their blurred backdrop */
+.toast { margin: 0; right: auto; width: max-content; max-width: calc(100vw - 32px); overflow: visible; inset-block-start: auto; }
+:root:not([data-ui="glass"]) .toast { border: 0; }
+[data-ui="glass"] .toast { inset-block-start: calc(14px + env(safe-area-inset-top, 0px)); }
+
+/* tooltips (any element with data-tip) */
+.tip { position: fixed; z-index: 40; max-width: 260px; padding: 7px 11px; border-radius: 8px; background: var(--ink); color: var(--bg); font-size: 12.5px; line-height: 1.4; font-weight: 500; pointer-events: none; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); }
+[data-ui="glass"] .tip { background: var(--sheet); color: var(--ink); border: 1px solid var(--edge); border-radius: 12px; -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px); }
+[data-tip] { cursor: help; }
+
+/* logo: the brand returns to the overview */
+a.brand { color: inherit; text-decoration: none; border-radius: 8px; }
+a.brand:focus-visible { outline-offset: 4px; }
+.brand .mark.logo, [data-ui="glass"] .brand .mark.logo { background: none; overflow: hidden; }
+.brand .mark img, .appicon img, .logoprev img { width: 100%; height: 100%; object-fit: contain; display: block; }
+[data-ui="glass"] .appicon.logo { background: none; box-shadow: none; overflow: hidden; }
+.logoprev { display: flex; align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--line); border-radius: var(--r); }
+.logoprev .box { width: 64px; height: 64px; border-radius: 14px; flex: none; display: grid; place-items: center; overflow: hidden; background: var(--accent); color: var(--accent-ink); }
+.logoprev .box.logo { background: var(--surface-2); }
+.logoprev .box svg.i { width: 32px; height: 32px; }
+.logoprev .txt { display: grid; min-width: 0; }
+.logoprev .txt small { color: var(--muted); }
+
+/* a field never drifts down when the field next to it has a hint underneath */
+.fields label, .regionform label, .nic label { align-content: start; }
