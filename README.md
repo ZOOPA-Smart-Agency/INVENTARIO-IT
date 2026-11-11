@@ -42,8 +42,10 @@ The recommended setup is one Linux server with Docker, installed by `deploy/inst
 
 1. Create the GitHub App described under [Access to the private repository](#access-to-the-private-repository), and copy its private key (`.pem`) to the server.
 2. Download the latest release's source code from the repository's **Releases** page on GitHub, copy it to the server, and unpack it.
-3. From the unpacked folder, run `sudo ./deploy/install.sh`. It asks for the address people will use, whether it is a public domain (then a free certificate is issued automatically; otherwise the server uses its own certificate and browsers warn the first time), and the GitHub App's ID and key.
+3. From the unpacked folder, run `sudo ./deploy/install.sh`. It asks for the address people will use (or several, separated by commas, such as a domain and the server's IP address), whether it is a public domain (then a free certificate is issued automatically; otherwise the server uses its own certificate and browsers warn the first time), and the GitHub App's ID and key.
 4. Open the address it prints and complete the first-run wizard with the setup code it shows.
+
+To change the addresses later, edit `SITE_HOST` in `/opt/inventario/.env` (for example `SITE_HOST=inventario.yourcompany.com, 192.168.1.20`) and run `docker compose up -d` there. If the list includes an IP address, also set `DEFAULT_SNI` to that IP: browsers opening the app by IP do not name the address they want, and this tells the web server which certificate to give them. A free public certificate is only possible when every address is a public domain; otherwise use `TLS_MODE=internal`.
 
 Everything lives in `/opt/inventario`: `.env` (settings and secrets: keep it private), `keys/` (the GitHub App key), `backups/` (the database backups taken before each update) and the container definitions. Useful commands, run in that folder: `docker compose ps`, `docker compose logs -f updater`, `docker compose restart web`.
 

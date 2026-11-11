@@ -38,6 +38,13 @@ if not SECRET_KEY:
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS") or (["localhost", "127.0.0.1"] if DEBUG else [])
 CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")
 
+# The addresses people open the app with (SITE_HOST in deploy/.env), for example
+# "inventario.example.com, 192.168.1.20": each is accepted, and sign-ins from each are trusted.
+SITE_HOSTS = env_list("DJANGO_SITE_HOSTS")
+_https_port = os.environ.get("DJANGO_HTTPS_PORT", "443").strip()
+ALLOWED_HOSTS += [h for h in SITE_HOSTS if h not in ALLOWED_HOSTS]
+CSRF_TRUSTED_ORIGINS += [f"https://{h}" + ("" if _https_port in ("", "443") else f":{_https_port}") for h in SITE_HOSTS]
+
 # Required by the first-run wizard in production, so a stranger cannot claim a fresh install.
 SETUP_TOKEN = os.environ.get("DJANGO_SETUP_TOKEN", "")
 

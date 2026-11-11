@@ -1,5 +1,12 @@
-# Web server: HTTPS for SITE_HOST, passing everything to the app. TLS_MODE is an email address (a free
-# certificate for a public domain) or "internal" (the server's own certificate, for in-house addresses).
+# Web server: HTTPS for SITE_HOST, passing everything to the app. SITE_HOST is one address or several separated
+# by commas ("localhost, 192.168.1.20, inventario.local"). TLS_MODE is an email address (a free certificate for a
+# public domain) or "internal" (the server's own certificate, for in-house addresses, names and IP addresses).
+{
+	# Browsers opening the app by IP address do not say which address they want, and behind Docker the web server
+	# cannot see it either; this is the address whose certificate those connections get (the first IP in SITE_HOST).
+	default_sni {$DEFAULT_SNI}
+}
+
 {$SITE_HOST} {
 	tls {$TLS_MODE}
 	encode zstd gzip

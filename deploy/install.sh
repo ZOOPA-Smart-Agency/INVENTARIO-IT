@@ -38,11 +38,18 @@ rm -rf "$TARGET/updater" && cp -R "$SOURCE/deploy/updater" "$TARGET/updater"
 
 if [ ! -f "$TARGET/.env" ]; then
   say "A few questions (Enter accepts the suggestion in brackets)"
-  ask SITE_HOST "Address people will use, such as inventario.yourcompany.com or this server's name"
-  [[ "$SITE_HOST" =~ ^[A-Za-z0-9.-]+$ ]] || fail "That address is not valid: use only letters, numbers, dots and dashes."
+  echo "The address people will type to open the app. It must already lead to this server: a domain such as"
+  echo "inventario.yourcompany.com set up in your DNS, a name your network knows, or this server's IP address."
+  echo "Give several separated by commas if needed (for example: localhost, 192.168.1.20). To try it on this computer, use localhost."
+  ask SITE_HOST "Address" "localhost"
+  SITE_HOST="$(printf '%s' "$SITE_HOST" | tr -s ' ' | sed 's/ *, */, /g; s/^ *//; s/ *$//')"
+  [[ "$SITE_HOST" =~ ^[A-Za-z0-9.-]+(,\ [A-Za-z0-9.-]+)*$ ]] || fail "That address is not valid: use only letters, numbers, dots and dashes, and commas between addresses."
   if [ -z "${TLS_MODE:-}" ]; then
     ask PUBLIC "Is it a public domain pointing at this server, so a free HTTPS certificate can be issued? (y/n)" "n"
     if [[ "$PUBLIC" =~ ^[YySs] ]]; then
+      if [[ "$SITE_HOST" =~ (^|\ )(localhost|[0-9.]+|[A-Za-z0-9-]+|[A-Za-z0-9.-]+\.local)(,|$) ]]; then
+        fail "Free public certificates are only for public domains. Give only public domains, or answer n to use the server's own certificate."
+      fi
       ask TLS_MODE "Email for certificate notices"
     else
       TLS_MODE="internal"
@@ -63,6 +70,7 @@ TZ=${TZ:-Europe/Madrid}
 POSTGRES_PASSWORD=$(random)
 DJANGO_SECRET_KEY=$(random)$(random)
 DJANGO_SETUP_TOKEN=$SETUP_TOKEN
+DEFAULT_SNI=$(printf '%s' "$SITE_HOST" | tr ',' '\n' | tr -d ' ' | grep -E '^[0-9.]+$' | head -1)
 APP_UPDATE_REPO=$REPO
 APP_UPDATE_GITHUB_APP_ID=$APP_UPDATE_GITHUB_APP_ID
 ${HTTP_PORT:+HTTP_PORT=$HTTP_PORT}
@@ -89,11 +97,19 @@ docker compose up -d
 
 for _ in $(seq 1 60); do
   if docker compose exec -T web python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz', timeout=3)" >/dev/null 2>&1; then
-    HOST="$(sed -n 's/^SITE_HOST=//p' .env)"
+    HOSTS="$(sed -n 's/^SITE_HOST=//p' .env)"
     TOKEN="$(sed -n 's/^DJANGO_SETUP_TOKEN=//p' .env)"
     PORT="$(sed -n 's/^HTTPS_PORT=//p' .env)"
     say "Inventario is running."
-    echo "Open https://$HOST${PORT:+:$PORT} to finish setting it up."
+    IFS=',' read -r -a ADDRESSES <<< "$HOSTS"
+    for HOST in "${ADDRESSES[@]}"; do
+      HOST="${HOST// /}"
+      echo "  https://$HOST${PORT:+:$PORT}"
+      if [ "$HOST" != "localhost" ] && ! python3 -c "import socket,sys; socket.gethostbyname(sys.argv[1])" "$HOST" >/dev/null 2>&1; then
+        echo "    (this computer cannot find \"$HOST\" yet: add it to your DNS, or to each computer's hosts file, pointing at this server)"
+      fi
+    done
+    echo "Open one of these to finish setting it up. To change the addresses later, edit SITE_HOST in $TARGET/.env and run: docker compose up -d"
     echo "The first-run wizard asks for this setup code: $TOKEN"
     if [ "$(sed -n 's/^TLS_MODE=//p' .env)" = "internal" ]; then
       echo "The certificate is the server's own, so browsers warn the first time; that is expected for in-house addresses."

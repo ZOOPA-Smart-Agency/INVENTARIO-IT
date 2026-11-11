@@ -27,8 +27,9 @@ services:
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER:-inventario}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-inventario}
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?DJANGO_SECRET_KEY must be set in .env}
-      DJANGO_ALLOWED_HOSTS: ${SITE_HOST},web,localhost
-      DJANGO_CSRF_TRUSTED_ORIGINS: https://${SITE_HOST}
+      DJANGO_SITE_HOSTS: ${SITE_HOST}  # one address or several, separated by commas
+      DJANGO_HTTPS_PORT: ${HTTPS_PORT:-443}
+      DJANGO_ALLOWED_HOSTS: web,localhost  # how the updater and health checks reach the app inside the server
       DJANGO_SETUP_TOKEN: ${DJANGO_SETUP_TOKEN:-}
       APP_UPDATE_REPO: ""  # the updater checks GitHub; the app shows what it found
       TZ: ${TZ:-Europe/Madrid}
@@ -50,6 +51,7 @@ services:
     environment:
       SITE_HOST: ${SITE_HOST}
       TLS_MODE: ${TLS_MODE:-internal}
+      DEFAULT_SNI: ${DEFAULT_SNI:-localhost}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./maintenance.html:/srv/maintenance/index.html:ro
