@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sin conexión · Offline</title>
+<style>
+  :root { color-scheme: light dark; --bg: #e8ecf4; --card: #fff; --ink: #1d1d1f; --muted: #6e6e73; --line: rgba(60, 70, 90, 0.14); --accent: #007aff; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0a0c13; --card: #1c1e27; --ink: #f5f5f7; --muted: #98989f; --line: rgba(255, 255, 255, 0.1); --accent: #0a84ff; } }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; box-sizing: border-box; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { width: min(440px, 100%); background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 28px; text-align: center; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  p { margin: 0 0 12px; color: var(--muted); }
+  button { margin-top: 6px; border: 0; border-radius: 999px; padding: 10px 22px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sin conexión</h1>
+  <p>No se puede llegar al servidor del inventario. Comprueba la conexión a internet o a la red de la empresa.</p>
+  <p lang="ca">No es pot arribar al servidor de l’inventari. Comprova la connexió.</p>
+  <p lang="en">The inventory server cannot be reached. Check your connection.</p>
+  <button type="button" onclick="location.reload()">Reintentar · Retry</button>
+</main>
+</body>
+</html>

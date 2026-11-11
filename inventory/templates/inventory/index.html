@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Inventario de equipos</title>
 <meta name="robots" content="noindex">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#e8ecf4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0c13" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Inventario">
+<link rel="icon" type="image/png" sizes="32x32" href="/app-icon/any-32.png?v={{ v }}-{{ logo_v }}" id="favIcon">
+<link rel="apple-touch-icon" href="/app-icon/apple-180.png?v={{ v }}-{{ logo_v }}" id="touchIcon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
@@ -57,6 +66,7 @@
           <div class="mi-row"><span id="mLangLbl"></span><div id="langSlot"></div></div>
           <div class="mi-row"><span id="mThemeLbl"></span><div id="themeSlot"></div></div>
           <div class="mi-row"><span id="mUiLbl"></span><div id="uiSlot"></div></div>
+          <button class="mi" type="button" id="installBtn" hidden><svg class="i" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5"/><path d="M5 20h14"/></svg><span id="installTxt"></span></button>
           <hr>
           <button class="mi danger" type="button" id="logoutBtn"><svg class="i" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg><span id="logoutTxt"></span></button>
         </div>

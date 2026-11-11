@@ -62,6 +62,12 @@ Updates can also install by themselves: turn on **Automatic updates** and choose
 
 Only the latest release of the configured repository can be installed. The app never has access to Docker: it can only ask the updater for that release. The updater keeps the last 5 pre-update backups and the current and previous app images.
 
+### Installing it on phones, tablets and computers
+
+The app can be installed like a native one, with its own icon and window: from the account menu, **Install the app** (Chrome, Edge and Android show the browser's install prompt; iPhone, iPad and Safari on the Mac show the steps). The icon is made from the company logo when one is uploaded in **Settings > General > Logo** (PNG, JPG, WebP or GIF; an SVG logo keeps the app's own icon). Without a connection to the server, the installed app shows a "no connection" page; it never keeps inventory data on the device.
+
+Browsers only allow installing from an address with a certificate they trust. That works out of the box with a public domain (`TLS_MODE` set to an email address). With the server's own certificate (`TLS_MODE=internal`, for local addresses and IPs), each device must first be set to trust it: copy it with `docker compose cp caddy:/data/caddy/pki/authorities/local/root.crt inventario-ca.crt` and install it as a trusted certificate on the device. Only do this on company devices: whoever controls the server could then create certificates those devices trust for any website. For anything beyond testing, a domain with a public certificate (or the company's own certificate authority) is the better choice.
+
 ## Other hosting
 
 The app is one container (`Dockerfile`) plus a PostgreSQL database, and also runs on any host that runs containers. It applies database migrations on start. Without the updater, **Settings > General > Updates** can only check for new versions; installing them is done by deploying the new version.

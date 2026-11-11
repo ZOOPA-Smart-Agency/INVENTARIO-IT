@@ -5,6 +5,10 @@ from . import api, views
 urlpatterns = [
     path("", views.index),
     path("healthz", views.healthz),
+    path("manifest.webmanifest", views.manifest),
+    path("sw.js", views.service_worker),
+    path("offline", views.offline),
+    path("app-icon/<str:purpose>-<int:size>.png", views.app_icon),
     path("api/logo", views.logo),
     path("api/bootstrap", api.bootstrap),
     path("api/state", api.state),
