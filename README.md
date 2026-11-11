@@ -119,7 +119,7 @@ The updater (or, on other hosting, the update check) needs read access to the re
 2. Name it, for example *Inventario update check*. Use the repository's address as the homepage URL, and untick **Webhook > Active**.
 3. Under **Repository permissions**, set **Contents** to **Read-only**. GitHub adds **Metadata: Read-only** automatically. Leave every other permission off.
 4. Under **Where can this GitHub App be installed?**, choose **Only on this account**, and create it.
-5. Note the **App ID** at the top of the app's page. Under **Private keys**, choose **Generate a private key**: a `.pem` file downloads. Keep it secret, and never commit it.
+5. Note the **App ID** at the top of the app's **General** page. Then, in the app's left sidebar, open **Credentials** and, under **Key pairs**, choose **New key**: a `.pem` file downloads. GitHub keeps only its public half, so this is the only copy: keep it secret, and never commit it.
 6. Choose **Install App**, pick the organisation, choose **Only select repositories**, and select this repository.
 7. With `deploy/install.sh`, give the App ID and the `.pem` file when it asks, or later put the key in `/opt/inventario/keys/github-app.pem`, set `APP_UPDATE_GITHUB_APP_ID` in `/opt/inventario/.env`, and run `docker compose up -d updater` there. On other hosting, set `APP_UPDATE_GITHUB_APP_ID` and `APP_UPDATE_GITHUB_APP_PRIVATE_KEY_FILE` (the path of the `.pem` file), or put the key's contents in `APP_UPDATE_GITHUB_APP_PRIVATE_KEY`, writing each line break as `\n`.
 
