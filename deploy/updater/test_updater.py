@@ -128,6 +128,7 @@ class InstallTests(UpdaterTestCase):
     def test_successful_update(self):
         self.make().install(self.job, "1.0.0")
         self.assertEqual(self.db.final(7)["status"], "done")
+        self.assertEqual(self.db.saved, [("current", "v1.1.0")])  # straight away, not at the next hourly check
         self.assertEqual(self.env()["APP_VERSION"], "1.1.0")
         self.assertEqual(self.env()["SITE_HOST"], "inventario.local")  # the rest of .env is untouched
         self.assertEqual((self.dir / "docker-compose.yml").read_text(), "new compose")
@@ -160,6 +161,7 @@ class InstallTests(UpdaterTestCase):
         final = self.db.final(7)
         self.assertEqual(final["status"], "rolled_back")
         self.assertIn("previous version and its data are back", final["message"])
+        self.assertEqual(self.db.saved, [])  # still not installed, so it stays on offer
         self.assertEqual(self.env()["APP_VERSION"], "1.0.0")
         self.assertEqual((self.dir / "docker-compose.yml").read_text(), "old docker-compose.yml")
         commands = self.commands()

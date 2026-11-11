@@ -359,6 +359,7 @@ class Updater:
                 self.discard_image(target)
                 return self._finish(job_id, "rolled_back", f"{e} The previous version and its data are back.")
             self._finish(job_id, "done", "")
+            self.db.save_check("current", release)  # the release just installed is no longer "new"
             self.prune()
             if self._updater_changed(source):
                 self.restart_updater()

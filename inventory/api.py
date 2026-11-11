@@ -947,12 +947,14 @@ def updates_status(request, body):
     out = {"installed": VERSION, "commit": commit()[:12], "auto": {"enabled": s.auto_update, "hour": s.auto_update_hour},
            "jobs": [_job_json(j) for j in m.UpdateJob.objects.all()[:10]], "updater": None}
     if state is not None:
-        out["updater"] = {
+        from .updates import as_installed
+
+        out["updater"] = as_installed({
             "status": state.check_status, "checkedAt": state.checked_at.isoformat() if state.checked_at else None,
             "checkRequested": state.check_requested, "latest": state.latest_tag, "name": state.latest_name,
             "notes": state.latest_notes, "url": state.latest_url,
             "published": state.latest_published.isoformat() if state.latest_published else None,
-        }
+        })
     return out
 
 

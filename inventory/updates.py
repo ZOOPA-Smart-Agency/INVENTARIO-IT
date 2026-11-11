@@ -94,8 +94,15 @@ def parse(version):
     return tuple(int(n) for n in numbers[:3]) or (0,)
 
 
+def as_installed(result):
+    """A check made before an update may still call the now-installed version "new"; it is not."""
+    if result and result.get("status") == "update" and parse(result.get("latest")) <= parse(VERSION):
+        return {**result, "status": "current"}
+    return result
+
+
 def cached():
-    return cache.get(CACHE_KEY)
+    return as_installed(cache.get(CACHE_KEY))
 
 
 def check():

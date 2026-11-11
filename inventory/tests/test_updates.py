@@ -43,6 +43,21 @@ class UpdatesApiTests(TestCase):
         data = self.client.get("/api/updates").json()
         self.assertEqual((data["updater"]["latest"], data["updater"]["status"]), (NEWER, "update"))
 
+    def test_installed_version_is_never_offered_again(self):
+        for tag in (f"v{VERSION}", "v0.0.1"):
+            alive(latest_tag=tag, check_status="update")  # a check made before the update was installed
+            updater = self.client.get("/api/updates").json()["updater"]
+            self.assertEqual(updater["status"], "current", tag)
+
+    def test_without_updater_the_remembered_check_is_corrected_too(self):
+        from django.core.cache import cache
+        from inventory import updates
+        cache.set(updates.CACHE_KEY, {"status": "update", "latest": f"v{VERSION}"})
+        self.assertEqual(self.client.get("/api/about").json()["updates"]["last"]["status"], "current")
+        cache.set(updates.CACHE_KEY, {"status": "update", "latest": "v99.0.0"})
+        self.assertEqual(self.client.get("/api/about").json()["updates"]["last"]["status"], "update")
+        cache.delete(updates.CACHE_KEY)
+
     def test_silent_updater_counts_as_absent(self):
         alive(last_seen=timezone.now() - timedelta(minutes=5))
         self.assertIsNone(self.client.get("/api/updates").json()["updater"])
