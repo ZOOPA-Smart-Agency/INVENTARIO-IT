@@ -10,7 +10,20 @@
 {$SITE_HOST} {
 	tls {$TLS_MODE}
 	encode zstd gzip
-	reverse_proxy web:8000
+
+	# The certificate authority behind the server's own certificate (TLS_MODE=internal). It is public information:
+	# the device app offers to trust it for this server after a person checks its fingerprint, since the
+	# certificates it signs are renewed every few hours. With a public certificate the file does not exist (404).
+	handle /ca.crt {
+		root * /data/caddy/pki/authorities/local
+		rewrite * /root.crt
+		header Content-Type application/x-x509-ca-cert
+		file_server
+	}
+
+	handle {
+		reverse_proxy web:8000
+	}
 
 	# while the app restarts during an update, show the maintenance page instead of an error
 	handle_errors {

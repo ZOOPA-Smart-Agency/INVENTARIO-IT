@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import api, views
+from . import agent, api, views
 
 urlpatterns = [
     path("", views.index),
@@ -33,6 +33,9 @@ urlpatterns = [
     path("api/backup/inspect", api.backup_inspect),
     path("api/backup/restore", api.backup_restore),
     path("api/maintenance", api.maintenance_status),
+    path("api/agent/login", agent.login),
+    path("api/agent/options", agent.options),
+    path("api/agent/report", agent.report),
     path("api/about", api.about),
     path("api/about/updates", api.check_updates),
     path("api/updates", api.updates_status),

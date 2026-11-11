@@ -113,6 +113,11 @@ for _ in $(seq 1 60); do
     echo "The first-run wizard asks for this setup code: $TOKEN"
     if [ "$(sed -n 's/^TLS_MODE=//p' .env)" = "internal" ]; then
       echo "The certificate is the server's own, so browsers warn the first time; that is expected for in-house addresses."
+      CA_FP="$(docker compose exec -T caddy cat /data/caddy/pki/authorities/local/root.crt 2>/dev/null | openssl x509 -noout -fingerprint -sha256 2>/dev/null | cut -d= -f2)"
+      if [ -n "$CA_FP" ]; then
+        echo "The device app asks to trust this certificate authority fingerprint; check it matches:"
+        echo "  $CA_FP"
+      fi
     fi
     if [ ! -s keys/github-app.pem ]; then
       echo "Updates: add the GitHub App's private key as $TARGET/keys/github-app.pem and its ID to .env, then run: docker compose up -d updater"

@@ -68,6 +68,16 @@ The app can be installed like a native one, with its own icon and window: from t
 
 Browsers only allow installing from an address with a certificate they trust. That works out of the box with a public domain (`TLS_MODE` set to an email address). With the server's own certificate (`TLS_MODE=internal`, for local addresses and IPs), each device must first be set to trust it: copy it with `docker compose cp caddy:/data/caddy/pki/authorities/local/root.crt inventario-ca.crt` and install it as a trusted certificate on the device. Only do this on company devices: whoever controls the server could then create certificates those devices trust for any website. For anything beyond testing, a domain with a public certificate (or the company's own certificate authority) is the better choice.
 
+### Adding computers with the device app
+
+The device app (repository `INVENTARIODATA`) reads a computer's details (serial number, model, processor, memory, drives, graphics, network cards, operating system, encryption, domain membership, battery health) and adds it to the inventory, or updates it if its serial number is already there. It signs in with a technician's or administrator's email and password. The API it uses is described in [docs/agent-api.md](docs/agent-api.md).
+
+With the server's own certificate (`TLS_MODE=internal`), the device app asks the first time whether to trust the server's certificate authority, which the web server publishes at `/ca.crt`. It trusts it only for that address. The installer prints the fingerprint to compare it with; to see it again, run this in the install folder:
+
+```bash
+docker compose exec -T caddy cat /data/caddy/pki/authorities/local/root.crt | openssl x509 -noout -fingerprint -sha256
+```
+
 ## Other hosting
 
 The app is one container (`Dockerfile`) plus a PostgreSQL database, and also runs on any host that runs containers. It applies database migrations on start. Without the updater, **Settings > General > Updates** can only check for new versions; installing them is done by deploying the new version.

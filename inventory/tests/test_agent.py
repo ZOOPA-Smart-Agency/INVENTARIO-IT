@@ -1,0 +1,184 @@
+import json
+from datetime import timedelta
+from unittest import mock
+
+from django.core.cache import cache
+from django.test import Client, TestCase
+from django.utils import timezone
+
+from inventory import agent
+from inventory import models as m
+from inventory.models import AuditEvent, Device, Maintenance, User
+
+GOOD = "Correct-Horse-7"
+
+MAC_FACTS = {
+    "serial": "C02XYZ123ABC", "hostname": "MacBook-de-Ana", "manufacturer": "Apple", "model": "MacBook Pro 14\"", "chassis": "laptop",
+    "cpu": {"name": "Apple M3 Pro", "cores": 11, "maxGhz": 4.05},
+    "ram": {"gb": 18, "type": "LPDDR5", "mts": 6400, "replaceable": "no"},
+    "disks": [{"gb": 512, "type": "SSD", "connector": "NVMe"}],
+    "gpus": [{"name": "Apple M3 Pro GPU", "kind": "integrated"}],
+    "screenInches": 14.2, "battery": {"healthPct": 93},
+    "os": {"family": "mac", "version": "15 Sequoia"}, "encryption": "yes", "domainJoined": "no",
+    "nics": [{"type": "wifi", "model": "Apple (SoC)", "mac": "f0-18-98-aa-bb-cc"}],
+}
+
+
+class AgentTests(TestCase):
+    def setUp(self):
+        cache.clear()
+        self.tech = User.objects.create_user("tech@x.es", GOOD, nombre="Teo Tech", rol="tech")
+        self.laptop = m.DeviceType.objects.create(nombre={"es": "Portátil", "en": "Laptop", "ca": "Portàtil"}, has_screen=True, has_battery=True)
+        self.desktop = m.DeviceType.objects.create(nombre={"es": "Sobremesa", "en": "Desktop", "ca": "Sobretaula"})
+        self.office = m.Location.objects.create(nombre={"es": "Oficina", "en": "Office", "ca": "Oficina"}, tipo="office")
+        self.store = m.Location.objects.create(nombre={"es": "Almacén", "en": "Storage", "ca": "Magatzem"}, tipo="storage")
+        m.AppSettings.objects.update_or_create(pk=1, defaults={"tag_prefix": "INV-"})
+        self.client = Client(enforce_csrf_checks=True)  # like the device app: no CSRF token, no cookies
+
+    def post(self, url, body, token=None):
+        headers = {"HTTP_AUTHORIZATION": f"Bearer {token}"} if token else {}
+        return self.client.post(f"/api/agent/{url}", data=json.dumps(body), content_type="application/json", **headers)
+
+    def token(self, email="tech@x.es"):
+        response = self.post("login", {"email": email, "password": GOOD})
+        self.assertEqual(response.status_code, 200, response.content)
+        return response.json()["token"]
+
+    # ---- signing in
+
+    def test_login_gives_a_key(self):
+        data = self.post("login", {"email": "TECH@x.es", "password": GOOD}).json()
+        self.assertEqual((data["expiresIn"], data["user"]["rol"]), (3600, "tech"))
+        self.assertNotIn("sessionid", self.client.cookies)  # no website session is created
+
+    def test_wrong_password_and_lockout_share_the_website_limit(self):
+        self.assertEqual(self.post("login", {"email": "tech@x.es", "password": "nope"}).json()["error"], "login_err")
+        for _ in range(10):
+            self.post("login", {"email": "tech@x.es", "password": "nope"})
+        self.assertEqual(self.post("login", {"email": "tech@x.es", "password": GOOD}).status_code, 429)
+
+    def test_read_only_and_pending_password_change_are_refused(self):
+        User.objects.create_user("read@x.es", GOOD, nombre="R", rol="read")
+        self.assertEqual(self.post("login", {"email": "read@x.es", "password": GOOD}).json()["error"], "err_forbidden")
+        User.objects.create_user("new@x.es", GOOD, nombre="N", rol="tech", must_change_password=True)
+        self.assertEqual(self.post("login", {"email": "new@x.es", "password": GOOD}).json()["error"], "err_must_change")
+
+    def test_key_is_required_and_checked(self):
+        self.assertEqual(self.client.get("/api/agent/options").status_code, 401)
+        self.assertEqual(self.client.get("/api/agent/options", HTTP_AUTHORIZATION="Bearer forged").status_code, 401)
+        self.assertEqual(self.post("report", {"facts": MAC_FACTS}).status_code, 401)
+
+    def test_password_change_cancels_keys(self):
+        token = self.token()
+        self.tech.set_password("Another-Pass-9")
+        self.tech.save()
+        self.assertEqual(self.client.get("/api/agent/options", HTTP_AUTHORIZATION=f"Bearer {token}").status_code, 401)
+
+    def test_losing_the_role_or_account_cancels_keys(self):
+        token = self.token()
+        User.objects.filter(pk=self.tech.pk).update(rol="read")
+        self.assertEqual(self.client.get("/api/agent/options", HTTP_AUTHORIZATION=f"Bearer {token}").status_code, 403)
+        User.objects.filter(pk=self.tech.pk).update(rol="tech", is_active=False)
+        self.assertEqual(self.client.get("/api/agent/options", HTTP_AUTHORIZATION=f"Bearer {token}").status_code, 401)
+
+    def test_keys_expire_after_an_hour(self):
+        token = self.token()
+        later = timezone.now().timestamp() + 3601
+        with mock.patch("django.core.signing.time.time", return_value=later):
+            self.assertEqual(self.client.get("/api/agent/options", HTTP_AUTHORIZATION=f"Bearer {token}").status_code, 401)
+
+    def test_closed_during_maintenance(self):
+        Maintenance.objects.create(pk=1, active=True, kind="restore", updated_at=timezone.now())
+        self.assertEqual(self.post("login", {"email": "tech@x.es", "password": GOOD}).status_code, 503)
+
+    # ---- options
+
+    def test_options(self):
+        data = self.client.get("/api/agent/options?serial=C02XYZ123ABC", HTTP_AUTHORIZATION=f"Bearer {self.token()}").json()
+        self.assertEqual(data["nextTag"], "INV-0001")
+        self.assertEqual(len(data["types"]), 2)
+        self.assertEqual({l["tipo"] for l in data["locations"]}, {"office", "storage"})
+        self.assertIsNone(data["existing"])
+
+    # ---- reporting
+
+    def test_new_computer_is_added_with_everything(self):
+        response = self.post("report", {"facts": MAC_FACTS, "loc": str(self.office.pk)}, self.token())
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertTrue(response.json()["created"])
+        d = Device.objects.get()
+        self.assertEqual((d.tag, d.serial, d.nombre, d.type, d.loc, d.estado), ("INV-0001", "C02XYZ123ABC", "MacBook-de-Ana", self.laptop, self.office, "disponible"))
+        self.assertEqual((d.model.fabricante, d.model.nombre), ("Apple", "MacBook Pro 14\""))
+        self.assertEqual((d.cpu.nombre, d.cpu.cores, d.cpu.speed), ("Apple M3 Pro", 11, 4.05))
+        self.assertEqual((d.ram_size, d.ram_gen.nombre, d.ram_speed, d.ram_rep), (18, "LPDDR5", 6400, "no"))
+        self.assertEqual([(k.size, k.unit, k.type.nombre, k.conn.nombre) for k in d.disks.all()], [(512, "GB", "SSD", "NVMe")])
+        self.assertEqual((d.gpu.nombre, d.gpu.kind), ("Apple M3 Pro GPU", "integrated"))
+        self.assertEqual((d.screen, d.bat_health, d.os_family, d.mac_version.nombre, d.enc, d.ad), (14.2, 93, "mac", "15 Sequoia", "yes", "no"))
+        self.assertEqual([(n.type, n.mac, n.model.nombre) for n in d.nics.all()], [("wifi", "F0:18:98:AA:BB:CC", "Apple (SoC)")])
+        event = AuditEvent.objects.first()
+        self.assertEqual((event.key, event.user, event.args["tag"]), ("log_agent_created", self.tech, "INV-0001"))
+
+    def test_existing_computer_is_updated_and_keeps_its_records(self):
+        token = self.token()
+        self.post("report", {"facts": MAC_FACTS, "tag": "INV-0042"}, token)
+        d = Device.objects.get()
+        d.estado, d.loc, d.notas, d.precio = "uso", self.office, "Entregado a Ana", 2449
+        d.bat_date = timezone.localdate() - timedelta(days=90)
+        d.save()
+        disk = d.disks.get()
+        disk.rep = "no"
+        disk.save()
+        employee = m.Employee.objects.create(nombre="Ana", email="ana@x.es", alta="2024-01-01")
+        m.Assignment.objects.create(device=d, employee=employee, desde="2024-01-01")
+        upgraded = dict(MAC_FACTS, serial="c02xyz123abc", ram={"gb": 36, "type": "LPDDR5"}, battery={"healthPct": 88},
+                        os={"family": "mac", "version": "26 Tahoe"})
+        response = self.post("report", {"facts": upgraded, "tag": "IGNORED", "loc": str(self.store.pk)}, token)
+        self.assertFalse(response.json()["created"])
+        d.refresh_from_db()
+        self.assertEqual(Device.objects.count(), 1)
+        self.assertEqual((d.tag, d.estado, d.loc, d.notas, float(d.precio)), ("INV-0042", "uso", self.office, "Entregado a Ana", 2449.0))
+        self.assertEqual((d.ram_size, d.mac_version.nombre, d.bat_health), (36, "26 Tahoe", 88))
+        self.assertEqual(list(d.battery_readings.values_list("salud", flat=True)), [93])  # the earlier reading is kept
+        self.assertEqual(d.disks.get().rep, "no")  # what a person added is kept
+        self.assertTrue(d.assignments.filter(hasta__isnull=True).exists())
+        self.assertEqual(AuditEvent.objects.first().key, "log_agent_updated")
+
+    def test_known_list_entries_are_reused_not_duplicated(self):
+        m.Cpu.objects.create(nombre="Apple M3 Pro", cores=11)
+        token = self.token()
+        self.post("report", {"facts": MAC_FACTS}, token)
+        self.post("report", {"facts": dict(MAC_FACTS, serial="OTHER-1")}, token)
+        self.assertEqual(m.Cpu.objects.filter(nombre__iexact="apple m3 pro").count(), 1)
+        self.assertEqual(m.DeviceModel.objects.count(), 1)
+
+    def test_windows_and_linux(self):
+        token = self.token()
+        win = {"serial": "PF4A9Z2B", "manufacturer": "LENOVO", "model": "ThinkPad T14 Gen 4", "chassis": "laptop",
+               "os": {"family": "win", "version": "11 23H2", "edition": "Pro"}, "encryption": "no", "domainJoined": "yes",
+               "nics": [{"type": "eth", "mac": "98:FA:9B:00:11:22"}, {"type": "wifi", "mac": "00:00:00:00:00:00"}]}
+        self.post("report", {"facts": win}, token)
+        d = Device.objects.get(serial="PF4A9Z2B")
+        self.assertEqual((d.win_version.nombre, d.win_edition.nombre, d.enc, d.ad), ("11 23H2", "Pro", "no", "yes"))
+        self.assertEqual(d.nics.count(), 1)  # empty MAC addresses are ignored
+        tux = {"serial": "LNX-1", "chassis": "desktop", "os": {"family": "linux", "distro": "Ubuntu", "version": "24.04 LTS"}}
+        self.post("report", {"facts": tux}, token)
+        d = Device.objects.get(serial="LNX-1")
+        self.assertEqual((d.type, d.loc, d.linux_distro.nombre, d.linux_version.nombre, d.linux_version.distro), (self.desktop, self.store, "Ubuntu", "24.04 LTS", d.linux_distro))
+
+    def test_refusals(self):
+        token = self.token()
+        self.assertEqual(self.post("report", {"facts": {"hostname": "x"}}, token).json()["error"], "err_required")
+        self.post("report", {"facts": MAC_FACTS, "tag": "INV-0007"}, token)
+        response = self.post("report", {"facts": dict(MAC_FACTS, serial="OTHER"), "tag": "INV-0007"}, token)
+        self.assertEqual((response.status_code, response.json()["error"]), (409, "err_dup"))
+        self.assertEqual(self.post("report", {"facts": "nope"}, token).status_code, 400)
+
+    def test_values_are_bounded(self):
+        token = self.token()
+        wild = dict(MAC_FACTS, serial="X" * 500, ram={"gb": -5}, cpu={"name": "A" * 1000, "cores": 10**9}, battery={"healthPct": 999},
+                    disks=[{"gb": "lots"}], nics=[{"type": "wifi", "mac": "not-a-mac"}])
+        response = self.post("report", {"facts": wild}, token)
+        self.assertEqual(response.status_code, 200, response.content)
+        d = Device.objects.get()
+        self.assertEqual((len(d.serial), d.ram_size, len(d.cpu.nombre), d.cpu.cores, d.bat_health), (100, None, 200, None, None))
+        self.assertEqual((d.disks.count(), d.nics.count()), (0, 0))
