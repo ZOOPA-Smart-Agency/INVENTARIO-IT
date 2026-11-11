@@ -246,4 +246,5 @@ class SettingsTests(ApiTestCase):
 
 class HealthTests(TestCase):
     def test_healthz(self):
-        self.assertEqual(self.client.get("/healthz").json(), {"status": "ok"})
+        from inventory.version import VERSION
+        self.assertEqual(self.client.get("/healthz").json(), {"status": "ok", "version": VERSION})

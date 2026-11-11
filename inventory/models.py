@@ -61,6 +61,10 @@ class AppSettings(models.Model):
     logo_type = models.CharField(max_length=40, blank=True)
     logo_version = models.PositiveIntegerField(default=0)
 
+    # Updates installed by themselves at this hour (server time) when a new release is published.
+    auto_update = models.BooleanField(default=False)
+    auto_update_hour = models.PositiveSmallIntegerField(default=3)
+
     @classmethod
     def load(cls):
         return cls.objects.get_or_create(pk=1)[0]
@@ -348,3 +352,45 @@ class Maintenance(models.Model):
     done = models.PositiveIntegerField(default=0)
     total = models.PositiveIntegerField(default=0)
     updated_at = models.DateTimeField(null=True, blank=True)
+
+
+class UpdaterState(models.Model):
+    """Single row (pk=1) written by the updater service (deploy/updater): it is alive, and what GitHub offers.
+
+    Not part of backups. The web app only sets check_requested; everything else comes from the updater.
+    """
+
+    last_seen = models.DateTimeField(null=True, blank=True)
+    running_version = models.CharField(max_length=40, blank=True)
+    latest_tag = models.CharField(max_length=40, blank=True)
+    latest_name = models.CharField(max_length=200, blank=True)
+    latest_notes = models.TextField(blank=True)
+    latest_url = models.CharField(max_length=300, blank=True)
+    latest_published = models.DateTimeField(null=True, blank=True)
+    check_status = models.CharField(max_length=20, blank=True)
+    checked_at = models.DateTimeField(null=True, blank=True)
+    check_requested = models.BooleanField(default=False)
+
+
+class UpdateJob(models.Model):
+    """One installation of a release, asked for by an administrator or by the automatic schedule."""
+
+    class Status(models.TextChoices):
+        QUEUED = "queued"
+        RUNNING = "running"
+        DONE = "done"
+        FAILED = "failed"            # nothing was changed
+        ROLLED_BACK = "rolled_back"  # the new version did not work; the previous one and its data are back
+
+    created_at = models.DateTimeField(default=timezone.now)
+    requested_by = models.CharField(max_length=200, blank=True)
+    automatic = models.BooleanField(default=False)
+    from_version = models.CharField(max_length=40, blank=True)
+    target = models.CharField(max_length=40)
+    status = models.CharField(max_length=12, choices=Status.choices, default=Status.QUEUED)
+    phase = models.CharField(max_length=20, blank=True)
+    message = models.TextField(blank=True)
+    finished_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["-id"]

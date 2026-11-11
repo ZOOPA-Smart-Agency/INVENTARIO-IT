@@ -1,6 +1,11 @@
 /* ================= i18n ================= */
 const I18N = {
   es: {
+    up_with_updater: 'El instalador de este servidor comprueba GitHub cada hora y puede instalar las versiones nuevas.', up_no_updater: 'El instalador automático no está activo en este servidor, así que las versiones nuevas se instalan a mano (lo explica el README).', up_install: 'Instalar {v}', up_confirm_t: 'Instalar la versión {v}', up_confirm_b1: 'Antes de empezar se hace una copia de seguridad completa.', up_confirm_b2: 'La aplicación estará en mantenimiento unos minutos; el resto de usuarios verá un aviso.', up_confirm_b3: 'Si algo falla, se vuelve automáticamente a la versión actual con sus datos.', up_confirm_ok: 'Instalar', up_title: 'Instalando la versión {v}', up_title_other: 'Instalando una actualización', up_queued: 'Esperando al instalador…', up_note: 'Puedes cerrar esta página: la instalación sigue en el servidor.', up_watch: '{name} está instalando una actualización. Cuando termine, la página se recargará sola.', up_watch_auto: 'Se está instalando una actualización automática. Cuando termine, la página se recargará sola.', up_ph_backup: 'Haciendo una copia de seguridad…', up_ph_download: 'Descargando la versión nueva…', up_ph_build: 'Preparando la versión nueva…', up_ph_restart: 'Reiniciando la aplicación…', up_ph_check: 'Comprobando que todo funciona…', up_ph_rollback: 'Algo ha fallado: volviendo a la versión anterior…', up_done: 'Versión {v} instalada. Recargando…', up_done_generic: 'Actualización instalada. Recargando…', up_installed_toast: 'Ahora usas la versión {v}.', up_result_rolled_back: 'La actualización no ha funcionado y se ha vuelto a la versión anterior. {msg}', up_result_failed: 'No se ha podido instalar la actualización. {msg}', up_auto_h: 'Actualizaciones automáticas', up_auto_on: 'Instalar las versiones nuevas automáticamente', up_auto_hour: 'Cada día a las', up_auto_d: 'A esa hora (la del servidor) se instala la última versión publicada, si hay una nueva, con copia de seguridad y vuelta atrás si algo falla. Nunca se instalan versiones de prueba. Si falla, no se reintenta hasta el día siguiente.', up_history: 'Historial', up_th_date: 'Fecha', up_th_version: 'Versión', up_th_how: 'Cómo', up_th_result: 'Resultado', up_how_auto: 'Automática', up_how_manual: 'Por {name}', up_st_queued: 'En cola', up_st_running: 'Instalando', up_st_done: 'Instalada', up_st_failed: 'No instalada', up_st_rolled_back: 'Revertida', up_no_history: 'Todavía no se ha instalado ninguna actualización desde aquí.', up_steps_1: 'Cuando se publica una versión nueva en GitHub, aparece aquí.', up_steps_2: 'Pulsa «Instalar», o deja que se instale sola a la hora elegida.', up_steps_3: 'El instalador hace una copia de seguridad, instala la versión y comprueba que funciona; si no, vuelve atrás solo.', err_no_updater: 'El instalador automático no responde en este servidor.', err_update_stale: 'Esa versión ya no es la última disponible. Vuelve a comprobar las actualizaciones.', err_update_busy: 'Ya hay una actualización o una restauración en curso.', log_update_requested: 'Instalación de la versión {v} solicitada',
+    ab_access: 'Acceso a GitHub', ab_access_app: 'GitHub App', ab_access_token: 'Token', ab_access_none: 'Sin configurar (solo repositorios públicos)', ab_st_app_missing: 'La GitHub App no está instalada en el repositorio, o no tiene acceso a él. Instálala y elige este repositorio.', ab_st_app_key: 'Falta la clave privada de la GitHub App o no es válida. Revisa APP_UPDATE_GITHUB_APP_ID y la clave en el servidor.',
+    set_updates: 'Actualizaciones', set_updates_sub: 'Busca versiones nuevas publicadas en GitHub', ab_current: 'Versión instalada', ab_how_h: 'Cómo se instala una versión nueva', ab_how_1: 'Se publica una versión nueva (release) en GitHub; se prueba y se prepara automáticamente.', ab_how_2: 'Haz una copia de seguridad en Ajustes › Datos › Copias de seguridad.', ab_how_3: 'Quien gestiona el servidor despliega la versión nueva. Los cambios en la base de datos se aplican solos al arrancar.',
+    bk_log_label: 'Entradas del historial', ab_python: 'Python', ab_django: 'Django', ab_postgres: 'PostgreSQL',
+    set_about: 'Acerca de', set_about_sub: 'Versión, datos y tecnología de la aplicación', ab_version: 'Versión', ab_build: 'Compilación', ab_env: 'Entorno', ab_env_production: 'Producción', ab_env_development: 'Desarrollo', ab_since: 'En uso desde', ab_tz: 'Zona horaria', ab_data: 'Datos', ab_dbsize: 'Tamaño de la base de datos', ab_tech: 'Tecnología', ab_loading: 'Cargando…', ab_unknown: 'Desconocida', ab_updates: 'Actualizaciones', ab_repo: 'Se comparan con las versiones publicadas en GitHub ({repo}).', ab_check: 'Buscar actualizaciones', ab_checking: 'Buscando…', ab_never: 'Todavía no se ha comprobado.', ab_checked: 'Comprobado el {d}.', ab_st_current: 'Tienes la última versión ({v}).', ab_st_update: 'Hay una versión nueva: {v}', ab_published: 'Publicada el {d}.', ab_open: 'Ver en GitHub', ab_install: 'Para instalarla, despliega la nueva versión en el servidor. Haz antes una copia de seguridad.', ab_st_none: 'Todavía no se ha publicado ninguna versión en GitHub.', ab_st_private: 'No se puede consultar el repositorio porque es privado. Conecta una GitHub App de solo lectura (o un token) en el servidor: lo explica el README.', ab_st_auth: 'GitHub ha rechazado el acceso: el token o la GitHub App no son válidos o no tienen acceso al repositorio.', ab_st_error: 'No se ha podido conectar con GitHub. Inténtalo más tarde.', ab_st_off: 'La búsqueda de actualizaciones está desactivada (APP_UPDATE_REPO).',
     mt_title: 'Estamos haciendo tareas de mantenimiento', mt_body: 'La aplicación de {org} no está disponible durante unos minutos.', mt_auto: 'Esta página se actualizará sola cuando vuelva a estar disponible.', mt_watch: '{name} está restaurando una copia de seguridad. Cuando termine, se cerrará la sesión de todos los usuarios.', mt_done: 'Restauración terminada. Vuelve a iniciar sesión.', mt_back: 'La aplicación vuelve a estar disponible.', maintenance: 'La aplicación está en mantenimiento.', err_maintenance_busy: 'Ya hay otra restauración en curso.', pr_finishing: 'Comprobando los datos restaurados…',
     pr_keep_open: 'No cierres ni recargues esta página hasta que termine.',
     pr_export: 'Exportando copia', pr_prepare: 'Preparando los datos…', pr_prepare_enc: 'Preparando y cifrando los datos…', pr_download: 'Descargando el archivo…', pr_check: 'Comprobando la copia', pr_upload: 'Subiendo el archivo…', pr_read: 'Leyendo la copia…', pr_restore: 'Restaurando copia', pr_restoring: 'Sustituyendo los datos…', pr_step: 'Paso {n} de {total}', pr_left: 'Quedan unos {t}', pr_elapsed: '{t} en curso', pr_leave: 'Hay una copia de seguridad en curso.',
@@ -251,6 +256,11 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     ok_resolve: 'Resolver',
   },
   en: {
+    up_with_updater: 'This server’s installer checks GitHub every hour and can install new versions.', up_no_updater: 'The automatic installer is not running on this server, so new versions are installed by hand (the README explains how).', up_install: 'Install {v}', up_confirm_t: 'Install version {v}', up_confirm_b1: 'A full backup is made before anything else.', up_confirm_b2: 'The app will be under maintenance for a few minutes; everyone else sees a notice.', up_confirm_b3: 'If anything fails, the current version and its data come back automatically.', up_confirm_ok: 'Install', up_title: 'Installing version {v}', up_title_other: 'Installing an update', up_queued: 'Waiting for the installer…', up_note: 'You can close this page: the installation carries on on the server.', up_watch: '{name} is installing an update. When it finishes, this page reloads by itself.', up_watch_auto: 'An automatic update is being installed. When it finishes, this page reloads by itself.', up_ph_backup: 'Making a backup…', up_ph_download: 'Downloading the new version…', up_ph_build: 'Preparing the new version…', up_ph_restart: 'Restarting the app…', up_ph_check: 'Checking everything works…', up_ph_rollback: 'Something failed: going back to the previous version…', up_done: 'Version {v} installed. Reloading…', up_done_generic: 'Update installed. Reloading…', up_installed_toast: 'You are now using version {v}.', up_result_rolled_back: 'The update did not work, so the previous version is back. {msg}', up_result_failed: 'The update could not be installed. {msg}', up_auto_h: 'Automatic updates', up_auto_on: 'Install new versions automatically', up_auto_hour: 'Every day at', up_auto_d: 'At that time (the server’s), the latest published version is installed if there is a new one, with a backup first and a rollback if anything fails. Test versions are never installed. If it fails, it is not retried until the next day.', up_history: 'History', up_th_date: 'Date', up_th_version: 'Version', up_th_how: 'How', up_th_result: 'Result', up_how_auto: 'Automatic', up_how_manual: 'By {name}', up_st_queued: 'Queued', up_st_running: 'Installing', up_st_done: 'Installed', up_st_failed: 'Not installed', up_st_rolled_back: 'Rolled back', up_no_history: 'No update has been installed from here yet.', up_steps_1: 'When a new version is published on GitHub, it appears here.', up_steps_2: 'Press Install, or let it install itself at the chosen time.', up_steps_3: 'The installer makes a backup, installs the version and checks it works; if not, it goes back by itself.', err_no_updater: 'The automatic installer is not answering on this server.', err_update_stale: 'That version is no longer the latest. Check for updates again.', err_update_busy: 'An update or restore is already running.', log_update_requested: 'Installation of version {v} requested',
+    ab_access: 'GitHub access', ab_access_app: 'GitHub App', ab_access_token: 'Token', ab_access_none: 'Not set up (public repositories only)', ab_st_app_missing: 'The GitHub App is not installed on the repository, or cannot access it. Install it and choose this repository.', ab_st_app_key: 'The GitHub App’s private key is missing or not valid. Check APP_UPDATE_GITHUB_APP_ID and the key on the server.',
+    set_updates: 'Updates', set_updates_sub: 'Check for new versions published on GitHub', ab_current: 'Installed version', ab_how_h: 'How a new version is installed', ab_how_1: 'A new version (release) is published on GitHub; it is tested and prepared automatically.', ab_how_2: 'Make a backup in Settings › Data › Backups.', ab_how_3: 'Whoever manages the server deploys the new version. Database changes are applied automatically when it starts.',
+    bk_log_label: 'History entries', ab_python: 'Python', ab_django: 'Django', ab_postgres: 'PostgreSQL',
+    set_about: 'About', set_about_sub: 'The app’s version, data and technology', ab_version: 'Version', ab_build: 'Build', ab_env: 'Environment', ab_env_production: 'Production', ab_env_development: 'Development', ab_since: 'In use since', ab_tz: 'Time zone', ab_data: 'Data', ab_dbsize: 'Database size', ab_tech: 'Technology', ab_loading: 'Loading…', ab_unknown: 'Unknown', ab_updates: 'Updates', ab_repo: 'Compared with the releases published on GitHub ({repo}).', ab_check: 'Check for updates', ab_checking: 'Checking…', ab_never: 'Not checked yet.', ab_checked: 'Checked on {d}.', ab_st_current: 'You have the latest version ({v}).', ab_st_update: 'A new version is available: {v}', ab_published: 'Published on {d}.', ab_open: 'View on GitHub', ab_install: 'To install it, deploy the new version on the server. Make a backup first.', ab_st_none: 'No version has been published on GitHub yet.', ab_st_private: 'The repository cannot be read because it is private. Connect a read-only GitHub App (or a token) on the server, as the README explains.', ab_st_auth: 'GitHub refused access: the token or GitHub App is not valid or cannot access the repository.', ab_st_error: 'Could not connect to GitHub. Please try again later.', ab_st_off: 'The update check is turned off (APP_UPDATE_REPO).',
     mt_title: 'Maintenance in progress', mt_body: 'The {org} app is unavailable for a few minutes.', mt_auto: 'This page will refresh by itself when the app is available again.', mt_watch: '{name} is restoring a backup. When it finishes, every user will be signed out.', mt_done: 'Restore finished. Please sign in again.', mt_back: 'The app is available again.', maintenance: 'The app is under maintenance.', err_maintenance_busy: 'Another restore is already running.', pr_finishing: 'Checking the restored data…',
     pr_keep_open: 'Do not close or reload this page until it finishes.',
     pr_export: 'Exporting backup', pr_prepare: 'Preparing the data…', pr_prepare_enc: 'Preparing and encrypting the data…', pr_download: 'Downloading the file…', pr_check: 'Checking the backup', pr_upload: 'Uploading the file…', pr_read: 'Reading the backup…', pr_restore: 'Restoring backup', pr_restoring: 'Replacing the data…', pr_step: 'Step {n} of {total}', pr_left: 'About {t} left', pr_elapsed: '{t} so far', pr_leave: 'A backup is in progress.',
@@ -501,6 +511,11 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     ok_resolve: 'Resolve',
   },
   ca: {
+    up_with_updater: 'L’instal·lador d’aquest servidor comprova GitHub cada hora i pot instal·lar les versions noves.', up_no_updater: 'L’instal·lador automàtic no està actiu en aquest servidor, així que les versions noves s’instal·len a mà (ho explica el README).', up_install: 'Instal·la {v}', up_confirm_t: 'Instal·la la versió {v}', up_confirm_b1: 'Abans de començar es fa una còpia de seguretat completa.', up_confirm_b2: 'L’aplicació estarà en manteniment uns minuts; la resta d’usuaris veurà un avís.', up_confirm_b3: 'Si alguna cosa falla, es torna automàticament a la versió actual amb les seves dades.', up_confirm_ok: 'Instal·la', up_title: 'Instal·lant la versió {v}', up_title_other: 'Instal·lant una actualització', up_queued: 'Esperant l’instal·lador…', up_note: 'Pots tancar aquesta pàgina: la instal·lació continua al servidor.', up_watch: '{name} està instal·lant una actualització. Quan acabi, la pàgina es recarregarà sola.', up_watch_auto: 'S’està instal·lant una actualització automàtica. Quan acabi, la pàgina es recarregarà sola.', up_ph_backup: 'Fent una còpia de seguretat…', up_ph_download: 'Descarregant la versió nova…', up_ph_build: 'Preparant la versió nova…', up_ph_restart: 'Reiniciant l’aplicació…', up_ph_check: 'Comprovant que tot funciona…', up_ph_rollback: 'Alguna cosa ha fallat: tornant a la versió anterior…', up_done: 'Versió {v} instal·lada. Recarregant…', up_done_generic: 'Actualització instal·lada. Recarregant…', up_installed_toast: 'Ara fas servir la versió {v}.', up_result_rolled_back: 'L’actualització no ha funcionat i s’ha tornat a la versió anterior. {msg}', up_result_failed: 'No s’ha pogut instal·lar l’actualització. {msg}', up_auto_h: 'Actualitzacions automàtiques', up_auto_on: 'Instal·la les versions noves automàticament', up_auto_hour: 'Cada dia a les', up_auto_d: 'A aquesta hora (la del servidor) s’instal·la l’última versió publicada, si n’hi ha una de nova, amb còpia de seguretat i tornada enrere si alguna cosa falla. Mai no s’instal·len versions de prova. Si falla, no es torna a provar fins l’endemà.', up_history: 'Historial', up_th_date: 'Data', up_th_version: 'Versió', up_th_how: 'Com', up_th_result: 'Resultat', up_how_auto: 'Automàtica', up_how_manual: 'Per {name}', up_st_queued: 'En cua', up_st_running: 'Instal·lant', up_st_done: 'Instal·lada', up_st_failed: 'No instal·lada', up_st_rolled_back: 'Revertida', up_no_history: 'Encara no s’ha instal·lat cap actualització des d’aquí.', up_steps_1: 'Quan es publica una versió nova a GitHub, apareix aquí.', up_steps_2: 'Prem «Instal·la», o deixa que s’instal·li sola a l’hora triada.', up_steps_3: 'L’instal·lador fa una còpia de seguretat, instal·la la versió i comprova que funciona; si no, torna enrere sol.', err_no_updater: 'L’instal·lador automàtic no respon en aquest servidor.', err_update_stale: 'Aquesta versió ja no és l’última disponible. Torna a comprovar les actualitzacions.', err_update_busy: 'Ja hi ha una actualització o una restauració en curs.', log_update_requested: 'Instal·lació de la versió {v} sol·licitada',
+    ab_access: 'Accés a GitHub', ab_access_app: 'GitHub App', ab_access_token: 'Token', ab_access_none: 'Sense configurar (només repositoris públics)', ab_st_app_missing: 'La GitHub App no està instal·lada al repositori, o no hi té accés. Instal·la-la i tria aquest repositori.', ab_st_app_key: 'Falta la clau privada de la GitHub App o no és vàlida. Revisa APP_UPDATE_GITHUB_APP_ID i la clau al servidor.',
+    set_updates: 'Actualitzacions', set_updates_sub: 'Cerca versions noves publicades a GitHub', ab_current: 'Versió instal·lada', ab_how_h: 'Com s’instal·la una versió nova', ab_how_1: 'Es publica una versió nova (release) a GitHub; es prova i es prepara automàticament.', ab_how_2: 'Fes una còpia de seguretat a Configuració › Dades › Còpies de seguretat.', ab_how_3: 'Qui gestiona el servidor desplega la versió nova. Els canvis a la base de dades s’apliquen sols en arrencar.',
+    bk_log_label: 'Entrades de l’historial', ab_python: 'Python', ab_django: 'Django', ab_postgres: 'PostgreSQL',
+    set_about: 'Quant a', set_about_sub: 'Versió, dades i tecnologia de l’aplicació', ab_version: 'Versió', ab_build: 'Compilació', ab_env: 'Entorn', ab_env_production: 'Producció', ab_env_development: 'Desenvolupament', ab_since: 'En ús des de', ab_tz: 'Zona horària', ab_data: 'Dades', ab_dbsize: 'Mida de la base de dades', ab_tech: 'Tecnologia', ab_loading: 'Carregant…', ab_unknown: 'Desconeguda', ab_updates: 'Actualitzacions', ab_repo: 'Es comparen amb les versions publicades a GitHub ({repo}).', ab_check: 'Cerca actualitzacions', ab_checking: 'Cercant…', ab_never: 'Encara no s’ha comprovat.', ab_checked: 'Comprovat el {d}.', ab_st_current: 'Tens l’última versió ({v}).', ab_st_update: 'Hi ha una versió nova: {v}', ab_published: 'Publicada el {d}.', ab_open: 'Mostra-la a GitHub', ab_install: 'Per instal·lar-la, desplega la versió nova al servidor. Fes abans una còpia de seguretat.', ab_st_none: 'Encara no s’ha publicat cap versió a GitHub.', ab_st_private: 'No es pot consultar el repositori perquè és privat. Connecta una GitHub App de només lectura (o un token) al servidor, com explica el README.', ab_st_auth: 'GitHub ha rebutjat l’accés: el token o la GitHub App no són vàlids o no tenen accés al repositori.', ab_st_error: 'No s’ha pogut connectar amb GitHub. Torna-ho a provar més tard.', ab_st_off: 'La cerca d’actualitzacions està desactivada (APP_UPDATE_REPO).',
     mt_title: 'Estem fent tasques de manteniment', mt_body: 'L’aplicació de {org} no està disponible durant uns minuts.', mt_auto: 'Aquesta pàgina s’actualitzarà sola quan torni a estar disponible.', mt_watch: '{name} està restaurant una còpia de seguretat. Quan acabi, es tancarà la sessió de tots els usuaris.', mt_done: 'Restauració acabada. Torna a iniciar sessió.', mt_back: 'L’aplicació torna a estar disponible.', maintenance: 'L’aplicació està en manteniment.', err_maintenance_busy: 'Ja hi ha una altra restauració en curs.', pr_finishing: 'Comprovant les dades restaurades…',
     pr_keep_open: 'No tanquis ni recarreguis aquesta pàgina fins que acabi.',
     pr_export: 'Exportant la còpia', pr_prepare: 'Preparant les dades…', pr_prepare_enc: 'Preparant i xifrant les dades…', pr_download: 'Descarregant el fitxer…', pr_check: 'Comprovant la còpia', pr_upload: 'Pujant el fitxer…', pr_read: 'Llegint la còpia…', pr_restore: 'Restaurant la còpia', pr_restoring: 'Substituint les dades…', pr_step: 'Pas {n} de {total}', pr_left: 'Queden uns {t}', pr_elapsed: '{t} en curs', pr_leave: 'Hi ha una còpia de seguretat en curs.',
@@ -829,6 +844,7 @@ async function api(method, url, body, opts = {}) {
       body: body === undefined ? undefined : form ? body : JSON.stringify(body) });
   } catch (e) { throw new ApiFail('err_network', 0); }
   if (r.ok && opts.file) return { blob: await r.blob(), name: ((r.headers.get('Content-Disposition') || '').match(/filename="([^"]+)"/) || [])[1] || 'download' };
+  if (!(r.headers.get('Content-Type') || '').includes('json')) throw new ApiFail('err_network', 0);   // e.g. the web server's maintenance page during an update
   const data = await r.json().catch(() => ({}));
   if (!r.ok) {
     if (r.status === 401 && cur) signedOut();   // the session expired while the page was open
@@ -1391,7 +1407,13 @@ const prog = {
   phase(label) {   // a new step; its progress is unknown until bytes() reports some
     this.n = Math.min(this.n + 1, this.steps); this.label = label; this.frac = null; this.eta = null; this.t0 = performance.now(); this.draw();
   },
-  server(m) {   // progress the server publishes while it restores
+  server(m) {   // progress the server publishes while it restores or installs an update
+    if (m.kind === 'update') {   // an update is five steps whose length nobody can predict: show the step and time elapsed
+      const label = t('up_ph_' + (m.phase || 'backup'));
+      if (label !== this.label) { this.label = label; this.frac = null; this.eta = null; this.t0 = performance.now(); }
+      this.steps = m.total || 5; this.n = Math.min((m.done || 0) + 1, this.steps); this.draw();
+      return;
+    }
     const label = t(m.phase === 'replacing' ? 'pr_restoring' : m.phase === 'finishing' ? 'pr_finishing' : 'pr_read');
     if (label !== this.label) { this.label = label; this.frac = null; this.eta = null; this.t0 = performance.now(); }
     if (m.phase === 'replacing' && m.total) this.bytes(m.done, m.total); else this.draw();
@@ -1484,8 +1506,10 @@ function enterMaintenance(m) {
   maint = m;
   document.querySelectorAll('dialog[open]').forEach(d => { if (d.id !== 'busy') d.close(); });
   if (m.canWatch) {
-    if (!prog.running) { prog.start(t('pr_restore'), 1, true); prog.phase(t('pr_read')); window.onbeforeunload = null; }
-    $('#progNote').hidden = false; $('#progNote').textContent = t('mt_watch', { name: m.startedBy || '—' });
+    const update = m.kind === 'update';
+    if (!prog.running) { prog.start(t(update ? 'up_title_other' : 'pr_restore'), 1, true); prog.phase(t(update ? 'up_ph_backup' : 'pr_read')); window.onbeforeunload = null; }
+    $('#progNote').hidden = false;
+    $('#progNote').textContent = update ? (m.startedBy ? t('up_watch', { name: m.startedBy }) : t('up_watch_auto')) : t('mt_watch', { name: m.startedBy || '—' });
     prog.server(m);
   } else {
     $('#maintBox').innerHTML = `${appIcon()}<h1>${T('mt_title')}</h1><p class="sub">${T('mt_body', { org: S.settings.orgName })}</p>
@@ -1505,7 +1529,12 @@ async function pollMaintenance() {
     return;
   }
   clearInterval(maintTimer); maintTimer = null;
-  const watched = maint && maint.canWatch; maint = null;
+  const watched = maint && maint.canWatch, updated = maint && maint.kind === 'update'; maint = null;
+  if (updated) {   // a new version may bring a new interface: load it
+    if (watched) prog.finish(t('up_done_generic'));
+    setTimeout(() => location.reload(), watched ? 2200 : 300);
+    return;
+  }
   if (watched) prog.finish(t('mt_done'));
   else { $('#busy').close(); $('#maintBox').hidden = true; $('#busyBox').hidden = false; }
   const boot = await api('GET', 'bootstrap').catch(() => null);
@@ -1631,6 +1660,157 @@ function bindData() {
     }, t(summary ? 'bk_restore_ok' : 'bk_unlock'), !!summary);
     if (summary) bindFirst();
   };
+}
+
+/* ================= about ================= */
+const fmtBytes = n => { const u = ['B', 'KB', 'MB', 'GB', 'TB']; let i = 0; n = Number(n) || 0; while (n >= 1024 && i < u.length - 1) { n /= 1024; i++; } return `${n.toLocaleString(locale(), { maximumFractionDigits: i ? 1 : 0 })} ${u[i]}`; };
+const num = n => Number(n || 0).toLocaleString(locale());
+function settingsAbout() {
+  const u = logoUrl();
+  return `<section class="panel"><div class="about-head"><div class="box${u ? ' logo' : ''}">${u ? `<img src="${esc(u)}" alt="">` : APP_SVG}</div>
+      <div><h2>${T('brand')}</h2><p class="sub" id="abSub">${T('ab_loading')}</p></div></div>
+      <dl class="kv" id="abApp"></dl></section>
+    <div class="grid2"><section class="panel"><h2>${T('ab_data')}</h2><dl class="kv" id="abData"></dl></section>
+      <section class="panel"><h2>${T('ab_tech')}</h2><dl class="kv" id="abTech"></dl></section></div>`;
+}
+function settingsUpdates() {
+  return `<section class="panel"><div><h2>${T('set_updates')}</h2><p class="sub" id="abRepo">${T('ab_loading')}</p></div>
+      <dl class="kv"><dt>${T('ab_current')}</dt><dd id="abCurrent">—</dd><dt>${T('ab_access')}</dt><dd id="abAccess">—</dd></dl>
+      <div class="upd" id="abUpd"></div>
+      <div class="row"><button class="btn" type="button" id="abCheck" disabled>${T('ab_check')}</button></div></section>
+    <div id="upMore"></div>`;
+}
+const UP_HOURS = Array.from({ length: 24 }, (_, h) => [String(h), `${String(h).padStart(2, '0')}:00`]);
+function updaterResult(u) {   // the updater's last check, in the shape drawUpdate understands
+  return u.status ? { status: u.status, latest: u.latest, name: u.name, notes: u.notes, url: u.url, published: u.published, checked: u.checkedAt } : null;
+}
+function updatesExtra(st) {
+  const jobs = st.jobs.length ? `<div class="tablebox"><table><thead><tr><th>${T('up_th_date')}</th><th>${T('up_th_version')}</th><th>${T('up_th_how')}</th><th>${T('up_th_result')}</th></tr></thead><tbody>
+      ${st.jobs.map(j => `<tr><td>${fmt(j.createdAt.slice(0, 10))}<span class="t2">${esc(j.createdAt.slice(11, 16))}</span></td>
+        <td>${j.from ? esc('v' + j.from.replace(/^v/, '')) : '—'} → <b>${esc(j.target)}</b></td>
+        <td>${j.automatic ? T('up_how_auto') : T('up_how_manual', { name: j.by || '—' })}</td>
+        <td><span class="pill st-${j.status === 'done' ? 'on' : j.status === 'rolled_back' || j.status === 'failed' ? 'perdido' : 'tech'}">${T('up_st_' + j.status)}</span>${j.message ? `<span class="t2">${esc(j.message)}</span>` : ''}</td></tr>`).join('')}
+    </tbody></table></div>` : `<p class="muted" style="margin:0">${T('up_no_history')}</p>`;
+  return `<section class="panel"><div><h2>${T('up_auto_h')}</h2><p class="sub">${T('up_auto_d')}</p></div>
+      <form id="upAuto" class="regionform" novalidate>
+        <label class="check"><input type="checkbox" id="upAutoOn"${st.auto.enabled ? ' checked' : ''}> ${T('up_auto_on')}</label>
+        <label>${T('up_auto_hour')}<select id="upAutoHour">${opts(UP_HOURS, String(st.auto.hour))}</select></label>
+        <div><button class="btn primary" type="submit">${T('save')}</button></div></form></section>
+    <section class="panel"><h2>${T('up_history')}</h2>${jobs}</section>
+    <section class="panel"><h2>${T('ab_how_h')}</h2><ol class="ab-steps"><li>${T('up_steps_1')}</li><li>${T('up_steps_2')}</li><li>${T('up_steps_3')}</li></ol></section>`;
+}
+async function bindUpdates() {
+  if (!$('#abUpd')) return;
+  let st;
+  try { st = await api('GET', 'updates'); } catch (err) { if (err.status !== 401) toast(t(err.code)); return; }
+  if (!$('#abUpd')) return;   // the person moved on meanwhile
+  $('#abCurrent').textContent = `${st.installed}${st.commit ? ` · ${st.commit.slice(0, 7)}` : ''}`;
+  if (!st.updater) return bindUpdatesWithoutUpdater();
+  $('#abRepo').textContent = t('up_with_updater');
+  $('#abAccess').closest('dl').querySelectorAll('dt, dd').forEach((el, i) => { if (i > 1) el.remove(); });
+  const r = updaterResult(st.updater);
+  drawUpdate(r, r && r.status === 'update' ? r.latest : null);
+  $('#upMore').innerHTML = updatesExtra(st);
+  const check = $('#abCheck'); check.disabled = false;
+  check.onclick = async () => {
+    check.disabled = true; check.textContent = t('ab_checking');
+    const before = st.updater.checkedAt;
+    try {
+      await api('POST', 'updates/check', {});
+      for (let i = 0; i < 20; i++) {   // the updater answers within a few seconds
+        await new Promise(res => setTimeout(res, 1500));
+        const now = await api('GET', 'updates');
+        if (now.updater && now.updater.checkedAt !== before) { if ($('#abUpd')) { route(); } return; }
+      }
+      toast(t('err_no_updater'));
+    } catch (err) { if (err.status !== 401) toast(t(err.code)); }
+    finally { if ($('#abCheck')) { check.disabled = false; check.textContent = t('ab_check'); } }
+  };
+  const install = $('#upInstall'); if (install) install.onclick = () => confirmInstall(install.dataset.tag);
+  $('#upAuto').onsubmit = async e => {
+    e.preventDefault();
+    try { await api('PUT', 'updates/auto', { enabled: $('#upAutoOn').checked, hour: Number($('#upAutoHour').value) }); toast(t('saved'), true); }
+    catch (err) { if (err.status !== 401) toast(t(err.code)); }
+  };
+}
+async function bindUpdatesWithoutUpdater() {   // no updater on this server: the app can only check, not install
+  let a;
+  try { a = await api('GET', 'about'); } catch (err) { if (err.status !== 401) toast(t(err.code)); return; }
+  if (!$('#abUpd')) return;
+  $('#abRepo').textContent = a.updates.repo ? t('ab_repo', { repo: a.updates.repo }) : t('ab_st_off');
+  $('#abAccess').textContent = t('ab_access_' + (a.updates.access || 'none'));
+  drawUpdate(a.updates.last);
+  $('#upMore').innerHTML = `<p class="notice info" style="margin:0">${T('up_no_updater')}</p>
+    <section class="panel"><h2>${T('ab_how_h')}</h2><ol class="ab-steps"><li>${T('ab_how_1')}</li><li>${T('ab_how_2')}</li><li>${T('ab_how_3')}</li></ol></section>`;
+  const b = $('#abCheck'); b.disabled = !a.updates.repo;
+  b.onclick = async () => {
+    b.disabled = true; b.textContent = t('ab_checking');
+    try { drawUpdate(await api('POST', 'about/updates', {})); }
+    catch (err) { if (err.status !== 401) toast(t(err.code)); }
+    finally { if ($('#abCheck')) { b.disabled = false; b.textContent = t('ab_check'); } }
+  };
+}
+function confirmInstall(tag) {
+  openDialog(t('up_confirm_t', { v: tag }), `<ul class="bk-sum" style="gap:6px"><li>${T('up_confirm_b1')}</li><li>${T('up_confirm_b2')}</li><li>${T('up_confirm_b3')}</li></ul>`, async () => {
+    const { job } = await api('POST', 'updates/install', { tag });
+    setTimeout(() => followUpdate(job.id, tag), 250);
+    return true;
+  }, t('up_confirm_ok'));
+}
+/* the person who asked for the update follows it until it is installed, rolled back or refused */
+function followUpdate(jobId, tag) {
+  prog.start(t('up_title', { v: tag }), 5, true); prog.phase(t('up_queued'));
+  window.onbeforeunload = null;   // leaving is harmless: the installation carries on on the server
+  $('#progNote').hidden = false; $('#progNote').textContent = t('up_note');
+  const timer = setInterval(async () => {
+    let m;
+    try { m = await api('GET', 'maintenance'); } catch (e) { return; }   // the app is restarting: keep waiting
+    if (m.active) { prog.server(m); return; }
+    let st;
+    try { st = await api('GET', 'updates'); } catch (e) { return; }
+    const job = st.jobs.find(j => j.id === jobId);
+    if (!job || job.status === 'queued' || job.status === 'running') return;
+    clearInterval(timer);
+    if (job.status === 'done') {
+      prog.finish(t('up_done', { v: tag }));
+      try { sessionStorage.setItem('inv-updated', tag); } catch (e) {}
+      setTimeout(() => location.reload(), 2200);
+      return;
+    }
+    prog.hide(); route();
+    toast(t(job.status === 'rolled_back' ? 'up_result_rolled_back' : 'up_result_failed', { msg: job.message || '' }));
+  }, 2000);
+}
+const kv = rows => rows.map(([k, v]) => `<dt>${T(k)}</dt><dd>${v}</dd>`).join('');
+function drawUpdate(r, installTag) {
+  const box = $('#abUpd'); if (!box) return;
+  if (!r) { box.innerHTML = `<p class="muted" style="margin:0">${T('ab_never')}</p>`; return; }
+  const when = r.checked ? `<p class="muted" style="margin:0;font-size:13px">${T('ab_checked', { d: fmt(r.checked.slice(0, 10)) })}</p>` : '';
+  if (r.status === 'current') { box.innerHTML = `<p class="notice" style="margin:0;background:var(--ok-bg);color:var(--ok)">${T('ab_st_current', { v: r.latest })}</p>${when}`; return; }
+  if (r.status === 'update') {
+    box.innerHTML = `<p class="notice info" style="margin:0"><b>${T('ab_st_update', { v: r.latest })}</b>${r.published ? ` · ${T('ab_published', { d: fmt(r.published.slice(0, 10)) })}` : ''}</p>
+      ${r.notes ? `<pre class="upd-notes">${esc(r.notes)}</pre>` : ''}
+      ${installTag ? '' : `<p class="muted" style="margin:0;font-size:13px">${T('ab_install')}</p>`}
+      <div class="row">${installTag ? `<button class="btn primary" type="button" id="upInstall" data-tag="${esc(installTag)}">${T('up_install', { v: installTag })}</button>` : ''}
+        ${r.url ? `<a class="btn small" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${T('ab_open')}</a>` : ''}</div>${when}`;
+    return;
+  }
+  const bad = ['private', 'auth', 'error', 'app_missing', 'app_key'].includes(r.status);
+  box.innerHTML = `<p class="notice${bad ? '' : ' info'}" style="margin:0">${T('ab_st_' + r.status)}</p>${when}`;
+}
+async function bindAbout() {
+  const sub = $('#abSub'); if (!sub) return;
+  let a;
+  try { a = await api('GET', 'about'); } catch (err) { if (err.status !== 401) toast(t(err.code)); return; }
+  if (!$('#abSub')) return;   // the person moved on meanwhile
+  sub.textContent = `${t('ab_version')} ${a.version}${a.commit ? ` · ${a.commit.slice(0, 7)}` : ''}`;
+  $('#abApp').innerHTML = kv([
+    ['ab_version', esc(a.version)], ['ab_build', a.commit ? `<span class="mono">${esc(a.commit)}</span>` : T('ab_unknown')],
+    ['ab_env', T('ab_env_' + a.environment)], ['f_org', esc(S.settings.orgName)],
+    ['ab_since', a.since ? fmt(a.since) : '—'], ['ab_tz', esc(a.timeZone)]]);
+  $('#abData').innerHTML = kv([['nav_devices', num(a.counts.devices)], ['nav_people', num(a.counts.employees)], ['set_users', num(a.counts.users)],
+    ['bk_log_label', num(a.counts.log)], ['ab_dbsize', fmtBytes(a.dbSize)]]);
+  $('#abTech').innerHTML = kv([['ab_python', esc(a.tech.python)], ['ab_django', esc(a.tech.django)], ['ab_postgres', esc(a.tech.postgres)]]);
 }
 
 /* ================= company logo ================= */
@@ -1939,7 +2119,7 @@ function viewEmployee(id) {
 
 /* ================= settings ================= */
 const SET_GROUPS = [
-  { id: 'general', items: [['region', 'set_region', null], ['marca', 'set_brand', null]] },
+  { id: 'general', items: [['acerca', 'set_about', null], ['actualizaciones', 'set_updates', null], ['region', 'set_region', null], ['marca', 'set_brand', null]] },
   { id: 'access', items: [['usuarios', 'set_users', () => S.users.filter(u => u.activo).length], ['contrasenas', 'set_pwpolicy', null]] },
   { id: 'org', items: [['departamentos', 'set_depts', () => S.depts.length], ['ubicaciones', 'set_locs', () => S.locations.length]] },
   { id: 'catalog', items: [['tipos', 'set_types', () => S.types.length], ['modelos', 'set_models', () => S.models.length]] },
@@ -1973,6 +2153,8 @@ function viewSettings(sec) {
   else if (sec === 'contrasenas') body = settingsPasswords();
   else if (sec === 'marca') body = settingsBrand();
   else if (sec === 'datos') body = settingsData();
+  else if (sec === 'acerca') body = settingsAbout();
+  else if (sec === 'actualizaciones') body = settingsUpdates();
   else body = settingsList(sec);
   const crumb = found ? `<p class="crumb"><a href="#ajustes">${T('set_title')}</a> <span>/</span> ${T('grp_' + found[3])}</p>` : '';
   return `<div class="head"><div><h1>${T('set_title')}</h1><p class="sub">${T('set_sub', { org: S.settings.orgName })}</p></div></div>
@@ -2463,7 +2645,7 @@ function route() {
     $('#eq').oninput = e => { FE.q = e.target.value; drawEmpRows(); };
     $('#eactivos').onchange = e => { FE.activos = e.target.value; drawEmpRows(); };
   } else if (h.startsWith('empleado-')) view.innerHTML = viewEmployee(h.slice(9));
-  else if (sec === 'ajustes') { view.innerHTML = viewSettings(h.slice(8)); bindRegion(); bindPwForm(); bindBrand(); bindData(); }
+  else if (sec === 'ajustes') { view.innerHTML = viewSettings(h.slice(8)); bindRegion(); bindPwForm(); bindBrand(); bindData(); bindAbout(); bindUpdates(); }
   else view.innerHTML = viewPanel();
   requestAnimationFrame(moveTabInd);
 }
@@ -2483,4 +2665,6 @@ document.addEventListener('visibilitychange', async () => {
   } catch (e) { toast(t('err_network')); }
   applyChrome(); route(); enter();
   if (underMaintenance) enterMaintenance(underMaintenance);
+  let updatedTo = null; try { updatedTo = sessionStorage.getItem('inv-updated'); sessionStorage.removeItem('inv-updated'); } catch (e) {}
+  if (updatedTo && cur) toast(t('up_installed_toast', { v: updatedTo }), true);
 })();

@@ -1,0 +1,85 @@
+# Inventario on one server: the database, the app, the web server (HTTPS) and the updater.
+# Installed by deploy/install.sh into INSTALL_DIR (default /opt/inventario); settings live in .env there.
+name: inventario
+
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-inventario}
+      POSTGRES_DB: ${POSTGRES_DB:-inventario}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    image: inventario-web:${APP_VERSION:?APP_VERSION must be set in .env}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-inventario}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-inventario}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?DJANGO_SECRET_KEY must be set in .env}
+      DJANGO_ALLOWED_HOSTS: ${SITE_HOST},web,localhost
+      DJANGO_CSRF_TRUSTED_ORIGINS: https://${SITE_HOST}
+      DJANGO_SETUP_TOKEN: ${DJANGO_SETUP_TOKEN:-}
+      APP_UPDATE_REPO: ""  # the updater checks GitHub; the app shows what it found
+      TZ: ${TZ:-Europe/Madrid}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz', timeout=4)"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - web
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    environment:
+      SITE_HOST: ${SITE_HOST}
+      TLS_MODE: ${TLS_MODE:-internal}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./maintenance.html:/srv/maintenance/index.html:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+  updater:
+    build: ./updater
+    image: inventario-updater
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      INSTALL_DIR: ${INSTALL_DIR:?INSTALL_DIR must be set in .env}
+      COMPOSE_PROJECT_NAME: inventario
+      APP_UPDATE_REPO: ${APP_UPDATE_REPO:-}
+      APP_UPDATE_GITHUB_APP_ID: ${APP_UPDATE_GITHUB_APP_ID:-}
+      APP_UPDATE_GITHUB_APP_PRIVATE_KEY_FILE: /run/secrets/github-app.pem
+      POSTGRES_USER: ${POSTGRES_USER:-inventario}
+      POSTGRES_DB: ${POSTGRES_DB:-inventario}
+      TZ: ${TZ:-Europe/Madrid}
+      HEALTH_TIMEOUT: ${HEALTH_TIMEOUT:-240}
+      APP_UPDATE_API: ${APP_UPDATE_API:-}  # leave empty: only set to test against a stand-in for GitHub
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # only the updater can manage containers
+      - ${INSTALL_DIR}:${INSTALL_DIR}              # same path inside and out, so Docker finds the files
+      - ./keys/github-app.pem:/run/secrets/github-app.pem:ro
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

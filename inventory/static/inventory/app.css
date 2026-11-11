@@ -729,3 +729,15 @@ dialog#busy::backdrop { background: var(--bg); }
 .maint .sub { margin: 0; }
 .maint .mt-auto { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; margin: 6px 0 0; }
 @media (prefers-reduced-motion: no-preference) { .maint .prog-icon { animation: progSpin 0.9s linear infinite; } }
+
+/* about page */
+.about-head { display: flex; align-items: center; gap: 14px; }
+.about-head .box { width: 56px; height: 56px; border-radius: 14px; flex: none; display: grid; place-items: center; overflow: hidden; background: var(--accent); color: var(--accent-ink); }
+.about-head .box.logo { background: var(--surface-2); }
+.about-head .box img { width: 100%; height: 100%; object-fit: contain; }
+.about-head .box svg.i { width: 28px; height: 28px; }
+.about-head h2 { font-size: 20px; }
+.upd { display: grid; gap: 10px; }
+.upd-notes { white-space: pre-wrap; max-height: 220px; overflow: auto; margin: 0; padding: 10px 12px; border-radius: 8px; background: var(--surface-2); font: 13px/1.5 var(--f-body); }
+.upd .row { gap: 10px; }
+.ab-steps { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--muted); font-size: 13.5px; }

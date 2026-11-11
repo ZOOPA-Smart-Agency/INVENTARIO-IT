@@ -7,3 +7,4 @@ staticfiles/
 node_modules/
 test-results/
 .claude/
+*.pem

@@ -27,9 +27,11 @@ def index(request):
 
 def healthz(request):
     """For the hosting platform's health check: confirms the database answers."""
+    from .version import VERSION
+
     with connection.cursor() as cursor:
         cursor.execute("SELECT 1")
-    return JsonResponse({"status": "ok"})
+    return JsonResponse({"status": "ok", "version": VERSION})
 
 
 @require_GET

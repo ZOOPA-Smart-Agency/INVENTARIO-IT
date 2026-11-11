@@ -3,6 +3,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_call:  # the release workflow runs these same tests first
 
 jobs:
   test:
@@ -29,3 +30,4 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python manage.py makemigrations --check --dry-run
       - run: python manage.py test
+      - run: python -m unittest discover -s deploy/updater

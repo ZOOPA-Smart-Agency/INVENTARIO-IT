@@ -1,5 +1,8 @@
 FROM python:3.13-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+# The exact build shown in Settings > About: docker build --build-arg APP_COMMIT=$(git rev-parse HEAD) .
+ARG APP_COMMIT=""
+ENV APP_COMMIT=$APP_COMMIT
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

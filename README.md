@@ -34,9 +34,35 @@ To see the first-install wizard, skip `load_demo_data` or point `DATABASE_URL` a
 
 Run the tests with `.venv/bin/python manage.py test`.
 
-## Deployment
+## Installing on a server
 
-The app is one container (`Dockerfile`) plus a PostgreSQL database, and suits any host that runs containers. It applies database migrations on start.
+The recommended setup is one Linux server with Docker, installed by `deploy/install.sh`. It runs four containers: the database, the app, a web server (Caddy) that provides HTTPS, and the **updater**, which installs new versions from **Settings > General > Updates**.
+
+**Requirements:** any Linux server (for example Ubuntu 24.04 or Debian 12) with [Docker Engine and the Compose plugin](https://docs.docker.com/engine/install/), 2 GB of memory, 20 GB of disk, and ports 80 and 443 open to the people who will use it.
+
+1. Create the GitHub App described under [Access to the private repository](#access-to-the-private-repository), and copy its private key (`.pem`) to the server.
+2. Download the latest release's source code from the repository's **Releases** page on GitHub, copy it to the server, and unpack it.
+3. From the unpacked folder, run `sudo ./deploy/install.sh`. It asks for the address people will use, whether it is a public domain (then a free certificate is issued automatically; otherwise the server uses its own certificate and browsers warn the first time), and the GitHub App's ID and key.
+4. Open the address it prints and complete the first-run wizard with the setup code it shows.
+
+Everything lives in `/opt/inventario`: `.env` (settings and secrets: keep it private), `keys/` (the GitHub App key), `backups/` (the database backups taken before each update) and the container definitions. Useful commands, run in that folder: `docker compose ps`, `docker compose logs -f updater`, `docker compose restart web`.
+
+### Installing new versions
+
+**Settings > General > Updates** shows the installed version and the latest release on GitHub (the updater checks every hour, or on **Check for updates**). When there is a new one, **Install** does the rest, while administrators watch the progress and everyone else sees a maintenance page:
+
+1. A full backup of the database, kept in `backups/`.
+2. The release is downloaded through the GitHub App and built on the server.
+3. The app restarts on the new version, which applies its own database changes.
+4. The updater checks that the new version answers. If it does not, it stops it, puts back the previous version and the backed-up database, and records what happened in the update history.
+
+Updates can also install by themselves: turn on **Automatic updates** and choose the hour (server time). Only published releases are installed, never pre-releases, and a failed automatic update is not retried until the next day.
+
+Only the latest release of the configured repository can be installed. The app never has access to Docker: it can only ask the updater for that release. The updater keeps the last 5 pre-update backups and the current and previous app images.
+
+## Other hosting
+
+The app is one container (`Dockerfile`) plus a PostgreSQL database, and also runs on any host that runs containers. It applies database migrations on start. Without the updater, **Settings > General > Updates** can only check for new versions; installing them is done by deploying the new version.
 
 | Environment variable | Required | Purpose |
 |---|---|---|
@@ -45,6 +71,10 @@ The app is one container (`Dockerfile`) plus a PostgreSQL database, and suits an
 | `DJANGO_ALLOWED_HOSTS` | Yes | Comma-separated host names, such as `inventario.example.com` |
 | `DJANGO_CSRF_TRUSTED_ORIGINS` | Yes | Comma-separated origins, such as `https://inventario.example.com` |
 | `DJANGO_SETUP_TOKEN` | For first install | Code the setup wizard asks for |
+| `APP_UPDATE_REPO` | No | GitHub repository checked for new releases (`ZOOPA-Smart-Agency/INVENTARIO-IT`); empty turns the check off |
+| `APP_UPDATE_TOKEN` | For a private repo | Read-only GitHub token for the update check (or use a GitHub App instead) |
+| `APP_UPDATE_GITHUB_APP_ID`, `APP_UPDATE_GITHUB_APP_PRIVATE_KEY_FILE` | For a private repo, instead of a token | GitHub App used by the update check, and the path to its private key; the key's contents can go in `APP_UPDATE_GITHUB_APP_PRIVATE_KEY` instead |
+| `APP_COMMIT` | No | Exact build shown in Settings > About; set at build time with `--build-arg APP_COMMIT=$(git rev-parse HEAD)` |
 | `DJANGO_DEBUG` | No | Leave unset in production |
 | `DJANGO_SSL_REDIRECT` | No | Set to `0` only if the host already forces HTTPS and redirects loop |
 | `PORT`, `WEB_CONCURRENCY` | No | Listening port (8000) and worker count (3) |
@@ -52,7 +82,7 @@ The app is one container (`Dockerfile`) plus a PostgreSQL database, and suits an
 
 The app must be served over HTTPS, because its cookies are marked secure. The health check is at `/healthz`; include the host name the check uses in `DJANGO_ALLOWED_HOSTS`.
 
-### First install
+### First install on other hosting
 
 Set `DJANGO_SETUP_TOKEN` to a long random value, deploy, and open the site. On an empty database the app shows a three-step wizard: organisation, locations and departments, then the first administrator. It asks for that code, works only once, and also loads the standard device types, components and software lists. Remove the variable afterwards if you like.
 
@@ -70,6 +100,39 @@ While a restore runs, the app is in maintenance mode: every request from anyone 
 
 These backups are for moving or recovering the app's data. The hosting database should still have its own regular backups.
 
+## Versions and updates
+
+**Settings > General > About** shows the version, the exact build, the environment, how much data there is, and the Python, Django and PostgreSQL versions. **Settings > General > Updates** compares the running version with the latest release published on GitHub, shows that release's notes and link, and, on a server installed with `deploy/install.sh`, installs it (see [Installing new versions](#installing-new-versions)).
+
+To publish a release:
+
+1. Raise `VERSION` in `inventory/version.py` (for example `1.1.0`) and commit.
+2. On GitHub, create a release with the tag `v1.1.0` and write what changed in its notes. Mark it as a pre-release if it is not ready for everyone.
+3. The **Release** workflow (`.github/workflows/release.yml`) runs the tests, checks that the tag matches `VERSION`, and publishes the app image to GitHub's container registry as `ghcr.io/zoopa-smart-agency/inventario-it:1.1.0`, plus `:latest` for normal releases. If the tag and `VERSION` differ, it stops without publishing.
+4. On a server installed with `deploy/install.sh`, install it from **Settings > General > Updates**, or let it install itself at night. On other hosting, make a backup and deploy that image.
+
+### Access to the private repository
+
+The updater (or, on other hosting, the update check) needs read access to the repository's releases and source code. Where the organisation does not allow personal tokens, use a GitHub App:
+
+1. In the organisation's settings on GitHub, open **Developer settings > GitHub Apps > New GitHub App**. If you cannot create one there, an organisation owner can, or you can create it under your own account and ask an owner to approve its installation.
+2. Name it, for example *Inventario update check*. Use the repository's address as the homepage URL, and untick **Webhook > Active**.
+3. Under **Repository permissions**, set **Contents** to **Read-only**. GitHub adds **Metadata: Read-only** automatically. Leave every other permission off.
+4. Under **Where can this GitHub App be installed?**, choose **Only on this account**, and create it.
+5. Note the **App ID** at the top of the app's page. Under **Private keys**, choose **Generate a private key**: a `.pem` file downloads. Keep it secret, and never commit it.
+6. Choose **Install App**, pick the organisation, choose **Only select repositories**, and select this repository.
+7. With `deploy/install.sh`, give the App ID and the `.pem` file when it asks, or later put the key in `/opt/inventario/keys/github-app.pem`, set `APP_UPDATE_GITHUB_APP_ID` in `/opt/inventario/.env`, and run `docker compose up -d updater` there. On other hosting, set `APP_UPDATE_GITHUB_APP_ID` and `APP_UPDATE_GITHUB_APP_PRIVATE_KEY_FILE` (the path of the `.pem` file), or put the key's contents in `APP_UPDATE_GITHUB_APP_PRIVATE_KEY`, writing each line break as `\n`.
+
+**Settings > General > Updates** then shows *GitHub access: GitHub App*. The server signs in with the key, and GitHub gives it a token, valid for an hour, that can only read this repository's contents. The key never leaves the server. If a personal token is allowed instead, set `APP_UPDATE_TOKEN` to a fine-grained token with **Contents: read-only** on this repository.
+
+### Getting the image onto other hosting
+
+A server installed with `deploy/install.sh` builds each release itself and does not need this. The release workflow also publishes the image to GitHub's container registry, which is private like the repository. Outside GitHub, that registry only accepts classic personal access tokens: GitHub App tokens cannot download from it. Where tokens are not allowed, choose one of these instead:
+
+- **A host that builds from the repository.** Many hosts connect to GitHub through their own GitHub App and build the `Dockerfile` themselves for each release or push. No registry login is needed.
+- **The host's own registry.** The release workflow can push the image there as well, using credentials stored as a GitHub Actions secret, and the server pulls from it.
+- **A personal access token (classic) with only `read:packages`,** if an organisation owner creates one for a dedicated account.
+
 ## Password rules
 
 The wizard, and later **Settings > Passwords**, control whether password requirements are enforced and which ones apply: minimum length, an uppercase letter, a number and a symbol. The server enforces them for new and changed passwords made in the app; existing passwords keep working. Passwords set from the command line with `createsuperuser` follow Django's own validators instead.
@@ -85,6 +148,7 @@ The wizard, and later **Settings > Passwords**, control whether password require
 | `inventory/registry.py` | Definition of each Settings list |
 | `inventory/static/inventory/app.js` | Interface, including all translations in `I18N` |
 | `inventory/tests/` | Server tests, also run by GitHub Actions |
+| `deploy/` | Server installation: `install.sh`, the containers (`docker-compose.yml`), the web server (`Caddyfile`) and the updater (`updater/`, with its own tests) |
 
 ## Conventions
 

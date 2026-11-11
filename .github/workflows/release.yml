@@ -1,0 +1,77 @@
+# Publishing a release on GitHub (tag v<VERSION>, for example v1.1.0) runs the tests, checks the tag matches
+# inventory/version.py, then builds the app image and publishes it to GitHub's container registry as
+#   ghcr.io/<owner>/<repo>:<version>   and, for normal (not pre-) releases, :latest
+# The server then runs that image. See "Versions and updates" in the README.
+name: Release
+
+on:
+  release:
+    types: [published]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    uses: ./.github/workflows/ci.yml
+
+  image:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the tag matches the app version
+        run: |
+          VERSION=$(sed -n 's/^VERSION = "\(.*\)"$/\1/p' inventory/version.py)
+          if [ "v$VERSION" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::The release tag is $GITHUB_REF_NAME but inventory/version.py says $VERSION. Make them match (tag v$VERSION) and publish again."
+            exit 1
+          fi
+          echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          flavor: latest=false
+          tags: |
+            type=raw,value=${{ env.VERSION }}
+            type=raw,value=latest,enable=${{ !github.event.release.prerelease }}
+          labels: |
+            org.opencontainers.image.title=Inventario de equipos
+            org.opencontainers.image.version=${{ env.VERSION }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            APP_COMMIT=${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Summary
+        run: |
+          {
+            echo "### Image published"
+            echo ""
+            echo "\`${IMAGE}:${VERSION}\`"
+            echo ""
+            echo "Deploy it on the server after making a backup (Settings > Data > Backups)."
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,20 @@
+# Web server: HTTPS for SITE_HOST, passing everything to the app. TLS_MODE is an email address (a free
+# certificate for a public domain) or "internal" (the server's own certificate, for in-house addresses).
+{$SITE_HOST} {
+	tls {$TLS_MODE}
+	encode zstd gzip
+	reverse_proxy web:8000
+
+	# while the app restarts during an update, show the maintenance page instead of an error
+	handle_errors {
+		@down expression `{err.status_code} in [502, 503, 504]`
+		handle @down {
+			root * /srv/maintenance
+			rewrite * /index.html
+			header Cache-Control "no-store"
+			file_server {
+				status 503
+			}
+		}
+	}
+}

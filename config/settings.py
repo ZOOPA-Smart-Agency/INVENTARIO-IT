@@ -41,6 +41,21 @@ CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")
 # Required by the first-run wizard in production, so a stranger cannot claim a fresh install.
 SETUP_TOKEN = os.environ.get("DJANGO_SETUP_TOKEN", "")
 
+# Update check (Settings > General > About): the GitHub repository whose releases are compared with this version.
+# A private repository needs a read-only token. An empty APP_UPDATE_REPO turns the check off.
+UPDATE_REPO = os.environ.get("APP_UPDATE_REPO", "ZOOPA-Smart-Agency/INVENTARIO-IT").strip()
+UPDATE_TOKEN = os.environ.get("APP_UPDATE_TOKEN", "").strip()
+# Or a GitHub App with read-only "Contents" access to the repository (for organisations that do not allow tokens).
+# The private key is the .pem file GitHub generates: give its contents (newlines may be written as \n) or a path to it.
+UPDATE_APP_ID = os.environ.get("APP_UPDATE_GITHUB_APP_ID", "").strip()
+UPDATE_APP_KEY = os.environ.get("APP_UPDATE_GITHUB_APP_PRIVATE_KEY", "").replace("\\n", "\n").strip()
+_key_file = os.environ.get("APP_UPDATE_GITHUB_APP_PRIVATE_KEY_FILE", "").strip()
+if _key_file and not UPDATE_APP_KEY:
+    try:
+        UPDATE_APP_KEY = Path(_key_file).expanduser().read_text().strip()
+    except OSError:
+        UPDATE_APP_KEY = ""  # reported on the Updates page as an unreadable key
+
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",

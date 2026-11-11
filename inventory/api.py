@@ -2,6 +2,7 @@
 import base64
 import binascii
 import datetime as dt
+from datetime import timedelta
 import contextlib
 import json
 import re
@@ -880,3 +881,118 @@ def backup_restore(request, body):
 def maintenance_status(request, body):
     state = maint.current()
     return {"active": False} if state is None else {"active": True, **maint.info(state, request.user)}
+
+
+# ---- about and updates ---------------------------------------------------------------
+
+
+@endpoint("GET", role="admin")
+def about(request, body):
+    import platform
+
+    import django
+    from django.conf import settings
+    from django.db import connection
+
+    from . import updates
+    from .version import VERSION, commit
+
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT current_setting('server_version'), pg_database_size(current_database())")
+        postgres, size = cursor.fetchone()
+    first = AuditEvent.objects.order_by("at").values_list("at", flat=True).first()
+    return {
+        "version": VERSION, "commit": commit()[:12], "environment": "development" if settings.DEBUG else "production",
+        "since": first.date().isoformat() if first else None, "timeZone": settings.TIME_ZONE,
+        "counts": {"devices": m.Device.objects.count(), "employees": m.Employee.objects.count(),
+                   "users": User.objects.count(), "log": AuditEvent.objects.count()},
+        "dbSize": size,
+        "tech": {"python": platform.python_version(), "django": django.get_version(), "postgres": postgres.split(" ")[0]},
+        "updates": {"repo": settings.UPDATE_REPO, "access": updates.access(), "last": updates.cached()},
+    }
+
+
+@endpoint("POST", role="admin")
+def check_updates(request, body):
+    from . import updates
+
+    return updates.check()
+
+
+# ---- installing updates (with the updater service, see deploy/updater) -------------------
+
+UPDATER_ALIVE = timedelta(seconds=60)
+
+
+def _updater():
+    """The updater's state, if it has reported in the last minute; otherwise None (not installed or stopped)."""
+    state = m.UpdaterState.objects.filter(pk=1).first()
+    if state is None or state.last_seen is None or timezone.now() - state.last_seen > UPDATER_ALIVE:
+        return None
+    return state
+
+
+def _job_json(job):
+    return {"id": job.id, "createdAt": job.created_at.isoformat(), "by": job.requested_by, "automatic": job.automatic,
+            "from": job.from_version, "target": job.target, "status": job.status, "phase": job.phase, "message": job.message,
+            "finishedAt": job.finished_at.isoformat() if job.finished_at else None}
+
+
+@endpoint("GET", role="admin")
+def updates_status(request, body):
+    from .version import VERSION, commit
+
+    s = m.AppSettings.load()
+    state = _updater()
+    out = {"installed": VERSION, "commit": commit()[:12], "auto": {"enabled": s.auto_update, "hour": s.auto_update_hour},
+           "jobs": [_job_json(j) for j in m.UpdateJob.objects.all()[:10]], "updater": None}
+    if state is not None:
+        out["updater"] = {
+            "status": state.check_status, "checkedAt": state.checked_at.isoformat() if state.checked_at else None,
+            "checkRequested": state.check_requested, "latest": state.latest_tag, "name": state.latest_name,
+            "notes": state.latest_notes, "url": state.latest_url,
+            "published": state.latest_published.isoformat() if state.latest_published else None,
+        }
+    return out
+
+
+@endpoint("POST", role="admin")
+def updates_check(request, body):
+    """Asks the updater to check GitHub now; without an updater, the app checks by itself."""
+    from . import updates
+
+    if _updater() is None:
+        return {"result": updates.check()}
+    m.UpdaterState.objects.filter(pk=1).update(check_requested=True)
+    return {"requested": True}
+
+
+@endpoint("POST", role="admin")
+def updates_install(request, body):
+    """Queues the latest release for the updater. Only the release the updater found on GitHub can be chosen."""
+    from .updates import parse
+    from .version import VERSION
+
+    state = _updater()
+    if state is None:
+        raise ApiError("err_no_updater", 409)
+    tag = text(body, "tag", 40)
+    if not tag or tag != state.latest_tag or parse(tag) <= parse(VERSION):
+        raise ApiError("err_update_stale", 409)
+    if m.UpdateJob.objects.filter(status__in=["queued", "running"]).exists() or maint.current() is not None:
+        raise ApiError("err_update_busy", 409)
+    job = m.UpdateJob.objects.create(requested_by=request.user.nombre, from_version=VERSION, target=tag)
+    audit(request, "log_update_requested", {"v": tag})
+    return {"job": _job_json(job)}
+
+
+@endpoint("PUT", role="admin")
+def updates_auto(request, body):
+    s = m.AppSettings.load()
+    hour = number(body, "hour", 0, 23)
+    if hour is None or hour != int(hour):
+        raise ApiError("err_invalid")
+    s.auto_update, s.auto_update_hour = bool(body.get("enabled")), int(hour)
+    s.save()
+    audit(request, "log_setting", {"xKey": "set_updates"})
+    return {"auto": {"enabled": s.auto_update, "hour": s.auto_update_hour}}
