@@ -132,6 +132,24 @@ def _item(model, name, **defaults):
     return found or model.objects.create(nombre=name, **defaults)
 
 
+def _generation(model, label):
+    """The list entry for "Wi-Fi 6E" or "Bluetooth 5.3", whether it is written like that or with a note after it
+    ("Wi-Fi 6 (802.11ax)"); created if the inventory does not have it yet. "Wi-Fi 6" never matches "Wi-Fi 6E"."""
+    pattern = re.compile(re.escape(label) + r"(\s*\(.*\))?", re.IGNORECASE)
+    found = next((item for item in model.objects.all() if pattern.fullmatch(item.nombre.strip())), None)
+    return found or model.objects.create(nombre=label)
+
+
+def _wifi_gen(value):
+    value = _text(value, 3).upper()
+    return _generation(m.WifiGeneration, f"Wi-Fi {value}") if value in ("4", "5", "6", "6E", "7") else None
+
+
+def _bt_ver(value):
+    value = _text(value, 4)
+    return _generation(m.BluetoothVersion, f"Bluetooth {value}") if re.fullmatch(r"[1-6]\.[0-9]", value) else None
+
+
 # ---- endpoints ------------------------------------------------------------------------------
 
 
@@ -347,6 +365,7 @@ def _apply_parts(device, f):
                      or (m.NicModel.objects.create(nombre=_text(n.get("model")), type=n["type"]) if _text(n.get("model")) else None))
             m.NetworkCard.objects.create(
                 device=device, type=n["type"], mac=mac, model=model or (before.model if before else None),
-                wifi_gen=before.wifi_gen if before else None, bt_ver=before.bt_ver if before else None,
+                wifi_gen=(_wifi_gen(n.get("wifiGen")) if n["type"] == "wifi" else None) or (before.wifi_gen if before else None),
+                bt_ver=(_bt_ver(n.get("btVer")) if n["type"] == "wifi" else None) or (before.bt_ver if before else None),
                 speed=before.speed if before else None, speed_unit=before.speed_unit if before else "Gbps",
             )

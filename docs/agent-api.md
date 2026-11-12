@@ -60,7 +60,7 @@ Every field is optional except `serial`. Unknown fields are ignored, and values 
 | `os` | `{"family": "win", "version": "11 23H2", "edition": "Pro"}` | `family` is `mac`, `win` or `linux`. Linux uses `distro` and `version`. |
 | `encryption` | `"yes"` | FileVault, BitLocker or LUKS. |
 | `domainJoined` | `"no"` | Active Directory. |
-| `nics` | `[{"type": "wifi", "model": "Intel Wi-Fi 6E AX211", "mac": "A4:C3:F0:12:34:56"}]` | `type` is `wifi` or `eth`. Replaces the card list. Wi-Fi generation, Bluetooth and speed are kept for the same MAC address. |
+| `nics` | `[{"type": "wifi", "model": "Intel Wi-Fi 6E AX211", "mac": "A4:C3:F0:12:34:56", "wifiGen": "6E", "btVer": "5.3"}]` | `type` is `wifi` or `eth`. Replaces the card list. `wifiGen` (`4`, `5`, `6`, `6E` or `7`) and `btVer` (`5.3`) are Wi-Fi only, and match list entries such as "Wi-Fi 6 (802.11ax)" or "Bluetooth 5.3", created if missing. Whatever is not sent (generation, Bluetooth, speed, model) is kept from the card with the same MAC address. |
 | `agent` | `{"version": "0.1.0", "platform": "macos-aarch64"}` | For information only. |
 
 For an existing computer, only hardware and software details change. Its asset tag, status, location, assignment, purchase data, notes, faults and history stay as they are. Each report is recorded in the activity history, with the account that sent it.

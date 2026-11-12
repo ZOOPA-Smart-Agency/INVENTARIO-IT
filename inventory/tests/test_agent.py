@@ -151,6 +151,25 @@ class AgentTests(TestCase):
         self.assertEqual(m.Cpu.objects.filter(nombre__iexact="apple m3 pro").count(), 1)
         self.assertEqual(m.DeviceModel.objects.count(), 1)
 
+    def test_wifi_generation_and_bluetooth(self):
+        wifi6 = m.WifiGeneration.objects.create(nombre="Wi-Fi 6 (802.11ax)")
+        m.WifiGeneration.objects.create(nombre="Wi-Fi 6E")
+        bt = m.BluetoothVersion.objects.create(nombre="Bluetooth 5.3")
+        token = self.token()
+        nics = [{"type": "wifi", "model": "Intel Wi-Fi 6 AX201", "mac": "A4:C3:F0:00:00:01", "wifiGen": "6", "btVer": "5.3"},
+                {"type": "eth", "mac": "A4:C3:F0:00:00:02", "wifiGen": "7"}]
+        self.post("report", {"facts": dict(MAC_FACTS, nics=nics)}, token)
+        wifi, eth = Device.objects.get().nics.all()
+        self.assertEqual((wifi.wifi_gen, wifi.bt_ver), (wifi6, bt))  # "6" matches "Wi-Fi 6 (802.11ax)", not "Wi-Fi 6E"
+        self.assertIsNone(eth.wifi_gen)  # only Wi-Fi cards have a generation
+        # unknown values are ignored and what was there is kept; new generations are added to the list
+        self.post("report", {"facts": dict(MAC_FACTS, nics=[dict(nics[0], wifiGen="abc", btVer="")])}, token)
+        self.assertEqual(Device.objects.get().nics.get().wifi_gen, wifi6)
+        self.post("report", {"facts": dict(MAC_FACTS, nics=[dict(nics[0], wifiGen="7", btVer="5.4")])}, token)
+        card = Device.objects.get().nics.get()
+        self.assertEqual((card.wifi_gen.nombre, card.bt_ver.nombre), ("Wi-Fi 7", "Bluetooth 5.4"))
+        self.assertEqual(m.WifiGeneration.objects.count(), 3)
+
     def test_windows_and_linux(self):
         token = self.token()
         win = {"serial": "PF4A9Z2B", "manufacturer": "LENOVO", "model": "ThinkPad T14 Gen 4", "chassis": "laptop",
