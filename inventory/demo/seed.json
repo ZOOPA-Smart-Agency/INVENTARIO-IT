@@ -65,7 +65,8 @@
    },
    "hasScreen": true,
    "hasBattery": true,
-   "code": "MB"
+   "code": "MB",
+   "match": "MacBook"
   },
   {
    "id": "t2",
@@ -110,7 +111,8 @@
    },
    "hasScreen": true,
    "hasBattery": false,
-   "code": "IMC"
+   "code": "IMC",
+   "match": "iMac"
   }
  ],
  "depts": [
@@ -220,7 +222,7 @@
    "id": "m2",
    "fabricante": "Apple",
    "nombre": "MacBook Pro 14\"",
-   "typeId": "t1"
+   "typeId": "t5"
   },
   {
    "id": "m3",
@@ -238,13 +240,13 @@
    "id": "m5",
    "fabricante": "Apple",
    "nombre": "MacBook Air 13\"",
-   "typeId": "t1"
+   "typeId": "t5"
   },
   {
    "id": "m6",
    "fabricante": "Apple",
    "nombre": "iMac 24\"",
-   "typeId": "t4"
+   "typeId": "t6"
   }
  ],
  "cpus": [
@@ -604,7 +606,7 @@
    "factura": "AB-24-00318",
    "precio": 2449,
    "notas": "",
-   "typeId": "t1",
+   "typeId": "t5",
    "ramSize": 18,
    "ramUnit": "GB",
    "ramGen": "rg4",
@@ -946,7 +948,7 @@
    "factura": "AB-24-01107",
    "precio": 3999,
    "notas": "",
-   "typeId": "t1",
+   "typeId": "t5",
    "ramSize": 36,
    "ramUnit": "GB",
    "ramGen": "rg4",
@@ -1008,7 +1010,7 @@
    "factura": "AB-23-00021",
    "precio": 1399,
    "notas": "",
-   "typeId": "t1",
+   "typeId": "t5",
    "ramSize": 16,
    "ramUnit": "GB",
    "ramGen": "rg4",
@@ -1147,7 +1149,7 @@
    "factura": "AB-25-00412",
    "precio": 1499,
    "notas": "",
-   "typeId": "t1",
+   "typeId": "t5",
    "ramSize": 16,
    "ramUnit": "GB",
    "ramGen": "rg4",
@@ -1277,7 +1279,7 @@
    "factura": "AB-24-00377",
    "precio": 1899,
    "notas": "",
-   "typeId": "t4",
+   "typeId": "t6",
    "ramSize": 16,
    "ramUnit": "GB",
    "ramGen": "rg4",
@@ -1491,7 +1493,7 @@
     "en": "Stolen in February 2024. Police report 2024/BCN/08812. Locked remotely through the MDM.",
     "ca": "Robat el febrer de 2024. Denúncia 2024/BCN/08812. Bloquejat en remot des de l’MDM."
    },
-   "typeId": "t1",
+   "typeId": "t5",
    "ramSize": 8,
    "ramUnit": "GB",
    "ramGen": "rg3",
@@ -1616,7 +1618,7 @@
    "factura": "AB-25-01344",
    "precio": 2599,
    "notas": "",
-   "typeId": "t1",
+   "typeId": "t5",
    "ramSize": 24,
    "ramUnit": "GB",
    "ramGen": "rg5",

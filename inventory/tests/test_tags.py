@@ -153,3 +153,118 @@ class TagTests(TestCase):
         named.refresh_from_db(), custom.refresh_from_db()
         self.assertEqual((named.code, custom.code), ("AIO", "NB"))  # a code someone chose is kept
         self.assertEqual(m.DeviceType.objects.get(pk=self.plain.pk).code, "")
+
+
+class AppleTypesTests(TestCase):
+    """The 0008 update gives MacBooks and iMacs their own types, codes and models, keeping their tags."""
+
+    def test_apple_models_and_devices_move_to_their_own_types(self):
+        migration = import_module("inventory.migrations.0008_apple_types")
+        laptop = kind("Portátil", "LAP", has_screen=True, has_battery=True)
+        aio = kind("Todo en uno", "AIO", has_screen=True)
+        store = m.Location.objects.create(nombre={"es": "Almacén", "en": "Storage", "ca": "Magatzem"}, tipo="storage")
+        air = m.DeviceModel.objects.create(nombre="MacBook Air 13\"", fabricante="Apple", type=laptop)
+        imac = m.DeviceModel.objects.create(nombre="Apple iMac 24\"", fabricante="Apple", type=aio)
+        dell = m.DeviceModel.objects.create(nombre="Latitude 5440", fabricante="Dell", type=laptop)
+        mac_dev = Device.objects.create(tag="INV-0001", serial="A", type=laptop, model=air, loc=store)
+        imac_dev = Device.objects.create(tag="INV-0002", serial="B", type=aio, model=imac, loc=store)
+        dell_dev = Device.objects.create(tag="INV-0003", serial="C", type=laptop, model=dell, loc=store)
+
+        migration.add_apple_types(apps, None)
+        migration.add_apple_types(apps, None)  # running again changes nothing
+        macbook, imac_type = m.DeviceType.objects.get(code="MB"), m.DeviceType.objects.get(code="IMC")
+        self.assertEqual((macbook.nombre["es"], macbook.has_screen, macbook.has_battery), ("MacBook", True, True))
+        self.assertEqual((imac_type.nombre["es"], imac_type.has_screen, imac_type.has_battery), ("iMac", True, False))
+        self.assertEqual(m.DeviceType.objects.count(), 4)
+        for obj in (air, imac, dell, mac_dev, imac_dev, dell_dev):
+            obj.refresh_from_db()
+        self.assertEqual((air.type, imac.type, dell.type), (macbook, imac_type, laptop))
+        self.assertEqual((mac_dev.type, imac_dev.type, dell_dev.type), (macbook, imac_type, laptop))
+        self.assertEqual((mac_dev.tag, imac_dev.tag), ("INV-0001", "INV-0002"))  # labels already on devices stay
+
+    def test_an_existing_type_is_reused(self):
+        migration = import_module("inventory.migrations.0008_apple_types")
+        mine = kind("macbook", has_screen=True, has_battery=True)
+        kind("Ordenadores Apple", "IMC", has_screen=True)
+        migration.add_apple_types(apps, None)
+        mine.refresh_from_db()
+        self.assertEqual(mine.code, "MB")
+        self.assertEqual(m.DeviceType.objects.count(), 2)
+
+    def test_nothing_is_added_before_the_first_run(self):
+        import_module("inventory.migrations.0008_apple_types").add_apple_types(apps, None)
+        self.assertFalse(m.DeviceType.objects.exists())
+
+    def test_new_installs_start_with_both(self):
+        from inventory.catalog import load_catalog
+        load_catalog()
+        self.assertEqual(dict(m.DeviceType.objects.filter(code__in=["MB", "IMC"]).values_list("code", "nombre__es")),
+                         {"MB": "MacBook", "IMC": "iMac"})
+
+
+class TypeMatchTests(TestCase):
+    """Settings > Device types: words that make the device app choose a type."""
+
+    def setUp(self):
+        cache.clear()
+        User.objects.create_user("tech@x.es", GOOD, nombre="Teo", rol="tech")
+        m.AppSettings.objects.update_or_create(pk=1, defaults={"tag_prefix": "Z"})
+        m.Location.objects.create(nombre={"es": "Almacén", "en": "Storage", "ca": "Magatzem"}, tipo="storage")
+        self.laptop = kind("Portátil", "LAP", has_screen=True, has_battery=True)
+        self.macbook = kind("MacBook", "MB", has_screen=True, has_battery=True)
+        self.pro = kind("Portátil de diseño", "DIS", has_screen=True, has_battery=True)
+        self.phone = kind("Móvil", "MOV", has_screen=True, has_battery=True)
+        self.pro.match = "MacBook Pro, Surface"
+        self.pro.save()
+        self.phone.match = " iphone ,Pixel,\nGalaxy "
+        self.phone.save()
+        self.client = Client(enforce_csrf_checks=True)
+        token = self.client.post("/api/agent/login", data=json.dumps({"email": "tech@x.es", "password": GOOD}),
+                                 content_type="application/json").json()["token"]
+        self.auth = {"HTTP_AUTHORIZATION": f"Bearer {token}"}
+
+    def guess(self, model, manufacturer="", chassis="laptop"):
+        from urllib.parse import urlencode
+        query = urlencode({"model": model, "manufacturer": manufacturer, "chassis": chassis})
+        return self.client.get(f"/api/agent/options?{query}", **self.auth).json()["nextTag"]
+
+    def test_words_choose_the_type(self):
+        self.assertEqual(self.phone.match_words(), ["iphone", "pixel", "galaxy"])
+        self.assertEqual(self.guess("MacBook Pro 14\"", "Apple"), "ZDIS001")  # a word beats a type name
+        self.assertEqual(self.guess("MacBook Air (M2)", "Apple"), "ZMB001")  # the type's name still works
+        self.assertEqual(self.guess("Surface Laptop 5", "Microsoft"), "ZDIS001")
+        self.assertEqual(self.guess("Galaxy Tab", "Samsung"), "ZMOV001")
+        self.assertEqual(self.guess("ThinkPad T14", "Lenovo"), "ZLAP001")  # nothing matches: by chassis
+        self.assertEqual(self.guess("Pixelbook", "Google"), "ZLAP001")  # whole words only
+
+    def test_the_maker_counts_too(self):
+        self.phone.match = "Apple"
+        self.phone.save()
+        self.assertEqual(self.guess("Mac17,5", "Apple"), "ZMOV001")
+
+    def test_report_uses_the_words(self):
+        facts = {"serial": "SF1", "manufacturer": "Microsoft", "model": "Surface Laptop 5", "chassis": "laptop"}
+        response = self.client.post("/api/agent/report", data=json.dumps({"facts": facts}), content_type="application/json", **self.auth)
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertEqual(Device.objects.get(serial="SF1").type, self.pro)
+
+    def test_options_list_the_words(self):
+        types = self.client.get("/api/agent/options", **self.auth).json()["types"]
+        self.assertEqual(next(t for t in types if t["code"] == "DIS")["match"], ["macbook pro", "surface"])
+
+    def test_settings_save_the_words(self):
+        admin = User.objects.create_user("admin@x.es", GOOD, nombre="Ada", rol="admin")
+        client = Client()
+        client.force_login(admin)
+        response = client.put(f"/api/lists/types/{self.laptop.pk}", content_type="application/json",
+                              data=json.dumps({"nombre": {"es": "Portátil"}, "code": "LAP", "hasScreen": True, "hasBattery": True, "match": "ThinkPad, Latitude"}))
+        self.assertEqual(response.json()["item"]["match"], "ThinkPad, Latitude")
+        self.assertEqual(self.guess("Latitude 5440", "Dell"), "ZLAP001")
+
+    def test_update_gives_the_apple_types_their_words(self):
+        migration = import_module("inventory.migrations.0009_type_match")
+        self.macbook.match = ""
+        self.macbook.save()
+        migration.fill_apple(apps, None)
+        self.macbook.refresh_from_db()
+        self.assertEqual(self.macbook.match, "MacBook")

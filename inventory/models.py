@@ -99,6 +99,12 @@ class DeviceType(TranslatedItem):
     uses_name = models.BooleanField(default=False)
     # Goes in the asset tags of this type, after the prefix: Z + LAP + 001. Capital letters and digits only.
     code = models.CharField(max_length=10, blank=True)
+    # Words, separated by commas, that make the device app choose this type when the computer's maker or model
+    # contains one of them (for example "MacBook" or "Surface, ThinkPad").
+    match = models.CharField(max_length=300, blank=True)
+
+    def match_words(self):
+        return [w.strip().lower() for w in self.match.replace("\n", ",").split(",") if w.strip()]
 
     def save(self, *args, **kwargs):
         self.code = "".join(c for c in (self.code or "").upper() if c.isascii() and c.isalnum())[:10]

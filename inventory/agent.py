@@ -188,25 +188,40 @@ def options(request, body):
     s = m.AppSettings.load()
     device = _existing(request.GET.get("serial"))
     types = list(m.DeviceType.objects.all())
-    guess = _guess_type(request.GET.get("chassis"), request.GET.get("model"), types)
+    guess = _guess_type(request.GET.get("chassis"), request.GET.get("model"), types, request.GET.get("manufacturer"))
     return {
         "org": s.org_name, "nextTag": next_tag(guess, s.tag_prefix, s.tag_numbering), "hostnameIsTag": s.hostname_is_tag,
         "types": [{"id": str(t.pk), "nombre": t.nombre, "hasScreen": t.has_screen, "hasBattery": t.has_battery, "usesName": t.uses_name,
-                   "code": t.code, "nextTag": next_tag(t, s.tag_prefix, s.tag_numbering)} for t in types],
+                   "code": t.code, "match": t.match_words(), "nextTag": next_tag(t, s.tag_prefix, s.tag_numbering)} for t in types],
         "locations": [{"id": str(l.pk), "nombre": l.nombre, "tipo": l.tipo} for l in m.Location.objects.all()],
         "existing": None if device is None else {"id": str(device.pk), "tag": device.tag, "estado": device.estado,
                                                  "typeId": str(device.type_id), "loc": str(device.loc_id)},
     }
 
 
-def _guess_type(chassis, model=None, types=None):
-    """A type named in the model (a "MacBook Air" is a MacBook), else one that fits the chassis, else the first."""
+def _type_names(t):
+    return [str(n).lower() for n in (t.nombre.values() if isinstance(t.nombre, dict) else [t.nombre]) if n]
+
+
+def _guess_type(chassis, model=None, types=None, manufacturer=None):
+    """The type for a new computer, chosen in this order (the device app makes the same choice):
+
+    1. One whose words to match (Settings > Device types) appear in the maker or model, such as "ThinkPad".
+    2. One whose name appears there: a "MacBook Air" is a "MacBook".
+    3. One that fits the chassis: a laptop gets a type with a battery. Otherwise, the first type.
+    A longer word wins over a shorter one, so "MacBook Pro" can go apart from "MacBook".
+    """
     types = list(m.DeviceType.objects.all()) if types is None else types
-    model = (model or "").lower()
-    named = [(len(n), t) for t in types for n in (t.nombre.values() if isinstance(t.nombre, dict) else [t.nombre])
-             if n and re.search(r"(^|[^a-z])" + re.escape(n.lower()) + r"($|[^a-z])", model)]
-    if named:
-        return max(named, key=lambda x: x[0])[1]
+    text = f"{manufacturer or ''} {model or ''}".lower()
+
+    def longest(words):
+        return max((len(w) for w in words if re.search(r"(^|[^a-z])" + re.escape(w) + r"($|[^a-z])", text)), default=0)
+
+    for words in (m.DeviceType.match_words, _type_names):
+        scored = [(longest(words(t)), t) for t in types]
+        best = max(scored, key=lambda x: x[0], default=(0, None))
+        if best[0]:
+            return best[1]
     wanted = {"laptop": lambda t: t.has_battery, "all_in_one": lambda t: t.has_screen and not t.has_battery,
               "desktop": lambda t: not t.has_screen and not t.has_battery and not t.uses_name}.get(chassis)
     return next((t for t in types if wanted and wanted(t)), None) or (types[0] if types else None)
@@ -224,7 +239,7 @@ def report(request, body):
     created = device is None
     if created:
         dtype = (m.DeviceType.objects.filter(pk=_int(body.get("typeId"))).first()
-                 or _guess_type(facts.get("chassis"), facts.get("model")))
+                 or _guess_type(facts.get("chassis"), facts.get("model"), manufacturer=facts.get("manufacturer")))
         tag = _text(body.get("tag"), 50) or next_tag(dtype)
         if tag_conflict(tag):  # the same tag, or the same identifier, as another device
             raise ApiError("err_dup", 409)
