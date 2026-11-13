@@ -43,6 +43,8 @@ class AppSettings(models.Model):
 
     org_name = models.CharField(max_length=200, default="Empresa")
     tag_prefix = models.CharField(max_length=20, default="INV-", blank=True)
+    # How tag numbers are counted: "type" (separately for each type code) or "global" (once for every device).
+    tag_numbering = models.CharField(max_length=10, default="type")
     date_fmt = models.CharField(max_length=10, default="dmy")
     currency = models.CharField(max_length=3, default="EUR")
     warranty_days = models.PositiveIntegerField(default=90)
@@ -95,6 +97,12 @@ class DeviceType(TranslatedItem):
     has_screen = models.BooleanField(default=False)
     has_battery = models.BooleanField(default=False)
     uses_name = models.BooleanField(default=False)
+    # Goes in the asset tags of this type, after the prefix: Z + LAP + 001. Capital letters and digits only.
+    code = models.CharField(max_length=10, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.code = "".join(c for c in (self.code or "").upper() if c.isascii() and c.isalnum())[:10]
+        super().save(*args, **kwargs)
 
 
 class Department(TranslatedItem):

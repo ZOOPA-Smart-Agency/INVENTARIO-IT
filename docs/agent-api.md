@@ -13,18 +13,21 @@ Every other call sends `Authorization: Bearer <token>`. A token lasts an hour. I
 
 ## Options
 
-`GET /api/agent/options?serial=<serial number>`
+`GET /api/agent/options?serial=<serial number>&chassis=<chassis>&model=<model>` (`chassis` and `model` are optional)
 
 ```json
 {
-  "org": "Zoopa", "nextTag": "INV-0018", "hostnameIsTag": false,
-  "types": [{"id": "1", "nombre": {"es": "Portátil", "en": "Laptop", "ca": "Portàtil"}, "hasScreen": true, "hasBattery": true, "usesName": false}],
+  "org": "Zoopa", "nextTag": "ZLAP018", "hostnameIsTag": false,
+  "types": [{"id": "1", "nombre": {"es": "Portátil", "en": "Laptop", "ca": "Portàtil"}, "hasScreen": true, "hasBattery": true, "usesName": false,
+             "code": "LAP", "nextTag": "ZLAP018"}],
   "locations": [{"id": "1", "nombre": {"es": "Oficina Madrid", "en": "Madrid office", "ca": "Oficina Madrid"}, "tipo": "office"}],
   "existing": {"id": "12", "tag": "INV-0012", "estado": "uso", "typeId": "1", "loc": "1"}
 }
 ```
 
 `existing` is the device with that serial number (ignoring case), or `null`.
+
+Each type's `nextTag` is the asset tag its next device gets: the tag prefix, the type's `code` and a number one higher than the highest in use (`ZLAP018`). That number is counted for each code, or across every device when **Settings > General > Tag numbering** is global. Types without a code use the prefix and a plain number (`INV-0018`). The top-level `nextTag` is the one for the type the server would choose from `chassis` and `model` (see below).
 
 ## Reporting a computer
 
@@ -39,7 +42,7 @@ Every other call sends `Authorization: Bearer <token>`. A token lasts an hour. I
 }
 ```
 
-`tag`, `typeId` and `loc` are only used when the computer is new. Without them the server uses the next free asset tag, a device type that fits `facts.chassis`, and the storage location. The answer is `{"created": true|false, "device": {...}}`. Errors are `400 err_required` (no serial number, or the inventory has no device types or locations yet) and `409 err_dup` (that asset tag is taken).
+`tag`, `typeId` and `loc` are only used when the computer is new. Without them the server uses a device type named in `facts.model` (a "MacBook Air" is a "MacBook" when that type exists) or else one that fits `facts.chassis`, that type's next asset tag, and the storage location. The answer is `{"created": true|false, "device": {...}}`. Errors are `400 err_required` (no serial number, or the inventory has no device types or locations yet) and `409 err_dup` (that asset tag is taken, ignoring case, or so is its number: `ZLAP01` and `ZLAP001` are the same, and with global numbering so is `ZMB001`).
 
 ### Facts
 

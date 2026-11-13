@@ -53,7 +53,19 @@
     "ca": "Portàtil"
    },
    "hasScreen": true,
-   "hasBattery": true
+   "hasBattery": true,
+   "code": "LAP"
+  },
+  {
+   "id": "t5",
+   "nombre": {
+    "es": "MacBook",
+    "en": "MacBook",
+    "ca": "MacBook"
+   },
+   "hasScreen": true,
+   "hasBattery": true,
+   "code": "MB"
   },
   {
    "id": "t2",
@@ -63,7 +75,8 @@
     "ca": "Sobretaula premuntat"
    },
    "hasScreen": false,
-   "hasBattery": false
+   "hasBattery": false,
+   "code": "PC"
   },
   {
    "id": "t3",
@@ -74,7 +87,8 @@
    },
    "hasScreen": false,
    "hasBattery": false,
-   "usesName": true
+   "usesName": true,
+   "code": "PC"
   },
   {
    "id": "t4",
@@ -84,7 +98,19 @@
     "ca": "Tot en un"
    },
    "hasScreen": true,
-   "hasBattery": false
+   "hasBattery": false,
+   "code": "AIO"
+  },
+  {
+   "id": "t6",
+   "nombre": {
+    "es": "iMac",
+    "en": "iMac",
+    "ca": "iMac"
+   },
+   "hasScreen": true,
+   "hasBattery": false,
+   "code": "IMC"
   }
  ],
  "depts": [

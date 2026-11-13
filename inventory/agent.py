@@ -5,8 +5,9 @@ The app signs in with an email and password and gets a signed key valid for an h
 Only active technicians and administrators can use it, and changing the account's password cancels its keys.
 
     POST /api/agent/login     {"email", "password"}             -> {"token", "expiresIn", "user"}
-    GET  /api/agent/options   ?serial=...                        -> locations, device types, next asset tag, and
-                                                                    the device with that serial number, if any
+    GET  /api/agent/options   ?serial=...&chassis=...&model=...  -> locations, device types (each with its next
+                                                                    asset tag), and the device with that serial
+                                                                    number, if any
     POST /api/agent/report    {"facts", "tag", "typeId", "loc"}  -> {"created", "device"}
 
 A computer with the same serial number (ignoring case) is updated: its hardware and software details are
@@ -32,6 +33,8 @@ from . import models as m
 from .api import LOGIN_MAX_ATTEMPTS, LOGIN_WINDOW_SECONDS, MAC_RE, ApiError, _throttle_key
 from .models import AuditEvent, Device, User
 from .state import device_json
+from .tags import conflict as tag_conflict
+from .tags import next_tag
 
 TOKEN_SALT = "inventario.agent"
 TOKEN_SECONDS = 3600
@@ -175,15 +178,6 @@ def login(request, body):
     return {"token": issue_token(user), "expiresIn": TOKEN_SECONDS, "user": {"nombre": user.nombre, "rol": user.rol}}
 
 
-def next_tag():
-    prefix = m.AppSettings.load().tag_prefix
-    taken = set(Device.objects.values_list("tag", flat=True))
-    n = Device.objects.count() + 1
-    while f"{prefix}{n:04d}" in taken:
-        n += 1
-    return f"{prefix}{n:04d}"
-
-
 def _existing(serial):
     serial = _text(serial, 100)
     return Device.objects.filter(serial__iexact=serial).first() if serial else None
@@ -193,18 +187,26 @@ def _existing(serial):
 def options(request, body):
     s = m.AppSettings.load()
     device = _existing(request.GET.get("serial"))
+    types = list(m.DeviceType.objects.all())
+    guess = _guess_type(request.GET.get("chassis"), request.GET.get("model"), types)
     return {
-        "org": s.org_name, "nextTag": next_tag(), "hostnameIsTag": s.hostname_is_tag,
-        "types": [{"id": str(t.pk), "nombre": t.nombre, "hasScreen": t.has_screen, "hasBattery": t.has_battery, "usesName": t.uses_name}
-                  for t in m.DeviceType.objects.all()],
+        "org": s.org_name, "nextTag": next_tag(guess, s.tag_prefix, s.tag_numbering), "hostnameIsTag": s.hostname_is_tag,
+        "types": [{"id": str(t.pk), "nombre": t.nombre, "hasScreen": t.has_screen, "hasBattery": t.has_battery, "usesName": t.uses_name,
+                   "code": t.code, "nextTag": next_tag(t, s.tag_prefix, s.tag_numbering)} for t in types],
         "locations": [{"id": str(l.pk), "nombre": l.nombre, "tipo": l.tipo} for l in m.Location.objects.all()],
         "existing": None if device is None else {"id": str(device.pk), "tag": device.tag, "estado": device.estado,
                                                  "typeId": str(device.type_id), "loc": str(device.loc_id)},
     }
 
 
-def _guess_type(chassis):
-    types = list(m.DeviceType.objects.all())
+def _guess_type(chassis, model=None, types=None):
+    """A type named in the model (a "MacBook Air" is a MacBook), else one that fits the chassis, else the first."""
+    types = list(m.DeviceType.objects.all()) if types is None else types
+    model = (model or "").lower()
+    named = [(len(n), t) for t in types for n in (t.nombre.values() if isinstance(t.nombre, dict) else [t.nombre])
+             if n and re.search(r"(^|[^a-z])" + re.escape(n.lower()) + r"($|[^a-z])", model)]
+    if named:
+        return max(named, key=lambda x: x[0])[1]
     wanted = {"laptop": lambda t: t.has_battery, "all_in_one": lambda t: t.has_screen and not t.has_battery,
               "desktop": lambda t: not t.has_screen and not t.has_battery and not t.uses_name}.get(chassis)
     return next((t for t in types if wanted and wanted(t)), None) or (types[0] if types else None)
@@ -221,10 +223,11 @@ def report(request, body):
     device = _existing(serial)
     created = device is None
     if created:
-        tag = _text(body.get("tag"), 50) or next_tag()
-        if Device.objects.filter(tag=tag).exists():
+        dtype = (m.DeviceType.objects.filter(pk=_int(body.get("typeId"))).first()
+                 or _guess_type(facts.get("chassis"), facts.get("model")))
+        tag = _text(body.get("tag"), 50) or next_tag(dtype)
+        if tag_conflict(tag):  # the same tag, or the same identifier, as another device
             raise ApiError("err_dup", 409)
-        dtype = m.DeviceType.objects.filter(pk=_int(body.get("typeId"))).first() or _guess_type(facts.get("chassis"))
         loc = (m.Location.objects.filter(pk=_int(body.get("loc"))).first()
                or m.Location.objects.filter(tipo="storage").first() or m.Location.objects.first())
         if dtype is None or loc is None:

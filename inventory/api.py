@@ -26,6 +26,8 @@ from . import models as m
 from .catalog import load_catalog
 from .models import Assignment, AuditEvent, Device, Employee, Incident, User
 from .registry import LISTS
+from .tags import SCOPES
+from .tags import conflict as tag_conflict
 from .state import (assignment_json, device_json, employee_json, full_state, incident_json, list_item_json,
                     me_json, password_policy_json, settings_json)
 
@@ -237,6 +239,7 @@ def state(request, body):
 
 
 def _apply_device(device, b):
+    old_tag = device.tag
     device.tag = text(b, "tag", 50, required=True, error="err_required")
     device.serial = text(b, "serial", 100, required=True, error="err_required")
     device.nombre = text(b, "nombre", 100)
@@ -293,8 +296,9 @@ def _apply_device(device, b):
     device.garantia_ext = choice(b, "garantiaExt", TRI_VALUES)
     device.notas = text(b, "notas", 10000)
 
-    duplicate = Device.objects.filter(tag=device.tag).exclude(pk=device.pk).exists()
-    if duplicate:
+    # the same tag, or (for a new or changed tag) the same identifier, as another device
+    if (Device.objects.filter(tag=device.tag).exclude(pk=device.pk).exists()
+            or (device.tag.lower() != (old_tag or "").lower() and tag_conflict(device.tag, device.pk))):
         raise ApiError("err_dup", 409)
     device.save()
     if previous:
@@ -510,6 +514,9 @@ def employee_status(request, body, pk):
 def _apply_settings(s, body):
     s.org_name = text(body, "orgName", 200) or s.org_name
     s.tag_prefix = text(body, "tagPrefix", 20)
+    s.tag_numbering = body.get("tagNumbering") or s.tag_numbering or "type"
+    if s.tag_numbering not in SCOPES:
+        raise ApiError("err_invalid")
     s.date_fmt = choice(body, "dateFmt", {"dmy", "mdy", "ymd", "dmydot"})
     s.currency = choice(body, "currency", {"EUR", "USD", "GBP", "CHF", "MXN", "COP", "ARS", "CLP"})
     s.warranty_days = int(number(body, "warrantyDays", 0, 3650) or 0)

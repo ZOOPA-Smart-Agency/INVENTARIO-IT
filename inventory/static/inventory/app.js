@@ -76,7 +76,7 @@ const I18N = {
     ff_onboard: 'Soldada en placa', ffd_onboard: 'Soldado en placa', ffd_25: '2,5 pulgadas', ffd_35: '3,5 pulgadas', ffd_prop: 'Propietario', unit_aria: 'Unidad', not_set: 'Sin indicar', fd_os: 'Sistema operativo', fd_loc: 'Ubicación', fd_enc: 'Disco cifrado',
     sect_net: 'Red', fd_wifi: 'Chip Wi-Fi', fd_mac_wifi: 'MAC Wi-Fi', fd_mac_eth: 'MAC Ethernet', mac_ph: 'AA:BB:CC:DD:EE:FF', err_mac: 'Las direcciones MAC deben tener el formato AA:BB:CC:DD:EE:FF',
     sect_purchase: 'Compra y garantía', fd_bought: 'Fecha de compra', fd_wend: 'Fin de garantía', fd_supplier: 'Proveedor', fd_invoice: 'N.º de factura', fd_price: 'Precio ({c})', fd_notes: 'Notas',
-    err_required: 'La etiqueta y el número de serie son obligatorios', err_dup: 'Ya existe un dispositivo con esa etiqueta',
+    err_required: 'La etiqueta y el número de serie son obligatorios', err_dup: 'Ya existe un dispositivo con esa etiqueta o ese número identificador', f_numbering: 'Numeración de las etiquetas', num_type: 'Por tipo de dispositivo', num_global: 'Global, para todos los dispositivos', num_type_hint: 'Cada código cuenta por su lado: {a} y {b} pueden convivir.', num_global_hint: 'Un único número para todos: si existe {a}, el siguiente MacBook será {c} y no {b}.',
 created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados',
     fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', err_person: 'El nombre y el email son obligatorios',
     assign_title: 'Asignar {tag}', fa_emp: 'Empleado', already_has: '(ya tiene {n})', fa_date: 'Fecha de entrega', fa_acc: 'Accesorios entregados', fa_acc_ph: 'Cargador, dock, ratón…', assign_btn: 'Asignar', assigned_to: 'Asignado a {name}',
@@ -119,7 +119,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     u_active: 'Activo', u_inactive: 'Desactivado', deactivate: 'Desactivar', activate: 'Activar', you: '(tú)',
     err_self: 'No puedes desactivar tu propia cuenta', err_last_admin: 'Tiene que quedar al menos un administrador activo', err_email_dup: 'Ya hay un usuario con ese email', err_pass: 'Escribe una contraseña', err_user: 'El nombre y el email son obligatorios',
     user_on: 'Cuenta activada', user_off: 'Cuenta desactivada',
-    f_org: 'Nombre de la organización', f_prefix: 'Prefijo de las etiquetas de inventario', f_prefix_hint: 'El próximo equipo se etiquetará como {x}',
+    f_org: 'Nombre de la organización', f_prefix: 'Prefijo de las etiquetas de inventario', f_prefix_hint: 'Las etiquetas son el prefijo, el código del tipo de dispositivo y un número, como {x}',
     f_datefmt: 'Formato de fecha', f_currency: 'Moneda', f_wdays: 'Avisar de garantías que vencen en los próximos (días)',
     df_dmy: 'Día/mes/año', df_mdy: 'Mes/día/año', df_ymd: 'Año-mes-día (ISO)', df_dmydot: 'Día.mes.año', region_saved: 'Ajustes guardados', region_preview: 'Vista previa: {d} · {m}',
 
@@ -217,6 +217,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     fd_customname: 'Nombre (opcional)',
     fd_customname_ph: 'Workstation de vídeo',
     type_usesname: 'Se identifica con un nombre en lugar de un modelo (montaje propio)',
+    type_code: 'Código para las etiquetas', type_code_hint: 'Va después del prefijo y antes del número, como LAP en {x}. Sin código, los equipos se numeran sin él.', th_code: 'Código',
     err_model_req: 'Elige un modelo, o añade uno con +',
     no_models: 'Todavía no hay modelos de este tipo',
     fd_osver: 'Versión',
@@ -333,7 +334,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     ff_onboard: 'Soldered on board', ffd_onboard: 'Soldered on board', ffd_25: '2.5-inch', ffd_35: '3.5-inch', ffd_prop: 'Proprietary', unit_aria: 'Unit', not_set: 'Not set', fd_os: 'Operating system', fd_loc: 'Location', fd_enc: 'Disk encrypted',
     sect_net: 'Network', fd_wifi: 'Wi-Fi chip', fd_mac_wifi: 'Wi-Fi MAC', fd_mac_eth: 'Ethernet MAC', mac_ph: 'AA:BB:CC:DD:EE:FF', err_mac: 'MAC addresses must look like AA:BB:CC:DD:EE:FF',
     sect_purchase: 'Purchase and warranty', fd_bought: 'Purchase date', fd_wend: 'Warranty end', fd_supplier: 'Supplier', fd_invoice: 'Invoice no.', fd_price: 'Price ({c})', fd_notes: 'Notes',
-    err_required: 'Asset tag and serial number are required', err_dup: 'A device with that tag already exists',
+    err_required: 'Asset tag and serial number are required', err_dup: 'Another device already has that tag or identification number', f_numbering: 'Tag numbering', num_type: 'By device type', num_global: 'Global, across all devices', num_type_hint: 'Each code counts on its own: {a} and {b} can both exist.', num_global_hint: 'One number for everything: if {a} exists, the next MacBook is {c}, not {b}.',
 created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_loc: 'Location', fe_hired: 'Start date', err_person: 'Name and email are required',
     assign_title: 'Assign {tag}', fa_emp: 'Employee', already_has: '(already has {n})', fa_date: 'Handover date', fa_acc: 'Accessories handed over', fa_acc_ph: 'Charger, dock, mouse…', assign_btn: 'Assign', assigned_to: 'Assigned to {name}',
@@ -376,7 +377,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     u_active: 'Active', u_inactive: 'Deactivated', deactivate: 'Deactivate', activate: 'Activate', you: '(you)',
     err_self: 'You cannot deactivate your own account', err_last_admin: 'At least one active administrator must remain', err_email_dup: 'A user with that email already exists', err_pass: 'Enter a password', err_user: 'Name and email are required',
     user_on: 'Account activated', user_off: 'Account deactivated',
-    f_org: 'Organisation name', f_prefix: 'Asset tag prefix', f_prefix_hint: 'The next device will be tagged {x}',
+    f_org: 'Organisation name', f_prefix: 'Asset tag prefix', f_prefix_hint: 'Tags are the prefix, the device type’s code and a number, such as {x}',
     f_datefmt: 'Date format', f_currency: 'Currency', f_wdays: 'Warn about warranties ending within (days)',
     df_dmy: 'Day/month/year', df_mdy: 'Month/day/year', df_ymd: 'Year-month-day (ISO)', df_dmydot: 'Day.month.year', region_saved: 'Settings saved', region_preview: 'Preview: {d} · {m}',
 
@@ -474,6 +475,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     fd_customname: 'Name (optional)',
     fd_customname_ph: 'Video workstation',
     type_usesname: 'Identified by a name instead of a model (custom build)',
+    type_code: 'Code for asset tags', type_code_hint: 'Goes after the prefix and before the number, like LAP in {x}. Without a code, devices are numbered without one.', th_code: 'Code',
     err_model_req: 'Choose a model, or add one with +',
     no_models: 'No models of this type yet',
     fd_osver: 'Version',
@@ -591,7 +593,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     unit_aria: 'Unitat', not_set: 'Sense indicar', fd_os: 'Sistema operatiu', fd_loc: 'Ubicació', fd_enc: 'Disc xifrat',
     sect_net: 'Xarxa', fd_wifi: 'Xip Wi-Fi', fd_mac_wifi: 'MAC Wi-Fi', fd_mac_eth: 'MAC Ethernet', mac_ph: 'AA:BB:CC:DD:EE:FF', err_mac: 'Les adreces MAC han de tenir el format AA:BB:CC:DD:EE:FF',
     sect_purchase: 'Compra i garantia', fd_bought: 'Data de compra', fd_wend: 'Fi de la garantia', fd_supplier: 'Proveïdor', fd_invoice: 'Núm. de factura', fd_price: 'Preu ({c})', fd_notes: 'Notes',
-    err_required: 'L’etiqueta i el número de sèrie són obligatoris', err_dup: 'Ja hi ha un dispositiu amb aquesta etiqueta',
+    err_required: 'L’etiqueta i el número de sèrie són obligatoris', err_dup: 'Ja hi ha un dispositiu amb aquesta etiqueta o aquest número identificador', f_numbering: 'Numeració de les etiquetes', num_type: 'Per tipus de dispositiu', num_global: 'Global, per a tots els dispositius', num_type_hint: 'Cada codi compta pel seu compte: {a} i {b} poden conviure.', num_global_hint: 'Un sol número per a tot: si existeix {a}, el següent MacBook serà {c} i no {b}.',
 created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
     fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', err_person: 'El nom i el correu són obligatoris',
     assign_title: 'Assigna {tag}', fa_emp: 'Empleat', already_has: '(ja en té {n})', fa_date: 'Data de lliurament', fa_acc: 'Accessoris lliurats', fa_acc_ph: 'Carregador, dock, ratolí…', assign_btn: 'Assigna', assigned_to: 'Assignat a {name}',
@@ -634,7 +636,7 @@ created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
     u_active: 'Actiu', u_inactive: 'Desactivat', deactivate: 'Desactiva', activate: 'Activa', you: '(tu)',
     err_self: 'No pots desactivar el teu propi compte', err_last_admin: 'Hi ha d’haver almenys un administrador actiu', err_email_dup: 'Ja hi ha un usuari amb aquest correu', err_pass: 'Escriu una contrasenya', err_user: 'El nom i el correu són obligatoris',
     user_on: 'Compte activat', user_off: 'Compte desactivat',
-    f_org: 'Nom de l’organització', f_prefix: 'Prefix de les etiquetes d’inventari', f_prefix_hint: 'El proper equip s’etiquetarà com a {x}',
+    f_org: 'Nom de l’organització', f_prefix: 'Prefix de les etiquetes d’inventari', f_prefix_hint: 'Les etiquetes són el prefix, el codi del tipus de dispositiu i un número, com ara {x}',
     f_datefmt: 'Format de data', f_currency: 'Moneda', f_wdays: 'Avisa de les garanties que vencen en els propers (dies)',
     df_dmy: 'Dia/mes/any', df_mdy: 'Mes/dia/any', df_ymd: 'Any-mes-dia (ISO)', df_dmydot: 'Dia.mes.any', region_saved: 'Configuració desada', region_preview: 'Previsualització: {d} · {m}',
 
@@ -732,6 +734,7 @@ created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
     fd_customname: 'Nom (opcional)',
     fd_customname_ph: 'Workstation de vídeo',
     type_usesname: 'S’identifica amb un nom en lloc d’un model (muntatge propi)',
+    type_code: 'Codi per a les etiquetes', type_code_hint: 'Va després del prefix i abans del número, com LAP a {x}. Sense codi, els equips es numeren sense.', th_code: 'Codi',
     err_model_req: 'Tria un model, o afegeix-ne un amb +',
     no_models: 'Encara no hi ha models d’aquest tipus',
     fd_osver: 'Versió',
@@ -950,7 +953,15 @@ function empPill(e) {
 }
 const normMac = v => v.trim().toUpperCase().replace(/-/g, ':');
 const validMac = v => !v || /^([0-9A-F]{2}:){5}[0-9A-F]{2}$/.test(v);
-const nextTag = () => { const p = S.settings.tagPrefix; let n = S.devices.length + 1; while (S.devices.some(d => d.tag === p + String(n).padStart(4, '0'))) n++; return p + String(n).padStart(4, '0'); };
+/* the next asset tag for a device type, as the server suggests it (inventory/tags.py): the prefix, the type's code
+   and one more than the highest number in use, counted for that code alone or for every device (Z + LAP + 001) */
+const tagCodeType = () => S.types.find(x => x.code) || S.types[0];
+const tagParts = (tag, p) => { if (!tag.toLowerCase().startsWith(p.toLowerCase())) return null; const m = tag.slice(p.length).match(/^([A-Za-z]*)(\d+)$/); return m ? [m[1].toUpperCase(), Number(m[2])] : null; };
+const nextTag = (typeId = tagCodeType()?.id, p = S.settings.tagPrefix || '', scope = S.settings.tagNumbering || 'type') => {
+  const code = typeInfo(typeId).code || '';
+  const used = S.devices.map(d => tagParts(d.tag, p)).filter(x => x && (scope === 'global' || x[0] === code));
+  return p + code + String(Math.max(0, ...used.map(x => x[1])) + 1).padStart(code ? 3 : 4, '0');
+};
 
 function age(from, to) {
   const a = new Date(from + 'T00:00:00'), b = new Date((to || today()) + 'T00:00:00');
@@ -1142,11 +1153,11 @@ const LISTS = {
       <label>${T('f_address')}<input name="direccion" id="${px}-dir" value="${esc(tx(x?.direccion))}"></label></div>`,
     read: (v, fd, x) => { const n = biRead(v); return n && { nombre: n, tipo: v.tipo, direccion: x && tx(x.direccion) === v.direccion ? x.direccion : v.direccion.trim() }; } },
   tipos: { coll: 'types', prefix: 't', title: 'set_types', sub: 'set_types_sub', single: 'item_type',
-    label: x => tx(x.nombre), cols: [['th_name', x => esc(tx(x.nombre))], ['k_screen', x => x.hasScreen ? `<span class="chip yes">${T('yes')}</span>` : `<span class="chip no">${T('no')}</span>`], ['k_battery', x => x.hasBattery ? `<span class="chip yes">${T('yes')}</span>` : `<span class="chip no">${T('no')}</span>`]],
+    label: x => tx(x.nombre), cols: [['th_name', x => esc(tx(x.nombre))], ['th_code', x => x.code ? `<span class="tag">${esc(x.code)}</span>` : '<span class="muted">—</span>'], ['k_screen', x => x.hasScreen ? `<span class="chip yes">${T('yes')}</span>` : `<span class="chip no">${T('no')}</span>`], ['k_battery', x => x.hasBattery ? `<span class="chip yes">${T('yes')}</span>` : `<span class="chip no">${T('no')}</span>`]],
     count: x => S.models.filter(m => m.typeId === x.id).length + S.devices.filter(d => d.typeId === x.id).length,
     usageText: x => { const m = S.models.filter(z => z.typeId === x.id).length, d = S.devices.filter(z => z.typeId === x.id).length; return m || d ? [m ? t('u_models', m) : '', d ? t('u_devices', d) : ''].filter(Boolean).join(' · ') : t('u_none'); },
-    form: (x, nested, px) => `<div class="fields">${biForm(x, px)}<label class="check full"><input type="checkbox" name="hasScreen" id="${px}-screen"${x?.hasScreen ? ' checked' : ''}> ${T('type_screen')}</label><label class="check full"><input type="checkbox" name="hasBattery" id="${px}-battery"${x?.hasBattery ? ' checked' : ''}> ${T('type_battery')}</label><label class="check full"><input type="checkbox" name="usesName" id="${px}-usesname"${x?.usesName ? ' checked' : ''}> ${T('type_usesname')}</label></div>`,
-    read: (v, fd) => { const n = biRead(v); return n && { nombre: n, hasScreen: fd.has('hasScreen'), hasBattery: fd.has('hasBattery'), usesName: fd.has('usesName') }; } },
+    form: (x, nested, px) => `<div class="fields">${biForm(x, px)}<label class="full">${T('type_code')}<input name="code" id="${px}-code" value="${esc(x?.code)}" maxlength="10" autocapitalize="characters" spellcheck="false" style="text-transform:uppercase"><span class="hint">${T('type_code_hint', { x: (S.settings.tagPrefix || '') + 'LAP001' })}</span></label><label class="check full"><input type="checkbox" name="hasScreen" id="${px}-screen"${x?.hasScreen ? ' checked' : ''}> ${T('type_screen')}</label><label class="check full"><input type="checkbox" name="hasBattery" id="${px}-battery"${x?.hasBattery ? ' checked' : ''}> ${T('type_battery')}</label><label class="check full"><input type="checkbox" name="usesName" id="${px}-usesname"${x?.usesName ? ' checked' : ''}> ${T('type_usesname')}</label></div>`,
+    read: (v, fd) => { const n = biRead(v); return n && { nombre: n, code: (v.code || '').toUpperCase().replace(/[^A-Z0-9]/g, ''), hasScreen: fd.has('hasScreen'), hasBattery: fd.has('hasBattery'), usesName: fd.has('usesName') }; } },
   modelos: { coll: 'models', prefix: 'm', title: 'set_models', sub: 'set_models_sub', single: 'item_model',
     label: x => modelName(x), optLabel: x => `${modelName(x)} (${typeName(x.typeId)})`,
     cols: [['th_maker', x => esc(x.fabricante)], ['th_model', x => `<b>${esc(x.nombre)}</b>`], ['th_kind', x => `<span class="chip">${esc(typeName(x.typeId))}</span>`]],
@@ -2219,6 +2230,7 @@ function settingsRegion() {
     <form class="regionform" id="regionForm" novalidate>
       <label>${T('f_org')}<input name="orgName" id="r-org" value="${esc(s.orgName)}"></label>
       <label>${T('f_prefix')}<input name="tagPrefix" id="r-prefix" value="${esc(s.tagPrefix)}" maxlength="10"><span class="hint" id="r-prefix-hint">${T('f_prefix_hint', { x: nextTag() })}</span></label>
+      <label>${T('f_numbering')}<select name="tagNumbering" id="r-numbering">${opts([['type', t('num_type')], ['global', t('num_global')]], s.tagNumbering || 'type')}</select><span class="hint" id="r-numbering-hint"></span></label>
       <label>${T('f_datefmt')}<select name="dateFmt" id="r-date">${opts(DATE_FMTS.map(f => [f, `${t('df_' + f)} · ${fmt(sample, f)}`]), s.dateFmt)}</select></label>
       <label>${T('f_currency')}<select name="currency" id="r-cur">${opts(CURRENCIES.map(c => [c, `${c} · ${money(1234.5, c)}`]), s.currency)}</select></label>
       <label>${T('f_wdays')}<input name="warrantyDays" id="r-wdays" type="number" min="0" max="730" step="1" value="${esc(s.warrantyDays)}"></label>
@@ -2230,12 +2242,13 @@ function settingsRegion() {
 }
 function bindRegion() {
   const f = $('#regionForm'); if (!f) return;
-  const prev = () => { const v = Object.fromEntries(new FormData(f)); $('#r-preview').textContent = t('region_preview', { d: fmt(today(), v.dateFmt), m: money(1149, v.currency) }); $('#r-prefix-hint').textContent = t('f_prefix_hint', { x: (v.tagPrefix || '') + String(S.devices.length + 1).padStart(4, '0') }); };
+  const prev = () => { const v = Object.fromEntries(new FormData(f)); $('#r-preview').textContent = t('region_preview', { d: fmt(today(), v.dateFmt), m: money(1149, v.currency) }); $('#r-prefix-hint').textContent = t('f_prefix_hint', { x: nextTag(undefined, v.tagPrefix || '', v.tagNumbering) });
+    const p = v.tagPrefix || ''; $('#r-numbering-hint').textContent = t(v.tagNumbering === 'global' ? 'num_global_hint' : 'num_type_hint', { a: p + 'LAP001', b: p + 'MB001', c: p + 'MB002' }); };
   f.addEventListener('input', prev); prev();
   f.addEventListener('submit', async e => {
     e.preventDefault();
     const v = Object.fromEntries(new FormData(f));
-    const body = { orgName: v.orgName.trim() || S.settings.orgName, tagPrefix: v.tagPrefix.trim(), dateFmt: v.dateFmt, currency: v.currency, warrantyDays: Math.max(0, parseInt(v.warrantyDays, 10) || 0), hostnameIsTag: v.hostnameIsTag === 'on' };
+    const body = { orgName: v.orgName.trim() || S.settings.orgName, tagPrefix: v.tagPrefix.trim(), tagNumbering: v.tagNumbering, dateFmt: v.dateFmt, currency: v.currency, warrantyDays: Math.max(0, parseInt(v.warrantyDays, 10) || 0), hostnameIsTag: v.hostnameIsTag === 'on' };
     try { await mutate('PUT', 'settings', body); } catch (err) { if (err.status !== 401) toast(t(err.code)); return; }
     applyChrome(); route(); toast(t('region_saved'), true);
   });
@@ -2282,7 +2295,7 @@ function bindRoleDesc() { const pw = $('#u-pass'), m = () => drawMeter($('#u-met
 
 /* ================= inventory actions ================= */
 function deviceForm(d) {
-  d = d || { tag: nextTag(), loc: storageLoc(), osFamily: 'win', enc: 'yes', compra: today(), typeId: S.types[0]?.id, modelId: S.models.find(m => m.typeId === S.types[0]?.id)?.id, nics: [{ type: 'wifi' }], disks: [{ unit: 'GB' }] };
+  d = d || { tag: nextTag(S.types[0]?.id), loc: storageLoc(), osFamily: 'win', enc: 'yes', compra: today(), typeId: S.types[0]?.id, modelId: S.models.find(m => m.typeId === S.types[0]?.id)?.id, nics: [{ type: 'wifi' }], disks: [{ unit: 'GB' }] };
   const ty = devType(d), named = usesName(ty);
   const f = (n, l, type = 'text', a, extra = '') => `<label>${T(l, a)}<input name="${n}" id="f-${n}" type="${type}" value="${esc(tx(d[n]))}"${type === 'number' ? ' step="1" min="0"' : ''}${extra}></label>`;
   const scr = hasScreen(ty), batt = hasBattery(ty);
@@ -2390,6 +2403,8 @@ function bindHwForm() {
   // the type decides: model list (filtered) or a free name, and whether screen / battery fields apply
   sel('#f-typeId').addEventListener('change', e => {
     const ty = e.target.value, sc = hasScreen(ty), bt = hasBattery(ty), named = usesName(ty), ms = sel('#f-modelId'), keep = ms.value;
+    // a new device's suggested tag follows its type, until someone types their own
+    const tag = sel('#f-tag'); if (tag && tag.dataset.auto !== undefined && tag.value === tag.dataset.auto) tag.value = tag.dataset.auto = nextTag(ty);
     ms.innerHTML = modelOpts(ty, keep);
     sel('#f-modelwrap').hidden = named; sel('#f-namewrap').hidden = !named;
     sel('#f-portable').hidden = !sc && !bt; sel('#f-scrtitle').textContent = screenTitle(ty);
@@ -2486,6 +2501,7 @@ const ACTIONS = {
       location.hash = 'dispositivo-' + device.id; return t('created', { tag: device.tag });
     }, t('add'));
     bindHwForm();
+    const tag = $('#f-tag'); tag.dataset.auto = tag.value;
   },
   editar(id) {
     const d = dev(id);

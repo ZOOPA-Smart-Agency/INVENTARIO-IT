@@ -18,6 +18,7 @@ def settings_json(s=None):
         "logo": s.logo_version if s.logo_type else 0,
         "orgName": s.org_name,
         "tagPrefix": s.tag_prefix,
+        "tagNumbering": s.tag_numbering,
         "dateFmt": s.date_fmt,
         "currency": s.currency,
         "warrantyDays": s.warranty_days,
