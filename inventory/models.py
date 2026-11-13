@@ -102,12 +102,20 @@ class DeviceType(TranslatedItem):
     # Words, separated by commas, that make the device app choose this type when the computer's maker or model
     # contains one of them (for example "MacBook" or "Surface, ThinkPad").
     match = models.CharField(max_length=300, blank=True)
+    # Also chosen for every computer of this shape ("laptop", "desktop" or "all_in_one"; "" for none), optionally
+    # leaving out Macs (so "all laptops except Macs" can go to Portátil while MacBooks get their own type).
+    auto_chassis = models.CharField(max_length=12, blank=True)
+    auto_not_mac = models.BooleanField(default=False)
+
+    CHASSIS = {"laptop", "desktop", "all_in_one"}
 
     def match_words(self):
         return [w.strip().lower() for w in self.match.replace("\n", ",").split(",") if w.strip()]
 
     def save(self, *args, **kwargs):
         self.code = "".join(c for c in (self.code or "").upper() if c.isascii() and c.isalnum())[:10]
+        if self.auto_chassis not in self.CHASSIS:
+            self.auto_chassis = ""
         super().save(*args, **kwargs)
 
 

@@ -14,7 +14,7 @@ class ListSpec:
 
 
 LISTS = {
-    "types": ListSpec(m.DeviceType, "set_types", {"hasScreen": "has_screen", "hasBattery": "has_battery", "usesName": "uses_name", "code": "code", "match": "match"}, translated=True),
+    "types": ListSpec(m.DeviceType, "set_types", {"hasScreen": "has_screen", "hasBattery": "has_battery", "usesName": "uses_name", "code": "code", "match": "match", "autoChassis": "auto_chassis", "autoNotMac": "auto_not_mac"}, translated=True),
     "depts": ListSpec(m.Department, "set_depts", translated=True),
     "locations": ListSpec(m.Location, "set_locs", {"tipo": "tipo", "direccion": "direccion"}, translated=True),
     "models": ListSpec(m.DeviceModel, "set_models", {"fabricante": "fabricante"}, {"typeId": ("type", m.DeviceType)}),

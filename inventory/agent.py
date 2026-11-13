@@ -192,7 +192,7 @@ def options(request, body):
     return {
         "org": s.org_name, "nextTag": next_tag(guess, s.tag_prefix, s.tag_numbering), "hostnameIsTag": s.hostname_is_tag,
         "types": [{"id": str(t.pk), "nombre": t.nombre, "hasScreen": t.has_screen, "hasBattery": t.has_battery, "usesName": t.uses_name,
-                   "code": t.code, "match": t.match_words(), "nextTag": next_tag(t, s.tag_prefix, s.tag_numbering)} for t in types],
+                   "code": t.code, "match": t.match_words(), "autoChassis": t.auto_chassis, "autoNotMac": t.auto_not_mac, "nextTag": next_tag(t, s.tag_prefix, s.tag_numbering)} for t in types],
         "locations": [{"id": str(l.pk), "nombre": l.nombre, "tipo": l.tipo} for l in m.Location.objects.all()],
         "existing": None if device is None else {"id": str(device.pk), "tag": device.tag, "estado": device.estado,
                                                  "typeId": str(device.type_id), "loc": str(device.loc_id)},
@@ -203,16 +203,23 @@ def _type_names(t):
     return [str(n).lower() for n in (t.nombre.values() if isinstance(t.nombre, dict) else [t.nombre]) if n]
 
 
+def _is_mac(manufacturer, model):
+    return "apple" in (manufacturer or "").lower() or bool(re.match(r"\s*(imac|macbook|mac(?![a-z]))", (model or "").lower()))
+
+
 def _guess_type(chassis, model=None, types=None, manufacturer=None):
     """The type for a new computer, chosen in this order (the device app makes the same choice):
 
     1. One whose words to match (Settings > Device types) appear in the maker or model, such as "ThinkPad".
     2. One whose name appears there: a "MacBook Air" is a "MacBook".
-    3. One that fits the chassis: a laptop gets a type with a battery. Otherwise, the first type.
+    3. One set to take every computer of this shape (all laptops, desktops or all-in-ones), unless it leaves out
+       Macs and this is one.
+    4. One that fits the shape: a laptop gets a type with a battery. Otherwise, the first type.
     A longer word wins over a shorter one, so "MacBook Pro" can go apart from "MacBook".
     """
     types = list(m.DeviceType.objects.all()) if types is None else types
     text = f"{manufacturer or ''} {model or ''}".lower()
+    mac = _is_mac(manufacturer, model)
 
     def longest(words):
         return max((len(w) for w in words if re.search(r"(^|[^a-z])" + re.escape(w) + r"($|[^a-z])", text)), default=0)
@@ -222,9 +229,13 @@ def _guess_type(chassis, model=None, types=None, manufacturer=None):
         best = max(scored, key=lambda x: x[0], default=(0, None))
         if best[0]:
             return best[1]
+    allowed = [t for t in types if not (mac and t.auto_not_mac)]
+    ruled = next((t for t in allowed if chassis and t.auto_chassis == chassis), None)
+    if ruled:
+        return ruled
     wanted = {"laptop": lambda t: t.has_battery, "all_in_one": lambda t: t.has_screen and not t.has_battery,
               "desktop": lambda t: not t.has_screen and not t.has_battery and not t.uses_name}.get(chassis)
-    return next((t for t in types if wanted and wanted(t)), None) or (types[0] if types else None)
+    return next((t for t in allowed if wanted and wanted(t)), None) or (allowed or types or [None])[0]
 
 
 @agent_endpoint("POST")

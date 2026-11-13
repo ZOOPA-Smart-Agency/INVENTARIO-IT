@@ -261,7 +261,55 @@ class TypeMatchTests(TestCase):
         self.assertEqual(response.json()["item"]["match"], "ThinkPad, Latitude")
         self.assertEqual(self.guess("Latitude 5440", "Dell"), "ZLAP001")
 
-    def test_update_gives_the_apple_types_their_words(self):
+    def test_all_of_a_shape_except_macs(self):
+        self.laptop.auto_chassis, self.laptop.auto_not_mac = "laptop", True
+        self.laptop.save()
+        self.macbook.has_battery = True
+        aio = kind("Todo en uno", "AIO", has_screen=True, auto_chassis="all_in_one", auto_not_mac=True)
+        imac = kind("iMac", "IMC", has_screen=True)
+        self.assertEqual(self.guess("Inspiron 15", "Dell"), "ZLAP001")
+        self.assertEqual(self.guess("Mac17,9", "Apple"), "ZMB001")  # a Mac laptop no word catches: not Portátil
+        self.assertEqual(self.guess("Vostro 5410", "Dell", "all_in_one"), "ZAIO001")
+        self.assertEqual(self.guess("iMac (24-inch)", "Apple", "all_in_one"), "ZIMC001")
+        self.assertEqual(self.guess("Mac15,4", "Apple", "all_in_one"), "ZIMC001")  # the next type that fits
+        aio.auto_chassis = "bogus"
+        aio.save()
+        self.assertEqual(aio.auto_chassis, "")
+        self.assertIsNotNone(imac)
+
+    def test_rules_beat_the_old_guess(self):
+        self.phone.auto_chassis = "laptop"
+        self.phone.save()
+        self.assertEqual(self.guess("Inspiron 15", "Dell"), "ZMOV001")  # not the first type with a battery
+
+    def test_update_fills_the_starting_types(self):
+        migration = import_module("inventory.migrations.0010_type_auto_rules")
+        aio = kind("Todo en uno", "AIO", has_screen=True)
+        custom = kind("Sobremesa a medida", "PC", uses_name=True)
+        prebuilt = kind("Sobremesa premontado", "PC")
+        self.macbook.match = ""
+        self.macbook.save()
+        migration.fill_rules(apps, None)
+        for t in (self.laptop, self.macbook, aio, custom, prebuilt, self.pro):
+            t.refresh_from_db()
+        self.assertEqual((self.laptop.auto_chassis, self.laptop.auto_not_mac), ("laptop", True))
+        self.assertIn("ThinkPad", self.laptop.match)
+        self.assertEqual(self.macbook.match, "MacBook")
+        self.assertEqual((aio.auto_chassis, aio.auto_not_mac), ("all_in_one", True))
+        self.assertEqual((prebuilt.auto_chassis, custom.auto_chassis), ("desktop", ""))
+        self.assertIn("To Be Filled By O.E.M.", custom.match)
+        self.assertEqual(self.pro.match, "MacBook Pro, Surface")  # set by someone: kept
+
+    def test_new_installs_start_with_rules(self):
+        m.DeviceType.objects.all().delete()
+        from inventory.catalog import load_catalog
+        load_catalog()
+        rules = {t.code + ("+" if t.uses_name else ""): (t.auto_chassis, t.auto_not_mac, bool(t.match)) for t in m.DeviceType.objects.all()}
+        self.assertEqual(rules, {"LAP": ("laptop", True, True), "MB": ("", False, True), "PC": ("desktop", False, True),
+                                 "PC+": ("", False, True), "AIO": ("all_in_one", True, True), "IMC": ("", False, True)})
+        self.assertEqual(self.guess("To Be Filled By O.E.M.", "To Be Filled By O.E.M.", "desktop"), "ZPC001")
+
+    def test_1_4_0_still_gives_the_apple_types_their_words(self):
         migration = import_module("inventory.migrations.0009_type_match")
         self.macbook.match = ""
         self.macbook.save()
