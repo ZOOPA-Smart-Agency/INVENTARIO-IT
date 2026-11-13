@@ -57,7 +57,7 @@
    "code": "LAP",
    "match": "ThinkPad, Latitude, EliteBook, ProBook, IdeaPad, Zenbook, Vivobook, Surface Laptop",
    "autoChassis": "laptop",
-   "autoNotMac": true
+   "autoApple": "except"
   },
   {
    "id": "t5",
@@ -109,7 +109,7 @@
    "code": "AIO",
    "match": "EliteOne, ProOne, All-in-One",
    "autoChassis": "all_in_one",
-   "autoNotMac": true
+   "autoApple": "except"
   },
   {
    "id": "t6",

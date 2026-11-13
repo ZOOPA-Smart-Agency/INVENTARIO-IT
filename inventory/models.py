@@ -102,12 +102,15 @@ class DeviceType(TranslatedItem):
     # Words, separated by commas, that make the device app choose this type when the computer's maker or model
     # contains one of them (for example "MacBook" or "Surface, ThinkPad").
     match = models.CharField(max_length=300, blank=True)
-    # Also chosen for every computer of this shape ("laptop", "desktop" or "all_in_one"; "" for none), optionally
-    # leaving out Macs (so "all laptops except Macs" can go to Portátil while MacBooks get their own type).
+    # Also chosen for every computer of this shape ("any", "laptop", "desktop" or "all_in_one"; "" for none), maybe
+    # only Apple computers or all but them: so all laptops except Apple ones can go to Portátil, and every Apple
+    # computer to a type of its own.
     auto_chassis = models.CharField(max_length=12, blank=True)
-    auto_not_mac = models.BooleanField(default=False)
+    # Which makers that rule covers: "" all, "only" only Apple computers, "except" all but Apple computers.
+    auto_apple = models.CharField(max_length=6, blank=True)
 
-    CHASSIS = {"laptop", "desktop", "all_in_one"}
+    CHASSIS = {"any", "laptop", "desktop", "all_in_one"}
+    APPLE = {"", "only", "except"}
 
     def match_words(self):
         return [w.strip().lower() for w in self.match.replace("\n", ",").split(",") if w.strip()]
@@ -116,6 +119,8 @@ class DeviceType(TranslatedItem):
         self.code = "".join(c for c in (self.code or "").upper() if c.isascii() and c.isalnum())[:10]
         if self.auto_chassis not in self.CHASSIS:
             self.auto_chassis = ""
+        if self.auto_apple not in self.APPLE:
+            self.auto_apple = ""
         super().save(*args, **kwargs)
 
 

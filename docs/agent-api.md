@@ -19,7 +19,7 @@ Every other call sends `Authorization: Bearer <token>`. A token lasts an hour. I
 {
   "org": "Zoopa", "nextTag": "ZLAP018", "hostnameIsTag": false,
   "types": [{"id": "1", "nombre": {"es": "Portátil", "en": "Laptop", "ca": "Portàtil"}, "hasScreen": true, "hasBattery": true, "usesName": false,
-             "code": "LAP", "match": ["thinkpad", "latitude"], "autoChassis": "laptop", "autoNotMac": true,
+             "code": "LAP", "match": ["thinkpad", "latitude"], "autoChassis": "laptop", "autoApple": "except",
              "nextTag": "ZLAP018"}],
   "locations": [{"id": "1", "nombre": {"es": "Oficina Madrid", "en": "Madrid office", "ca": "Oficina Madrid"}, "tipo": "office"}],
   "existing": {"id": "12", "tag": "INV-0012", "estado": "uso", "typeId": "1", "loc": "1"}
@@ -43,7 +43,7 @@ Each type's `nextTag` is the asset tag its next device gets: the tag prefix, the
 }
 ```
 
-`tag`, `typeId` and `loc` are only used when the computer is new. Without them the server picks a device type in this order: one whose `match` words (set in **Settings > Device types**) appear in `facts.manufacturer` or `facts.model`; one whose name appears there (a "MacBook Air" is a "MacBook"); the first one set to take every computer of that `facts.chassis` (`autoChassis`), unless it leaves out Macs (`autoNotMac`) and this is one (made by Apple, or a model starting with "Mac", "MacBook" or "iMac"); one that fits `facts.chassis` by having a screen or battery. Whole words only, ignoring case, and the longest matching word wins. Then it uses that type's next asset tag, and the storage location. The answer is `{"created": true|false, "device": {...}}`. Errors are `400 err_required` (no serial number, or the inventory has no device types or locations yet) and `409 err_dup` (that asset tag is taken, ignoring case, or so is its number: `ZLAP01` and `ZLAP001` are the same, and with global numbering so is `ZMB001`).
+`tag`, `typeId` and `loc` are only used when the computer is new. Without them the server picks a device type in this order: one whose `match` words (set in **Settings > Device types**) appear in `facts.manufacturer` or `facts.model`; one whose name appears there (a "MacBook Air" is a "MacBook"); the first one set to take every computer of that `facts.chassis` (`autoChassis`), then the first set to take computers of any shape (`autoChassis` `"any"`), in both cases skipping types whose `autoApple` is `"only"` when this is not an Apple computer, or `"except"` when it is (Apple means made by Apple, or a model starting with "Mac", "MacBook" or "iMac"); one that fits `facts.chassis` by having a screen or battery. Whole words only, ignoring case, and the longest matching word wins. Then it uses that type's next asset tag, and the storage location. The answer is `{"created": true|false, "device": {...}}`. Errors are `400 err_required` (no serial number, or the inventory has no device types or locations yet) and `409 err_dup` (that asset tag is taken, ignoring case, or so is its number: `ZLAP01` and `ZLAP001` are the same, and with global numbering so is `ZMB001`).
 
 ### Facts
 
