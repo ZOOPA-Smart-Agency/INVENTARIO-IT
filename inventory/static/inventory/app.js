@@ -79,7 +79,7 @@ const I18N = {
     err_required: 'La etiqueta y el número de serie son obligatorios', err_dup: 'Ya existe un dispositivo con esa etiqueta o ese número identificador', f_numbering: 'Numeración de las etiquetas', num_type: 'Por tipo de dispositivo', num_global: 'Global, para todos los dispositivos', num_type_hint: 'Cada código cuenta por su lado: {a} y {b} pueden convivir.', num_global_hint: 'Un único número para todos: si existe {a}, el siguiente MacBook será {c} y no {b}.',
 created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados',
     fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_depts: 'Departamentos', fe_locs: 'Ubicaciones', no_dept: 'Sin departamento', no_loc: 'Sin ubicación', add_dept: 'Añadir otro departamento', add_loc: 'Añadir otra ubicación', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', k_contract: 'Contrato', ct_indefinido: 'Indefinido', ct_temporal: 'Temporal', ct_practicas: 'Prácticas', ct_all: 'Todos los contratos', ct_unset: 'Sin definir', err_person: 'El nombre y el email son obligatorios',
-    assign_title: 'Asignar {tag}', fa_emp: 'Empleado', already_has: '(ya tiene {n})', fa_date: 'Fecha de entrega', fa_acc: 'Accesorios entregados', fa_acc_ph: 'Cargador, dock, ratón…', assign_btn: 'Asignar', assigned_to: 'Asignado a {name}',
+    assign_title: 'Asignar {tag}', fa_to: 'Asignar a', fa_to_emp: 'Un empleado', fa_to_dept: 'Un departamento (equipo compartido)', fa_dept: 'Departamento', err_dept: 'Elige un departamento', shared_dept: 'Equipo compartido del departamento', fa_emp: 'Empleado', already_has: '(ya tiene {n})', fa_date: 'Fecha de entrega', fa_acc: 'Accesorios entregados', fa_acc_ph: 'Cargador, dock, ratón…', assign_btn: 'Asignar', assigned_to: 'Asignado a {name}',
     return_title: 'Devolución de {tag}', return_intro: 'Lo devuelve {name}, que lo tiene desde el {d}.', fr_date: 'Fecha de devolución', fr_cond: 'Estado físico', fr_next: 'Después de la devolución',
     next_avail: 'Disponible en el almacén', next_rep: 'Enviar a reparación', next_disc: 'Descartar', fr_notes_ph: 'Falta el cargador, borrado de datos hecho…', return_prefix: 'Devolución: ', return_done: 'Devolución registrada',
     fault_title: 'Registrar avería en {tag}', fi_date: 'Fecha', fi_type: 'Tipo', fi_desc: 'Descripción del problema', fi_parts: 'Piezas cambiadas', fi_cost: 'Coste ({c})', fi_tech: 'Servicio técnico',
@@ -337,7 +337,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     err_required: 'Asset tag and serial number are required', err_dup: 'Another device already has that tag or identification number', f_numbering: 'Tag numbering', num_type: 'By device type', num_global: 'Global, across all devices', num_type_hint: 'Each code counts on its own: {a} and {b} can both exist.', num_global_hint: 'One number for everything: if {a} exists, the next MacBook is {c}, not {b}.',
 created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_depts: 'Departments', fe_locs: 'Locations', no_dept: 'No department', no_loc: 'No location', add_dept: 'Add another department', add_loc: 'Add another location', fe_loc: 'Location', fe_hired: 'Start date', k_contract: 'Contract', ct_indefinido: 'Permanent', ct_temporal: 'Temporary', ct_practicas: 'Internship', ct_all: 'All contracts', ct_unset: 'Not defined', err_person: 'Name and email are required',
-    assign_title: 'Assign {tag}', fa_emp: 'Employee', already_has: '(already has {n})', fa_date: 'Handover date', fa_acc: 'Accessories handed over', fa_acc_ph: 'Charger, dock, mouse…', assign_btn: 'Assign', assigned_to: 'Assigned to {name}',
+    assign_title: 'Assign {tag}', fa_to: 'Assign to', fa_to_emp: 'An employee', fa_to_dept: 'A department (shared device)', fa_dept: 'Department', err_dept: 'Choose a department', shared_dept: 'Shared by the department', fa_emp: 'Employee', already_has: '(already has {n})', fa_date: 'Handover date', fa_acc: 'Accessories handed over', fa_acc_ph: 'Charger, dock, mouse…', assign_btn: 'Assign', assigned_to: 'Assigned to {name}',
     return_title: 'Return of {tag}', return_intro: '{name} is returning it. They have had it since {d}.', fr_date: 'Return date', fr_cond: 'Physical condition', fr_next: 'After the return',
     next_avail: 'Available in storage', next_rep: 'Send for repair', next_disc: 'Retire', fr_notes_ph: 'Charger missing, data wiped…', return_prefix: 'Return: ', return_done: 'Return recorded',
     fault_title: 'Log fault on {tag}', fi_date: 'Date', fi_type: 'Type', fi_desc: 'Problem description', fi_parts: 'Parts replaced', fi_cost: 'Cost ({c})', fi_tech: 'Repair service',
@@ -596,7 +596,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     err_required: 'L’etiqueta i el número de sèrie són obligatoris', err_dup: 'Ja hi ha un dispositiu amb aquesta etiqueta o aquest número identificador', f_numbering: 'Numeració de les etiquetes', num_type: 'Per tipus de dispositiu', num_global: 'Global, per a tots els dispositius', num_type_hint: 'Cada codi compta pel seu compte: {a} i {b} poden conviure.', num_global_hint: 'Un sol número per a tot: si existeix {a}, el següent MacBook serà {c} i no {b}.',
 created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
     fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_depts: 'Departaments', fe_locs: 'Ubicacions', no_dept: 'Sense departament', no_loc: 'Sense ubicació', add_dept: 'Afegeix un altre departament', add_loc: 'Afegeix una altra ubicació', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', k_contract: 'Contracte', ct_indefinido: 'Indefinit', ct_temporal: 'Temporal', ct_practicas: 'Pràctiques', ct_all: 'Tots els contractes', ct_unset: 'Sense definir', err_person: 'El nom i el correu són obligatoris',
-    assign_title: 'Assigna {tag}', fa_emp: 'Empleat', already_has: '(ja en té {n})', fa_date: 'Data de lliurament', fa_acc: 'Accessoris lliurats', fa_acc_ph: 'Carregador, dock, ratolí…', assign_btn: 'Assigna', assigned_to: 'Assignat a {name}',
+    assign_title: 'Assigna {tag}', fa_to: 'Assigna a', fa_to_emp: 'Un empleat', fa_to_dept: 'Un departament (equip compartit)', fa_dept: 'Departament', err_dept: 'Tria un departament', shared_dept: 'Equip compartit del departament', fa_emp: 'Empleat', already_has: '(ja en té {n})', fa_date: 'Data de lliurament', fa_acc: 'Accessoris lliurats', fa_acc_ph: 'Carregador, dock, ratolí…', assign_btn: 'Assigna', assigned_to: 'Assignat a {name}',
     return_title: 'Devolució de {tag}', return_intro: 'El retorna {name}, que el té des del {d}.', fr_date: 'Data de devolució', fr_cond: 'Estat físic', fr_next: 'Després de la devolució',
     next_avail: 'Disponible al magatzem', next_rep: 'Envia a reparar', next_disc: 'Retira', fr_notes_ph: 'Falta el carregador, esborrat de dades fet…', return_prefix: 'Devolució: ', return_done: 'Devolució registrada',
     fault_title: 'Registra una avaria a {tag}', fi_date: 'Data', fi_type: 'Tipus', fi_desc: 'Descripció del problema', fi_parts: 'Peces canviades', fi_cost: 'Cost ({c})', fi_tech: 'Servei tècnic',
@@ -895,6 +895,14 @@ const deptName = id => tx(byId('depts', id)?.nombre) || '—';
 const locName = id => tx(byId('locations', id)?.nombre) || '—';
 /* an employee's departments and offices (each can be several) */
 const deptNames = e => (e.depts || []).map(deptName).join(', ') || '—';
+/* who has a device under an assignment: a person, or a whole department (a shared device) */
+const holderName = a => !a ? '' : a.deptId ? deptName(a.deptId) : (emp(a.employeeId)?.nombre || '—');
+const holderCell = a => {
+  if (!a) return '';
+  if (a.deptId) return `<b>${esc(deptName(a.deptId))}</b><span class="t2">${T('shared_dept')}</span>`;
+  const p = emp(a.employeeId);
+  return p ? `<a href="#empleado-${p.id}">${esc(p.nombre)}</a><span class="t2">${esc(deptNames(p))}</span>` : '—';
+};
 const locNames = e => (e.locs || []).map(locName).join(', ') || '—';
 const emp = id => byId('employees', id);
 const dev = id => byId('devices', id);
@@ -1144,7 +1152,8 @@ const diskUses = key => (d, x) => (d.disks || []).some(k => k[key] === x.id);
 const LISTS = {
   departamentos: { coll: 'depts', prefix: 'dp', title: 'set_depts', sub: 'set_depts_sub', single: 'item_dept',
     label: x => tx(x.nombre), cols: [['th_name', x => esc(tx(x.nombre))]],
-    count: x => S.employees.filter(e => (e.depts || []).includes(x.id)).length, usageText: x => usage(LISTS.departamentos.count(x), 'u_people'),
+    count: x => S.employees.filter(e => (e.depts || []).includes(x.id)).length + S.assignments.filter(a => a.deptId === x.id).length,
+    usageText: x => { const p = S.employees.filter(e => (e.depts || []).includes(x.id)).length, d = new Set(S.assignments.filter(a => a.deptId === x.id).map(a => a.deviceId)).size; return p || d ? [p ? t('u_people', p) : '', d ? t('u_devices', d) : ''].filter(Boolean).join(' · ') : t('u_none'); },
     form: (x, nested, px) => `<div class="fields">${biForm(x, px)}</div>`,
     read: v => { const n = biRead(v); return n && { nombre: n }; } },
   ubicaciones: { coll: 'locations', prefix: 'l', title: 'set_locs', sub: 'set_locs_sub', single: 'item_loc',
@@ -1962,7 +1971,7 @@ function viewPanel() {
   activos.filter(d => d.enc === 'no').forEach(d => alerts.push({ k: 'bad', d, t: t('al_enc', { tag: d.tag }), s: t('al_enc_s') }));
   activos.filter(d => hasBattery(devType(d)) && has(d.batHealth) && d.batHealth < 80).forEach(d => alerts.push({ k: 'warn', d, t: t('al_bat', { tag: d.tag, p: nf(d.batHealth) }), s: t('al_bat_s') }));
 
-  const byDept = S.depts.map(x => [tx(x.nombre), S.assignments.filter(a => !a.hasta && (emp(a.employeeId)?.depts || []).includes(x.id)).length]).sort((a, b) => b[1] - a[1]);
+  const byDept = S.depts.map(x => [tx(x.nombre), S.assignments.filter(a => !a.hasta && (a.deptId === x.id || (emp(a.employeeId)?.depts || []).includes(x.id))).length]).sort((a, b) => b[1] - a[1]);
   const max = Math.max(1, ...byDept.map(x => x[1]));
   const valor = activos.reduce((s, d) => s + (Number(d.precio) || 0), 0);
   const col = { uso: 'var(--info)', disponible: 'var(--ok)', reparacion: 'var(--warn)' };
@@ -2009,16 +2018,16 @@ function drawDeviceRows() {
     if (F.estado === 'activos' && isRetired(d)) return false;
     if (F.estado === 'retirados' && !isRetired(d)) return false;
     if (ST.includes(F.estado) && d.estado !== F.estado) return false;
-    if (F.dept && !(e?.depts || []).includes(F.dept)) return false;
+    if (F.dept && a?.deptId !== F.dept && !(e?.depts || []).includes(F.dept)) return false;
     if (F.tipo && devType(d) !== F.tipo) return false;
-    if (q && ![d.tag, hostOf(d), d.serial, osText(d), cpuOf(d)?.nombre, ...(d.nics || []).map(n => n.mac + ' ' + listName('nicModels', n.modelId)), gpuOf(d)?.nombre, devTitle(d), e?.nombre].join(' ').toLowerCase().includes(q)) return false;
+    if (q && ![d.tag, hostOf(d), d.serial, osText(d), cpuOf(d)?.nombre, ...(d.nics || []).map(n => n.mac + ' ' + listName('nicModels', n.modelId)), gpuOf(d)?.nombre, devTitle(d), e?.nombre, a?.deptId ? deptName(a.deptId) : ''].join(' ').toLowerCase().includes(q)) return false;
     return true;
   });
   $('#devTable').innerHTML = rows.length ? `<table><thead><tr><th>${T('th_tag')}</th><th>${T('th_device')}</th><th>${T('th_assigned')}</th><th>${T('th_status')}</th><th>${T('th_warranty')}</th></tr></thead><tbody>
     ${rows.map(d => { const a = openAsg(d.id), e = a && emp(a.employeeId), m = model(d.modelId);
       return `<tr class="click" data-go="dispositivo-${d.id}"><td>${tagLink(d)}</td>
         <td><b>${esc(devTitle(d))}</b><span class="t2">${[esc(typeName(devType(d))), hostExtra(d), `<span class="mono">${esc(d.serial)}</span>`].filter(Boolean).join(' · ')}</span></td>
-        <td>${e ? `${esc(e.nombre)}<span class="t2">${esc(deptNames(e))}${hasLeft(e) ? ` · <span class="w-past">${T('left_badge')}</span>` : ''}</span>` : '<span class="muted">—</span>'}</td>
+        <td>${e ? `${esc(e.nombre)}<span class="t2">${esc(deptNames(e))}${hasLeft(e) ? ` · <span class="w-past">${T('left_badge')}</span>` : ''}</span>` : a?.deptId ? `${esc(deptName(a.deptId))}<span class="t2">${T('shared_dept')}</span>` : '<span class="muted">—</span>'}</td>
         <td>${pill(d.estado)}</td><td>${warranty(d)}</td></tr>`; }).join('')}
   </tbody></table>` : `<div class="empty">${T('no_match_dev')}</div>`;
 }
@@ -2060,6 +2069,7 @@ function viewDevice(id) {
   <div class="grid3">
     <section class="panel"><h2>${T('current')}</h2>
       ${e ? `<div class="current"><b><a href="#empleado-${e.id}">${esc(e.nombre)}</a></b><span class="muted">${esc(deptNames(e))} · ${esc(locNames(e))}</span><span>${T('since', { d: fmt(a.desde), age: age(a.desde) })}</span>${tx(a.notas) ? `<span class="muted">${T('delivered_with', { x: tx(a.notas) })}</span>` : ''}</div>`
+        : a?.deptId ? `<div class="current"><b>${esc(deptName(a.deptId))}</b><span class="muted">${T('shared_dept')} · ${esc(locName(d.loc))}</span><span>${T('since', { d: fmt(a.desde), age: age(a.desde) })}</span>${tx(a.notas) ? `<span class="muted">${T('delivered_with', { x: tx(a.notas) })}</span>` : ''}</div>`
         : `<p class="muted">${retired ? T('out_service') : T('unassigned_at', { loc: locName(d.loc) })}</p>`}
     </section>
     <section class="panel"><h2>${T('hw')}</h2>
@@ -2088,15 +2098,15 @@ function viewDevice(id) {
   ${tx(d.notas) ? `<section class="panel"><h2>${T('notes')}</h2><p style="margin:0;white-space:pre-line">${esc(tx(d.notas))}</p></section>` : ''}
   <section class="panel"><h2>${T('user_hist')}</h2>
     ${hist.length ? `<div class="tablebox"><table><thead><tr><th>${T('th_person')}</th><th>${T('th_from')}</th><th>${T('th_to')}</th><th>${T('th_dur')}</th><th>${T('th_faults')}</th><th>${T('th_handover')}</th></tr></thead><tbody>
-      ${hist.map(h => { const p = emp(h.employeeId), fs = faultsIn(d.id, h.desde, h.hasta); return `<tr><td>${p ? `<a href="#empleado-${p.id}">${esc(p.nombre)}</a><span class="t2">${esc(deptNames(p))}</span>` : '—'}</td><td>${fmt(h.desde)}</td><td>${h.hasta ? fmt(h.hasta) : `<b>${T('current_lbl')}</b>`}</td><td>${esc(age(h.desde, h.hasta))}</td>
+      ${hist.map(h => { const fs = faultsIn(d.id, h.desde, h.hasta); return `<tr><td>${holderCell(h)}</td><td>${fmt(h.desde)}</td><td>${h.hasta ? fmt(h.hasta) : `<b>${T('current_lbl')}</b>`}</td><td>${esc(age(h.desde, h.hasta))}</td>
         <td>${fs.length ? `<b>${fs.length}</b>${fs.map(f => `<span class="t2">${fmt(f.fecha)} · ${esc(tx(f.descripcion))}</span>`).join('')}` : dash}</td>
         <td>${esc(tx(h.notas)) || dash}${h.condicion ? `<span class="t2">${T('returned_cond', { c: cd(h.condicion) })}</span>` : ''}</td></tr>`; }).join('')}
     </tbody></table></div>` : `<p class="muted">${T('never_assigned')}</p>`}
   </section>
   <section class="panel"><h2>${T('inc_hist')}</h2>
     ${incs.length ? `<div class="tablebox"><table><thead><tr><th>${T('th_date')}</th><th>${T('th_kind')}</th><th>${T('th_desc')}</th><th>${T('th_holder')}</th><th>${T('th_parts')}</th><th>${T('th_cost')}</th><th>${T('th_status')}</th></tr></thead><tbody>
-      ${incs.map(i => { const h = holderAt(d.id, i.fecha), p = h && emp(h.employeeId); return `<tr><td>${fmt(i.fecha)}</td><td>${esc(itp(i.tipo))}</td><td>${esc(tx(i.descripcion))}${tx(i.proveedor) ? `<span class="t2">${esc(tx(i.proveedor))}</span>` : ''}</td>
-        <td>${p ? `<a href="#empleado-${p.id}">${esc(p.nombre)}</a>` : `<span class="muted">${T('nobody')}</span>`}</td><td>${esc(tx(i.piezas)) || dash}</td><td>${money(i.coste)}</td>
+      ${incs.map(i => { const h = holderAt(d.id, i.fecha), p = h && !h.deptId && emp(h.employeeId); return `<tr><td>${fmt(i.fecha)}</td><td>${esc(itp(i.tipo))}</td><td>${esc(tx(i.descripcion))}${tx(i.proveedor) ? `<span class="t2">${esc(tx(i.proveedor))}</span>` : ''}</td>
+        <td>${p ? `<a href="#empleado-${p.id}">${esc(p.nombre)}</a>` : h?.deptId ? esc(deptName(h.deptId)) : `<span class="muted">${T('nobody')}</span>`}</td><td>${esc(tx(i.piezas)) || dash}</td><td>${money(i.coste)}</td>
         <td>${i.estado === 'abierta' ? `<div class="row">${pill('abierta', t('open'))}${ed ? `<button class="btn small" type="button" data-act="resolver" data-id="${i.id}">${T('mark_resolved')}</button>` : ''}</div>` : `${pill('resuelta', t('resolved'))}<span class="t2">${fmt(i.resuelta)}</span>`}</td></tr>`; }).join('')}
     </tbody></table></div>` : `<p class="muted">${T('no_inc')}</p>`}
   </section>`;
@@ -2566,20 +2576,27 @@ const ACTIONS = {
     const people = S.employees.filter(e => empState(e) === 'activo').sort((a, b) => a.nombre.localeCompare(b.nombre, lang))
       .map(e => { const n = S.assignments.filter(a => a.employeeId === e.id && !a.hasta).length; return [e.id, `${e.nombre} · ${deptNames(e)}${n ? ' ' + t('already_has', { n }) : ''}`]; });
     openDialog(t('assign_title', { tag: d.tag }), `<div class="fields">
-      <label class="full">${T('fa_emp')}<select name="emp" id="a-emp">${opts(people)}</select></label>
+      <label class="full">${T('fa_to')}<select name="to" id="a-to">${opts([['emp', t('fa_to_emp')], ['dept', t('fa_to_dept')]])}</select></label>
+      <label class="full" id="a-empwrap">${T('fa_emp')}<select name="emp" id="a-emp">${opts(people)}</select></label>
+      <label class="full" id="a-deptwrap" hidden>${T('fa_dept')}${selPlus('departamentos', 'dept', 'a-dept', opts(S.depts.map(x => [x.id, tx(x.nombre)])))}</label>
       <label>${T('fa_date')}<input type="date" name="desde" id="a-desde" value="${today()}"></label>
       <label>${T('fd_loc')}${selPlus('ubicaciones', 'loc', 'a-loc', opts(personLocs()))}</label>
       <label class="full">${T('fa_acc')}<input name="notas" id="a-notas" placeholder="${T('fa_acc_ph')}"></label></div>`, async v => {
+      if (v.to === 'dept') {
+        if (!v.dept) { toast(t('err_dept')); return false; }
+        await mutate('POST', `devices/${d.id}/assign`, { deptId: v.dept, desde: v.desde, loc: v.loc, notas: v.notas }); return t('assigned_to', { name: deptName(v.dept) });
+      }
       const e = emp(v.emp); if (!e) return false;
       await mutate('POST', `devices/${d.id}/assign`, { employeeId: e.id, desde: v.desde, loc: v.loc, notas: v.notas }); return t('assigned_to', { name: e.nombre });
     }, t('assign_btn'));
+    $('#a-to').onchange = e => { const dept = e.target.value === 'dept'; $('#a-empwrap').hidden = dept; $('#a-deptwrap').hidden = !dept; };
     // default the location to the chosen person's (first) workplace
     const sync = () => { const e = emp($('#a-emp').value), l = e && (e.locs || []).find(x => $('#a-loc').querySelector(`option[value="${x}"]`)); if (l) $('#a-loc').value = l; };
     $('#a-emp').onchange = sync; sync();
   },
   devolver(id) {
-    const d = dev(id), a = openAsg(id), e = emp(a.employeeId);
-    openDialog(t('return_title', { tag: d.tag }), `<p class="muted" style="margin:0 0 12px">${T('return_intro', { name: e.nombre, d: fmt(a.desde) })}</p><div class="fields">
+    const d = dev(id), a = openAsg(id);
+    openDialog(t('return_title', { tag: d.tag }), `<p class="muted" style="margin:0 0 12px">${T('return_intro', { name: holderName(a), d: fmt(a.desde) })}</p><div class="fields">
       <label>${T('fr_date')}<input type="date" name="hasta" id="r-hasta" value="${today()}"></label>
       <label>${T('fr_cond')}<select name="condicion" id="r-cond">${kopts(CONDS, cd)}</select></label>
       <label class="full">${T('fr_next')}<select name="next" id="r-next">${opts([['disponible', t('next_avail')], ['reparacion', t('next_rep')], ['descartado', t('next_disc')]])}</select></label>
@@ -2617,7 +2634,7 @@ const ACTIONS = {
     const choices = ST.filter(k => k !== d.estado && (k !== 'uso' || a));
     openDialog(t('status_title', { tag: d.tag }), `<div class="fields">
       <label class="full">${T('fc_new')}<select name="estado" id="c-estado">${kopts(choices, st)}</select></label>
-      ${a ? `<p class="full muted" style="margin:0">${T('fc_warn', { name: emp(a.employeeId).nombre })}</p>` : ''}
+      ${a ? `<p class="full muted" style="margin:0">${T('fc_warn', { name: holderName(a) })}</p>` : ''}
       <div class="sect">${T('sect_disposal')}</div>
       <label>${T('fc_dest')}<select name="metodo" id="c-metodo">${kopts(DISPOSAL, dsp)}</select></label>
       <label>${T('fc_cert')}<input name="cert" id="c-cert" placeholder="BR-2026-0XX"></label>

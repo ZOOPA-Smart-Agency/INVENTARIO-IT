@@ -304,3 +304,39 @@ class EmployeePlacesTests(TestCase):
         self.assertEqual(self.client.delete(f"/api/lists/depts/{dept.pk}").json()["error"], "in_use_cant")
         empty = m.Department.objects.create(nombre={"es": "Vacío", "en": "Empty", "ca": "Buit"})
         self.assertEqual(self.client.delete(f"/api/lists/depts/{empty.pk}").status_code, 200)
+
+
+class DepartmentAssignmentTests(ApiTestCase):
+    """A device can go to a whole department (a shared device) instead of a person."""
+
+    def test_assign_to_a_department_then_return(self):
+        client = self.as_user(self.tech)
+        device, dept = self.available_device(), m.Department.objects.first()
+        response = self.send(client, "post", f"devices/{device.pk}/assign", {"deptId": str(dept.pk), "loc": str(device.loc_id)})
+        self.assertEqual(response.status_code, 200, response.content)
+        data = response.json()["assignment"]
+        self.assertEqual((data["deptId"], data["employeeId"]), (str(dept.pk), ""))
+        device.refresh_from_db()
+        self.assertEqual(device.estado, "uso")
+        self.assertEqual(AuditEvent.objects.filter(key="log_assigned").last().args["name"], dept.nombre)
+        back = self.send(client, "post", f"devices/{device.pk}/return", {"condicion": "good", "next": "disponible"})
+        self.assertEqual(back.status_code, 200, back.content)
+        self.assertEqual(AuditEvent.objects.filter(key="log_returned").last().args["name"], dept.nombre)
+        state = client.get("/api/state").json()["state"]["assignments"]
+        self.assertTrue(any(a["deptId"] == str(dept.pk) and a["hasta"] for a in state))
+
+    def test_a_person_or_a_department_not_both_nor_none(self):
+        client = self.as_user(self.tech)
+        device, dept, employee = self.available_device(), m.Department.objects.first(), self.active_employee()
+        both = {"deptId": str(dept.pk), "employeeId": str(employee.pk), "loc": str(device.loc_id)}
+        self.assertEqual(self.send(client, "post", f"devices/{device.pk}/assign", both).status_code, 400)
+        self.assertEqual(self.send(client, "post", f"devices/{device.pk}/assign", {"loc": str(device.loc_id)}).status_code, 400)
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            Assignment.objects.create(device=device, desde="2026-01-01")
+
+    def test_a_department_with_devices_cannot_be_deleted(self):
+        client = self.as_user(self.admin)
+        device = self.available_device()
+        empty = m.Department.objects.create(nombre={"es": "Eventos", "en": "Events", "ca": "Esdeveniments"})
+        self.send(client, "post", f"devices/{device.pk}/assign", {"deptId": str(empty.pk), "loc": str(device.loc_id)})
+        self.assertEqual(self.send(client, "delete", f"lists/depts/{empty.pk}").json()["error"], "in_use_cant")

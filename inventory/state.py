@@ -105,7 +105,7 @@ def device_json(d):
 
 def assignment_json(a):
     return {
-        "id": str(a.pk), "deviceId": str(a.device_id), "employeeId": str(a.employee_id),
+        "id": str(a.pk), "deviceId": str(a.device_id), "employeeId": sid(a.employee_id), "deptId": sid(a.dept_id),
         "desde": iso(a.desde), "hasta": iso(a.hasta, None), "notas": a.notas, "condicion": a.condicion,
     }
 

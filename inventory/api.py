@@ -378,8 +378,9 @@ def device_update(request, body, pk):
 @endpoint("POST", role="edit")
 def device_assign(request, body, pk):
     device = get_or_404(Device, pk)
-    employee = fk(body, "employeeId", Employee)
-    if employee is None or employee.estado != Employee.State.ACTIVE:
+    # to a person (employeeId) or to a whole department (deptId)
+    employee, dept = fk(body, "employeeId", Employee), fk(body, "deptId", m.Department)
+    if (employee is None) == (dept is None) or (employee is not None and employee.estado != Employee.State.ACTIVE):
         raise ApiError("err_invalid")
     if device.estado in RETIRED or open_assignment(device):
         raise ApiError("err_conflict", 409)
@@ -387,13 +388,13 @@ def device_assign(request, body, pk):
     if location is None:
         raise ApiError("err_required")
     assignment = Assignment.objects.create(
-        device=device, employee=employee, desde=date(body, "desde", timezone.localdate()), notas=text(body, "notas", 1000)
+        device=device, employee=employee, dept=dept, desde=date(body, "desde", timezone.localdate()), notas=text(body, "notas", 1000)
     )
     if device.estado != Device.State.REPAIR:
         device.estado = Device.State.IN_USE
     device.loc = location
     device.save()
-    audit(request, "log_assigned", {"tag": device.tag, "name": employee.nombre}, device)
+    audit(request, "log_assigned", {"tag": device.tag, "name": assignment.holder_name}, device)
     return {"assignment": assignment_json(assignment)}
 
 
@@ -420,7 +421,7 @@ def device_return(request, body, pk):
         device.loc = storage
     device.save()
     audit(request, "log_returned",
-          {"name": assignment.employee.nombre, "tag": device.tag, "cond": assignment.condicion}, device)
+          {"name": assignment.holder_name, "tag": device.tag, "cond": assignment.condicion}, device)
 
 
 @endpoint("POST", role="edit")

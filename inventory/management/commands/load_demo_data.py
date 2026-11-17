@@ -123,7 +123,7 @@ class Command(BaseCommand):
             for r in reversed(d.get("batLog") or []):
                 m.BatteryReading.objects.create(device=device, fecha=day(r["fecha"]), salud=r["salud"])
         for a in data["assignments"]:
-            m.Assignment.objects.create(device_id=devices[a["deviceId"]], employee_id=employees[a["employeeId"]], desde=day(a["desde"]),
+            m.Assignment.objects.create(device_id=devices[a["deviceId"]], employee_id=employees.get(a.get("employeeId")), dept_id=ids["depts"].get(a.get("deptId")), desde=day(a["desde"]),
                                         hasta=day(a["hasta"]), notas=plain(a["notas"]), condicion=a["condicion"])
         for i in data["incidents"]:
             m.Incident.objects.create(device_id=devices[i["deviceId"]], fecha=day(i["fecha"]), tipo=i["tipo"], descripcion=plain(i["descripcion"]),

@@ -359,7 +359,9 @@ class BatteryReading(models.Model):
 
 class Assignment(models.Model):
     device = models.ForeignKey(Device, related_name="assignments", on_delete=models.PROTECT)
-    employee = models.ForeignKey(Employee, related_name="assignments", on_delete=models.PROTECT)
+    # who has it: a person, or a whole department (a shared device); exactly one of the two
+    employee = models.ForeignKey(Employee, related_name="assignments", null=True, blank=True, on_delete=models.PROTECT)
+    dept = models.ForeignKey(Department, related_name="assignments", null=True, blank=True, on_delete=models.PROTECT)
     desde = models.DateField()
     hasta = models.DateField(null=True, blank=True)
     notas = models.TextField(blank=True)
@@ -370,8 +372,17 @@ class Assignment(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=["device"], condition=Q(hasta__isnull=True), name="one_open_assignment_per_device"
-            )
+            ),
+            models.CheckConstraint(
+                condition=Q(employee__isnull=False, dept__isnull=True) | Q(employee__isnull=True, dept__isnull=False),
+                name="assignment_to_a_person_or_a_department",
+            ),
         ]
+
+    @property
+    def holder_name(self):
+        """The person's name, or the department's (a translated name, as the activity log expects)."""
+        return self.employee.nombre if self.employee_id else self.dept.nombre
 
 
 class Incident(models.Model):
