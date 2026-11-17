@@ -48,7 +48,7 @@ const I18N = {
     w_expired: 'Vencida', w_expired_on: 'Vencida el {d}', w_soon: 'Vence en {n} días',
 
     back_devices: '← Dispositivos', not_found_dev: 'No existe ese dispositivo.', back_list: 'Volver a la lista', serial_no: 'N.º de serie',
-    btn_return: 'Registrar devolución', btn_assign: 'Asignar a empleado', btn_fault: 'Registrar avería', btn_status: 'Cambiar estado', btn_edit: 'Editar',
+    btn_return: 'Registrar devolución', btn_assign: 'Asignar', mi_to_emp: 'A un empleado', mi_to_emp_d: 'Lo usará una persona', mi_to_dept: 'A un departamento', mi_to_dept_d: 'Equipo compartido por todo el departamento', assign_title_dept: 'Asignar {tag} a un departamento', btn_fault: 'Registrar avería', btn_status: 'Cambiar estado', btn_edit: 'Editar',
     n_left: '{name} dejó la empresa el {date}. Recupera este equipo y registra la devolución.', n_noenc: 'El disco no está cifrado.',
     current: 'Asignación actual', since: 'Desde el {d} ({age})', delivered_with: 'Entregado con: {x}', out_service: 'Fuera de servicio.', unassigned_at: 'Sin asignar. Está en {loc}.',
     hw: 'Hardware y software', k_type: 'Tipo', cores: n => n === 1 ? '1 núcleo' : n + ' núcleos', k_cpu: 'Procesador', k_ram: 'Memoria', k_disk: 'Almacenamiento', k_os: 'Sistema', k_enc: 'Cifrado', k_loc: 'Ubicación',
@@ -79,7 +79,7 @@ const I18N = {
     err_required: 'La etiqueta y el número de serie son obligatorios', err_dup: 'Ya existe un dispositivo con esa etiqueta o ese número identificador', f_numbering: 'Numeración de las etiquetas', num_type: 'Por tipo de dispositivo', num_global: 'Global, para todos los dispositivos', num_type_hint: 'Cada código cuenta por su lado: {a} y {b} pueden convivir.', num_global_hint: 'Un único número para todos: si existe {a}, el siguiente MacBook será {c} y no {b}.',
 created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados',
     fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_depts: 'Departamentos', fe_locs: 'Ubicaciones', no_dept: 'Sin departamento', no_loc: 'Sin ubicación', add_dept: 'Añadir otro departamento', add_loc: 'Añadir otra ubicación', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', k_contract: 'Contrato', ct_indefinido: 'Indefinido', ct_temporal: 'Temporal', ct_practicas: 'Prácticas', ct_all: 'Todos los contratos', ct_unset: 'Sin definir', err_person: 'El nombre y el email son obligatorios',
-    assign_title: 'Asignar {tag}', fa_to: 'Asignar a', fa_to_emp: 'Un empleado', fa_to_dept: 'Un departamento (equipo compartido)', fa_dept: 'Departamento', err_dept: 'Elige un departamento', shared_dept: 'Equipo compartido del departamento', fa_emp: 'Empleado', already_has: '(ya tiene {n})', fa_date: 'Fecha de entrega', fa_acc: 'Accesorios entregados', fa_acc_ph: 'Cargador, dock, ratón…', assign_btn: 'Asignar', assigned_to: 'Asignado a {name}',
+    assign_title: 'Asignar {tag}', fa_dept: 'Departamento', err_dept: 'Elige un departamento', shared_dept: 'Equipo compartido del departamento', fa_emp: 'Empleado', already_has: '(ya tiene {n})', fa_date: 'Fecha de entrega', fa_acc: 'Accesorios entregados', fa_acc_ph: 'Cargador, dock, ratón…', assign_btn: 'Asignar', assigned_to: 'Asignado a {name}',
     return_title: 'Devolución de {tag}', return_intro: 'Lo devuelve {name}, que lo tiene desde el {d}.', fr_date: 'Fecha de devolución', fr_cond: 'Estado físico', fr_next: 'Después de la devolución',
     next_avail: 'Disponible en el almacén', next_rep: 'Enviar a reparación', next_disc: 'Descartar', fr_notes_ph: 'Falta el cargador, borrado de datos hecho…', return_prefix: 'Devolución: ', return_done: 'Devolución registrada',
     fault_title: 'Registrar avería en {tag}', fi_date: 'Fecha', fi_type: 'Tipo', fi_desc: 'Descripción del problema', fi_parts: 'Piezas cambiadas', fi_cost: 'Coste ({c})', fi_tech: 'Servicio técnico',
@@ -306,7 +306,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     w_expired: 'Expired', w_expired_on: 'Expired on {d}', w_soon: 'Ends in {n} days',
 
     back_devices: '← Devices', not_found_dev: 'That device does not exist.', back_list: 'Back to the list', serial_no: 'Serial no.',
-    btn_return: 'Record return', btn_assign: 'Assign to employee', btn_fault: 'Log fault', btn_status: 'Change status', btn_edit: 'Edit',
+    btn_return: 'Record return', btn_assign: 'Assign', mi_to_emp: 'To an employee', mi_to_emp_d: 'One person will use it', mi_to_dept: 'To a department', mi_to_dept_d: 'Shared by the whole department', assign_title_dept: 'Assign {tag} to a department', btn_fault: 'Log fault', btn_status: 'Change status', btn_edit: 'Edit',
     n_left: '{name} left on {date}. Recover this device and record the return.', n_noenc: 'The disk is not encrypted.',
     current: 'Current assignment', since: 'Since {d} ({age})', delivered_with: 'Handed over with: {x}', out_service: 'Out of service.', unassigned_at: 'Unassigned. Located at {loc}.',
     hw: 'Hardware and software', k_type: 'Type', cores: n => n === 1 ? '1 core' : n + ' cores', k_cpu: 'Processor', k_ram: 'Memory', k_disk: 'Storage', k_os: 'Operating system', k_enc: 'Encryption', k_loc: 'Location',
@@ -337,7 +337,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     err_required: 'Asset tag and serial number are required', err_dup: 'Another device already has that tag or identification number', f_numbering: 'Tag numbering', num_type: 'By device type', num_global: 'Global, across all devices', num_type_hint: 'Each code counts on its own: {a} and {b} can both exist.', num_global_hint: 'One number for everything: if {a} exists, the next MacBook is {c}, not {b}.',
 created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_depts: 'Departments', fe_locs: 'Locations', no_dept: 'No department', no_loc: 'No location', add_dept: 'Add another department', add_loc: 'Add another location', fe_loc: 'Location', fe_hired: 'Start date', k_contract: 'Contract', ct_indefinido: 'Permanent', ct_temporal: 'Temporary', ct_practicas: 'Internship', ct_all: 'All contracts', ct_unset: 'Not defined', err_person: 'Name and email are required',
-    assign_title: 'Assign {tag}', fa_to: 'Assign to', fa_to_emp: 'An employee', fa_to_dept: 'A department (shared device)', fa_dept: 'Department', err_dept: 'Choose a department', shared_dept: 'Shared by the department', fa_emp: 'Employee', already_has: '(already has {n})', fa_date: 'Handover date', fa_acc: 'Accessories handed over', fa_acc_ph: 'Charger, dock, mouse…', assign_btn: 'Assign', assigned_to: 'Assigned to {name}',
+    assign_title: 'Assign {tag}', fa_dept: 'Department', err_dept: 'Choose a department', shared_dept: 'Shared by the department', fa_emp: 'Employee', already_has: '(already has {n})', fa_date: 'Handover date', fa_acc: 'Accessories handed over', fa_acc_ph: 'Charger, dock, mouse…', assign_btn: 'Assign', assigned_to: 'Assigned to {name}',
     return_title: 'Return of {tag}', return_intro: '{name} is returning it. They have had it since {d}.', fr_date: 'Return date', fr_cond: 'Physical condition', fr_next: 'After the return',
     next_avail: 'Available in storage', next_rep: 'Send for repair', next_disc: 'Retire', fr_notes_ph: 'Charger missing, data wiped…', return_prefix: 'Return: ', return_done: 'Return recorded',
     fault_title: 'Log fault on {tag}', fi_date: 'Date', fi_type: 'Type', fi_desc: 'Problem description', fi_parts: 'Parts replaced', fi_cost: 'Cost ({c})', fi_tech: 'Repair service',
@@ -564,7 +564,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     w_expired: 'Vençuda', w_expired_on: 'Vençuda el {d}', w_soon: 'Venç d’aquí a {n} dies',
 
     back_devices: '← Dispositius', not_found_dev: 'Aquest dispositiu no existeix.', back_list: 'Torna a la llista', serial_no: 'Núm. de sèrie',
-    btn_return: 'Registra la devolució', btn_assign: 'Assigna a un empleat', btn_fault: 'Registra una avaria', btn_status: 'Canvia l’estat', btn_edit: 'Edita',
+    btn_return: 'Registra la devolució', btn_assign: 'Assigna', mi_to_emp: 'A un empleat', mi_to_emp_d: 'El farà servir una persona', mi_to_dept: 'A un departament', mi_to_dept_d: 'Equip compartit per tot el departament', assign_title_dept: 'Assigna {tag} a un departament', btn_fault: 'Registra una avaria', btn_status: 'Canvia l’estat', btn_edit: 'Edita',
     n_left: '{name} va deixar l’empresa el {date}. Recupera aquest equip i registra’n la devolució.', n_noenc: 'El disc no està xifrat.',
     current: 'Assignació actual', since: 'Des del {d} ({age})', delivered_with: 'Lliurat amb: {x}', out_service: 'Fora de servei.', unassigned_at: 'Sense assignar. És a {loc}.',
     hw: 'Maquinari i programari', k_type: 'Tipus', cores: n => n === 1 ? '1 nucli' : n + ' nuclis', k_cpu: 'Processador', k_ram: 'Memòria', k_disk: 'Emmagatzematge', k_os: 'Sistema', k_enc: 'Xifratge', k_loc: 'Ubicació',
@@ -596,7 +596,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     err_required: 'L’etiqueta i el número de sèrie són obligatoris', err_dup: 'Ja hi ha un dispositiu amb aquesta etiqueta o aquest número identificador', f_numbering: 'Numeració de les etiquetes', num_type: 'Per tipus de dispositiu', num_global: 'Global, per a tots els dispositius', num_type_hint: 'Cada codi compta pel seu compte: {a} i {b} poden conviure.', num_global_hint: 'Un sol número per a tot: si existeix {a}, el següent MacBook serà {c} i no {b}.',
 created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
     fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_depts: 'Departaments', fe_locs: 'Ubicacions', no_dept: 'Sense departament', no_loc: 'Sense ubicació', add_dept: 'Afegeix un altre departament', add_loc: 'Afegeix una altra ubicació', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', k_contract: 'Contracte', ct_indefinido: 'Indefinit', ct_temporal: 'Temporal', ct_practicas: 'Pràctiques', ct_all: 'Tots els contractes', ct_unset: 'Sense definir', err_person: 'El nom i el correu són obligatoris',
-    assign_title: 'Assigna {tag}', fa_to: 'Assigna a', fa_to_emp: 'Un empleat', fa_to_dept: 'Un departament (equip compartit)', fa_dept: 'Departament', err_dept: 'Tria un departament', shared_dept: 'Equip compartit del departament', fa_emp: 'Empleat', already_has: '(ja en té {n})', fa_date: 'Data de lliurament', fa_acc: 'Accessoris lliurats', fa_acc_ph: 'Carregador, dock, ratolí…', assign_btn: 'Assigna', assigned_to: 'Assignat a {name}',
+    assign_title: 'Assigna {tag}', fa_dept: 'Departament', err_dept: 'Tria un departament', shared_dept: 'Equip compartit del departament', fa_emp: 'Empleat', already_has: '(ja en té {n})', fa_date: 'Data de lliurament', fa_acc: 'Accessoris lliurats', fa_acc_ph: 'Carregador, dock, ratolí…', assign_btn: 'Assigna', assigned_to: 'Assignat a {name}',
     return_title: 'Devolució de {tag}', return_intro: 'El retorna {name}, que el té des del {d}.', fr_date: 'Data de devolució', fr_cond: 'Estat físic', fr_next: 'Després de la devolució',
     next_avail: 'Disponible al magatzem', next_rep: 'Envia a reparar', next_disc: 'Retira', fr_notes_ph: 'Falta el carregador, esborrat de dades fet…', return_prefix: 'Devolució: ', return_done: 'Devolució registrada',
     fault_title: 'Registra una avaria a {tag}', fi_date: 'Data', fi_type: 'Tipus', fi_desc: 'Descripció del problema', fi_parts: 'Peces canviades', fi_cost: 'Cost ({c})', fi_tech: 'Servei tècnic',
@@ -896,6 +896,12 @@ const locName = id => tx(byId('locations', id)?.nombre) || '—';
 /* an employee's departments and offices (each can be several) */
 const deptNames = e => (e.depts || []).map(deptName).join(', ') || '—';
 /* who has a device under an assignment: a person, or a whole department (a shared device) */
+/* the device page's Assign button: a menu to give it to a person or to a whole department */
+const assignMenu = d => `<div class="menuwrap"><button class="btn primary" type="button" id="assignBtn" data-menu="assignMenu" aria-haspopup="true" aria-expanded="false">${T('btn_assign')}<svg class="i chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="menu" id="assignMenu" hidden>
+    <button class="mi" type="button" data-act="asignar" data-id="${d.id}"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><span class="txt"><span>${T('mi_to_emp')}</span><small>${T('mi_to_emp_d')}</small></span></button>
+    <button class="mi" type="button" data-act="asignarDepto" data-id="${d.id}"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.2.6 3.5 2.6 3.5 6"/></svg><span class="txt"><span>${T('mi_to_dept')}</span><small>${T('mi_to_dept_d')}</small></span></button>
+  </div></div>`;
 const holderName = a => !a ? '' : a.deptId ? deptName(a.deptId) : (emp(a.employeeId)?.nombre || '—');
 const holderCell = a => {
   if (!a) return '';
@@ -2056,7 +2062,7 @@ function viewDevice(id) {
       <p class="sub">${[esc(typeName(devType(d))), hostExtra(d), `${T('serial_no')} <span class="mono">${esc(d.serial)}</span>`].filter(Boolean).join(' · ')}</p>
     </div>
     ${ed ? `<div class="row">
-      ${retired ? '' : (a ? `<button class="btn primary" type="button" data-act="devolver" data-id="${d.id}">${T('btn_return')}</button>` : `<button class="btn primary" type="button" data-act="asignar" data-id="${d.id}">${T('btn_assign')}</button>`)}
+      ${retired ? '' : (a ? `<button class="btn primary" type="button" data-act="devolver" data-id="${d.id}">${T('btn_return')}</button>` : assignMenu(d))}
       ${retired ? '' : `<button class="btn" type="button" data-act="incidencia" data-id="${d.id}">${T('btn_fault')}</button>`}
       <button class="btn" type="button" data-act="estado" data-id="${d.id}">${T('btn_status')}</button>
       <button class="btn" type="button" data-act="editar" data-id="${d.id}">${T('btn_edit')}</button>
@@ -2571,14 +2577,15 @@ const ACTIONS = {
     });
     bindHwForm();
   },
-  asignar(id) {
+  asignarDepto(id) { ACTIONS.asignar(id, 'dept'); },
+  asignar(id, to = 'emp') {
     const d = dev(id);
     const people = S.employees.filter(e => empState(e) === 'activo').sort((a, b) => a.nombre.localeCompare(b.nombre, lang))
       .map(e => { const n = S.assignments.filter(a => a.employeeId === e.id && !a.hasta).length; return [e.id, `${e.nombre} · ${deptNames(e)}${n ? ' ' + t('already_has', { n }) : ''}`]; });
-    openDialog(t('assign_title', { tag: d.tag }), `<div class="fields">
-      <label class="full">${T('fa_to')}<select name="to" id="a-to">${opts([['emp', t('fa_to_emp')], ['dept', t('fa_to_dept')]])}</select></label>
-      <label class="full" id="a-empwrap">${T('fa_emp')}<select name="emp" id="a-emp">${opts(people)}</select></label>
-      <label class="full" id="a-deptwrap" hidden>${T('fa_dept')}${selPlus('departamentos', 'dept', 'a-dept', opts(S.depts.map(x => [x.id, tx(x.nombre)])))}</label>
+    openDialog(t(to === 'dept' ? 'assign_title_dept' : 'assign_title', { tag: d.tag }), `<div class="fields">
+      <input type="hidden" name="to" value="${to}">
+      <label class="full" id="a-empwrap"${to === 'dept' ? ' hidden' : ''}>${T('fa_emp')}<select name="emp" id="a-emp">${opts(people)}</select></label>
+      <label class="full" id="a-deptwrap"${to === 'dept' ? '' : ' hidden'}>${T('fa_dept')}${selPlus('departamentos', 'dept', 'a-dept', opts(S.depts.map(x => [x.id, tx(x.nombre)])))}</label>
       <label>${T('fa_date')}<input type="date" name="desde" id="a-desde" value="${today()}"></label>
       <label>${T('fd_loc')}${selPlus('ubicaciones', 'loc', 'a-loc', opts(personLocs()))}</label>
       <label class="full">${T('fa_acc')}<input name="notas" id="a-notas" placeholder="${T('fa_acc_ph')}"></label></div>`, async v => {
@@ -2589,7 +2596,6 @@ const ACTIONS = {
       const e = emp(v.emp); if (!e) return false;
       await mutate('POST', `devices/${d.id}/assign`, { employeeId: e.id, desde: v.desde, loc: v.loc, notas: v.notas }); return t('assigned_to', { name: e.nombre });
     }, t('assign_btn'));
-    $('#a-to').onchange = e => { const dept = e.target.value === 'dept'; $('#a-empwrap').hidden = dept; $('#a-deptwrap').hidden = !dept; };
     // default the location to the chosen person's (first) workplace
     const sync = () => { const e = emp($('#a-emp').value), l = e && (e.locs || []).find(x => $('#a-loc').querySelector(`option[value="${x}"]`)); if (l) $('#a-loc').value = l; };
     $('#a-emp').onchange = sync; sync();
@@ -2670,7 +2676,10 @@ const ACTIONS = {
 
 };
 
-function closeMenus() { [['#userBtn', '#userMenu'], ['#addBtn', '#addMenu']].forEach(([b, m]) => { $(m).hidden = true; $(b).setAttribute('aria-expanded', 'false'); }); }
+function closeMenus() {
+  [['#userBtn', '#userMenu'], ['#addBtn', '#addMenu']].forEach(([b, m]) => { $(m).hidden = true; $(b).setAttribute('aria-expanded', 'false'); });
+  document.querySelectorAll('#view [data-menu]').forEach(b => { b.setAttribute('aria-expanded', 'false'); const m = document.getElementById(b.dataset.menu); if (m) m.hidden = true; });
+}
 function toggleMenu(b, m) { const open = $(m).hidden; closeMenus(); if (open) { $(m).hidden = false; $(b).setAttribute('aria-expanded', 'true'); $(m).querySelector('.mi')?.focus(); } }
 $('#userBtn').onclick = e => { e.stopPropagation(); toggleMenu('#userBtn', '#userMenu'); };
 $('#addBtn').onclick = e => { e.stopPropagation(); toggleMenu('#addBtn', '#addMenu'); };
@@ -2726,8 +2735,10 @@ $('#themeSeg').addEventListener('click', e => {
 /* ================= routing ================= */
 const view = $('#view');
 view.addEventListener('click', ev => {
+  const menuBtn = ev.target.closest('[data-menu]');
+  if (menuBtn) { ev.stopPropagation(); toggleMenu('#' + menuBtn.id, '#' + menuBtn.dataset.menu); return; }
   const act = ev.target.closest('[data-act]');
-  if (act) { if (can('edit')) ACTIONS[act.dataset.act](act.dataset.id); return; }
+  if (act) { closeMenus(); if (can('edit')) ACTIONS[act.dataset.act](act.dataset.id); return; }
   const s = ev.target.closest('[data-set]');
   if (s) { if (can('admin')) SET_ACTIONS[s.dataset.set](s.dataset.list, s.dataset.id); return; }
   const f = ev.target.closest('[data-filter]');

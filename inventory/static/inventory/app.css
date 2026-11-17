@@ -68,6 +68,12 @@ nav.tabs a.on { background: var(--surface-2); color: var(--ink); }
 .addbtn[aria-expanded="true"] { background: var(--surface-2); border-style: solid; }
 .menu { position: absolute; top: calc(100% + 6px); right: 0; z-index: 30; min-width: 260px; max-width: calc(100vw - 32px); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 6px; display: grid; gap: 2px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16); }
 .menu.left { right: auto; left: 0; }
+/* a button that opens a menu in the page (the device page's Assign) */
+[data-menu] { display: inline-flex; align-items: center; gap: 6px; }
+/* the page header holding such a menu stays above the notices and cards that follow it */
+.devhead { position: relative; z-index: 5; }
+[data-menu] .chev { width: 16px; height: 16px; margin-right: -4px; transition: transform 0.2s; }
+[data-menu][aria-expanded="true"] .chev { transform: rotate(180deg); }
 .menu-head { padding: 8px 10px 10px; border-bottom: 1px solid var(--line); margin-bottom: 4px; display: grid; }
 .menu-head small { color: var(--muted); }
 .mi { display: flex; align-items: center; gap: 10px; width: 100%; border: 0; background: transparent; padding: 8px 10px; border-radius: 6px; cursor: pointer; text-align: left; color: var(--ink); text-decoration: none; font-weight: 500; }
