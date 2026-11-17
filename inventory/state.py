@@ -90,7 +90,7 @@ def device_json(d):
         "batLog": [{"fecha": iso(r.fecha), "salud": r.salud} for r in d.battery_readings.all()],
         "osFamily": d.os_family, "osVerId": sid(os_version), "osVersion": "",
         "osEditionId": sid(d.win_edition_id), "osDistroId": sid(d.linux_distro_id),
-        "oclp": d.oclp, "hackintosh": d.hackintosh, "enc": d.enc, "ad": d.ad,
+        "oclp": d.oclp, "oclpVersion": d.oclp_version, "hackintosh": d.hackintosh, "enc": d.enc, "ad": d.ad,
         "disks": [
             {"size": k.size, "unit": k.unit, "type": sid(k.type_id), "rep": k.rep, "form": sid(k.form_id), "conn": sid(k.conn_id)}
             for k in d.disks.all()

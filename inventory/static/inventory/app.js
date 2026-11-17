@@ -226,7 +226,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     fd_oclp: 'Parcheado con OCLP',
     fd_ad: 'Unido al directorio activo',
     k_ad: 'Directorio activo',
-    chip_oclp: 'Parcheado (OCLP)',
+    chip_oclp: 'Parcheado (OCLP)', chip_oclp_v: 'Parcheado (OCLP {v})', fd_oclp_ver: 'Versión de OCLP',
     grp_software: 'Software',
     grp_software_d: 'Versiones de sistema operativo, ediciones, distribuciones y sus versiones',
     set_macver: 'Versiones de macOS',
@@ -484,7 +484,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     fd_oclp: 'Patched with OCLP',
     fd_ad: 'Joined to Active Directory',
     k_ad: 'Active Directory',
-    chip_oclp: 'Patched (OCLP)',
+    chip_oclp: 'Patched (OCLP)', chip_oclp_v: 'Patched (OCLP {v})', fd_oclp_ver: 'OCLP version',
     grp_software: 'Software',
     grp_software_d: 'Operating system versions, editions, distributions and their versions',
     set_macver: 'macOS versions',
@@ -743,7 +743,7 @@ created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
     fd_oclp: 'Pedaçat amb OCLP',
     fd_ad: 'Unit al directori actiu',
     k_ad: 'Directori actiu',
-    chip_oclp: 'Pedaçat (OCLP)',
+    chip_oclp: 'Pedaçat (OCLP)', chip_oclp_v: 'Pedaçat (OCLP {v})', fd_oclp_ver: 'Versió d’OCLP',
     grp_software: 'Programari',
     grp_software_d: 'Versions de sistema operatiu, edicions, distribucions i les seves versions',
     set_macver: 'Versions de macOS',
@@ -2068,7 +2068,7 @@ function viewDevice(id) {
         <dt>${T('k_ram')}</dt><dd>${esc(withUnit(d.ramSize, d.ramUnit)) || '—'}${sub(ramDetail(d))}${chips([chip(modules), chip(listName('ramForms', d.ramForm)), repChip(d.ramRep)])}</dd>
         ${(d.disks || []).length ? d.disks.map((k, i) => `<dt>${d.disks.length > 1 ? T('disk_n', { n: i + 1 }) : T('k_disk')}</dt><dd>${esc(withUnit(k.size, k.unit)) || '—'}${chips([chip(listName('diskTypes', k.type)), chip(listName('diskForms', k.form)), chip(listName('diskConns', k.conn)), repChip(k.rep)])}</dd>`).join('') : `<dt>${T('k_disk')}</dt><dd>—</dd>`}
         <dt>${T('k_gpu')}</dt><dd>${gp ? esc(gp.nombre) : '—'}${chips([gp?.kind ? chip(t('gpu_' + gp.kind)) : '', gp && withUnit(gp.vram, gp.vramUnit) ? chip('VRAM ' + withUnit(gp.vram, gp.vramUnit)) : ''])}</dd>
-        <dt>${T('k_os')}</dt><dd>${esc(osText(d)) || '—'}${chips([d.oclp === 'yes' ? chip(t('chip_oclp')) : '', d.hackintosh === 'yes' ? chip('Hackintosh') : ''])}</dd>
+        <dt>${T('k_os')}</dt><dd>${esc(osText(d)) || '—'}${chips([d.oclp === 'yes' ? chip(d.oclpVersion ? t('chip_oclp_v', { v: d.oclpVersion }) : t('chip_oclp')) : '', d.hackintosh === 'yes' ? chip('Hackintosh') : ''])}</dd>
         <dt>${esc(encLabel(d.osFamily))}</dt><dd>${d.enc === 'yes' ? T('yes') : d.enc === 'no' ? `<span class="w-past">${T('no')}</span>` : '—'}</dd>
         <dt>${T('k_ad')}</dt><dd>${d.ad === 'yes' ? T('yes') : d.ad === 'no' ? T('no') : '—'}</dd>
         <dt>${T('k_loc')}</dt><dd>${esc(locName(d.loc))}</dd></dl>
@@ -2360,6 +2360,7 @@ function deviceForm(d) {
     <label class="os-f" data-os="linux"${d.osFamily === 'linux' ? '' : ' hidden'}>${T('fd_distro')}${selPlus('distros', 'osDistroId', 'f-osDistro', listOpts('linuxDistros', d.osDistroId))}</label>
     <label class="os-f" data-os="linux"${d.osFamily === 'linux' ? '' : ' hidden'}>${T('fd_osver')}${selPlus('linuxver', 'osVerLinux', 'f-osVerLinux', linuxVerOpts(d.osDistroId, d.osFamily === 'linux' ? d.osVerId : ''))}</label>
     <label class="os-f" data-os="mac"${d.osFamily === 'mac' ? '' : ' hidden'}>${T('fd_oclp')}<select name="oclp" id="f-oclp">${triOpts(d.oclp)}</select></label>
+    <label class="os-f" data-os="mac" id="f-oclpverwrap"${d.osFamily === 'mac' && d.oclp === 'yes' ? '' : ' hidden'}>${T('fd_oclp_ver')}<input name="oclpVersion" id="f-oclpver" value="${esc(d.oclpVersion)}" maxlength="20" placeholder="2.1.0"></label>
     <label class="os-f" data-os="mac"${d.osFamily === 'mac' ? '' : ' hidden'}>Hackintosh<select name="hackintosh" id="f-hackintosh">${triOpts(d.hackintosh)}</select></label>
     <label><span id="f-enclabel">${esc(encLabel(d.osFamily))}</span><select name="enc" id="f-enc">${triOpts(d.enc)}</select></label>
     <label>${T('fd_ad')}<select name="ad" id="f-ad">${triOpts(d.ad)}</select></label>
@@ -2430,7 +2431,11 @@ function bindHwForm() {
     const fam = e.target.value;
     document.querySelectorAll('.os-f').forEach(x => x.hidden = !x.dataset.os.split(' ').includes(fam));
     sel('#f-enclabel').textContent = encLabel(fam);
+    oclpVer();
   });
+  // the OCLP version only when it is patched
+  const oclpVer = () => { sel('#f-oclpverwrap').hidden = sel('#f-osFamily').value !== 'mac' || sel('#f-oclp').value !== 'yes'; };
+  sel('#f-oclp').addEventListener('change', oclpVer);
   const gpuInfo = () => { sel('#f-gpuinfo').textContent = gpuDetail(byId('gpus', sel('#f-gpuId').value)); };
   sel('#f-gpuId').addEventListener('change', gpuInfo); gpuInfo();
   const cpuInfo = () => { sel('#f-cpuinfo').textContent = cpuDetail(byId('cpus', sel('#f-cpuId').value)); };
@@ -2484,7 +2489,7 @@ function readDevice(v, fd, prev) {
     disks,
     gpuId: v.gpuId,
     osFamily: v.osFamily, osVerId: v.osFamily === 'mac' ? v.osVerMac : v.osFamily === 'win' ? v.osVerWin : v.osFamily === 'linux' ? v.osVerLinux : '', osVersion: '',
-    osEditionId: v.osFamily === 'win' ? v.osEditionId : '', osDistroId: v.osFamily === 'linux' ? v.osDistroId : '', oclp: v.osFamily === 'mac' ? v.oclp : '', hackintosh: v.osFamily === 'mac' ? v.hackintosh : '',
+    osEditionId: v.osFamily === 'win' ? v.osEditionId : '', osDistroId: v.osFamily === 'linux' ? v.osDistroId : '', oclp: v.osFamily === 'mac' ? v.oclp : '', oclpVersion: v.osFamily === 'mac' && v.oclp === 'yes' ? (v.oclpVersion || '').trim() : '', hackintosh: v.osFamily === 'mac' ? v.hackintosh : '',
     enc: v.enc, ad: v.ad, loc: v.loc, nics,
     screen: scr ? numOrNull(v.screen) : null, touch: scr ? v.touch : '', batHealth: batt ? numOrNull(v.batHealth) : null, batDate: batt ? v.batDate : '',
     batLog: prev?.batLog ? [...prev.batLog] : [],

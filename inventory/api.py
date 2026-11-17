@@ -309,6 +309,7 @@ def _apply_device(device, b):
     if device.linux_version and device.linux_version.distro_id != getattr(device.linux_distro, "pk", None):
         raise ApiError("err_invalid")
     device.oclp = choice(b, "oclp", TRI_VALUES) if family == "mac" else ""
+    device.oclp_version = text(b, "oclpVersion", 20) if device.oclp == "yes" else ""
     device.hackintosh = choice(b, "hackintosh", TRI_VALUES) if family == "mac" else ""
     device.enc, device.ad = choice(b, "enc", TRI_VALUES), choice(b, "ad", TRI_VALUES)
 

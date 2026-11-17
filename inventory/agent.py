@@ -375,6 +375,11 @@ def _apply_facts(device, f):
         device.linux_version = _item(m.LinuxVersion, os_info.get("version"), distro=distro) if distro else None
         if family != "mac":
             device.oclp = device.hackintosh = ""
+            device.oclp_version = ""
+        elif isinstance(f.get("oclp"), str):  # the device app reads it on Macs from 0.8.0; older ones leave it alone
+            found = _text(f["oclp"], 20)
+            device.oclp = "yes" if found else "no"
+            device.oclp_version = "" if found in ("", "yes") else found.lstrip("vV")
     if _tri(f.get("encryption")):
         device.enc = _tri(f.get("encryption"))
     if _tri(f.get("domainJoined")):

@@ -59,11 +59,12 @@ Every field is optional except `serial`. Unknown fields are ignored, and values 
 | `chassis` | `"laptop"` | `laptop`, `desktop`, `all_in_one` or `unknown`; picks the device type for new computers. |
 | `cpu` | `{"name": "Apple M3 Pro", "cores": 11, "maxGhz": 4.05}` | Processor list entry. |
 | `ram` | `{"gb": 18, "type": "LPDDR5", "mts": 6400, "replaceable": "no", "modules": 2, "moduleGb": 8, "formFactor": "SO-DIMM"}` | |
-| `disks` | `[{"gb": 512, "type": "SSD", "connector": "NVMe", "replaceable": ""}]` | Replaces the drive list. What a person added (form factor, replaceable) is kept for the same position. |
+| `disks` | `[{"gb": 512, "type": "SSD", "connector": "NVMe", "replaceable": "yes"}]` | Replaces the drive list. What a person added (form factor, replaceable) is kept for the same position when the app does not know. From device app 0.8.0, `replaceable` is filled in: on Macs from the model (soldered on Apple silicon, T2 Macs, the 12-inch MacBook and the 2016-2017 MacBook Pro with Touch Bar), elsewhere from the connection (SATA and M.2 NVMe yes; eMMC, UFS and soldered "BGA" NVMe no). |
 | `gpus` | `[{"name": "NVIDIA RTX 4070", "kind": "dedicated", "vramGb": 12}]` | The first dedicated one, else the first. |
 | `screenInches`, `touch` | `14.2`, `"no"` | Only for types with a screen. |
 | `battery` | `{"healthPct": 92}` | Only for types with a battery. The previous reading moves to the history. |
 | `os` | `{"family": "win", "version": "11 23H2", "edition": "Pro"}` | `family` is `mac`, `win` or `linux`. Linux uses `distro` and `version`. |
+| `oclp` | `"2.1.0"` | Macs only, from device app 0.8.0 (and inventory 1.11.0): OpenCore Legacy Patcher's version when the Mac starts through it, `"yes"` when it starts through OpenCore without saying which version, `""` when it does not. Sets "Patched with OCLP" and its version. Left out by older apps, which then change neither. |
 | `encryption` | `"yes"` | FileVault, BitLocker or LUKS. |
 | `domainJoined` | `"no"` | Active Directory. |
 | `nics` | `[{"type": "wifi", "model": "Intel Wi-Fi 6E AX211", "mac": "A4:C3:F0:12:34:56", "wifiGen": "6E", "btVer": "5.3"}]` | `type` is `wifi` or `eth`. Replaces the card list. `wifiGen` (`4`, `5`, `6`, `6E` or `7`) and `btVer` (`5.3`) are Wi-Fi only, and match list entries such as "Wi-Fi 6 (802.11ax)" or "Bluetooth 5.3", created if missing. Whatever is not sent (generation, Bluetooth, speed, model) is kept from the card with the same MAC address. |

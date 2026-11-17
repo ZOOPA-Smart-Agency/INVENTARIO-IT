@@ -201,3 +201,31 @@ class AgentTests(TestCase):
         d = Device.objects.get()
         self.assertEqual((len(d.serial), d.ram_size, len(d.cpu.nombre), d.cpu.cores, d.bat_health), (100, None, 200, None, None))
         self.assertEqual((d.disks.count(), d.nics.count()), (0, 0))
+
+
+class OclpAndDrivesTests(TestCase):
+    """Macs report whether they start through OpenCore Legacy Patcher, and drives whether they can be replaced."""
+
+    setUp, post, token = AgentTests.setUp, AgentTests.post, AgentTests.token
+
+    def report(self, **facts):
+        response = self.post("report", {"facts": {**MAC_FACTS, **facts}, "loc": str(self.office.pk)}, self.token())
+        self.assertEqual(response.status_code, 200, response.content)
+        return Device.objects.get()
+
+    def test_oclp(self):
+        d = self.report(oclp="2.1.0")
+        self.assertEqual((d.oclp, d.oclp_version), ("yes", "2.1.0"))
+        d = self.report(oclp="yes")  # through OpenCore, version unknown
+        self.assertEqual((d.oclp, d.oclp_version), ("yes", ""))
+        d = self.report(oclp="")
+        self.assertEqual((d.oclp, d.oclp_version), ("no", ""))
+        Device.objects.update(oclp="yes", oclp_version="1.0.0")
+        facts = dict(MAC_FACTS)  # an older device app sends nothing: what someone set by hand stays
+        self.post("report", {"facts": facts}, self.token())
+        d = Device.objects.get()
+        self.assertEqual((d.oclp, d.oclp_version), ("yes", "1.0.0"))
+
+    def test_replaceable_drive(self):
+        d = self.report(disks=[{"gb": 1000, "type": "SSD", "connector": "SATA", "replaceable": "yes"}])
+        self.assertEqual([k.rep for k in d.disks.all()], ["yes"])
