@@ -13,7 +13,7 @@ Every other call sends `Authorization: Bearer <token>`. A token lasts an hour. I
 
 ## Options
 
-`GET /api/agent/options?serial=<serial number>&chassis=<chassis>&model=<model>&manufacturer=<maker>` (all but `serial` are optional)
+`GET /api/agent/options?serial=<serial number>&chassis=<chassis>&model=<model>&manufacturer=<maker>&hostname=<name>` (all but `serial` are optional)
 
 ```json
 {
@@ -27,6 +27,8 @@ Every other call sends `Authorization: Bearer <token>`. A token lasts an hour. I
 ```
 
 `existing` is the device with that serial number (ignoring case), or `null`.
+
+`hostnameTag` (from 1.10.0, when `hostname` is given) says whether the computer's name can be its asset tag, for inventories where **Settings > General** makes the hostname the tag (`hostnameIsTag`): `{"name": "zlap004", "tag": "ZLAP004", "valid": true, "usedBy": null, "matches": false}`. `valid` means it follows the tags' pattern (the prefix, a device type's code or none, and a number); `tag` is that name written as a tag; `usedBy` is the tag of another device that has it or the same identifier; `matches` says whether it is already the tag of the computer with that serial number. When `hostnameIsTag` is on and a new computer is reported without a `tag`, a valid, free name becomes its tag.
 
 Each type's `nextTag` is the asset tag its next device gets: the tag prefix, the type's `code` and a number one higher than the highest in use (`ZLAP018`). That number is counted for each code, or across every device when **Settings > General > Tag numbering** is global. Types without a code use the prefix and a plain number (`INV-0018`). The top-level `nextTag` is the one for the type the server would choose from `chassis` and `model` (see below).
 

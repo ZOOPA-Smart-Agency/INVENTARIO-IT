@@ -322,3 +322,43 @@ class TypeMatchTests(TestCase):
         apple.auto_chassis = "desktop"
         apple.save()
         self.assertEqual(self.guess("Mac mini (2024)", "Apple", "desktop"), "ZAPL001")  # a shape beats "any"
+
+
+class HostnameTagTests(TestCase):
+    """With "the hostname is the asset tag" on, the device app checks the computer's name."""
+
+    def setUp(self):
+        cache.clear()
+        m.AppSettings.objects.update_or_create(pk=1, defaults={"tag_prefix": "Z", "hostname_is_tag": True})
+        User.objects.create_user("tech@x.es", GOOD, nombre="Teo", rol="tech")
+        self.store = m.Location.objects.create(nombre={"es": "Almacén", "en": "Storage", "ca": "Magatzem"}, tipo="storage")
+        self.laptop = kind("Portátil", "LAP", has_screen=True, has_battery=True)
+        self.client = Client(enforce_csrf_checks=True)
+        token = self.client.post("/api/agent/login", data=json.dumps({"email": "tech@x.es", "password": GOOD}),
+                                 content_type="application/json").json()["token"]
+        self.auth = {"HTTP_AUTHORIZATION": f"Bearer {token}"}
+        Device.objects.create(tag="ZLAP001", serial="OLD", type=self.laptop, loc=self.store)
+
+    def check(self, hostname, serial="NEW"):
+        return self.client.get(f"/api/agent/options?serial={serial}&hostname={hostname}", **self.auth).json()["hostnameTag"]
+
+    def test_the_name_is_checked(self):
+        self.assertEqual(self.check("zlap004"), {"name": "zlap004", "tag": "ZLAP004", "valid": True, "usedBy": None, "matches": False})
+        self.assertEqual(self.check("ZLAP1")["usedBy"], "ZLAP001")  # the same identifier
+        self.assertFalse(self.check("MacBook-de-Ana")["valid"])
+        self.assertFalse(self.check("ZXYZ004")["valid"])  # no type has that code
+        self.assertTrue(self.check("Z0007")["valid"])  # the plain numbering
+        own = self.check("ZLAP001", serial="OLD")
+        self.assertEqual((own["usedBy"], own["matches"]), (None, True))  # its own tag
+        self.assertIsNone(self.client.get("/api/agent/options?serial=NEW", **self.auth).json()["hostnameTag"])
+
+    def report(self, hostname, serial):
+        facts = {"serial": serial, "hostname": hostname, "manufacturer": "Dell", "model": "Latitude", "chassis": "laptop"}
+        response = self.client.post("/api/agent/report", data=json.dumps({"facts": facts}), content_type="application/json", **self.auth)
+        self.assertEqual(response.status_code, 200, response.content)
+        return response.json()["device"]["tag"]
+
+    def test_a_valid_free_name_becomes_the_tag(self):
+        self.assertEqual(self.report("zlap009", "A"), "ZLAP009")
+        self.assertEqual(self.report("ZLAP009", "B"), "ZLAP010")  # taken now: the next free one
+        self.assertEqual(self.report("DESKTOP-4K2J", "C"), "ZLAP011")  # not a tag: the next free one

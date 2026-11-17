@@ -255,7 +255,7 @@ class EmployeeContractTests(TestCase):
         call_command("load_demo_data", password=PASSWORD, verbosity=0, stdout=open("/dev/null", "w"))
         client = Client()
         client.force_login(User.objects.get(email="it@empresa.es"))
-        body = {"nombre": "Lara Becaria", "email": "lara@empresa.es", "dept": "", "loc": "", "alta": "2026-11-01", "contrato": "practicas"}
+        body = {"nombre": "Lara Becaria", "email": "lara@empresa.es", "depts": [], "locs": [], "alta": "2026-11-01", "contrato": "practicas"}
         response = client.post("/api/employees", data=json.dumps(body), content_type="application/json")
         self.assertEqual(response.status_code, 200, response.content)
         data = response.json()["employee"]
@@ -267,3 +267,40 @@ class EmployeeContractTests(TestCase):
         body.pop("contrato")  # not given: not defined
         self.assertEqual(client.put(url, data=json.dumps(body), content_type="application/json").json()["employee"]["contrato"], "")
         self.assertTrue(all(e.contrato == "" for e in Employee.objects.exclude(pk=data["id"])))
+
+
+class EmployeePlacesTests(TestCase):
+    """An employee can belong to several departments and work from several offices."""
+
+    def setUp(self):
+        call_command("load_demo_data", password=PASSWORD, verbosity=0, stdout=open("/dev/null", "w"))
+        self.client = Client()
+        self.client.force_login(User.objects.get(email="admin@empresa.es"))
+
+    def send(self, method, url, body):
+        return getattr(self.client, method)("/api/" + url, data=json.dumps(body), content_type="application/json")
+
+    def test_several_departments_and_offices(self):
+        d1, d2 = m.Department.objects.all()[:2]
+        l1, l2 = m.Location.objects.exclude(tipo="storage")[:2]
+        body = {"nombre": "Pau", "email": "pau@empresa.es", "alta": "2026-11-01", "depts": [str(d2.pk), str(d1.pk)], "locs": [str(l1.pk), str(l2.pk)]}
+        response = self.send("post", "employees", body)
+        self.assertEqual(response.status_code, 200, response.content)
+        data = response.json()["employee"]
+        self.assertEqual(data["depts"], sorted([str(d1.pk), str(d2.pk)], key=int))
+        self.assertEqual(data["locs"], sorted([str(l1.pk), str(l2.pk)], key=int))
+        data = self.send("put", f"employees/{data['id']}", {**body, "depts": [str(d1.pk)], "locs": []}).json()["employee"]
+        self.assertEqual((data["depts"], data["locs"]), ([str(d1.pk)], []))
+        self.assertEqual(self.send("post", "employees", {**body, "depts": ["99999"]}).status_code, 400)
+        self.assertEqual(self.send("post", "employees", {**body, "depts": "1"}).status_code, 400)
+
+    def test_demo_people_keep_their_department_and_office(self):
+        self.assertTrue(all(e.depts.count() == 1 and e.locs.count() == 1 for e in Employee.objects.all()))
+        state = self.client.get("/api/state").json()["state"]["employees"]
+        self.assertTrue(all(len(e["depts"]) == 1 and "dept" not in e for e in state))
+
+    def test_a_department_people_belong_to_cannot_be_deleted(self):
+        dept = Employee.objects.first().depts.first()
+        self.assertEqual(self.client.delete(f"/api/lists/depts/{dept.pk}").json()["error"], "in_use_cant")
+        empty = m.Department.objects.create(nombre={"es": "Vacío", "en": "Empty", "ca": "Buit"})
+        self.assertEqual(self.client.delete(f"/api/lists/depts/{empty.pk}").status_code, 200)

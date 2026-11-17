@@ -78,7 +78,7 @@ const I18N = {
     sect_purchase: 'Compra y garantía', fd_bought: 'Fecha de compra', fd_wend: 'Fin de garantía', fd_supplier: 'Proveedor', fd_invoice: 'N.º de factura', fd_price: 'Precio ({c})', fd_notes: 'Notas',
     err_required: 'La etiqueta y el número de serie son obligatorios', err_dup: 'Ya existe un dispositivo con esa etiqueta o ese número identificador', f_numbering: 'Numeración de las etiquetas', num_type: 'Por tipo de dispositivo', num_global: 'Global, para todos los dispositivos', num_type_hint: 'Cada código cuenta por su lado: {a} y {b} pueden convivir.', num_global_hint: 'Un único número para todos: si existe {a}, el siguiente MacBook será {c} y no {b}.',
 created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados',
-    fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', k_contract: 'Contrato', ct_indefinido: 'Indefinido', ct_temporal: 'Temporal', ct_practicas: 'Prácticas', ct_all: 'Todos los contratos', ct_unset: 'Sin definir', err_person: 'El nombre y el email son obligatorios',
+    fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_depts: 'Departamentos', fe_locs: 'Ubicaciones', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', k_contract: 'Contrato', ct_indefinido: 'Indefinido', ct_temporal: 'Temporal', ct_practicas: 'Prácticas', ct_all: 'Todos los contratos', ct_unset: 'Sin definir', err_person: 'El nombre y el email son obligatorios',
     assign_title: 'Asignar {tag}', fa_emp: 'Empleado', already_has: '(ya tiene {n})', fa_date: 'Fecha de entrega', fa_acc: 'Accesorios entregados', fa_acc_ph: 'Cargador, dock, ratón…', assign_btn: 'Asignar', assigned_to: 'Asignado a {name}',
     return_title: 'Devolución de {tag}', return_intro: 'Lo devuelve {name}, que lo tiene desde el {d}.', fr_date: 'Fecha de devolución', fr_cond: 'Estado físico', fr_next: 'Después de la devolución',
     next_avail: 'Disponible en el almacén', next_rep: 'Enviar a reparación', next_disc: 'Descartar', fr_notes_ph: 'Falta el cargador, borrado de datos hecho…', return_prefix: 'Devolución: ', return_done: 'Devolución registrada',
@@ -336,7 +336,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     sect_purchase: 'Purchase and warranty', fd_bought: 'Purchase date', fd_wend: 'Warranty end', fd_supplier: 'Supplier', fd_invoice: 'Invoice no.', fd_price: 'Price ({c})', fd_notes: 'Notes',
     err_required: 'Asset tag and serial number are required', err_dup: 'Another device already has that tag or identification number', f_numbering: 'Tag numbering', num_type: 'By device type', num_global: 'Global, across all devices', num_type_hint: 'Each code counts on its own: {a} and {b} can both exist.', num_global_hint: 'One number for everything: if {a} exists, the next MacBook is {c}, not {b}.',
 created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
-    fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_loc: 'Location', fe_hired: 'Start date', k_contract: 'Contract', ct_indefinido: 'Permanent', ct_temporal: 'Temporary', ct_practicas: 'Internship', ct_all: 'All contracts', ct_unset: 'Not defined', err_person: 'Name and email are required',
+    fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_depts: 'Departments', fe_locs: 'Locations', fe_loc: 'Location', fe_hired: 'Start date', k_contract: 'Contract', ct_indefinido: 'Permanent', ct_temporal: 'Temporary', ct_practicas: 'Internship', ct_all: 'All contracts', ct_unset: 'Not defined', err_person: 'Name and email are required',
     assign_title: 'Assign {tag}', fa_emp: 'Employee', already_has: '(already has {n})', fa_date: 'Handover date', fa_acc: 'Accessories handed over', fa_acc_ph: 'Charger, dock, mouse…', assign_btn: 'Assign', assigned_to: 'Assigned to {name}',
     return_title: 'Return of {tag}', return_intro: '{name} is returning it. They have had it since {d}.', fr_date: 'Return date', fr_cond: 'Physical condition', fr_next: 'After the return',
     next_avail: 'Available in storage', next_rep: 'Send for repair', next_disc: 'Retire', fr_notes_ph: 'Charger missing, data wiped…', return_prefix: 'Return: ', return_done: 'Return recorded',
@@ -595,7 +595,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     sect_purchase: 'Compra i garantia', fd_bought: 'Data de compra', fd_wend: 'Fi de la garantia', fd_supplier: 'Proveïdor', fd_invoice: 'Núm. de factura', fd_price: 'Preu ({c})', fd_notes: 'Notes',
     err_required: 'L’etiqueta i el número de sèrie són obligatoris', err_dup: 'Ja hi ha un dispositiu amb aquesta etiqueta o aquest número identificador', f_numbering: 'Numeració de les etiquetes', num_type: 'Per tipus de dispositiu', num_global: 'Global, per a tots els dispositius', num_type_hint: 'Cada codi compta pel seu compte: {a} i {b} poden conviure.', num_global_hint: 'Un sol número per a tot: si existeix {a}, el següent MacBook serà {c} i no {b}.',
 created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
-    fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', k_contract: 'Contracte', ct_indefinido: 'Indefinit', ct_temporal: 'Temporal', ct_practicas: 'Pràctiques', ct_all: 'Tots els contractes', ct_unset: 'Sense definir', err_person: 'El nom i el correu són obligatoris',
+    fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_depts: 'Departaments', fe_locs: 'Ubicacions', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', k_contract: 'Contracte', ct_indefinido: 'Indefinit', ct_temporal: 'Temporal', ct_practicas: 'Pràctiques', ct_all: 'Tots els contractes', ct_unset: 'Sense definir', err_person: 'El nom i el correu són obligatoris',
     assign_title: 'Assigna {tag}', fa_emp: 'Empleat', already_has: '(ja en té {n})', fa_date: 'Data de lliurament', fa_acc: 'Accessoris lliurats', fa_acc_ph: 'Carregador, dock, ratolí…', assign_btn: 'Assigna', assigned_to: 'Assignat a {name}',
     return_title: 'Devolució de {tag}', return_intro: 'El retorna {name}, que el té des del {d}.', fr_date: 'Data de devolució', fr_cond: 'Estat físic', fr_next: 'Després de la devolució',
     next_avail: 'Disponible al magatzem', next_rep: 'Envia a reparar', next_disc: 'Retira', fr_notes_ph: 'Falta el carregador, esborrat de dades fet…', return_prefix: 'Devolució: ', return_done: 'Devolució registrada',
@@ -893,6 +893,9 @@ const modelName = m => `${m.fabricante} ${m.nombre}`.trim();
 const typeName = id => tx(byId('types', id)?.nombre) || '—';
 const deptName = id => tx(byId('depts', id)?.nombre) || '—';
 const locName = id => tx(byId('locations', id)?.nombre) || '—';
+/* an employee's departments and offices (each can be several) */
+const deptNames = e => (e.depts || []).map(deptName).join(', ') || '—';
+const locNames = e => (e.locs || []).map(locName).join(', ') || '—';
 const emp = id => byId('employees', id);
 const dev = id => byId('devices', id);
 const openAsg = devId => S.assignments.find(a => a.deviceId === devId && !a.hasta);
@@ -1141,13 +1144,13 @@ const diskUses = key => (d, x) => (d.disks || []).some(k => k[key] === x.id);
 const LISTS = {
   departamentos: { coll: 'depts', prefix: 'dp', title: 'set_depts', sub: 'set_depts_sub', single: 'item_dept',
     label: x => tx(x.nombre), cols: [['th_name', x => esc(tx(x.nombre))]],
-    count: x => S.employees.filter(e => e.dept === x.id).length, usageText: x => usage(LISTS.departamentos.count(x), 'u_people'),
+    count: x => S.employees.filter(e => (e.depts || []).includes(x.id)).length, usageText: x => usage(LISTS.departamentos.count(x), 'u_people'),
     form: (x, nested, px) => `<div class="fields">${biForm(x, px)}</div>`,
     read: v => { const n = biRead(v); return n && { nombre: n }; } },
   ubicaciones: { coll: 'locations', prefix: 'l', title: 'set_locs', sub: 'set_locs_sub', single: 'item_loc',
     label: x => tx(x.nombre), cols: [['th_name', x => esc(tx(x.nombre))], ['th_kind', x => `<span class="chip">${esc(lk(x.tipo))}</span>`], ['th_address', x => esc(tx(x.direccion)) || '<span class="muted">—</span>']],
-    count: x => S.devices.filter(d => d.loc === x.id).length + S.employees.filter(e => e.loc === x.id).length,
-    usageText: x => { const d = S.devices.filter(z => z.loc === x.id).length, p = S.employees.filter(z => z.loc === x.id).length; return d || p ? [d ? t('u_devices', d) : '', p ? t('u_people', p) : ''].filter(Boolean).join(' · ') : t('u_none'); },
+    count: x => S.devices.filter(d => d.loc === x.id).length + S.employees.filter(e => (e.locs || []).includes(x.id)).length,
+    usageText: x => { const d = S.devices.filter(z => z.loc === x.id).length, p = S.employees.filter(z => (z.locs || []).includes(x.id)).length; return d || p ? [d ? t('u_devices', d) : '', p ? t('u_people', p) : ''].filter(Boolean).join(' · ') : t('u_none'); },
     form: (x, nested, px) => `<div class="fields">${biForm(x, px)}
       <label>${T('f_loc_kind')}<select name="tipo" id="${px}-tipo">${kopts(LOC_KINDS, lk, x?.tipo || 'office')}</select></label>
       <label>${T('f_address')}<input name="direccion" id="${px}-dir" value="${esc(tx(x?.direccion))}"></label></div>`,
@@ -1959,7 +1962,7 @@ function viewPanel() {
   activos.filter(d => d.enc === 'no').forEach(d => alerts.push({ k: 'bad', d, t: t('al_enc', { tag: d.tag }), s: t('al_enc_s') }));
   activos.filter(d => hasBattery(devType(d)) && has(d.batHealth) && d.batHealth < 80).forEach(d => alerts.push({ k: 'warn', d, t: t('al_bat', { tag: d.tag, p: nf(d.batHealth) }), s: t('al_bat_s') }));
 
-  const byDept = S.depts.map(x => [tx(x.nombre), S.assignments.filter(a => !a.hasta && emp(a.employeeId)?.dept === x.id).length]).sort((a, b) => b[1] - a[1]);
+  const byDept = S.depts.map(x => [tx(x.nombre), S.assignments.filter(a => !a.hasta && (emp(a.employeeId)?.depts || []).includes(x.id)).length]).sort((a, b) => b[1] - a[1]);
   const max = Math.max(1, ...byDept.map(x => x[1]));
   const valor = activos.reduce((s, d) => s + (Number(d.precio) || 0), 0);
   const col = { uso: 'var(--info)', disponible: 'var(--ok)', reparacion: 'var(--warn)' };
@@ -2006,7 +2009,7 @@ function drawDeviceRows() {
     if (F.estado === 'activos' && isRetired(d)) return false;
     if (F.estado === 'retirados' && !isRetired(d)) return false;
     if (ST.includes(F.estado) && d.estado !== F.estado) return false;
-    if (F.dept && e?.dept !== F.dept) return false;
+    if (F.dept && !(e?.depts || []).includes(F.dept)) return false;
     if (F.tipo && devType(d) !== F.tipo) return false;
     if (q && ![d.tag, hostOf(d), d.serial, osText(d), cpuOf(d)?.nombre, ...(d.nics || []).map(n => n.mac + ' ' + listName('nicModels', n.modelId)), gpuOf(d)?.nombre, devTitle(d), e?.nombre].join(' ').toLowerCase().includes(q)) return false;
     return true;
@@ -2015,7 +2018,7 @@ function drawDeviceRows() {
     ${rows.map(d => { const a = openAsg(d.id), e = a && emp(a.employeeId), m = model(d.modelId);
       return `<tr class="click" data-go="dispositivo-${d.id}"><td>${tagLink(d)}</td>
         <td><b>${esc(devTitle(d))}</b><span class="t2">${[esc(typeName(devType(d))), hostExtra(d), `<span class="mono">${esc(d.serial)}</span>`].filter(Boolean).join(' · ')}</span></td>
-        <td>${e ? `${esc(e.nombre)}<span class="t2">${esc(deptName(e.dept))}${hasLeft(e) ? ` · <span class="w-past">${T('left_badge')}</span>` : ''}</span>` : '<span class="muted">—</span>'}</td>
+        <td>${e ? `${esc(e.nombre)}<span class="t2">${esc(deptNames(e))}${hasLeft(e) ? ` · <span class="w-past">${T('left_badge')}</span>` : ''}</span>` : '<span class="muted">—</span>'}</td>
         <td>${pill(d.estado)}</td><td>${warranty(d)}</td></tr>`; }).join('')}
   </tbody></table>` : `<div class="empty">${T('no_match_dev')}</div>`;
 }
@@ -2056,7 +2059,7 @@ function viewDevice(id) {
   ${d.enc === 'no' && !retired ? `<div class="notice bad">${T('n_noenc')}</div>` : ''}
   <div class="grid3">
     <section class="panel"><h2>${T('current')}</h2>
-      ${e ? `<div class="current"><b><a href="#empleado-${e.id}">${esc(e.nombre)}</a></b><span class="muted">${esc(deptName(e.dept))} · ${esc(locName(e.loc))}</span><span>${T('since', { d: fmt(a.desde), age: age(a.desde) })}</span>${tx(a.notas) ? `<span class="muted">${T('delivered_with', { x: tx(a.notas) })}</span>` : ''}</div>`
+      ${e ? `<div class="current"><b><a href="#empleado-${e.id}">${esc(e.nombre)}</a></b><span class="muted">${esc(deptNames(e))} · ${esc(locNames(e))}</span><span>${T('since', { d: fmt(a.desde), age: age(a.desde) })}</span>${tx(a.notas) ? `<span class="muted">${T('delivered_with', { x: tx(a.notas) })}</span>` : ''}</div>`
         : `<p class="muted">${retired ? T('out_service') : T('unassigned_at', { loc: locName(d.loc) })}</p>`}
     </section>
     <section class="panel"><h2>${T('hw')}</h2>
@@ -2085,7 +2088,7 @@ function viewDevice(id) {
   ${tx(d.notas) ? `<section class="panel"><h2>${T('notes')}</h2><p style="margin:0;white-space:pre-line">${esc(tx(d.notas))}</p></section>` : ''}
   <section class="panel"><h2>${T('user_hist')}</h2>
     ${hist.length ? `<div class="tablebox"><table><thead><tr><th>${T('th_person')}</th><th>${T('th_from')}</th><th>${T('th_to')}</th><th>${T('th_dur')}</th><th>${T('th_faults')}</th><th>${T('th_handover')}</th></tr></thead><tbody>
-      ${hist.map(h => { const p = emp(h.employeeId), fs = faultsIn(d.id, h.desde, h.hasta); return `<tr><td>${p ? `<a href="#empleado-${p.id}">${esc(p.nombre)}</a><span class="t2">${esc(deptName(p.dept))}</span>` : '—'}</td><td>${fmt(h.desde)}</td><td>${h.hasta ? fmt(h.hasta) : `<b>${T('current_lbl')}</b>`}</td><td>${esc(age(h.desde, h.hasta))}</td>
+      ${hist.map(h => { const p = emp(h.employeeId), fs = faultsIn(d.id, h.desde, h.hasta); return `<tr><td>${p ? `<a href="#empleado-${p.id}">${esc(p.nombre)}</a><span class="t2">${esc(deptNames(p))}</span>` : '—'}</td><td>${fmt(h.desde)}</td><td>${h.hasta ? fmt(h.hasta) : `<b>${T('current_lbl')}</b>`}</td><td>${esc(age(h.desde, h.hasta))}</td>
         <td>${fs.length ? `<b>${fs.length}</b>${fs.map(f => `<span class="t2">${fmt(f.fecha)} · ${esc(tx(f.descripcion))}</span>`).join('')}` : dash}</td>
         <td>${esc(tx(h.notas)) || dash}${h.condicion ? `<span class="t2">${T('returned_cond', { c: cd(h.condicion) })}</span>` : ''}</td></tr>`; }).join('')}
     </tbody></table></div>` : `<p class="muted">${T('never_assigned')}</p>`}
@@ -2113,11 +2116,11 @@ function viewEmployees() {
 }
 function drawEmpRows() {
   const q = FE.q.trim().toLowerCase();
-  const rows = S.employees.filter(e => (FE.activos === 'todos' || empState(e) === FE.activos) && (FE.contrato === 'todos' || (e.contrato || 'unset') === FE.contrato) && (!q || [e.nombre, e.email, deptName(e.dept)].join(' ').toLowerCase().includes(q)))
+  const rows = S.employees.filter(e => (FE.activos === 'todos' || empState(e) === FE.activos) && (FE.contrato === 'todos' || (e.contrato || 'unset') === FE.contrato) && (!q || [e.nombre, e.email, deptNames(e), locNames(e)].join(' ').toLowerCase().includes(q)))
     .sort((a, b) => a.nombre.localeCompare(b.nombre, lang));
   $('#empTable').innerHTML = rows.length ? `<table><thead><tr><th>${T('th_name')}</th><th>${T('lbl_dept')}</th><th>${T('th_loc')}</th><th>${T('th_curdev')}</th><th>${T('th_sit')}</th></tr></thead><tbody>
     ${rows.map(e => { const ds = S.assignments.filter(a => a.employeeId === e.id && !a.hasta).map(a => dev(a.deviceId)).filter(Boolean);
-      return `<tr class="click" data-go="empleado-${e.id}"><td><b>${esc(e.nombre)}</b>${tempChip(e)}<span class="t2">${esc(e.email)}</span></td><td>${esc(deptName(e.dept))}</td><td>${esc(locName(e.loc))}</td>
+      return `<tr class="click" data-go="empleado-${e.id}"><td><b>${esc(e.nombre)}</b>${tempChip(e)}<span class="t2">${esc(e.email)}</span></td><td>${esc(deptNames(e))}</td><td>${esc(locNames(e))}</td>
       <td><div class="row">${ds.length ? ds.map(tagLink).join('') : `<span class="muted">${T('none')}</span>`}</div></td>
       <td>${empPill(e)}${empState(e) !== 'activo' && e.estadoFecha ? `<span class="t2">${T('since_d', { d: fmt(e.estadoFecha) })}</span>` : ''}</td></tr>`; }).join('')}
   </tbody></table>` : `<div class="empty">${T('no_match_people')}</div>`;
@@ -2137,7 +2140,7 @@ function viewEmployee(id) {
   return `
   <a class="back" href="#empleados">${T('back_people')}</a>
   <div class="devhead">
-    <div class="id"><div class="row">${empPill(e)}${tempChip(e)}</div><h1>${esc(e.nombre)}</h1><p class="sub">${esc(deptName(e.dept))} · ${esc(locName(e.loc))} · ${esc(e.email)}</p></div>
+    <div class="id"><div class="row">${empPill(e)}${tempChip(e)}</div><h1>${esc(e.nombre)}</h1><p class="sub">${esc(deptNames(e))} · ${esc(locNames(e))} · ${esc(e.email)}</p></div>
     ${can('edit') ? `<div class="row"><button class="btn" type="button" data-act="editarEmpleado" data-id="${e.id}">${T('btn_edit')}</button><button class="btn" type="button" data-act="situacion" data-id="${e.id}">${T('btn_situation')}</button></div>` : ''}
   </div>
   ${st === 'salida' && cur2.length ? `<div class="notice bad">${T('n_person_left', cur2.length)}</div>` : ''}
@@ -2493,17 +2496,19 @@ function readDevice(v, fd, prev) {
 }
 const personLocs = () => S.locations.filter(l => l.tipo !== 'storage').map(l => [l.id, tx(l.nombre)]);
 function employeeForm(e) {
-  e = e || { loc: S.locations.find(l => l.tipo === 'office')?.id, dept: S.depts[0]?.id, alta: today() };
+  e = e || { locs: [S.locations.find(l => l.tipo === 'office')?.id].filter(Boolean), depts: [], alta: today() };
   return `<div class="fields">
     <label class="full">${T('fe_name')}<input name="nombre" id="e-nombre" value="${esc(e.nombre)}"></label>
     <label class="full">${T('fe_email')}<input name="email" id="e-email" type="email" value="${esc(e.email)}"></label>
-    <label>${T('fe_dept')}${selPlus('departamentos', 'dept', 'e-dept', opts(S.depts.map(x => [x.id, tx(x.nombre)]), e.dept))}</label>
-    <label>${T('fe_loc')}${selPlus('ubicaciones', 'loc', 'e-loc', opts(personLocs(), e.loc))}</label>
+    <fieldset class="full checklist"><legend>${T('fe_depts')}</legend>${checkList('depts', 'e-dept', S.depts.map(x => [x.id, tx(x.nombre)]), e.depts)}</fieldset>
+    <fieldset class="full checklist"><legend>${T('fe_locs')}</legend>${checkList('locs', 'e-loc', personLocs(), e.locs)}</fieldset>
     <label>${T('fe_hired')}<input name="alta" id="e-alta" type="date" value="${esc(e.alta)}"></label>
     <label>${T('k_contract')}<select name="contrato" id="e-contrato">${opts(CONTRACTS.map(c => [c, t(ctKey(c))]), e.contrato || '')}</select></label>
   </div>`;
 }
-function readEmployee(v) { if (!v.nombre.trim() || !v.email.trim()) { toast(t('err_person')); return null; } return { nombre: v.nombre.trim(), email: v.email.trim(), dept: v.dept, loc: v.loc, alta: v.alta || today(), contrato: v.contrato || '' }; }
+/* a group of checkboxes, for picking several of a list */
+const checkList = (name, id, items, chosen) => items.length ? items.map(([value, label], i) => `<label class="check"><input type="checkbox" name="${name}" id="${id}-${i}" value="${esc(value)}"${(chosen || []).includes(value) ? ' checked' : ''}> ${esc(label)}</label>`).join('') : `<span class="muted">${T('none')}</span>`;
+function readEmployee(v, fd) { if (!v.nombre.trim() || !v.email.trim()) { toast(t('err_person')); return null; } return { nombre: v.nombre.trim(), email: v.email.trim(), depts: fd.getAll('depts'), locs: fd.getAll('locs'), alta: v.alta || today(), contrato: v.contrato || '' }; }
 /* contract: not defined (''), indefinido, temporal or prácticas (the last two show a badge next to the name) */
 const CONTRACTS = ['', 'indefinido', 'temporal', 'practicas'];
 const ctKey = c => c ? 'ct_' + c : 'ct_unset';
@@ -2530,7 +2535,7 @@ const ACTIONS = {
   asignar(id) {
     const d = dev(id);
     const people = S.employees.filter(e => empState(e) === 'activo').sort((a, b) => a.nombre.localeCompare(b.nombre, lang))
-      .map(e => { const n = S.assignments.filter(a => a.employeeId === e.id && !a.hasta).length; return [e.id, `${e.nombre} · ${deptName(e.dept)}${n ? ' ' + t('already_has', { n }) : ''}`]; });
+      .map(e => { const n = S.assignments.filter(a => a.employeeId === e.id && !a.hasta).length; return [e.id, `${e.nombre} · ${deptNames(e)}${n ? ' ' + t('already_has', { n }) : ''}`]; });
     openDialog(t('assign_title', { tag: d.tag }), `<div class="fields">
       <label class="full">${T('fa_emp')}<select name="emp" id="a-emp">${opts(people)}</select></label>
       <label>${T('fa_date')}<input type="date" name="desde" id="a-desde" value="${today()}"></label>
@@ -2539,8 +2544,8 @@ const ACTIONS = {
       const e = emp(v.emp); if (!e) return false;
       await mutate('POST', `devices/${d.id}/assign`, { employeeId: e.id, desde: v.desde, loc: v.loc, notas: v.notas }); return t('assigned_to', { name: e.nombre });
     }, t('assign_btn'));
-    // default the location to the chosen person's workplace
-    const sync = () => { const e = emp($('#a-emp').value); if (e && $('#a-loc').querySelector(`option[value="${e.loc}"]`)) $('#a-loc').value = e.loc; };
+    // default the location to the chosen person's (first) workplace
+    const sync = () => { const e = emp($('#a-emp').value), l = e && (e.locs || []).find(x => $('#a-loc').querySelector(`option[value="${x}"]`)); if (l) $('#a-loc').value = l; };
     $('#a-emp').onchange = sync; sync();
   },
   devolver(id) {
@@ -2593,15 +2598,15 @@ const ACTIONS = {
     });
   },
   nuevoEmpleado() {
-    openDialog(t('new_person'), employeeForm(), async v => {
-      const r = readEmployee(v); if (!r) return false;
+    openDialog(t('new_person'), employeeForm(), async (v, fd) => {
+      const r = readEmployee(v, fd); if (!r) return false;
       const { employee } = await mutate('POST', 'employees', r);
       location.hash = 'empleado-' + employee.id; return t('person_added', { name: employee.nombre });
     }, t('add'));
   },
   editarEmpleado(id) {
     const e = emp(id);
-    openDialog(t('edit_person', { name: e.nombre }), employeeForm(e), async v => { const r = readEmployee(v); if (!r) return false; await mutate('PUT', 'employees/' + e.id, r); return t('saved'); });
+    openDialog(t('edit_person', { name: e.nombre }), employeeForm(e), async (v, fd) => { const r = readEmployee(v, fd); if (!r) return false; await mutate('PUT', 'employees/' + e.id, r); return t('saved'); });
   },
   situacion(id) {
     const e = emp(id), ds = S.assignments.filter(a => a.employeeId === e.id && !a.hasta).map(a => dev(a.deviceId)).filter(Boolean);

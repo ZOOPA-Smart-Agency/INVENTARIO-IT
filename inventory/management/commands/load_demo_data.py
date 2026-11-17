@@ -78,10 +78,13 @@ class Command(BaseCommand):
             ).pk
         employees = {}
         for e in data["employees"]:
-            employees[e["id"]] = m.Employee.objects.create(
-                nombre=e["nombre"], email=e["email"], dept_id=ids["depts"][e["dept"]], loc_id=ids["locations"][e["loc"]],
+            person = m.Employee.objects.create(
+                nombre=e["nombre"], email=e["email"],
                 alta=day(e["alta"]), estado=e["estado"], estado_fecha=day(e["estadoFecha"]), contrato=e.get("contrato") or "",
-            ).pk
+            )
+            person.depts.set([ids["depts"][x] for x in e.get("depts") or [e["dept"]]])
+            person.locs.set([ids["locations"][x] for x in e.get("locs") or [e["loc"]]])
+            employees[e["id"]] = person.pk
 
         def ref(coll, value):
             return ids[coll][value] if value else None

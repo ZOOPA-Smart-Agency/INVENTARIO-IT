@@ -148,6 +148,21 @@ def money(body, key):
     return value
 
 
+def fks(body, key, model):
+    """Resolves a list of ids from the JSON (missing means none); every id must exist."""
+    values = body.get(key) or []
+    if not isinstance(values, list):
+        raise ApiError("err_invalid")
+    try:
+        ids = {int(v) for v in values if v not in (None, "")}
+    except (TypeError, ValueError):
+        raise ApiError("err_invalid")
+    found = list(model.objects.filter(pk__in=ids))
+    if len(found) != len(ids):
+        raise ApiError("err_invalid")
+    return found
+
+
 def fk(body, key, model):
     """Resolves an id from the JSON; '' or missing means no value."""
     value = body.get(key)
@@ -478,12 +493,14 @@ def _apply_employee(employee, b):
         validate_email(employee.email)
     except ValidationError:
         raise ApiError("err_person")
-    employee.dept, employee.loc = fk(b, "dept", m.Department), fk(b, "loc", m.Location)
+    depts, locs = fks(b, "depts", m.Department), fks(b, "locs", m.Location)
     employee.alta = date(b, "alta", timezone.localdate())
     employee.contrato = b.get("contrato") or ""
     if employee.contrato not in Employee.Contract.values:
         raise ApiError("err_invalid")
     employee.save()
+    employee.depts.set(depts)
+    employee.locs.set(locs)
 
 
 @endpoint("POST", role="edit")
@@ -623,6 +640,8 @@ def list_item(request, body, coll, pk):
     spec = _spec(coll)
     item = get_or_404(spec.model, pk)
     if request.method == "DELETE":
+        if hasattr(item, "employees") and item.employees.exists():
+            raise ApiError("in_use_cant", 409)  # a department or office people still belong to (not protected by the database)
         item.delete()
         audit(request, "log_setting", {"xKey": spec.title})
         return None

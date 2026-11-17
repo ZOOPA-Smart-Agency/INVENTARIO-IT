@@ -63,8 +63,8 @@ def employee_json(e):
         "id": str(e.pk),
         "nombre": e.nombre,
         "email": e.email,
-        "dept": sid(e.dept_id),
-        "loc": sid(e.loc_id),
+        "depts": sorted((str(x.pk) for x in e.depts.all()), key=int),
+        "locs": sorted((str(x.pk) for x in e.locs.all()), key=int),
         "alta": iso(e.alta),
         "estado": e.estado,
         "estadoFecha": iso(e.estado_fecha, None),
@@ -133,7 +133,7 @@ def full_state(user):
     if is_admin:  # only administrators set passwords
         state["settings"]["pwPolicy"] = password_policy_json()
     state["users"] = [user_json(u, is_admin) for u in User.objects.order_by("id")]
-    state["employees"] = [employee_json(e) for e in Employee.objects.all()]
+    state["employees"] = [employee_json(e) for e in Employee.objects.prefetch_related("depts", "locs")]
     devices = Device.objects.prefetch_related("disks", "nics", "battery_readings")
     state["devices"] = [device_json(d) for d in devices]
     state["assignments"] = [assignment_json(a) for a in Assignment.objects.all()]

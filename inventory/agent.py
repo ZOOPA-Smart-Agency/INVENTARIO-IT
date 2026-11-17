@@ -34,6 +34,7 @@ from .api import LOGIN_MAX_ATTEMPTS, LOGIN_WINDOW_SECONDS, MAC_RE, ApiError, _th
 from .models import AuditEvent, Device, User
 from .state import device_json
 from .tags import conflict as tag_conflict
+from .tags import parts
 from .tags import next_tag
 
 TOKEN_SALT = "inventario.agent"
@@ -196,7 +197,27 @@ def options(request, body):
         "locations": [{"id": str(l.pk), "nombre": l.nombre, "tipo": l.tipo} for l in m.Location.objects.all()],
         "existing": None if device is None else {"id": str(device.pk), "tag": device.tag, "estado": device.estado,
                                                  "typeId": str(device.type_id), "loc": str(device.loc_id)},
+        "hostnameTag": _hostname_tag(request.GET.get("hostname"), device, types, s) if request.GET.get("hostname") else None,
     }
+
+
+def _hostname_tag(hostname, device, types, s):
+    """With "the hostname is the asset tag" on: can this computer's name be its tag?
+
+    valid: it follows the tags' pattern (prefix, a device type's code or none, a number), such as ZLAP004;
+    tag: that name written as a tag.
+    usedBy: the tag of another device that has it, or has the same identifier (see tags.conflict).
+    matches: for a computer already in the inventory, whether the name is its tag.
+    """
+    hostname = _text(hostname, 63)
+    found = parts(hostname, s.tag_prefix)
+    codes = {t.code for t in types if t.code}
+    valid = bool(hostname) and found is not None and (found[0] in codes or found[0] == "")
+    other = tag_conflict(hostname, device.pk if device else None) if valid else None
+    # written the way tags are: the prefix as set, the code in capitals (zlap004 -> ZLAP004)
+    tag = s.tag_prefix + found[0] + hostname[len(s.tag_prefix) + len(found[0]):] if valid else ""
+    return {"name": hostname, "tag": tag, "valid": valid, "usedBy": other.tag if other else None,
+            "matches": bool(device) and hostname.lower() == device.tag.lower()}
 
 
 def _type_names(t):
@@ -253,7 +274,11 @@ def report(request, body):
     if created:
         dtype = (m.DeviceType.objects.filter(pk=_int(body.get("typeId"))).first()
                  or _guess_type(facts.get("chassis"), facts.get("model"), manufacturer=facts.get("manufacturer")))
-        tag = _text(body.get("tag"), 50) or next_tag(dtype)
+        tag = _text(body.get("tag"), 50)
+        if not tag and m.AppSettings.load().hostname_is_tag:  # the computer's name, when it is a valid, free tag
+            check = _hostname_tag(facts.get("hostname"), None, list(m.DeviceType.objects.all()), m.AppSettings.load())
+            tag = check["tag"] if check["valid"] and not check["usedBy"] else ""
+        tag = tag or next_tag(dtype)
         if tag_conflict(tag):  # the same tag, or the same identifier, as another device
             raise ApiError("err_dup", 409)
         loc = (m.Location.objects.filter(pk=_int(body.get("loc"))).first()

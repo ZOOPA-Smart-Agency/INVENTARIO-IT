@@ -238,8 +238,9 @@ class Employee(models.Model):
 
     nombre = models.CharField(max_length=200)
     email = models.EmailField()
-    dept = models.ForeignKey(Department, null=True, blank=True, on_delete=models.PROTECT)
-    loc = models.ForeignKey(Location, null=True, blank=True, on_delete=models.PROTECT)
+    # Someone can belong to several departments and work from several offices.
+    depts = models.ManyToManyField(Department, blank=True, related_name="employees")
+    locs = models.ManyToManyField(Location, blank=True, related_name="employees")
     alta = models.DateField()
     estado = models.CharField(max_length=10, choices=State.choices, default=State.ACTIVE)
     estado_fecha = models.DateField(null=True, blank=True)
