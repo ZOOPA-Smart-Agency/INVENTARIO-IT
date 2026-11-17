@@ -68,7 +68,7 @@ def employee_json(e):
         "alta": iso(e.alta),
         "estado": e.estado,
         "estadoFecha": iso(e.estado_fecha, None),
-        "temporal": e.temporal,
+        "contrato": e.contrato,
     }
 
 

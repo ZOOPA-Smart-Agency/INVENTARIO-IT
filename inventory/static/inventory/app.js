@@ -78,7 +78,7 @@ const I18N = {
     sect_purchase: 'Compra y garantía', fd_bought: 'Fecha de compra', fd_wend: 'Fin de garantía', fd_supplier: 'Proveedor', fd_invoice: 'N.º de factura', fd_price: 'Precio ({c})', fd_notes: 'Notas',
     err_required: 'La etiqueta y el número de serie son obligatorios', err_dup: 'Ya existe un dispositivo con esa etiqueta o ese número identificador', f_numbering: 'Numeración de las etiquetas', num_type: 'Por tipo de dispositivo', num_global: 'Global, para todos los dispositivos', num_type_hint: 'Cada código cuenta por su lado: {a} y {b} pueden convivir.', num_global_hint: 'Un único número para todos: si existe {a}, el siguiente MacBook será {c} y no {b}.',
 created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados',
-    fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', fe_temporal: 'Temporal o en prácticas', chip_temporal: 'Temporal / prácticas', k_contract: 'Contrato', contract_regular: 'Indefinido', err_person: 'El nombre y el email son obligatorios',
+    fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', k_contract: 'Contrato', ct_indefinido: 'Indefinido', ct_temporal: 'Temporal', ct_practicas: 'Prácticas', ct_all: 'Todos los contratos', ct_unset: 'Sin definir', err_person: 'El nombre y el email son obligatorios',
     assign_title: 'Asignar {tag}', fa_emp: 'Empleado', already_has: '(ya tiene {n})', fa_date: 'Fecha de entrega', fa_acc: 'Accesorios entregados', fa_acc_ph: 'Cargador, dock, ratón…', assign_btn: 'Asignar', assigned_to: 'Asignado a {name}',
     return_title: 'Devolución de {tag}', return_intro: 'Lo devuelve {name}, que lo tiene desde el {d}.', fr_date: 'Fecha de devolución', fr_cond: 'Estado físico', fr_next: 'Después de la devolución',
     next_avail: 'Disponible en el almacén', next_rep: 'Enviar a reparación', next_disc: 'Descartar', fr_notes_ph: 'Falta el cargador, borrado de datos hecho…', return_prefix: 'Devolución: ', return_done: 'Devolución registrada',
@@ -336,7 +336,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     sect_purchase: 'Purchase and warranty', fd_bought: 'Purchase date', fd_wend: 'Warranty end', fd_supplier: 'Supplier', fd_invoice: 'Invoice no.', fd_price: 'Price ({c})', fd_notes: 'Notes',
     err_required: 'Asset tag and serial number are required', err_dup: 'Another device already has that tag or identification number', f_numbering: 'Tag numbering', num_type: 'By device type', num_global: 'Global, across all devices', num_type_hint: 'Each code counts on its own: {a} and {b} can both exist.', num_global_hint: 'One number for everything: if {a} exists, the next MacBook is {c}, not {b}.',
 created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
-    fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_loc: 'Location', fe_hired: 'Start date', fe_temporal: 'Temporary or intern', chip_temporal: 'Temporary / intern', k_contract: 'Contract', contract_regular: 'Permanent', err_person: 'Name and email are required',
+    fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_loc: 'Location', fe_hired: 'Start date', k_contract: 'Contract', ct_indefinido: 'Permanent', ct_temporal: 'Temporary', ct_practicas: 'Internship', ct_all: 'All contracts', ct_unset: 'Not defined', err_person: 'Name and email are required',
     assign_title: 'Assign {tag}', fa_emp: 'Employee', already_has: '(already has {n})', fa_date: 'Handover date', fa_acc: 'Accessories handed over', fa_acc_ph: 'Charger, dock, mouse…', assign_btn: 'Assign', assigned_to: 'Assigned to {name}',
     return_title: 'Return of {tag}', return_intro: '{name} is returning it. They have had it since {d}.', fr_date: 'Return date', fr_cond: 'Physical condition', fr_next: 'After the return',
     next_avail: 'Available in storage', next_rep: 'Send for repair', next_disc: 'Retire', fr_notes_ph: 'Charger missing, data wiped…', return_prefix: 'Return: ', return_done: 'Return recorded',
@@ -595,7 +595,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     sect_purchase: 'Compra i garantia', fd_bought: 'Data de compra', fd_wend: 'Fi de la garantia', fd_supplier: 'Proveïdor', fd_invoice: 'Núm. de factura', fd_price: 'Preu ({c})', fd_notes: 'Notes',
     err_required: 'L’etiqueta i el número de sèrie són obligatoris', err_dup: 'Ja hi ha un dispositiu amb aquesta etiqueta o aquest número identificador', f_numbering: 'Numeració de les etiquetes', num_type: 'Per tipus de dispositiu', num_global: 'Global, per a tots els dispositius', num_type_hint: 'Cada codi compta pel seu compte: {a} i {b} poden conviure.', num_global_hint: 'Un sol número per a tot: si existeix {a}, el següent MacBook serà {c} i no {b}.',
 created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
-    fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', fe_temporal: 'Temporal o en pràctiques', chip_temporal: 'Temporal / pràctiques', k_contract: 'Contracte', contract_regular: 'Indefinit', err_person: 'El nom i el correu són obligatoris',
+    fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', k_contract: 'Contracte', ct_indefinido: 'Indefinit', ct_temporal: 'Temporal', ct_practicas: 'Pràctiques', ct_all: 'Tots els contractes', ct_unset: 'Sense definir', err_person: 'El nom i el correu són obligatoris',
     assign_title: 'Assigna {tag}', fa_emp: 'Empleat', already_has: '(ja en té {n})', fa_date: 'Data de lliurament', fa_acc: 'Accessoris lliurats', fa_acc_ph: 'Carregador, dock, ratolí…', assign_btn: 'Assigna', assigned_to: 'Assignat a {name}',
     return_title: 'Devolució de {tag}', return_intro: 'El retorna {name}, que el té des del {d}.', fr_date: 'Data de devolució', fr_cond: 'Estat físic', fr_next: 'Després de la devolució',
     next_avail: 'Disponible al magatzem', next_rep: 'Envia a reparar', next_disc: 'Retira', fr_notes_ph: 'Falta el carregador, esborrat de dades fet…', return_prefix: 'Devolució: ', return_done: 'Devolució registrada',
@@ -2099,7 +2099,7 @@ function viewDevice(id) {
   </section>`;
 }
 
-const FE = { q: '', activos: 'todos' };
+const FE = { q: '', activos: 'todos', contrato: 'todos' };
 function viewEmployees() {
   return `
   <div class="head"><div><h1>${T('people_title')}</h1><p class="sub">${T('people_sub')}</p></div>
@@ -2107,12 +2107,13 @@ function viewEmployees() {
   <div class="toolbar">
     <input type="search" id="eq" placeholder="${T('search_people')}" value="${esc(FE.q)}" aria-label="${T('lbl_search')}">
     <select id="eactivos" aria-label="${T('lbl_situation')}">${opts([['todos', t('f_all')], ...EMP_STATES.map(s => [s, t('es_' + s)])], FE.activos)}</select>
+    <select id="econtrato" aria-label="${T('k_contract')}">${opts([['todos', t('ct_all')], ...CONTRACTS.map(c => [c || 'unset', t(ctKey(c))])], FE.contrato)}</select>
   </div>
   <div class="tablebox" id="empTable"></div>`;
 }
 function drawEmpRows() {
   const q = FE.q.trim().toLowerCase();
-  const rows = S.employees.filter(e => (FE.activos === 'todos' || empState(e) === FE.activos) && (!q || [e.nombre, e.email, deptName(e.dept)].join(' ').toLowerCase().includes(q)))
+  const rows = S.employees.filter(e => (FE.activos === 'todos' || empState(e) === FE.activos) && (FE.contrato === 'todos' || (e.contrato || 'unset') === FE.contrato) && (!q || [e.nombre, e.email, deptName(e.dept)].join(' ').toLowerCase().includes(q)))
     .sort((a, b) => a.nombre.localeCompare(b.nombre, lang));
   $('#empTable').innerHTML = rows.length ? `<table><thead><tr><th>${T('th_name')}</th><th>${T('lbl_dept')}</th><th>${T('th_loc')}</th><th>${T('th_curdev')}</th><th>${T('th_sit')}</th></tr></thead><tbody>
     ${rows.map(e => { const ds = S.assignments.filter(a => a.employeeId === e.id && !a.hasta).map(a => dev(a.deviceId)).filter(Boolean);
@@ -2149,7 +2150,7 @@ function viewEmployee(id) {
   </section>
   <section class="panel"><h2>${T('data')}</h2>
     <dl class="kv"><dt>${T('k_hired')}</dt><dd>${fmt(e.alta)}</dd><dt>${T('k_tenure')}</dt><dd>${esc(age(e.alta, st === 'salida' ? e.estadoFecha : null))}</dd><dt>${T('k_email')}</dt><dd>${esc(e.email)}</dd>
-      <dt>${T('k_contract')}</dt><dd>${T(e.temporal ? 'fe_temporal' : 'contract_regular')}</dd>
+      <dt>${T('k_contract')}</dt><dd>${T(ctKey(e.contrato))}</dd>
       <dt>${T('th_sit')}</dt><dd>${empPill(e)}${st !== 'activo' && e.estadoFecha ? `<span class="muted" style="display:block;font-size:12.5px">${T('since_d', { d: fmt(e.estadoFecha) })}</span>` : ''}</dd></dl>
   </section>`;
 }
@@ -2499,11 +2500,14 @@ function employeeForm(e) {
     <label>${T('fe_dept')}${selPlus('departamentos', 'dept', 'e-dept', opts(S.depts.map(x => [x.id, tx(x.nombre)]), e.dept))}</label>
     <label>${T('fe_loc')}${selPlus('ubicaciones', 'loc', 'e-loc', opts(personLocs(), e.loc))}</label>
     <label>${T('fe_hired')}<input name="alta" id="e-alta" type="date" value="${esc(e.alta)}"></label>
-    <label class="check full"><input type="checkbox" name="temporal" id="e-temporal"${e.temporal ? ' checked' : ''}> ${T('fe_temporal')}</label>
+    <label>${T('k_contract')}<select name="contrato" id="e-contrato">${opts(CONTRACTS.map(c => [c, t(ctKey(c))]), e.contrato || '')}</select></label>
   </div>`;
 }
-function readEmployee(v) { if (!v.nombre.trim() || !v.email.trim()) { toast(t('err_person')); return null; } return { nombre: v.nombre.trim(), email: v.email.trim(), dept: v.dept, loc: v.loc, alta: v.alta || today(), temporal: v.temporal === 'on' }; }
-const tempChip = e => e.temporal ? ` <span class="chip">${T('chip_temporal')}</span>` : '';
+function readEmployee(v) { if (!v.nombre.trim() || !v.email.trim()) { toast(t('err_person')); return null; } return { nombre: v.nombre.trim(), email: v.email.trim(), dept: v.dept, loc: v.loc, alta: v.alta || today(), contrato: v.contrato || '' }; }
+/* contract: not defined (''), indefinido, temporal or prácticas (the last two show a badge next to the name) */
+const CONTRACTS = ['', 'indefinido', 'temporal', 'practicas'];
+const ctKey = c => c ? 'ct_' + c : 'ct_unset';
+const tempChip = e => e.contrato === 'temporal' || e.contrato === 'practicas' ? ` <span class="chip">${T('ct_' + e.contrato)}</span>` : '';
 
 const ACTIONS = {
   nuevoDispositivo() {
@@ -2698,6 +2702,7 @@ function route() {
     view.innerHTML = viewEmployees(); drawEmpRows();
     $('#eq').oninput = e => { FE.q = e.target.value; drawEmpRows(); };
     $('#eactivos').onchange = e => { FE.activos = e.target.value; drawEmpRows(); };
+    $('#econtrato').onchange = e => { FE.contrato = e.target.value; drawEmpRows(); };
   } else if (h.startsWith('empleado-')) view.innerHTML = viewEmployee(h.slice(9));
   else if (sec === 'ajustes') { view.innerHTML = viewSettings(h.slice(8)); bindRegion(); bindPwForm(); bindBrand(); bindData(); bindAbout(); bindUpdates(); }
   else view.innerHTML = viewPanel();

@@ -250,16 +250,20 @@ class HealthTests(TestCase):
         self.assertEqual(self.client.get("/healthz").json(), {"status": "ok", "version": VERSION})
 
 
-class TemporaryEmployeeTests(TestCase):
-    def test_marked_and_cleared(self):
+class EmployeeContractTests(TestCase):
+    def test_contract_choice(self):
         call_command("load_demo_data", password=PASSWORD, verbosity=0, stdout=open("/dev/null", "w"))
         client = Client()
         client.force_login(User.objects.get(email="it@empresa.es"))
-        body = {"nombre": "Lara Becaria", "email": "lara@empresa.es", "dept": "", "loc": "", "alta": "2026-11-01", "temporal": True}
+        body = {"nombre": "Lara Becaria", "email": "lara@empresa.es", "dept": "", "loc": "", "alta": "2026-11-01", "contrato": "practicas"}
         response = client.post("/api/employees", data=json.dumps(body), content_type="application/json")
         self.assertEqual(response.status_code, 200, response.content)
         data = response.json()["employee"]
-        self.assertTrue(data["temporal"])
-        response = client.put(f"/api/employees/{data['id']}", data=json.dumps({**body, "temporal": False}), content_type="application/json")
-        self.assertFalse(response.json()["employee"]["temporal"])
-        self.assertFalse(Employee.objects.get(pk=data["id"]).temporal)
+        self.assertEqual(data["contrato"], "practicas")
+        url = f"/api/employees/{data['id']}"
+        self.assertEqual(client.put(url, data=json.dumps({**body, "contrato": "temporal"}), content_type="application/json").json()["employee"]["contrato"], "temporal")
+        self.assertEqual(client.put(url, data=json.dumps({**body, "contrato": "freelance"}), content_type="application/json").status_code, 400)
+        self.assertEqual(client.put(url, data=json.dumps({**body, "contrato": "indefinido"}), content_type="application/json").json()["employee"]["contrato"], "indefinido")
+        body.pop("contrato")  # not given: not defined
+        self.assertEqual(client.put(url, data=json.dumps(body), content_type="application/json").json()["employee"]["contrato"], "")
+        self.assertTrue(all(e.contrato == "" for e in Employee.objects.exclude(pk=data["id"])))
