@@ -41,7 +41,7 @@ const I18N = {
     by_dept: 'Equipos en uso por departamento', activity: 'Actividad reciente',
 
     devices_title: 'Dispositivos', devices_sub: 'Equipos de la empresa',
-    search_dev: 'Buscar por etiqueta, nombre, n.º de serie, MAC, modelo o persona', lbl_search: 'Buscar', lbl_status: 'Estado', lbl_dept: 'Departamento', lbl_type: 'Tipo',
+    search_dev: 'Buscar por etiqueta, nombre, n.º de serie, MAC, modelo o persona', lbl_search_in: 'Buscar en', search_in: 'Buscar en «{x}»', sf_all: 'Todos los datos', sf_tag: 'Etiqueta', sf_name: 'Nombre del equipo', sf_serial: 'N.º de serie', sf_model: 'Modelo', sf_cpu: 'Procesador', sf_ram: 'Memoria', sf_disk: 'Almacenamiento', sf_gpu: 'Gráficos', sf_os: 'Sistema', sf_mac: 'MAC', sf_person: 'Asignado a', lbl_search: 'Buscar', lbl_status: 'Estado', lbl_dept: 'Departamento', lbl_type: 'Tipo',
     f_active: 'Todos los activos', f_all: 'Todos', f_alldepts: 'Todos los departamentos', f_alltypes: 'Todos los tipos',
     th_tag: 'Etiqueta', th_device: 'Equipo', th_assigned: 'Asignado a', th_status: 'Estado', th_warranty: 'Garantía',
     left_badge: 'ha dejado la empresa', no_match_dev: 'Ningún dispositivo coincide con los filtros.',
@@ -299,7 +299,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     by_dept: 'Devices in use by department', activity: 'Recent activity',
 
     devices_title: 'Devices', devices_sub: 'Company equipment',
-    search_dev: 'Search by tag, name, serial number, MAC, model or person', lbl_search: 'Search', lbl_status: 'Status', lbl_dept: 'Department', lbl_type: 'Type',
+    search_dev: 'Search by tag, name, serial number, MAC, model or person', lbl_search_in: 'Search in', search_in: 'Search in “{x}”', sf_all: 'All details', sf_tag: 'Tag', sf_name: 'Computer name', sf_serial: 'Serial number', sf_model: 'Model', sf_cpu: 'Processor', sf_ram: 'Memory', sf_disk: 'Storage', sf_gpu: 'Graphics', sf_os: 'System', sf_mac: 'MAC', sf_person: 'Assigned to', lbl_search: 'Search', lbl_status: 'Status', lbl_dept: 'Department', lbl_type: 'Type',
     f_active: 'All active', f_all: 'All', f_alldepts: 'All departments', f_alltypes: 'All types',
     th_tag: 'Tag', th_device: 'Device', th_assigned: 'Assigned to', th_status: 'Status', th_warranty: 'Warranty',
     left_badge: 'left', no_match_dev: 'No devices match these filters.',
@@ -557,7 +557,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     by_dept: 'Equips en ús per departament', activity: 'Activitat recent',
 
     devices_title: 'Dispositius', devices_sub: 'Equips de l’empresa',
-    search_dev: 'Cerca per etiqueta, nom, núm. de sèrie, MAC, model o persona', lbl_search: 'Cerca', lbl_status: 'Estat', lbl_dept: 'Departament', lbl_type: 'Tipus',
+    search_dev: 'Cerca per etiqueta, nom, núm. de sèrie, MAC, model o persona', lbl_search_in: 'Cerca a', search_in: 'Cerca a «{x}»', sf_all: 'Totes les dades', sf_tag: 'Etiqueta', sf_name: 'Nom de l’equip', sf_serial: 'Núm. de sèrie', sf_model: 'Model', sf_cpu: 'Processador', sf_ram: 'Memòria', sf_disk: 'Emmagatzematge', sf_gpu: 'Gràfics', sf_os: 'Sistema', sf_mac: 'MAC', sf_person: 'Assignat a', lbl_search: 'Cerca', lbl_status: 'Estat', lbl_dept: 'Departament', lbl_type: 'Tipus',
     f_active: 'Tots els actius', f_all: 'Tots', f_alldepts: 'Tots els departaments', f_alltypes: 'Tots els tipus',
     th_tag: 'Etiqueta', th_device: 'Equip', th_assigned: 'Assignat a', th_status: 'Estat', th_warranty: 'Garantia',
     left_badge: 'ha deixat l’empresa', no_match_dev: 'Cap dispositiu no coincideix amb els filtres.',
@@ -2037,13 +2037,30 @@ function viewPanel() {
   </div>`;
 }
 
-const F = { q: '', estado: 'activos', dept: '', tipo: '' };
+const F = { q: '', estado: 'activos', dept: '', tipo: '', campo: '' };
+/* what the device search looks in: everything, or one detail (so "16" in Memory finds 16 GB, not a serial number) */
+const SEARCH_IN = {
+  tag: d => d.tag,
+  name: d => hostOf(d),
+  serial: d => d.serial,
+  model: d => [devTitle(d), typeName(devType(d))].join(' '),
+  cpu: d => { const c = cpuOf(d); return c ? [c.nombre, cpuGen(c.nombre), withUnit(c.speed, c.speedUnit)].join(' ') : ''; },
+  ram: d => [withUnit(d.ramSize, d.ramUnit), ramDetail(d), listName('ramForms', d.ramForm)].join(' '),
+  disk: d => [...(d.disks || []).map(k => [withUnit(k.size, k.unit), listName('diskTypes', k.type), listName('diskForms', k.form), listName('diskConns', k.conn)].join(' ')), specParts(d).slice(-1)[0] || ''].join(' '),
+  gpu: d => gpuOf(d)?.nombre || '',
+  os: d => osText(d),
+  mac: d => (d.nics || []).map(n => n.mac + ' ' + listName('nicModels', n.modelId)).join(' '),
+  person: d => { const a = openAsg(d.id), e = a && emp(a.employeeId); return a ? [holderName(a), e ? deptNames(e) : ''].join(' ') : ''; },
+};
+/* a match ignoring case, and also ignoring spaces ("16gb" finds "16 GB") */
+const found = (text, q) => { const h = String(text || '').toLowerCase(); return h.includes(q) || h.replace(/\s+/g, '').includes(q.replace(/\s+/g, '')); };
 function viewDevices() {
   return `
   <div class="head"><div><h1>${T('devices_title')}</h1><p class="sub">${T('devices_sub')}</p></div>
     <div class="row">${reloadBtn()}${can('edit') ? `<button class="btn primary" type="button" data-act="nuevoDispositivo">${T('new_device')}</button>` : ''}</div></div>
   <div class="toolbar">
-    <input type="search" id="fq" placeholder="${T('search_dev')}" value="${esc(F.q)}" aria-label="${T('lbl_search')}">
+    <input type="search" id="fq" placeholder="${F.campo ? T('search_in', { x: t('sf_' + F.campo) }) : T('search_dev')}" value="${esc(F.q)}" aria-label="${T('lbl_search')}">
+    <select id="fcampo" aria-label="${T('lbl_search_in')}">${opts([['', t('sf_all')], ...Object.keys(SEARCH_IN).map(k => [k, t('sf_' + k)])], F.campo)}</select>
     <select id="festado" aria-label="${T('lbl_status')}">${opts([['activos', t('f_active')], ['', t('f_all')], ...ST.map(k => [k, st(k)]), ['retirados', t('retired_stat')]], F.estado)}</select>
     <select id="fdept" aria-label="${T('lbl_dept')}">${opts([['', t('f_alldepts')], ...S.depts.map(x => [x.id, tx(x.nombre)])], F.dept)}</select>
     <select id="ftipo" aria-label="${T('lbl_type')}">${opts([['', t('f_alltypes')], ...S.types.map(x => [x.id, tx(x.nombre)])], F.tipo)}</select>
@@ -2059,7 +2076,7 @@ function drawDeviceRows() {
     if (ST.includes(F.estado) && d.estado !== F.estado) return false;
     if (F.dept && a?.deptId !== F.dept && !(e?.depts || []).includes(F.dept)) return false;
     if (F.tipo && devType(d) !== F.tipo) return false;
-    if (q && ![d.tag, hostOf(d), d.serial, osText(d), cpuOf(d)?.nombre, ...(d.nics || []).map(n => n.mac + ' ' + listName('nicModels', n.modelId)), gpuOf(d)?.nombre, devTitle(d), e?.nombre, a?.deptId ? deptName(a.deptId) : ''].join(' ').toLowerCase().includes(q)) return false;
+    if (q && !(F.campo ? found(SEARCH_IN[F.campo](d), q) : found([d.tag, hostOf(d), d.serial, osText(d), cpuOf(d)?.nombre, ...(d.nics || []).map(n => n.mac + ' ' + listName('nicModels', n.modelId)), gpuOf(d)?.nombre, devTitle(d), e?.nombre, a?.deptId ? deptName(a.deptId) : '', specLine(d)].join(' '), q))) return false;
     return true;
   });
   $('#devTable').innerHTML = rows.length ? `<table><thead><tr><th>${T('th_tag')}</th><th>${T('th_device')}</th><th>${T('th_assigned')}</th><th>${T('th_status')}</th><th>${T('th_warranty')}</th></tr></thead><tbody>
@@ -2777,7 +2794,7 @@ view.addEventListener('click', ev => {
   const s = ev.target.closest('[data-set]');
   if (s) { if (can('admin')) SET_ACTIONS[s.dataset.set](s.dataset.list, s.dataset.id); return; }
   const f = ev.target.closest('[data-filter]');
-  if (f) { F.estado = f.dataset.filter; F.q = ''; F.dept = ''; F.tipo = ''; }
+  if (f) { F.estado = f.dataset.filter; F.q = ''; F.dept = ''; F.tipo = ''; F.campo = ''; }
   if (ev.target.closest('a')) return;
   const go = ev.target.closest('[data-go]');
   if (go) location.hash = go.dataset.go;
@@ -2794,6 +2811,7 @@ function route() {
     $('#festado').onchange = e => { F.estado = e.target.value; drawDeviceRows(); };
     $('#fdept').onchange = e => { F.dept = e.target.value; drawDeviceRows(); };
     $('#ftipo').onchange = e => { F.tipo = e.target.value; drawDeviceRows(); };
+    $('#fcampo').onchange = e => { F.campo = e.target.value; $('#fq').placeholder = F.campo ? t('search_in', { x: t('sf_' + F.campo) }) : t('search_dev'); drawDeviceRows(); $('#fq').focus(); };
   } else if (h.startsWith('dispositivo-')) view.innerHTML = viewDevice(h.slice(12));
   else if (h === 'empleados') {
     view.innerHTML = viewEmployees(); drawEmpRows();
