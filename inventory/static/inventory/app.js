@@ -48,7 +48,7 @@ const I18N = {
     w_expired: 'Vencida', w_expired_on: 'Vencida el {d}', w_soon: 'Vence en {n} días',
 
     back_devices: '← Dispositivos', not_found_dev: 'No existe ese dispositivo.', back_list: 'Volver a la lista', serial_no: 'N.º de serie',
-    btn_return: 'Registrar devolución', btn_assign: 'Asignar', reload: 'Actualizar', reloaded: 'Datos actualizados', mi_to_emp: 'A un empleado', mi_to_emp_d: 'Lo usará una persona', mi_to_dept: 'A un departamento', mi_to_dept_d: 'Equipo compartido por todo el departamento', assign_title_dept: 'Asignar {tag} a un departamento', btn_fault: 'Registrar avería', btn_status: 'Cambiar estado', btn_edit: 'Editar',
+    btn_return: 'Registrar devolución', btn_assign: 'Asignar', gen_n: n => n + '.ª gen.', ultra_s: n => 'Serie ' + n, ryzen_s: n => 'serie ' + n, reload: 'Actualizar', reloaded: 'Datos actualizados', mi_to_emp: 'A un empleado', mi_to_emp_d: 'Lo usará una persona', mi_to_dept: 'A un departamento', mi_to_dept_d: 'Equipo compartido por todo el departamento', assign_title_dept: 'Asignar {tag} a un departamento', btn_fault: 'Registrar avería', btn_status: 'Cambiar estado', btn_edit: 'Editar',
     n_left: '{name} dejó la empresa el {date}. Recupera este equipo y registra la devolución.', n_noenc: 'El disco no está cifrado.',
     current: 'Asignación actual', since: 'Desde el {d} ({age})', delivered_with: 'Entregado con: {x}', out_service: 'Fuera de servicio.', unassigned_at: 'Sin asignar. Está en {loc}.',
     hw: 'Hardware y software', k_type: 'Tipo', cores: n => n === 1 ? '1 núcleo' : n + ' núcleos', k_cpu: 'Procesador', k_ram: 'Memoria', k_disk: 'Almacenamiento', k_os: 'Sistema', k_enc: 'Cifrado', k_loc: 'Ubicación',
@@ -306,7 +306,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     w_expired: 'Expired', w_expired_on: 'Expired on {d}', w_soon: 'Ends in {n} days',
 
     back_devices: '← Devices', not_found_dev: 'That device does not exist.', back_list: 'Back to the list', serial_no: 'Serial no.',
-    btn_return: 'Record return', btn_assign: 'Assign', reload: 'Refresh', reloaded: 'Up to date', mi_to_emp: 'To an employee', mi_to_emp_d: 'One person will use it', mi_to_dept: 'To a department', mi_to_dept_d: 'Shared by the whole department', assign_title_dept: 'Assign {tag} to a department', btn_fault: 'Log fault', btn_status: 'Change status', btn_edit: 'Edit',
+    btn_return: 'Record return', btn_assign: 'Assign', gen_n: n => n + ([11, 12, 13].includes(n % 100) ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' })[n % 10] || 'th') + ' gen', ultra_s: n => 'Series ' + n, ryzen_s: n => n + ' series', reload: 'Refresh', reloaded: 'Up to date', mi_to_emp: 'To an employee', mi_to_emp_d: 'One person will use it', mi_to_dept: 'To a department', mi_to_dept_d: 'Shared by the whole department', assign_title_dept: 'Assign {tag} to a department', btn_fault: 'Log fault', btn_status: 'Change status', btn_edit: 'Edit',
     n_left: '{name} left on {date}. Recover this device and record the return.', n_noenc: 'The disk is not encrypted.',
     current: 'Current assignment', since: 'Since {d} ({age})', delivered_with: 'Handed over with: {x}', out_service: 'Out of service.', unassigned_at: 'Unassigned. Located at {loc}.',
     hw: 'Hardware and software', k_type: 'Type', cores: n => n === 1 ? '1 core' : n + ' cores', k_cpu: 'Processor', k_ram: 'Memory', k_disk: 'Storage', k_os: 'Operating system', k_enc: 'Encryption', k_loc: 'Location',
@@ -564,7 +564,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     w_expired: 'Vençuda', w_expired_on: 'Vençuda el {d}', w_soon: 'Venç d’aquí a {n} dies',
 
     back_devices: '← Dispositius', not_found_dev: 'Aquest dispositiu no existeix.', back_list: 'Torna a la llista', serial_no: 'Núm. de sèrie',
-    btn_return: 'Registra la devolució', btn_assign: 'Assigna', reload: 'Actualitza', reloaded: 'Dades actualitzades', mi_to_emp: 'A un empleat', mi_to_emp_d: 'El farà servir una persona', mi_to_dept: 'A un departament', mi_to_dept_d: 'Equip compartit per tot el departament', assign_title_dept: 'Assigna {tag} a un departament', btn_fault: 'Registra una avaria', btn_status: 'Canvia l’estat', btn_edit: 'Edita',
+    btn_return: 'Registra la devolució', btn_assign: 'Assigna', gen_n: n => n + 'a gen.', ultra_s: n => 'Sèrie ' + n, ryzen_s: n => 'sèrie ' + n, reload: 'Actualitza', reloaded: 'Dades actualitzades', mi_to_emp: 'A un empleat', mi_to_emp_d: 'El farà servir una persona', mi_to_dept: 'A un departament', mi_to_dept_d: 'Equip compartit per tot el departament', assign_title_dept: 'Assigna {tag} a un departament', btn_fault: 'Registra una avaria', btn_status: 'Canvia l’estat', btn_edit: 'Edita',
     n_left: '{name} va deixar l’empresa el {date}. Recupera aquest equip i registra’n la devolució.', n_noenc: 'El disc no està xifrat.',
     current: 'Assignació actual', since: 'Des del {d} ({age})', delivered_with: 'Lliurat amb: {x}', out_service: 'Fora de servei.', unassigned_at: 'Sense assignar. És a {loc}.',
     hw: 'Maquinari i programari', k_type: 'Tipus', cores: n => n === 1 ? '1 nucli' : n + ' nuclis', k_cpu: 'Processador', k_ram: 'Memòria', k_disk: 'Emmagatzematge', k_os: 'Sistema', k_enc: 'Xifratge', k_loc: 'Ubicació',
@@ -965,6 +965,30 @@ const screenTitle = typeId => hasBattery(typeId) && hasScreen(typeId) ? t('sect_
 const modelOpts = (typeId, selId) => { const ms = S.models.filter(m => m.typeId === typeId); return ms.length ? opts(ms.map(m => [m.id, modelName(m)]), selId) : opts([['', t('no_models')]]); };
 const triOpts = sel => opts([['', t('undef')], ['yes', t('yes')], ['no', t('no')]], sel || '');
 const toGB = (v, u) => u === 'TB' ? v * 1024 : u === 'MB' ? v / 1024 : v;
+/* a processor's generation, from its model name: Intel Core i5-8250U -> 8th, i7-1165G7 -> 11th, i9-14900K -> 14th,
+   Core Ultra 7 155H -> series 1, AMD Ryzen 5 5600U -> 5000 series; '' when the name does not say (Apple M3...) */
+function cpuGen(name) {
+  const n = name || '';
+  let m = n.match(/Core\s*(?:\(TM\)\s*)?i[3579]-(\d{4,5})/i);
+  if (m) { const num = m[1]; return t('gen_n', num.length === 5 || num[0] === '1' ? Number(num.slice(0, 2)) : Number(num[0])); }
+  if ((m = n.match(/Core\s*Ultra\s*[3579]\s*(\d)\d{2}/i))) return t('ultra_s', Number(m[1]));
+  if ((m = n.match(/Ryzen\s*(?:\d\s*)?(?:PRO\s*)?(\d)\d{3}/i))) return t('ryzen_s', m[1] + '000');
+  return '';
+}
+/* what a device mostly is: processor (and generation), memory, and total storage with its kind */
+function specParts(d) {
+  const c = cpuOf(d), gen = c ? cpuGen(c.nombre) : '';
+  const cpu = c ? c.nombre + (gen ? ` (${gen})` : '') : '';
+  const ram = has(d.ramSize) ? `${withUnit(d.ramSize, d.ramUnit)} RAM` : '';
+  const disks = (d.disks || []).filter(k => has(k.size));
+  const total = disks.reduce((sum, k) => sum + toGB(Number(k.size), k.unit), 0);
+  const kinds = [...new Set(disks.map(k => listName('diskTypes', k.type)).filter(Boolean))].join(' + ');
+  const disk = total ? [total >= 1024 ? `${nf(Math.round(total / 1024 * 10) / 10)} TB` : `${nf(Math.round(total))} GB`, kinds].filter(Boolean).join(' ') : '';
+  return [cpu, ram, disk].filter(Boolean);
+}
+const specLine = d => specParts(d).join(' · ');
+/* the same as HTML that wraps onto more lines only between the parts, never inside one ("8th gen", "1 TB SSD") */
+const specHtml = d => { const ps = specParts(d); return ps.map((p, i) => `<span class="nw">${esc(p)}${i < ps.length - 1 ? ' ·' : ''}</span>`).join(' '); };
 /* who had the device on a given day, and the faults logged while someone had it */
 const holderAt = (devId, date) => S.assignments.find(a => a.deviceId === devId && a.desde <= date && (!a.hasta || a.hasta >= date));
 const faultsIn = (devId, from, to) => S.incidents.filter(i => i.deviceId === devId && i.fecha >= from && (!to || i.fecha <= to));
@@ -2041,7 +2065,7 @@ function drawDeviceRows() {
   $('#devTable').innerHTML = rows.length ? `<table><thead><tr><th>${T('th_tag')}</th><th>${T('th_device')}</th><th>${T('th_assigned')}</th><th>${T('th_status')}</th><th>${T('th_warranty')}</th></tr></thead><tbody>
     ${rows.map(d => { const a = openAsg(d.id), e = a && emp(a.employeeId), m = model(d.modelId);
       return `<tr class="click" data-go="dispositivo-${d.id}"><td>${tagLink(d)}</td>
-        <td><b>${esc(devTitle(d))}</b><span class="t2">${[esc(typeName(devType(d))), hostExtra(d), `<span class="mono">${esc(d.serial)}</span>`].filter(Boolean).join(' · ')}</span></td>
+        <td><b>${esc(devTitle(d))}</b>${specLine(d) ? `<span class="t2 spec">${specHtml(d)}</span>` : ''}<span class="t2">${[esc(typeName(devType(d))), hostExtra(d), `<span class="mono">${esc(d.serial)}</span>`].filter(Boolean).join(' · ')}</span></td>
         <td>${e ? `${esc(e.nombre)}<span class="t2">${esc(deptNames(e))}${hasLeft(e) ? ` · <span class="w-past">${T('left_badge')}</span>` : ''}</span>` : a?.deptId ? `${esc(deptName(a.deptId))}<span class="t2">${T('shared_dept')}</span>` : '<span class="muted">—</span>'}</td>
         <td>${pill(d.estado)}</td><td>${warranty(d)}</td></tr>`; }).join('')}
   </tbody></table>` : `<div class="empty">${T('no_match_dev')}</div>`;

@@ -152,6 +152,8 @@ tbody tr:last-child td { border-bottom: 0; }
 tbody tr.click { cursor: pointer; }
 tbody tr.click:hover td { background: var(--surface-2); }
 td .t2 { display: block; font-size: 12.5px; color: var(--muted); }
+td .t2.spec { color: color-mix(in srgb, var(--ink) 72%, var(--muted)); margin-top: 1px; } /* the device's processor, memory and storage */
+td .t2.spec .nw { white-space: nowrap; }
 .empty { padding: 28px; text-align: center; color: var(--muted); }
 
 .alerts { display: grid; }
