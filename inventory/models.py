@@ -243,6 +243,8 @@ class Employee(models.Model):
     alta = models.DateField()
     estado = models.CharField(max_length=10, choices=State.choices, default=State.ACTIVE)
     estado_fecha = models.DateField(null=True, blank=True)
+    # A temporary contract or an internship ("prácticas"), rather than a permanent one.
+    temporal = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["id"]

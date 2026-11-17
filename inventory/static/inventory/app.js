@@ -78,7 +78,7 @@ const I18N = {
     sect_purchase: 'Compra y garantía', fd_bought: 'Fecha de compra', fd_wend: 'Fin de garantía', fd_supplier: 'Proveedor', fd_invoice: 'N.º de factura', fd_price: 'Precio ({c})', fd_notes: 'Notas',
     err_required: 'La etiqueta y el número de serie son obligatorios', err_dup: 'Ya existe un dispositivo con esa etiqueta o ese número identificador', f_numbering: 'Numeración de las etiquetas', num_type: 'Por tipo de dispositivo', num_global: 'Global, para todos los dispositivos', num_type_hint: 'Cada código cuenta por su lado: {a} y {b} pueden convivir.', num_global_hint: 'Un único número para todos: si existe {a}, el siguiente MacBook será {c} y no {b}.',
 created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados',
-    fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', err_person: 'El nombre y el email son obligatorios',
+    fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', fe_temporal: 'Temporal o en prácticas', chip_temporal: 'Temporal / prácticas', k_contract: 'Contrato', contract_regular: 'Indefinido', err_person: 'El nombre y el email son obligatorios',
     assign_title: 'Asignar {tag}', fa_emp: 'Empleado', already_has: '(ya tiene {n})', fa_date: 'Fecha de entrega', fa_acc: 'Accesorios entregados', fa_acc_ph: 'Cargador, dock, ratón…', assign_btn: 'Asignar', assigned_to: 'Asignado a {name}',
     return_title: 'Devolución de {tag}', return_intro: 'Lo devuelve {name}, que lo tiene desde el {d}.', fr_date: 'Fecha de devolución', fr_cond: 'Estado físico', fr_next: 'Después de la devolución',
     next_avail: 'Disponible en el almacén', next_rep: 'Enviar a reparación', next_disc: 'Descartar', fr_notes_ph: 'Falta el cargador, borrado de datos hecho…', return_prefix: 'Devolución: ', return_done: 'Devolución registrada',
@@ -336,7 +336,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     sect_purchase: 'Purchase and warranty', fd_bought: 'Purchase date', fd_wend: 'Warranty end', fd_supplier: 'Supplier', fd_invoice: 'Invoice no.', fd_price: 'Price ({c})', fd_notes: 'Notes',
     err_required: 'Asset tag and serial number are required', err_dup: 'Another device already has that tag or identification number', f_numbering: 'Tag numbering', num_type: 'By device type', num_global: 'Global, across all devices', num_type_hint: 'Each code counts on its own: {a} and {b} can both exist.', num_global_hint: 'One number for everything: if {a} exists, the next MacBook is {c}, not {b}.',
 created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
-    fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_loc: 'Location', fe_hired: 'Start date', err_person: 'Name and email are required',
+    fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_loc: 'Location', fe_hired: 'Start date', fe_temporal: 'Temporary or intern', chip_temporal: 'Temporary / intern', k_contract: 'Contract', contract_regular: 'Permanent', err_person: 'Name and email are required',
     assign_title: 'Assign {tag}', fa_emp: 'Employee', already_has: '(already has {n})', fa_date: 'Handover date', fa_acc: 'Accessories handed over', fa_acc_ph: 'Charger, dock, mouse…', assign_btn: 'Assign', assigned_to: 'Assigned to {name}',
     return_title: 'Return of {tag}', return_intro: '{name} is returning it. They have had it since {d}.', fr_date: 'Return date', fr_cond: 'Physical condition', fr_next: 'After the return',
     next_avail: 'Available in storage', next_rep: 'Send for repair', next_disc: 'Retire', fr_notes_ph: 'Charger missing, data wiped…', return_prefix: 'Return: ', return_done: 'Return recorded',
@@ -595,7 +595,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     sect_purchase: 'Compra i garantia', fd_bought: 'Data de compra', fd_wend: 'Fi de la garantia', fd_supplier: 'Proveïdor', fd_invoice: 'Núm. de factura', fd_price: 'Preu ({c})', fd_notes: 'Notes',
     err_required: 'L’etiqueta i el número de sèrie són obligatoris', err_dup: 'Ja hi ha un dispositiu amb aquesta etiqueta o aquest número identificador', f_numbering: 'Numeració de les etiquetes', num_type: 'Per tipus de dispositiu', num_global: 'Global, per a tots els dispositius', num_type_hint: 'Cada codi compta pel seu compte: {a} i {b} poden conviure.', num_global_hint: 'Un sol número per a tot: si existeix {a}, el següent MacBook serà {c} i no {b}.',
 created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
-    fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', err_person: 'El nom i el correu són obligatoris',
+    fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', fe_temporal: 'Temporal o en pràctiques', chip_temporal: 'Temporal / pràctiques', k_contract: 'Contracte', contract_regular: 'Indefinit', err_person: 'El nom i el correu són obligatoris',
     assign_title: 'Assigna {tag}', fa_emp: 'Empleat', already_has: '(ja en té {n})', fa_date: 'Data de lliurament', fa_acc: 'Accessoris lliurats', fa_acc_ph: 'Carregador, dock, ratolí…', assign_btn: 'Assigna', assigned_to: 'Assignat a {name}',
     return_title: 'Devolució de {tag}', return_intro: 'El retorna {name}, que el té des del {d}.', fr_date: 'Data de devolució', fr_cond: 'Estat físic', fr_next: 'Després de la devolució',
     next_avail: 'Disponible al magatzem', next_rep: 'Envia a reparar', next_disc: 'Retira', fr_notes_ph: 'Falta el carregador, esborrat de dades fet…', return_prefix: 'Devolució: ', return_done: 'Devolució registrada',
@@ -2116,7 +2116,7 @@ function drawEmpRows() {
     .sort((a, b) => a.nombre.localeCompare(b.nombre, lang));
   $('#empTable').innerHTML = rows.length ? `<table><thead><tr><th>${T('th_name')}</th><th>${T('lbl_dept')}</th><th>${T('th_loc')}</th><th>${T('th_curdev')}</th><th>${T('th_sit')}</th></tr></thead><tbody>
     ${rows.map(e => { const ds = S.assignments.filter(a => a.employeeId === e.id && !a.hasta).map(a => dev(a.deviceId)).filter(Boolean);
-      return `<tr class="click" data-go="empleado-${e.id}"><td><b>${esc(e.nombre)}</b><span class="t2">${esc(e.email)}</span></td><td>${esc(deptName(e.dept))}</td><td>${esc(locName(e.loc))}</td>
+      return `<tr class="click" data-go="empleado-${e.id}"><td><b>${esc(e.nombre)}</b>${tempChip(e)}<span class="t2">${esc(e.email)}</span></td><td>${esc(deptName(e.dept))}</td><td>${esc(locName(e.loc))}</td>
       <td><div class="row">${ds.length ? ds.map(tagLink).join('') : `<span class="muted">${T('none')}</span>`}</div></td>
       <td>${empPill(e)}${empState(e) !== 'activo' && e.estadoFecha ? `<span class="t2">${T('since_d', { d: fmt(e.estadoFecha) })}</span>` : ''}</td></tr>`; }).join('')}
   </tbody></table>` : `<div class="empty">${T('no_match_people')}</div>`;
@@ -2136,7 +2136,7 @@ function viewEmployee(id) {
   return `
   <a class="back" href="#empleados">${T('back_people')}</a>
   <div class="devhead">
-    <div class="id"><div class="row">${empPill(e)}</div><h1>${esc(e.nombre)}</h1><p class="sub">${esc(deptName(e.dept))} · ${esc(locName(e.loc))} · ${esc(e.email)}</p></div>
+    <div class="id"><div class="row">${empPill(e)}${tempChip(e)}</div><h1>${esc(e.nombre)}</h1><p class="sub">${esc(deptName(e.dept))} · ${esc(locName(e.loc))} · ${esc(e.email)}</p></div>
     ${can('edit') ? `<div class="row"><button class="btn" type="button" data-act="editarEmpleado" data-id="${e.id}">${T('btn_edit')}</button><button class="btn" type="button" data-act="situacion" data-id="${e.id}">${T('btn_situation')}</button></div>` : ''}
   </div>
   ${st === 'salida' && cur2.length ? `<div class="notice bad">${T('n_person_left', cur2.length)}</div>` : ''}
@@ -2149,6 +2149,7 @@ function viewEmployee(id) {
   </section>
   <section class="panel"><h2>${T('data')}</h2>
     <dl class="kv"><dt>${T('k_hired')}</dt><dd>${fmt(e.alta)}</dd><dt>${T('k_tenure')}</dt><dd>${esc(age(e.alta, st === 'salida' ? e.estadoFecha : null))}</dd><dt>${T('k_email')}</dt><dd>${esc(e.email)}</dd>
+      <dt>${T('k_contract')}</dt><dd>${T(e.temporal ? 'fe_temporal' : 'contract_regular')}</dd>
       <dt>${T('th_sit')}</dt><dd>${empPill(e)}${st !== 'activo' && e.estadoFecha ? `<span class="muted" style="display:block;font-size:12.5px">${T('since_d', { d: fmt(e.estadoFecha) })}</span>` : ''}</dd></dl>
   </section>`;
 }
@@ -2498,9 +2499,11 @@ function employeeForm(e) {
     <label>${T('fe_dept')}${selPlus('departamentos', 'dept', 'e-dept', opts(S.depts.map(x => [x.id, tx(x.nombre)]), e.dept))}</label>
     <label>${T('fe_loc')}${selPlus('ubicaciones', 'loc', 'e-loc', opts(personLocs(), e.loc))}</label>
     <label>${T('fe_hired')}<input name="alta" id="e-alta" type="date" value="${esc(e.alta)}"></label>
+    <label class="check full"><input type="checkbox" name="temporal" id="e-temporal"${e.temporal ? ' checked' : ''}> ${T('fe_temporal')}</label>
   </div>`;
 }
-function readEmployee(v) { if (!v.nombre.trim() || !v.email.trim()) { toast(t('err_person')); return null; } return { nombre: v.nombre.trim(), email: v.email.trim(), dept: v.dept, loc: v.loc, alta: v.alta || today() }; }
+function readEmployee(v) { if (!v.nombre.trim() || !v.email.trim()) { toast(t('err_person')); return null; } return { nombre: v.nombre.trim(), email: v.email.trim(), dept: v.dept, loc: v.loc, alta: v.alta || today(), temporal: v.temporal === 'on' }; }
+const tempChip = e => e.temporal ? ` <span class="chip">${T('chip_temporal')}</span>` : '';
 
 const ACTIONS = {
   nuevoDispositivo() {

@@ -248,3 +248,18 @@ class HealthTests(TestCase):
     def test_healthz(self):
         from inventory.version import VERSION
         self.assertEqual(self.client.get("/healthz").json(), {"status": "ok", "version": VERSION})
+
+
+class TemporaryEmployeeTests(TestCase):
+    def test_marked_and_cleared(self):
+        call_command("load_demo_data", password=PASSWORD, verbosity=0, stdout=open("/dev/null", "w"))
+        client = Client()
+        client.force_login(User.objects.get(email="it@empresa.es"))
+        body = {"nombre": "Lara Becaria", "email": "lara@empresa.es", "dept": "", "loc": "", "alta": "2026-11-01", "temporal": True}
+        response = client.post("/api/employees", data=json.dumps(body), content_type="application/json")
+        self.assertEqual(response.status_code, 200, response.content)
+        data = response.json()["employee"]
+        self.assertTrue(data["temporal"])
+        response = client.put(f"/api/employees/{data['id']}", data=json.dumps({**body, "temporal": False}), content_type="application/json")
+        self.assertFalse(response.json()["employee"]["temporal"])
+        self.assertFalse(Employee.objects.get(pk=data["id"]).temporal)

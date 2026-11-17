@@ -80,7 +80,7 @@ class Command(BaseCommand):
         for e in data["employees"]:
             employees[e["id"]] = m.Employee.objects.create(
                 nombre=e["nombre"], email=e["email"], dept_id=ids["depts"][e["dept"]], loc_id=ids["locations"][e["loc"]],
-                alta=day(e["alta"]), estado=e["estado"], estado_fecha=day(e["estadoFecha"]),
+                alta=day(e["alta"]), estado=e["estado"], estado_fecha=day(e["estadoFecha"]), temporal=bool(e.get("temporal")),
             ).pk
 
         def ref(coll, value):

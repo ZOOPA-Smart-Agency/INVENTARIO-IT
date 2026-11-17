@@ -480,6 +480,7 @@ def _apply_employee(employee, b):
         raise ApiError("err_person")
     employee.dept, employee.loc = fk(b, "dept", m.Department), fk(b, "loc", m.Location)
     employee.alta = date(b, "alta", timezone.localdate())
+    employee.temporal = bool(b.get("temporal"))
     employee.save()
 
 
