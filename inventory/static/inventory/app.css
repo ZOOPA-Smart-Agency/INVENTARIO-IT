@@ -243,9 +243,14 @@ dialog form { display: grid; gap: 16px; padding: 20px; }
 @media (max-width: 480px) { .fields { grid-template-columns: 1fr; } }
 .fields label, .regionform label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); font-weight: 500; min-width: 0; }
 .fields label.check { display: flex; align-items: center; gap: 8px; color: var(--ink); }
-.fields fieldset.checklist { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; }
-.fields fieldset.checklist legend { padding: 0; margin-bottom: 6px; font-size: 13px; color: var(--muted); font-weight: 500; }
-.fields fieldset.checklist label.check { font-size: 14px; }
+/* pick several of a list: a menu per row with "add another" below, like a device's drives */
+.multifield { display: grid; gap: 6px; }
+.multilabel { font-size: 13px; color: var(--muted); font-weight: 500; }
+.multilist { display: grid; gap: 6px; }
+.multirow { display: flex; gap: 6px; align-items: center; min-width: 0; }
+.multirow > select, .multirow > .selplus { flex: 1; min-width: 0; }
+.multirow .multi-del[hidden] { display: none; }
+.multifield [data-multi-add] { margin-top: 2px; }
 .fields .sect { grid-column: 1 / -1; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; border-top: 1px solid var(--line); padding-top: 10px; margin-top: 4px; }
 .fields .hint, .regionform .hint { font-size: 12px; color: var(--muted); font-weight: 400; }
 .selplus { display: flex; gap: 6px; min-width: 0; }

@@ -78,7 +78,7 @@ const I18N = {
     sect_purchase: 'Compra y garantía', fd_bought: 'Fecha de compra', fd_wend: 'Fin de garantía', fd_supplier: 'Proveedor', fd_invoice: 'N.º de factura', fd_price: 'Precio ({c})', fd_notes: 'Notas',
     err_required: 'La etiqueta y el número de serie son obligatorios', err_dup: 'Ya existe un dispositivo con esa etiqueta o ese número identificador', f_numbering: 'Numeración de las etiquetas', num_type: 'Por tipo de dispositivo', num_global: 'Global, para todos los dispositivos', num_type_hint: 'Cada código cuenta por su lado: {a} y {b} pueden convivir.', num_global_hint: 'Un único número para todos: si existe {a}, el siguiente MacBook será {c} y no {b}.',
 created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados',
-    fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_depts: 'Departamentos', fe_locs: 'Ubicaciones', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', k_contract: 'Contrato', ct_indefinido: 'Indefinido', ct_temporal: 'Temporal', ct_practicas: 'Prácticas', ct_all: 'Todos los contratos', ct_unset: 'Sin definir', err_person: 'El nombre y el email son obligatorios',
+    fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_depts: 'Departamentos', fe_locs: 'Ubicaciones', no_dept: 'Sin departamento', no_loc: 'Sin ubicación', add_dept: 'Añadir otro departamento', add_loc: 'Añadir otra ubicación', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', k_contract: 'Contrato', ct_indefinido: 'Indefinido', ct_temporal: 'Temporal', ct_practicas: 'Prácticas', ct_all: 'Todos los contratos', ct_unset: 'Sin definir', err_person: 'El nombre y el email son obligatorios',
     assign_title: 'Asignar {tag}', fa_emp: 'Empleado', already_has: '(ya tiene {n})', fa_date: 'Fecha de entrega', fa_acc: 'Accesorios entregados', fa_acc_ph: 'Cargador, dock, ratón…', assign_btn: 'Asignar', assigned_to: 'Asignado a {name}',
     return_title: 'Devolución de {tag}', return_intro: 'Lo devuelve {name}, que lo tiene desde el {d}.', fr_date: 'Fecha de devolución', fr_cond: 'Estado físico', fr_next: 'Después de la devolución',
     next_avail: 'Disponible en el almacén', next_rep: 'Enviar a reparación', next_disc: 'Descartar', fr_notes_ph: 'Falta el cargador, borrado de datos hecho…', return_prefix: 'Devolución: ', return_done: 'Devolución registrada',
@@ -336,7 +336,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     sect_purchase: 'Purchase and warranty', fd_bought: 'Purchase date', fd_wend: 'Warranty end', fd_supplier: 'Supplier', fd_invoice: 'Invoice no.', fd_price: 'Price ({c})', fd_notes: 'Notes',
     err_required: 'Asset tag and serial number are required', err_dup: 'Another device already has that tag or identification number', f_numbering: 'Tag numbering', num_type: 'By device type', num_global: 'Global, across all devices', num_type_hint: 'Each code counts on its own: {a} and {b} can both exist.', num_global_hint: 'One number for everything: if {a} exists, the next MacBook is {c}, not {b}.',
 created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
-    fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_depts: 'Departments', fe_locs: 'Locations', fe_loc: 'Location', fe_hired: 'Start date', k_contract: 'Contract', ct_indefinido: 'Permanent', ct_temporal: 'Temporary', ct_practicas: 'Internship', ct_all: 'All contracts', ct_unset: 'Not defined', err_person: 'Name and email are required',
+    fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_depts: 'Departments', fe_locs: 'Locations', no_dept: 'No department', no_loc: 'No location', add_dept: 'Add another department', add_loc: 'Add another location', fe_loc: 'Location', fe_hired: 'Start date', k_contract: 'Contract', ct_indefinido: 'Permanent', ct_temporal: 'Temporary', ct_practicas: 'Internship', ct_all: 'All contracts', ct_unset: 'Not defined', err_person: 'Name and email are required',
     assign_title: 'Assign {tag}', fa_emp: 'Employee', already_has: '(already has {n})', fa_date: 'Handover date', fa_acc: 'Accessories handed over', fa_acc_ph: 'Charger, dock, mouse…', assign_btn: 'Assign', assigned_to: 'Assigned to {name}',
     return_title: 'Return of {tag}', return_intro: '{name} is returning it. They have had it since {d}.', fr_date: 'Return date', fr_cond: 'Physical condition', fr_next: 'After the return',
     next_avail: 'Available in storage', next_rep: 'Send for repair', next_disc: 'Retire', fr_notes_ph: 'Charger missing, data wiped…', return_prefix: 'Return: ', return_done: 'Return recorded',
@@ -595,7 +595,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     sect_purchase: 'Compra i garantia', fd_bought: 'Data de compra', fd_wend: 'Fi de la garantia', fd_supplier: 'Proveïdor', fd_invoice: 'Núm. de factura', fd_price: 'Preu ({c})', fd_notes: 'Notes',
     err_required: 'L’etiqueta i el número de sèrie són obligatoris', err_dup: 'Ja hi ha un dispositiu amb aquesta etiqueta o aquest número identificador', f_numbering: 'Numeració de les etiquetes', num_type: 'Per tipus de dispositiu', num_global: 'Global, per a tots els dispositius', num_type_hint: 'Cada codi compta pel seu compte: {a} i {b} poden conviure.', num_global_hint: 'Un sol número per a tot: si existeix {a}, el següent MacBook serà {c} i no {b}.',
 created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
-    fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_depts: 'Departaments', fe_locs: 'Ubicacions', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', k_contract: 'Contracte', ct_indefinido: 'Indefinit', ct_temporal: 'Temporal', ct_practicas: 'Pràctiques', ct_all: 'Tots els contractes', ct_unset: 'Sense definir', err_person: 'El nom i el correu són obligatoris',
+    fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_depts: 'Departaments', fe_locs: 'Ubicacions', no_dept: 'Sense departament', no_loc: 'Sense ubicació', add_dept: 'Afegeix un altre departament', add_loc: 'Afegeix una altra ubicació', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', k_contract: 'Contracte', ct_indefinido: 'Indefinit', ct_temporal: 'Temporal', ct_practicas: 'Pràctiques', ct_all: 'Tots els contractes', ct_unset: 'Sense definir', err_person: 'El nom i el correu són obligatoris',
     assign_title: 'Assigna {tag}', fa_emp: 'Empleat', already_has: '(ja en té {n})', fa_date: 'Data de lliurament', fa_acc: 'Accessoris lliurats', fa_acc_ph: 'Carregador, dock, ratolí…', assign_btn: 'Assigna', assigned_to: 'Assignat a {name}',
     return_title: 'Devolució de {tag}', return_intro: 'El retorna {name}, que el té des del {d}.', fr_date: 'Data de devolució', fr_cond: 'Estat físic', fr_next: 'Després de la devolució',
     next_avail: 'Disponible al magatzem', next_rep: 'Envia a reparar', next_disc: 'Retira', fr_notes_ph: 'Falta el carregador, esborrat de dades fet…', return_prefix: 'Devolució: ', return_done: 'Devolució registrada',
@@ -2500,15 +2500,39 @@ function employeeForm(e) {
   return `<div class="fields">
     <label class="full">${T('fe_name')}<input name="nombre" id="e-nombre" value="${esc(e.nombre)}"></label>
     <label class="full">${T('fe_email')}<input name="email" id="e-email" type="email" value="${esc(e.email)}"></label>
-    <fieldset class="full checklist"><legend>${T('fe_depts')}</legend>${checkList('depts', 'e-dept', S.depts.map(x => [x.id, tx(x.nombre)]), e.depts)}</fieldset>
-    <fieldset class="full checklist"><legend>${T('fe_locs')}</legend>${checkList('locs', 'e-loc', personLocs(), e.locs)}</fieldset>
+    ${multiList('depts', e.depts)}
+    ${multiList('locs', e.locs)}
     <label>${T('fe_hired')}<input name="alta" id="e-alta" type="date" value="${esc(e.alta)}"></label>
     <label>${T('k_contract')}<select name="contrato" id="e-contrato">${opts(CONTRACTS.map(c => [c, t(ctKey(c))]), e.contrato || '')}</select></label>
   </div>`;
 }
-/* a group of checkboxes, for picking several of a list */
-const checkList = (name, id, items, chosen) => items.length ? items.map(([value, label], i) => `<label class="check"><input type="checkbox" name="${name}" id="${id}-${i}" value="${esc(value)}"${(chosen || []).includes(value) ? ' checked' : ''}> ${esc(label)}</label>`).join('') : `<span class="muted">${T('none')}</span>`;
-function readEmployee(v, fd) { if (!v.nombre.trim() || !v.email.trim()) { toast(t('err_person')); return null; } return { nombre: v.nombre.trim(), email: v.email.trim(), depts: fd.getAll('depts'), locs: fd.getAll('locs'), alta: v.alta || today(), contrato: v.contrato || '' }; }
+/* picking several of a list, like a device's drives: a menu per row, "add another" below, and remove on each row
+   (hidden while there is only one, which can be left empty) */
+const MULTI = {
+  depts: { kind: 'departamentos', label: 'fe_depts', none: 'no_dept', add: 'add_dept', items: () => S.depts.map(x => [x.id, tx(x.nombre)]) },
+  locs: { kind: 'ubicaciones', label: 'fe_locs', none: 'no_loc', add: 'add_loc', items: personLocs },
+};
+function multiRow(name, value) {
+  const M = MULTI[name], i = ++nicSeq;
+  return `<div class="multirow">${selPlus(M.kind, name, `e-${name}-${i}`, opts([['', t(M.none)], ...M.items()], value || ''))}<button type="button" class="btn small multi-del" aria-label="${T('nic_remove')}">${T('nic_remove')}</button></div>`;
+}
+function multiList(name, values) {
+  const M = MULTI[name], rows = values && values.length ? values : [''];
+  return `<div class="full multifield"><span class="multilabel">${T(M.label)}</span><div class="multilist" data-multi="${name}">${rows.map(v => multiRow(name, v)).join('')}</div>
+    <div><button type="button" class="btn small" data-multi-add="${name}">${T(M.add)}</button></div></div>`;
+}
+const multiSync = list => { const rows = list.querySelectorAll('.multirow'); rows.forEach(r => { r.querySelector('.multi-del').hidden = rows.length < 2; }); };
+document.addEventListener('click', e => {
+  const del = e.target.closest('.multi-del'), add = e.target.closest('[data-multi-add]');
+  if (del) { const list = del.closest('.multilist'); del.closest('.multirow').remove(); multiSync(list); list.querySelector('select')?.focus(); }
+  if (add) {
+    const list = add.closest('.multifield').querySelector('.multilist');
+    list.insertAdjacentHTML('beforeend', multiRow(add.dataset.multiAdd, ''));
+    multiSync(list); list.lastElementChild.querySelector('select').focus();
+  }
+});
+const multiRead = (fd, name) => [...new Set(fd.getAll(name).filter(Boolean))];
+function readEmployee(v, fd) { if (!v.nombre.trim() || !v.email.trim()) { toast(t('err_person')); return null; } return { nombre: v.nombre.trim(), email: v.email.trim(), depts: multiRead(fd, 'depts'), locs: multiRead(fd, 'locs'), alta: v.alta || today(), contrato: v.contrato || '' }; }
 /* contract: not defined (''), indefinido, temporal or prácticas (the last two show a badge next to the name) */
 const CONTRACTS = ['', 'indefinido', 'temporal', 'practicas'];
 const ctKey = c => c ? 'ct_' + c : 'ct_unset';
