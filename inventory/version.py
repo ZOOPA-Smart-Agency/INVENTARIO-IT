@@ -2,7 +2,7 @@
 import os
 from pathlib import Path
 
-VERSION = "1.12.1"
+VERSION = "1.12.2"
 ROOT = Path(__file__).resolve().parent.parent
 
 

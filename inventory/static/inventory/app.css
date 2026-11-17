@@ -182,6 +182,11 @@ dl.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
 .devhead .id .row { gap: 10px; }
 .back { color: var(--muted); text-decoration: none; font-size: 13.5px; }
 .back:hover { color: var(--ink); }
+/* refresh button: beside the back link on detail pages, before the main button on lists */
+.backrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.reloadbtn.busy svg { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .reloadbtn.busy svg { animation: none; opacity: 0.5; } }
 .current { border-left: 3px solid var(--accent); padding-left: 12px; display: grid; gap: 2px; }
 .current b { font-size: 16px; }
 .notice { background: var(--warn-bg); color: var(--warn); padding: 10px 14px; border-radius: 6px; font-weight: 500; }

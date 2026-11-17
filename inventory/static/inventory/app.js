@@ -48,7 +48,7 @@ const I18N = {
     w_expired: 'Vencida', w_expired_on: 'Vencida el {d}', w_soon: 'Vence en {n} días',
 
     back_devices: '← Dispositivos', not_found_dev: 'No existe ese dispositivo.', back_list: 'Volver a la lista', serial_no: 'N.º de serie',
-    btn_return: 'Registrar devolución', btn_assign: 'Asignar', mi_to_emp: 'A un empleado', mi_to_emp_d: 'Lo usará una persona', mi_to_dept: 'A un departamento', mi_to_dept_d: 'Equipo compartido por todo el departamento', assign_title_dept: 'Asignar {tag} a un departamento', btn_fault: 'Registrar avería', btn_status: 'Cambiar estado', btn_edit: 'Editar',
+    btn_return: 'Registrar devolución', btn_assign: 'Asignar', reload: 'Actualizar', reloaded: 'Datos actualizados', mi_to_emp: 'A un empleado', mi_to_emp_d: 'Lo usará una persona', mi_to_dept: 'A un departamento', mi_to_dept_d: 'Equipo compartido por todo el departamento', assign_title_dept: 'Asignar {tag} a un departamento', btn_fault: 'Registrar avería', btn_status: 'Cambiar estado', btn_edit: 'Editar',
     n_left: '{name} dejó la empresa el {date}. Recupera este equipo y registra la devolución.', n_noenc: 'El disco no está cifrado.',
     current: 'Asignación actual', since: 'Desde el {d} ({age})', delivered_with: 'Entregado con: {x}', out_service: 'Fuera de servicio.', unassigned_at: 'Sin asignar. Está en {loc}.',
     hw: 'Hardware y software', k_type: 'Tipo', cores: n => n === 1 ? '1 núcleo' : n + ' núcleos', k_cpu: 'Procesador', k_ram: 'Memoria', k_disk: 'Almacenamiento', k_os: 'Sistema', k_enc: 'Cifrado', k_loc: 'Ubicación',
@@ -306,7 +306,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     w_expired: 'Expired', w_expired_on: 'Expired on {d}', w_soon: 'Ends in {n} days',
 
     back_devices: '← Devices', not_found_dev: 'That device does not exist.', back_list: 'Back to the list', serial_no: 'Serial no.',
-    btn_return: 'Record return', btn_assign: 'Assign', mi_to_emp: 'To an employee', mi_to_emp_d: 'One person will use it', mi_to_dept: 'To a department', mi_to_dept_d: 'Shared by the whole department', assign_title_dept: 'Assign {tag} to a department', btn_fault: 'Log fault', btn_status: 'Change status', btn_edit: 'Edit',
+    btn_return: 'Record return', btn_assign: 'Assign', reload: 'Refresh', reloaded: 'Up to date', mi_to_emp: 'To an employee', mi_to_emp_d: 'One person will use it', mi_to_dept: 'To a department', mi_to_dept_d: 'Shared by the whole department', assign_title_dept: 'Assign {tag} to a department', btn_fault: 'Log fault', btn_status: 'Change status', btn_edit: 'Edit',
     n_left: '{name} left on {date}. Recover this device and record the return.', n_noenc: 'The disk is not encrypted.',
     current: 'Current assignment', since: 'Since {d} ({age})', delivered_with: 'Handed over with: {x}', out_service: 'Out of service.', unassigned_at: 'Unassigned. Located at {loc}.',
     hw: 'Hardware and software', k_type: 'Type', cores: n => n === 1 ? '1 core' : n + ' cores', k_cpu: 'Processor', k_ram: 'Memory', k_disk: 'Storage', k_os: 'Operating system', k_enc: 'Encryption', k_loc: 'Location',
@@ -564,7 +564,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     w_expired: 'Vençuda', w_expired_on: 'Vençuda el {d}', w_soon: 'Venç d’aquí a {n} dies',
 
     back_devices: '← Dispositius', not_found_dev: 'Aquest dispositiu no existeix.', back_list: 'Torna a la llista', serial_no: 'Núm. de sèrie',
-    btn_return: 'Registra la devolució', btn_assign: 'Assigna', mi_to_emp: 'A un empleat', mi_to_emp_d: 'El farà servir una persona', mi_to_dept: 'A un departament', mi_to_dept_d: 'Equip compartit per tot el departament', assign_title_dept: 'Assigna {tag} a un departament', btn_fault: 'Registra una avaria', btn_status: 'Canvia l’estat', btn_edit: 'Edita',
+    btn_return: 'Registra la devolució', btn_assign: 'Assigna', reload: 'Actualitza', reloaded: 'Dades actualitzades', mi_to_emp: 'A un empleat', mi_to_emp_d: 'El farà servir una persona', mi_to_dept: 'A un departament', mi_to_dept_d: 'Equip compartit per tot el departament', assign_title_dept: 'Assigna {tag} a un departament', btn_fault: 'Registra una avaria', btn_status: 'Canvia l’estat', btn_edit: 'Edita',
     n_left: '{name} va deixar l’empresa el {date}. Recupera aquest equip i registra’n la devolució.', n_noenc: 'El disc no està xifrat.',
     current: 'Assignació actual', since: 'Des del {d} ({age})', delivered_with: 'Lliurat amb: {x}', out_service: 'Fora de servei.', unassigned_at: 'Sense assignar. És a {loc}.',
     hw: 'Maquinari i programari', k_type: 'Tipus', cores: n => n === 1 ? '1 nucli' : n + ' nuclis', k_cpu: 'Processador', k_ram: 'Memòria', k_disk: 'Emmagatzematge', k_os: 'Sistema', k_enc: 'Xifratge', k_loc: 'Ubicació',
@@ -866,6 +866,15 @@ async function api(method, url, body, opts = {}) {
 function adopt(d) { S = d.state || emptyState(d.settings || S.settings); cur = d.me; }
 function signedOut() { cur = null; S = emptyState(S.settings); document.querySelectorAll('dialog[open]').forEach(x => x.close()); applyChrome(); route(); }
 async function reload() { adopt(await api('GET', 'state')); }
+/* a button for the pages that show inventory data: fetches it again, to see what others (or the device app) changed */
+const reloadBtn = () => `<button class="iconbtn reloadbtn" type="button" data-reload aria-label="${T('reload')}" title="${T('reload')}"><svg class="i" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg></button>`;
+async function reloadNow(btn) {
+  if (btn.classList.contains('busy')) return;
+  btn.classList.add('busy'); btn.disabled = true;
+  try { await reload(); applyChrome(); route(); toast(t('reloaded'), true); }
+  catch (err) { if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); }
+  finally { btn.classList.remove('busy'); btn.disabled = false; }
+}
 /* send a change, then show what the server now holds; a failed refresh must not look like a failed save */
 async function mutate(method, url, body) { const d = await api(method, url, body); await reload().catch(() => {}); return d; }
 
@@ -1984,7 +1993,7 @@ function viewPanel() {
   const uname = id => byId('users', id)?.nombre;
 
   return `
-  <div class="head"><div><h1>${T('summary_title')}</h1><p class="sub">${T('summary_sub', { n: activos.length, v: money(valor) })}</p></div></div>
+  <div class="head"><div><h1>${T('summary_title')}</h1><p class="sub">${T('summary_sub', { n: activos.length, v: money(valor) })}</p></div>${reloadBtn()}</div>
   <div class="stats">
     ${['uso', 'disponible', 'reparacion'].map(k => `<a class="stat" href="#dispositivos" data-filter="${k}"><b>${c(k)}</b><span><i class="dot" style="background:${col[k]}"></i>${esc(st(k))}</span></a>`).join('')}
     <a class="stat" href="#dispositivos" data-filter="retirados"><b>${c('descartado') + c('perdido')}</b><span><i class="dot" style="background:var(--mute)"></i>${T('retired_stat')}</span></a>
@@ -2008,7 +2017,7 @@ const F = { q: '', estado: 'activos', dept: '', tipo: '' };
 function viewDevices() {
   return `
   <div class="head"><div><h1>${T('devices_title')}</h1><p class="sub">${T('devices_sub')}</p></div>
-    ${can('edit') ? `<button class="btn primary" type="button" data-act="nuevoDispositivo">${T('new_device')}</button>` : ''}</div>
+    <div class="row">${reloadBtn()}${can('edit') ? `<button class="btn primary" type="button" data-act="nuevoDispositivo">${T('new_device')}</button>` : ''}</div></div>
   <div class="toolbar">
     <input type="search" id="fq" placeholder="${T('search_dev')}" value="${esc(F.q)}" aria-label="${T('lbl_search')}">
     <select id="festado" aria-label="${T('lbl_status')}">${opts([['activos', t('f_active')], ['', t('f_all')], ...ST.map(k => [k, st(k)]), ['retirados', t('retired_stat')]], F.estado)}</select>
@@ -2054,7 +2063,7 @@ function viewDevice(id) {
   const bat = has(d.batHealth) ? Number(d.batHealth) : null;
   const nics = d.nics || [];
   return `
-  <a class="back" href="#dispositivos">${T('back_devices')}</a>
+  <div class="backrow"><a class="back" href="#dispositivos">${T('back_devices')}</a>${reloadBtn()}</div>
   <div class="devhead">
     <div class="id">
       <div class="row"><span class="tag" style="font-size:14px;padding:3px 8px">${esc(d.tag)}</span>${pill(d.estado)}</div>
@@ -2122,7 +2131,7 @@ const FE = { q: '', activos: 'todos', contrato: 'todos' };
 function viewEmployees() {
   return `
   <div class="head"><div><h1>${T('people_title')}</h1><p class="sub">${T('people_sub')}</p></div>
-    ${can('edit') ? `<button class="btn primary" type="button" data-act="nuevoEmpleado">${T('new_person')}</button>` : ''}</div>
+    <div class="row">${reloadBtn()}${can('edit') ? `<button class="btn primary" type="button" data-act="nuevoEmpleado">${T('new_person')}</button>` : ''}</div></div>
   <div class="toolbar">
     <input type="search" id="eq" placeholder="${T('search_people')}" value="${esc(FE.q)}" aria-label="${T('lbl_search')}">
     <select id="eactivos" aria-label="${T('lbl_situation')}">${opts([['todos', t('f_all')], ...EMP_STATES.map(s => [s, t('es_' + s)])], FE.activos)}</select>
@@ -2154,7 +2163,7 @@ function viewEmployee(id) {
   const head = last => `<thead><tr><th>${T('th_tag')}</th><th>${T('th_device')}</th><th>${T('th_from')}</th><th>${T(last)}</th><th>${T('th_faults')}</th><th>${T('th_handed')}</th></tr></thead>`;
   const st = empState(e);
   return `
-  <a class="back" href="#empleados">${T('back_people')}</a>
+  <div class="backrow"><a class="back" href="#empleados">${T('back_people')}</a>${reloadBtn()}</div>
   <div class="devhead">
     <div class="id"><div class="row">${empPill(e)}${tempChip(e)}</div><h1>${esc(e.nombre)}</h1><p class="sub">${esc(deptNames(e))} · ${esc(locNames(e))} · ${esc(e.email)}</p></div>
     ${can('edit') ? `<div class="row"><button class="btn" type="button" data-act="editarEmpleado" data-id="${e.id}">${T('btn_edit')}</button><button class="btn" type="button" data-act="situacion" data-id="${e.id}">${T('btn_situation')}</button></div>` : ''}
@@ -2735,6 +2744,8 @@ $('#themeSeg').addEventListener('click', e => {
 /* ================= routing ================= */
 const view = $('#view');
 view.addEventListener('click', ev => {
+  const rb = ev.target.closest('[data-reload]');
+  if (rb) { reloadNow(rb); return; }
   const menuBtn = ev.target.closest('[data-menu]');
   if (menuBtn) { ev.stopPropagation(); toggleMenu('#' + menuBtn.id, '#' + menuBtn.dataset.menu); return; }
   const act = ev.target.closest('[data-act]');
