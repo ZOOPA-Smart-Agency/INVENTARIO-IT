@@ -184,6 +184,7 @@ dl.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
 .back:hover { color: var(--ink); }
 /* refresh button: beside the back link on detail pages, before the main button on lists */
 .backrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.reloadbtn { padding: 0; } /* the browser's button padding would push the icon off-centre */
 .reloadbtn.busy svg { animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .reloadbtn.busy svg { animation: none; opacity: 0.5; } }
