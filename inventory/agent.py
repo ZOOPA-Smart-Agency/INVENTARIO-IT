@@ -4,7 +4,7 @@ The app signs in with an email and password and gets a signed key valid for an h
 "Authorization: Bearer <key>". No cookies are involved, so these endpoints do not use CSRF protection.
 Only active technicians and administrators can use it, and changing the account's password cancels its keys.
 
-    POST /api/agent/login     {"email", "password"}             -> {"token", "expiresIn", "user"}
+    POST /api/agent/login     {"email", "password"}             -> {"token", "expiresIn", "user"}  ("email" may be a username)
     GET  /api/agent/options   ?serial=...&chassis=...&model=...  -> locations, device types (each with its next
                                                                     asset tag), and the device with that serial
                                                                     number, if any
@@ -30,7 +30,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from . import maintenance as maint
 from . import models as m
-from .api import LOGIN_MAX_ATTEMPTS, LOGIN_WINDOW_SECONDS, MAC_RE, ApiError, _throttle_key
+from .api import LOGIN_MAX_ATTEMPTS, LOGIN_WINDOW_SECONDS, MAC_RE, ApiError, _throttle_key, login_email
 from .models import AuditEvent, Device, User
 from .state import device_json
 from .tags import conflict as tag_conflict
@@ -158,14 +158,14 @@ def _bt_ver(value):
 
 @agent_endpoint("POST", auth=False)
 def login(request, body):
-    email = _text(body.get("email"), 254).lower()
+    email = login_email(body.get("email"))  # an email address or a username
     password = str(body.get("password") or "")
-    key = _throttle_key(request, email)  # the same limit as signing in on the website
+    key = _throttle_key(request, email or _text(body.get("email"), 254).lower())  # the same limit as the website
     if cache.get(key, 0) >= LOGIN_MAX_ATTEMPTS:
         raise ApiError("login_locked", 429)
-    user = authenticate(request, username=email, password=password)
+    user = authenticate(request, username=email, password=password)  # also for unknown names: same timing
     if user is None:
-        inactive = User.objects.filter(email=email, is_active=False).first()
+        inactive = User.objects.filter(email=email, is_active=False).first() if email else None
         if inactive and inactive.check_password(password):
             raise ApiError("login_off", 403)
         cache.set(key, cache.get(key, 0) + 1, LOGIN_WINDOW_SECONDS)

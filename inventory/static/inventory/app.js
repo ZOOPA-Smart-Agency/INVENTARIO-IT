@@ -28,7 +28,7 @@ const I18N = {
     age_lt: 'menos de 1 mes', age_y: n => n === 1 ? '1 año' : n + ' años', age_m: n => n === 1 ? '1 mes' : n + ' meses', age_and: ' y ',
 
     login_title: 'Entrar', login_sub: 'Inventario de equipos de {org}', f_email: 'Email', f_pass: 'Contraseña', login_btn: 'Entrar',
-    login_err: 'El email o la contraseña no son correctos.', login_off: 'Esta cuenta está desactivada. Pide a un administrador que la active.',
+    login_err: 'El correo, el nombre de usuario o la contraseña no son correctos.', login_off: 'Esta cuenta está desactivada. Pide a un administrador que la active.',
     logout: 'Cerrar sesión', settings: 'Ajustes', no_perm: 'Solo los administradores pueden abrir los ajustes.',
     role_admin: 'Administrador', role_tech: 'Técnico IT', role_read: 'Solo lectura',
     role_admin_d: 'Todo, incluidos los ajustes y los usuarios', role_tech_d: 'Gestiona equipos, empleados y averías', role_read_d: 'Consulta el inventario sin cambiar nada',
@@ -117,7 +117,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     f_chip: 'Nombre del chip', f_chip_ph: 'Intel Wi-Fi 7 BE200', f_gen: 'Generación Wi-Fi', th_chip: 'Chip', th_gen: 'Generación', f_bt: 'Bluetooth', th_bt: 'Bluetooth',
     th_role: 'Rol', th_last: 'Último acceso', never: 'Nunca', f_role: 'Rol', f_pass_tmp: 'Contraseña inicial', f_pass_new: 'Nueva contraseña', f_pass_hint: 'Déjala vacía para no cambiarla.',
     u_active: 'Activo', u_inactive: 'Desactivado', deactivate: 'Desactivar', activate: 'Activar', you: '(tú)',
-    err_self: 'No puedes desactivar tu propia cuenta', err_last_admin: 'Tiene que quedar al menos un administrador activo', err_email_dup: 'Ya hay un usuario con ese email', err_pass: 'Escribe una contraseña', err_user: 'El nombre y el email son obligatorios',
+    err_self: 'No puedes desactivar tu propia cuenta', err_last_admin: 'Tiene que quedar al menos un administrador activo', err_email_dup: 'Ya hay un usuario con ese email', err_username: 'El nombre de usuario solo puede tener letras minúsculas, números, puntos, guiones y guiones bajos (al menos 2)', err_username_dup: 'Ya hay un usuario con ese nombre de usuario', f_login_id: 'Correo o nombre de usuario', f_username: 'Nombre de usuario', f_username_hint: 'Sirve para iniciar sesión igual que el correo. Déjalo vacío para entrar solo con el correo.', f_username_hint_new: 'Sirve para iniciar sesión igual que el correo. Si lo dejas vacío, se crea a partir del correo.', err_pass: 'Escribe una contraseña', err_user: 'El nombre y el email son obligatorios',
     user_on: 'Cuenta activada', user_off: 'Cuenta desactivada',
     f_org: 'Nombre de la organización', f_prefix: 'Prefijo de las etiquetas de inventario', f_prefix_hint: 'Las etiquetas son el prefijo, el código del tipo de dispositivo y un número, como {x}',
     f_datefmt: 'Formato de fecha', f_currency: 'Moneda', f_wdays: 'Avisar de garantías que vencen en los próximos (días)',
@@ -286,7 +286,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     age_lt: 'under 1 month', age_y: n => n === 1 ? '1 year' : n + ' years', age_m: n => n === 1 ? '1 month' : n + ' months', age_and: ' and ',
 
     login_title: 'Sign in', login_sub: '{org} device inventory', f_email: 'Email', f_pass: 'Password', login_btn: 'Sign in',
-    login_err: 'The email or password is not correct.', login_off: 'This account is deactivated. Ask an administrator to turn it back on.',
+    login_err: 'The email, username or password is not correct.', login_off: 'This account is deactivated. Ask an administrator to turn it back on.',
     logout: 'Sign out', settings: 'Settings', no_perm: 'Only administrators can open settings.',
     role_admin: 'Administrator', role_tech: 'IT technician', role_read: 'Read only',
     role_admin_d: 'Everything, including settings and users', role_tech_d: 'Manages devices, employees and faults', role_read_d: 'Views the inventory without changing anything',
@@ -375,7 +375,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     f_chip: 'Chip name', f_chip_ph: 'Intel Wi-Fi 7 BE200', f_gen: 'Wi-Fi generation', th_chip: 'Chip', th_gen: 'Generation', f_bt: 'Bluetooth', th_bt: 'Bluetooth',
     th_role: 'Role', th_last: 'Last sign-in', never: 'Never', f_role: 'Role', f_pass_tmp: 'Initial password', f_pass_new: 'New password', f_pass_hint: 'Leave empty to keep the current one.',
     u_active: 'Active', u_inactive: 'Deactivated', deactivate: 'Deactivate', activate: 'Activate', you: '(you)',
-    err_self: 'You cannot deactivate your own account', err_last_admin: 'At least one active administrator must remain', err_email_dup: 'A user with that email already exists', err_pass: 'Enter a password', err_user: 'Name and email are required',
+    err_self: 'You cannot deactivate your own account', err_last_admin: 'At least one active administrator must remain', err_email_dup: 'A user with that email already exists', err_username: 'A username can only have lowercase letters, digits, dots, dashes and underscores (at least 2)', err_username_dup: 'A user with that username already exists', f_login_id: 'Email or username', f_username: 'Username', f_username_hint: 'Signs in just like the email. Leave it empty to sign in with the email only.', f_username_hint_new: 'Signs in just like the email. If left empty, one is made from the email.', err_pass: 'Enter a password', err_user: 'Name and email are required',
     user_on: 'Account activated', user_off: 'Account deactivated',
     f_org: 'Organisation name', f_prefix: 'Asset tag prefix', f_prefix_hint: 'Tags are the prefix, the device type’s code and a number, such as {x}',
     f_datefmt: 'Date format', f_currency: 'Currency', f_wdays: 'Warn about warranties ending within (days)',
@@ -544,7 +544,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     age_lt: 'menys d’1 mes', age_y: n => n === 1 ? '1 any' : n + ' anys', age_m: n => n === 1 ? '1 mes' : n + ' mesos', age_and: ' i ',
 
     login_title: 'Inicia la sessió', login_sub: 'Inventari d’equips de {org}', f_email: 'Correu electrònic', f_pass: 'Contrasenya', login_btn: 'Entra',
-    login_err: 'El correu o la contrasenya no són correctes.', login_off: 'Aquest compte està desactivat. Demana a un administrador que l’activi.',
+    login_err: 'El correu, el nom d’usuari o la contrasenya no són correctes.', login_off: 'Aquest compte està desactivat. Demana a un administrador que l’activi.',
     logout: 'Tanca la sessió', settings: 'Configuració', no_perm: 'Només els administradors poden obrir la configuració.',
     role_admin: 'Administrador', role_tech: 'Tècnic IT', role_read: 'Només lectura',
     role_admin_d: 'Tot, inclosos la configuració i els usuaris', role_tech_d: 'Gestiona equips, empleats i avaries', role_read_d: 'Consulta l’inventari sense canviar res',
@@ -634,7 +634,7 @@ created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
     f_chip: 'Nom del xip', f_chip_ph: 'Intel Wi-Fi 7 BE200', f_gen: 'Generació Wi-Fi', th_chip: 'Xip', th_gen: 'Generació', f_bt: 'Bluetooth', th_bt: 'Bluetooth',
     th_role: 'Rol', th_last: 'Últim accés', never: 'Mai', f_role: 'Rol', f_pass_tmp: 'Contrasenya inicial', f_pass_new: 'Contrasenya nova', f_pass_hint: 'Deixa-la buida per no canviar-la.',
     u_active: 'Actiu', u_inactive: 'Desactivat', deactivate: 'Desactiva', activate: 'Activa', you: '(tu)',
-    err_self: 'No pots desactivar el teu propi compte', err_last_admin: 'Hi ha d’haver almenys un administrador actiu', err_email_dup: 'Ja hi ha un usuari amb aquest correu', err_pass: 'Escriu una contrasenya', err_user: 'El nom i el correu són obligatoris',
+    err_self: 'No pots desactivar el teu propi compte', err_last_admin: 'Hi ha d’haver almenys un administrador actiu', err_email_dup: 'Ja hi ha un usuari amb aquest correu', err_username: 'El nom d’usuari només pot tenir lletres minúscules, números, punts, guions i guions baixos (com a mínim 2)', err_username_dup: 'Ja hi ha un usuari amb aquest nom d’usuari', f_login_id: 'Correu o nom d’usuari', f_username: 'Nom d’usuari', f_username_hint: 'Serveix per iniciar sessió igual que el correu. Deixa’l buit per entrar només amb el correu.', f_username_hint_new: 'Serveix per iniciar sessió igual que el correu. Si el deixes buit, es crea a partir del correu.', err_pass: 'Escriu una contrasenya', err_user: 'El nom i el correu són obligatoris',
     user_on: 'Compte activat', user_off: 'Compte desactivat',
     f_org: 'Nom de l’organització', f_prefix: 'Prefix de les etiquetes d’inventari', f_prefix_hint: 'Les etiquetes són el prefix, el codi del tipus de dispositiu i un número, com ara {x}',
     f_datefmt: 'Format de data', f_currency: 'Moneda', f_wdays: 'Avisa de les garanties que vencen en els propers (dies)',
@@ -1222,7 +1222,7 @@ function viewLogin(err) {
   return `<div class="login"><div class="card">
     <div class="loginhead">${appIcon()}<h1>${T('login_title')}</h1><p class="sub">${T('login_sub', { org: S.settings.orgName })}</p></div>
     <form id="loginForm" novalidate>
-      <label>${T('f_email')}<input type="email" name="email" id="login-email" autocomplete="username" required></label>
+      <label>${T('f_login_id')}<input type="text" name="email" id="login-email" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
       <label>${T('f_pass')}<input type="password" name="pass" id="login-pass" autocomplete="current-password" required></label>
       ${err ? `<p class="err" role="alert">${esc(err)}</p>` : ''}
       <button class="btn primary" type="submit">${T('login_btn')}</button>
@@ -2216,7 +2216,7 @@ function settingsUsers() {
   return `<section class="panel">
     <div class="head"><div><h2>${T('set_users')}</h2><p class="sub">${T('set_users_sub')}</p></div><button class="btn primary" type="button" data-set="addUser">${T('add_x', { x: t('item_user') })}</button></div>
     <div class="tablebox"><table><thead><tr><th>${T('th_name')}</th><th>${T('th_role')}</th><th>${T('th_status')}</th><th>${T('th_last')}</th><th></th></tr></thead><tbody>
-      ${S.users.map(u => `<tr><td><b>${esc(u.nombre)}</b> ${u.id === cur.id ? `<span class="muted">${T('you')}</span>` : ''}<span class="t2">${esc(u.email)}</span></td>
+      ${S.users.map(u => `<tr><td><b>${esc(u.nombre)}</b> ${u.id === cur.id ? `<span class="muted">${T('you')}</span>` : ''}<span class="t2">${esc(u.email)}${u.username ? ' · ' + esc(u.username) : ''}</span></td>
         <td><span class="pill st-${esc(u.rol)}" tabindex="0" data-tip="${T('role_' + u.rol + '_d')}">${esc(rl(u.rol))}</span></td><td>${u.activo ? pill('on', t('u_active')) : pill('off', t('u_inactive'))}${u.mustChange ? ` <span class="chip" tabindex="0" data-tip="${T('chip_must_change_d')}">${T('chip_must_change')}</span>` : ''}</td><td>${u.last ? fmt(u.last) : `<span class="muted">${T('never')}</span>`}</td>
         <td class="act"><div class="row" style="justify-content:flex-end"><button class="btn small" type="button" data-set="editUser" data-id="${u.id}">${T('btn_edit')}</button>
         <button class="btn small${u.activo ? ' danger' : ''}" type="button" data-set="toggleUser" data-id="${u.id}"${u.id === cur.id ? ' disabled' : ''}>${u.activo ? T('deactivate') : T('activate')}</button></div></td></tr>`).join('')}
@@ -2258,6 +2258,7 @@ function userForm(u) {
   return `<div class="fields">
     <label class="full">${T('th_name')}<input name="nombre" id="u-nombre" value="${esc(u?.nombre)}"></label>
     <label class="full">${T('f_email')}<input name="email" id="u-email" type="email" value="${esc(u?.email)}"></label>
+    <label class="full">${T('f_username')}<input name="username" id="u-username" value="${esc(u?.username)}" maxlength="150" autocapitalize="none" spellcheck="false"><span class="hint">${T(u ? 'f_username_hint' : 'f_username_hint_new')}</span></label>
     <label>${T('f_role')}<select name="rol" id="u-rol">${kopts(ROLES, rl, u?.rol || 'tech')}</select></label>
     <label>${u ? T('f_pass_new') : T('f_pass_tmp')}<input name="pass" id="u-pass" type="password" autocomplete="new-password">${u ? `<span class="hint">${T('f_pass_hint')}</span>` : ''}</label>
     <div class="full"><div id="u-meter"></div></div>
@@ -2268,10 +2269,13 @@ function readUser(v, u) {
   const nombre = v.nombre.trim(), email = v.email.trim().toLowerCase();
   if (!nombre || !email) { toast(t('err_user')); return null; }
   if (S.users.some(x => x.email.toLowerCase() === email && x !== u)) { toast(t('err_email_dup')); return null; }
+  const username = (v.username || '').trim().toLowerCase();
+  if (username && !/^[a-z0-9._-]{2,150}$/.test(username)) { toast(t('err_username')); return null; }
+  if (username && S.users.some(x => (x.username || '') === username && x !== u)) { toast(t('err_username_dup')); return null; }
   if (!u && !v.pass) { toast(t('err_pass')); return null; }
   if (v.pass && !pwMeets(v.pass, S.settings.pwPolicy)) { toast(t('err_pass_weak')); return null; }
   if (u && u.rol === 'admin' && v.rol !== 'admin' && u.activo && activeAdmins() === 1) { toast(t('err_last_admin')); return null; }
-  return { nombre, email, rol: v.rol, mustChange: v.mustChange === 'on', ...(v.pass ? { pass: v.pass } : {}) };
+  return { nombre, email, username, rol: v.rol, mustChange: v.mustChange === 'on', ...(v.pass ? { pass: v.pass } : {}) };
 }
 const SET_ACTIONS = {
   add(list) { const C = LISTS[list]; openDialog(t('add_x', { x: t(C.single) }), C.form(null, false, 's'), async (v, fd) => { const r = C.read(v, fd, null); if (!r) return false; const { item } = await mutate('POST', 'lists/' + C.coll, r); return t('added_x', { x: C.label(item) }); }, t('add')); },
@@ -2281,7 +2285,12 @@ const SET_ACTIONS = {
     if (C.count(x)) { toast(t('in_use_cant')); return; }
     openDialog(t('delete_title', { name: C.label(x) }), `<p style="margin:0">${T('delete_body', { name: C.label(x) })}</p>`, async () => { await mutate('DELETE', `lists/${C.coll}/${id}`); return t('deleted'); }, t('delete'), true);
   },
-  addUser() { openDialog(t('add_x', { x: t('item_user') }), userForm(), async v => { const r = readUser(v, null); if (!r) return false; await mutate('POST', 'users', r); return t('added_x', { x: r.nombre }); }, t('add')); bindRoleDesc(); },
+  addUser() {
+    openDialog(t('add_x', { x: t('item_user') }), userForm(), async v => { const r = readUser(v, null); if (!r) return false; await mutate('POST', 'users', r); return t('added_x', { x: r.nombre }); }, t('add')); bindRoleDesc();
+    // the username follows the start of the email until someone types their own (ana.lopez@… -> ana.lopez)
+    const mail = $('#u-email'), name = $('#u-username'); let auto = '';
+    mail.addEventListener('input', () => { if (name.value === auto) name.value = auto = mail.value.split('@')[0].toLowerCase().replace(/[^a-z0-9._-]/g, ''); });
+  },
   editUser(_, id) { const u = byId('users', id); openDialog(t('edit_x', { x: u.nombre }), userForm(u), async v => { const r = readUser(v, u); if (!r) return false; await mutate('PUT', 'users/' + id, r); applyChrome(); return t('saved'); }); bindRoleDesc(); },
   async toggleUser(_, id) {
     const u = byId('users', id);

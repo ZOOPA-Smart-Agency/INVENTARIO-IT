@@ -4,10 +4,10 @@ The device app (repository `INVENTARIODATA`) reads a computer's details and adds
 
 ## Signing in
 
-`POST /api/agent/login` with `{"email": "...", "password": "..."}`
+`POST /api/agent/login` with `{"email": "...", "password": "..."}`. From 1.7.0, `email` can also be the account's username.
 
 - `200`: `{"token": "...", "expiresIn": 3600, "user": {"nombre": "...", "rol": "tech"}}`
-- `401 login_err` (wrong email or password), `403 login_off` (deactivated), `403 err_must_change` (must change the password on the website first), `403 err_forbidden` (read-only role), `429 login_locked` (too many attempts; shared with the website's limit), `503 maintenance` (a restore or update is running).
+- `401 login_err` (wrong email, username or password), `403 login_off` (deactivated), `403 err_must_change` (must change the password on the website first), `403 err_forbidden` (read-only role), `429 login_locked` (too many attempts; shared with the website's limit), `503 maintenance` (a restore or update is running).
 
 Every other call sends `Authorization: Bearer <token>`. A token lasts an hour. It stops working at once if the account's password changes, the account is deactivated, or its role becomes read-only (`401 err_auth` or `403 err_forbidden`). No cookies are used, so there is no CSRF token.
 

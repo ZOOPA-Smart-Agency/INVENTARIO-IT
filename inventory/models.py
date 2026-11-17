@@ -1,16 +1,39 @@
+import re
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
 
 TRI = [("", "Not defined"), ("yes", "Yes"), ("no", "No")]
+USERNAME_RE = re.compile(r"[a-z0-9._-]{2,150}")
+
+
+def clean_username(value):
+    """A username as stored: lowercase letters, digits, dots, dashes and underscores; "" when not valid."""
+    value = str(value or "").strip().lower()
+    return value if USERNAME_RE.fullmatch(value) else ""
+
+
+def suggest_username(email, taken=None):
+    """A free username made from the start of an email address: ana.lopez@x.es -> ana.lopez (or ana.lopez2...)."""
+    base = re.sub(r"[^a-z0-9._-]", "", str(email or "").split("@")[0].lower())[:140] or "user"
+    base = base if len(base) >= 2 else base + "0"
+    taken = set(User.objects.exclude(username=None).values_list("username", flat=True)) if taken is None else taken
+    name, n = base, 1
+    while name in taken:
+        n += 1
+        name = f"{base}{n}"
+    return name
 
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
     def create_user(self, email, password=None, **extra):
-        user = self.model(email=self.normalize_email(email).lower(), **extra)
+        email = self.normalize_email(email).lower()
+        extra["username"] = clean_username(extra.get("username")) or suggest_username(email)
+        user = self.model(email=email, **extra)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -27,6 +50,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         READ = "read"
 
     email = models.EmailField(unique=True)
+    # Signs in like the email does; optional, unique, lowercase (see clean_username).
+    username = models.CharField(max_length=150, unique=True, null=True, blank=True)
     nombre = models.CharField(max_length=200)
     rol = models.CharField(max_length=10, choices=Role.choices, default=Role.TECH)
     is_active = models.BooleanField(default=True)

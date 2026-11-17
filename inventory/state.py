@@ -46,12 +46,12 @@ def list_item_json(spec, obj):
 def user_json(u, full):
     out = {"id": str(u.pk), "nombre": u.nombre, "rol": u.rol, "activo": u.is_active}
     if full:  # addresses and sign-in dates are only for administrators
-        out.update(email=u.email, last=iso(u.last_login.date() if u.last_login else None, None), mustChange=u.must_change_password)
+        out.update(email=u.email, username=u.username or "", last=iso(u.last_login.date() if u.last_login else None, None), mustChange=u.must_change_password)
     return out
 
 
 def me_json(u):
-    out = {"id": str(u.pk), "nombre": u.nombre, "rol": u.rol, "email": u.email, "activo": u.is_active,
+    out = {"id": str(u.pk), "nombre": u.nombre, "rol": u.rol, "email": u.email, "username": u.username or "", "activo": u.is_active,
            "mustChange": u.must_change_password}
     if u.must_change_password:  # the change-password screen shows the rules
         out["pwPolicy"] = password_policy_json()

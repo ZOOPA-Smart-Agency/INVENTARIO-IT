@@ -24,7 +24,7 @@ from . import backup as backups
 from . import maintenance as maint
 from . import models as m
 from .catalog import load_catalog
-from .models import Assignment, AuditEvent, Device, Employee, Incident, User
+from .models import Assignment, AuditEvent, Device, Employee, Incident, User, clean_username, suggest_username
 from .registry import LISTS
 from .tags import SCOPES
 from .tags import conflict as tag_conflict
@@ -186,16 +186,24 @@ def _throttle_key(request, email):
     return f"login:{ip}:{email}"
 
 
+def login_email(identifier):
+    """Sign-in takes an email address or a username: the email address it stands for ("" when unknown)."""
+    identifier = str(identifier or "").strip().lower()[:254]
+    if "@" in identifier or not identifier:
+        return identifier
+    return User.objects.filter(username=identifier).values_list("email", flat=True).first() or ""
+
+
 @endpoint("POST", auth=False)
 def session_login(request, body):
-    email = text(body, "email", 254).lower()
+    email = login_email(body.get("email"))
     password = body.get("password") or ""
-    key = _throttle_key(request, email)
+    key = _throttle_key(request, email or str(body.get("email") or "").strip().lower()[:254])
     if cache.get(key, 0) >= LOGIN_MAX_ATTEMPTS:
         raise ApiError("login_locked", 429)
-    user = authenticate(request, username=email, password=str(password))
+    user = authenticate(request, username=email, password=str(password))  # also for unknown names: same timing
     if user is None:
-        inactive = User.objects.filter(email=email, is_active=False).first()
+        inactive = User.objects.filter(email=email, is_active=False).first() if email else None
         if inactive and inactive.check_password(str(password)):
             raise ApiError("login_off", 403)
         cache.set(key, cache.get(key, 0) + 1, LOGIN_WINDOW_SECONDS)
@@ -634,6 +642,14 @@ def _apply_user(request, user, b):
         raise ApiError("err_user")
     if User.objects.filter(email=user.email).exclude(pk=user.pk).exists():
         raise ApiError("err_email_dup", 409)
+    raw = str(b.get("username") or "").strip()
+    user.username = clean_username(raw) or None
+    if raw and not user.username:
+        raise ApiError("err_username")
+    if not user.pk and not raw:
+        user.username = suggest_username(user.email)
+    if user.username and User.objects.filter(username=user.username).exclude(pk=user.pk).exists():
+        raise ApiError("err_username_dup", 409)
     if b.get("rol") not in User.Role.values:
         raise ApiError("err_invalid")
     if was_active_admin and b["rol"] != User.Role.ADMIN and _active_admins() == 1:
