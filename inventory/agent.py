@@ -144,6 +144,14 @@ def _generation(model, label):
     return found or model.objects.create(nombre=label)
 
 
+def _nic_speed(n, before):
+    """An Ethernet port's fastest speed, from speedMbps (device app 0.9.0): 1000 -> 1 Gbps, 2500 -> 2.5 Gbps, 100 Mbps."""
+    mbps = _number(n.get("speedMbps"), 10, 400_000) if n.get("type") == "eth" else None
+    if mbps:
+        return {"speed": round(mbps / 1000, 1), "speed_unit": "Gbps"} if mbps >= 1000 else {"speed": round(mbps), "speed_unit": "Mbps"}
+    return {"speed": before.speed if before else None, "speed_unit": before.speed_unit if before else "Gbps"}
+
+
 def _wifi_gen(value):
     value = _text(value, 3).upper()
     return _generation(m.WifiGeneration, f"Wi-Fi {value}") if value in ("4", "5", "6", "6E", "7") else None
@@ -318,9 +326,14 @@ def _apply_facts(device, f):
     cpu = f.get("cpu") if isinstance(f.get("cpu"), dict) else {}
     if _text(cpu.get("name")):
         found = m.Cpu.objects.filter(nombre__iexact=_text(cpu.get("name"))).first()
+        cores, ghz = _number(cpu.get("cores"), 1, 1024), _number(cpu.get("maxGhz"), 0.1, 20)
         if found is None:
-            cores, ghz = _number(cpu.get("cores"), 1, 1024), _number(cpu.get("maxGhz"), 0.1, 20)
             found = m.Cpu.objects.create(nombre=_text(cpu.get("name")), cores=int(cores) if cores else None, speed=ghz, speed_unit="GHz")
+        elif (found.cores is None and cores) or (found.speed is None and ghz):  # fill in what the entry lacks; never overwrite
+            found.cores = found.cores or (int(cores) if cores else None)
+            if found.speed is None and ghz:
+                found.speed, found.speed_unit = ghz, "GHz"
+            found.save()
         device.cpu = found
 
     ram = f.get("ram") if isinstance(f.get("ram"), dict) else {}
@@ -332,6 +345,8 @@ def _apply_facts(device, f):
         device.ram_speed, device.ram_speed_unit = _number(ram.get("mts"), 100, 20000), "MT/s"
     if _tri(ram.get("replaceable")):
         device.ram_rep = _tri(ram.get("replaceable"))
+    if device.ram_rep == "no":  # soldered: no modules to describe (older reports may have left some)
+        device.ram_modules, device.ram_mod_size, device.ram_form = None, None, None
     if device.ram_rep == "yes":
         modules, module_gb = _number(ram.get("modules"), 1, 64), _number(ram.get("moduleGb"), 0.1, 4096)
         device.ram_modules = int(modules) if modules else device.ram_modules
@@ -344,9 +359,15 @@ def _apply_facts(device, f):
     if gpus:
         main = next((g for g in gpus if g.get("kind") == "dedicated"), gpus[0])
         found = m.Gpu.objects.filter(nombre__iexact=_text(main.get("name"))).first()
+        kind = main.get("kind") if main.get("kind") in ("integrated", "dedicated") else ""
+        vram = _number(main.get("vramGb"), 0.1, 1024) if kind == "dedicated" else None
         if found is None:
-            kind = main.get("kind") if main.get("kind") in ("integrated", "dedicated") else ""
-            found = m.Gpu.objects.create(nombre=_text(main.get("name")), kind=kind, vram=_number(main.get("vramGb"), 0.1, 1024), vram_unit="GB")
+            found = m.Gpu.objects.create(nombre=_text(main.get("name")), kind=kind, vram=vram, vram_unit="GB")
+        elif (not found.kind and kind) or (found.vram is None and vram):  # fill in what the entry lacks; never overwrite
+            found.kind = found.kind or kind
+            if found.vram is None and vram:
+                found.vram, found.vram_unit = vram, "GB"
+            found.save()
         device.gpu = found
 
     if device.type.has_screen:
@@ -397,16 +418,21 @@ def _apply_parts(device, f):
     if disks:
         old = list(device.disks.all())
         device.disks.all().delete()
+        unused = list(old)
         for i, d in enumerate(disks):
             gb = _number(d.get("gb"), 0.1, 1_000_000)
             size, unit = (round(gb / 1000, 2), "TB") if gb >= 1000 else (round(gb), "GB")
-            before = old[i] if i < len(old) else None
+            # the same drive as before: one of the same size, else the one in the same place
+            before = (next((o for o in unused if o.size == size and o.unit == unit), None)
+                      or (old[i] if i < len(old) and old[i] in unused else None))
+            if before is not None:
+                unused.remove(before)
             m.Disk.objects.create(
                 device=device, size=size, unit=unit,
                 type=_item(m.DiskType, d.get("type")) or (before.type if before else None),
                 conn=_item(m.DiskConnector, d.get("connector")) or (before.conn if before else None),
                 rep=_tri(d.get("replaceable")) or (before.rep if before else ""),
-                form=(before.form if before else None),
+                form=_item(m.DiskFormFactor, d.get("formFactor")) or (before.form if before else None),
             )
 
     nics = []
@@ -428,5 +454,5 @@ def _apply_parts(device, f):
                 device=device, type=n["type"], mac=mac, model=model or (before.model if before else None),
                 wifi_gen=(_wifi_gen(n.get("wifiGen")) if n["type"] == "wifi" else None) or (before.wifi_gen if before else None),
                 bt_ver=(_bt_ver(n.get("btVer")) if n["type"] == "wifi" else None) or (before.bt_ver if before else None),
-                speed=before.speed if before else None, speed_unit=before.speed_unit if before else "Gbps",
+                **_nic_speed(n, before),
             )

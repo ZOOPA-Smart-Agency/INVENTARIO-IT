@@ -340,3 +340,92 @@ class DepartmentAssignmentTests(ApiTestCase):
         empty = m.Department.objects.create(nombre={"es": "Eventos", "en": "Events", "ca": "Esdeveniments"})
         self.send(client, "post", f"devices/{device.pk}/assign", {"deptId": str(empty.pk), "loc": str(device.loc_id)})
         self.assertEqual(self.send(client, "delete", f"lists/depts/{empty.pk}").json()["error"], "in_use_cant")
+
+
+class EthernetSpeedTests(TestCase):
+    def test_megabits_typed_as_gigabits_are_corrected(self):
+        from importlib import import_module
+
+        from django.apps import apps
+        from inventory.api import ethernet_speed
+        self.assertEqual(ethernet_speed(1000, "Gbps"), (1.0, "Gbps"))
+        self.assertEqual(ethernet_speed(2500, "Mbps"), (2.5, "Gbps"))
+        self.assertEqual(ethernet_speed(100, "Mbps"), (100, "Mbps"))
+        self.assertEqual(ethernet_speed(10, "Gbps"), (10, "Gbps"))
+        self.assertEqual(ethernet_speed(None, "Gbps"), (None, "Gbps"))
+        call_command("load_demo_data", password=PASSWORD, verbosity=0, stdout=open("/dev/null", "w"))
+        device = Device.objects.first()
+        card = m.NetworkCard.objects.create(device=device, type="eth", mac="D0:C0:BF:28:E9:82", speed=1000, speed_unit="Gbps")
+        import_module("inventory.migrations.0018_fix_ethernet_speeds").fix(apps, None)
+        card.refresh_from_db()
+        self.assertEqual((card.speed, card.speed_unit), (1.0, "Gbps"))
+
+
+class IntegrityTests(ApiTestCase):
+    """Fixes from the review: data that cannot be right is refused."""
+
+    def device_body(self, device, **changes):
+        client = self.as_user(self.admin)
+        body = next(d for d in client.get("/api/state").json()["state"]["devices"] if d["id"] == str(device.pk))
+        return client, {**body, **changes}
+
+    def test_serial_numbers_are_unique(self):
+        a, b = Device.objects.all()[:2]
+        client, body = self.device_body(b, serial=a.serial.lower())
+        self.assertEqual(self.send(client, "put", f"devices/{b.pk}", body).json()["error"], "err_serial_dup")
+
+    def test_model_must_match_the_type(self):
+        device = Device.objects.exclude(model=None).first()
+        other = m.DeviceModel.objects.exclude(type=device.type).first()
+        client, body = self.device_body(device, modelId=str(other.pk))
+        self.assertEqual(self.send(client, "put", f"devices/{device.pk}", body).status_code, 400)
+
+    def test_connector_is_kept_for_soldered_drives(self):
+        device = Device.objects.first()
+        conn = m.DiskConnector.objects.first()
+        client, body = self.device_body(device, disks=[{"size": 512, "unit": "GB", "type": "", "rep": "no", "form": "", "conn": str(conn.pk)}])
+        self.assertEqual(self.send(client, "put", f"devices/{device.pk}", body).status_code, 200)
+        self.assertEqual(device.disks.get().conn, conn)
+
+    def test_infinite_and_list_values_are_refused(self):
+        device = Device.objects.first()
+        client, body = self.device_body(device, screen="Infinity")
+        self.assertEqual(self.send(client, "put", f"devices/{device.pk}", body).status_code, 400)
+        client, body = self.device_body(device, enc=["yes"])
+        self.assertEqual(self.send(client, "put", f"devices/{device.pk}", body).status_code, 400)
+
+    def test_dates_that_cannot_be(self):
+        client = self.as_user(self.tech)
+        device, employee = self.available_device(), self.active_employee()
+        loc = str(device.loc_id)
+        self.send(client, "post", f"devices/{device.pk}/assign", {"employeeId": str(employee.pk), "loc": loc, "desde": "2026-03-01"})
+        self.send(client, "post", f"devices/{device.pk}/return", {"condicion": "good", "next": "disponible", "hasta": "2026-06-01"})
+        early = self.send(client, "post", f"devices/{device.pk}/assign", {"employeeId": str(employee.pk), "loc": loc, "desde": "2026-05-01"})
+        self.assertEqual(early.json()["error"], "err_asg_dates")
+        fault = self.send(client, "post", f"devices/{device.pk}/incidents", {"descripcion": "Pantalla", "tipo": "fault", "fecha": "2026-06-10"}).json()
+        resolve = self.send(client, "post", f"incidents/{fault['incident']['id']}/resolve", {"resuelta": "2026-06-01"})
+        self.assertEqual(resolve.json()["error"], "err_fix_dates")
+
+    def test_retired_devices_do_not_go_to_repair(self):
+        client = self.as_user(self.tech)
+        device = self.available_device()
+        Device.objects.filter(pk=device.pk).update(estado="descartado")
+        response = self.send(client, "post", f"devices/{device.pk}/incidents", {"descripcion": "x", "tipo": "fault", "rep": True})
+        self.assertEqual(response.status_code, 409)
+
+
+class DataCheckTests(ApiTestCase):
+    def test_ignore_and_show_again(self):
+        device = Device.objects.first()
+        client = self.as_user(self.tech)
+        response = self.send(client, "post", f"devices/{device.pk}/checks", {"key": "usb_nic"})
+        self.assertEqual(response.json()["device"]["checksIgnored"], ["usb_nic"])
+        self.send(client, "post", f"devices/{device.pk}/checks", {"key": "usb_nic"})  # twice: once
+        device.refresh_from_db()
+        self.assertEqual(device.checks_ignored, ["usb_nic"])
+        self.assertEqual(AuditEvent.objects.filter(key="log_check_ignored").count(), 2)
+        self.assertEqual(self.send(client, "post", f"devices/{device.pk}/checks", {"key": "Bad key!"}).status_code, 400)
+        self.assertEqual(self.send(self.as_user(self.reader), "post", f"devices/{device.pk}/checks", {"key": "x"}).status_code, 403)
+        self.send(client, "post", f"devices/{device.pk}/checks", {"reset": True})
+        device.refresh_from_db()
+        self.assertEqual(device.checks_ignored, [])

@@ -80,7 +80,7 @@ def device_json(d):
         "estado": d.estado, "loc": sid(d.loc_id),
         "compra": iso(d.compra), "precio": float(d.precio), "proveedor": d.proveedor, "factura": d.factura,
         "garantia": iso(d.garantia), "garantiaExt": d.garantia_ext, "garantiaEnded": d.garantia_ended,
-        "destino": d.destino, "wipeCert": d.wipe_cert, "notas": d.notas,
+        "destino": d.destino, "wipeCert": d.wipe_cert, "notas": d.notas, "checksIgnored": d.checks_ignored or [],
         "cpuId": sid(d.cpu_id), "cpuRep": d.cpu_rep,
         "ramSize": d.ram_size, "ramUnit": d.ram_unit, "ramGen": sid(d.ram_gen_id),
         "ramSpeed": d.ram_speed, "ramSpeedUnit": d.ram_speed_unit, "ramRep": d.ram_rep,

@@ -22,6 +22,7 @@ urlpatterns = [
     path("api/devices/<int:pk>/return", api.device_return),
     path("api/devices/<int:pk>/incidents", api.device_incident),
     path("api/devices/<int:pk>/status", api.device_status),
+    path("api/devices/<int:pk>/checks", api.device_checks),
     path("api/incidents/<int:pk>/resolve", api.incident_resolve),
     path("api/employees", api.employee_create),
     path("api/employees/<int:pk>", api.employee_update),

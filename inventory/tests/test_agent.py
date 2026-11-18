@@ -229,3 +229,89 @@ class OclpAndDrivesTests(TestCase):
     def test_replaceable_drive(self):
         d = self.report(disks=[{"gb": 1000, "type": "SSD", "connector": "SATA", "replaceable": "yes"}])
         self.assertEqual([k.rep for k in d.disks.all()], ["yes"])
+
+
+class DriveAndEthernetDetailsTests(TestCase):
+    """Device app 0.9.0 sends the drive's connection generation and form factor, and the Ethernet port's speed."""
+
+    setUp, post, token = AgentTests.setUp, AgentTests.post, AgentTests.token
+
+    def report(self, **facts):
+        response = self.post("report", {"facts": {**MAC_FACTS, **facts}, "loc": str(self.office.pk)}, self.token())
+        self.assertEqual(response.status_code, 200, response.content)
+        return Device.objects.get()
+
+    def test_drive_details(self):
+        m.DiskConnector.objects.create(nombre="SATA III")
+        m.DiskFormFactor.objects.create(nombre='2.5"')
+        d = self.report(disks=[{"gb": 1000, "type": "SSD", "connector": "SATA III", "replaceable": "yes", "formFactor": '2.5"'}])
+        disk = d.disks.get()
+        self.assertEqual((disk.conn.nombre, disk.form.nombre), ("SATA III", '2.5"'))
+        self.assertEqual(m.DiskConnector.objects.count(), 1)  # the existing entry, not a copy
+        d = self.report(disks=[{"gb": 1000, "type": "SSD", "connector": "SATA III"}])  # not known this time: kept
+        self.assertEqual(d.disks.get().form.nombre, '2.5"')
+
+    def test_ethernet_speed(self):
+        eth = {"type": "eth", "model": "Broadcom BCM16B4", "mac": "10:dd:b1:f1:15:d0"}
+        d = self.report(nics=[{**eth, "speedMbps": 1000}])
+        card = d.nics.get()
+        self.assertEqual((card.model.nombre, card.speed, card.speed_unit), ("Broadcom BCM16B4", 1.0, "Gbps"))
+        d = self.report(nics=[{**eth, "speedMbps": 2500}])
+        self.assertEqual((d.nics.get().speed, d.nics.get().speed_unit), (2.5, "Gbps"))
+        d = self.report(nics=[{**eth, "speedMbps": 100}])
+        self.assertEqual((d.nics.get().speed, d.nics.get().speed_unit), (100, "Mbps"))
+        d = self.report(nics=[eth])  # an older app sends no speed: the one saved stays
+        self.assertEqual((d.nics.get().speed, d.nics.get().speed_unit), (100, "Mbps"))
+
+
+class AccuracyTests(TestCase):
+    """Fixes from the accuracy review: entries are completed, soldered memory has no modules, old mistakes corrected."""
+
+    setUp, post, token = AgentTests.setUp, AgentTests.post, AgentTests.token
+
+    def report(self, **facts):
+        response = self.post("report", {"facts": {**MAC_FACTS, **facts}, "loc": str(self.office.pk)}, self.token())
+        self.assertEqual(response.status_code, 200, response.content)
+        return Device.objects.get()
+
+    def test_entries_are_filled_in_but_never_overwritten(self):
+        m.Gpu.objects.create(nombre="NVIDIA GeForce GTX 775M", kind="", vram=None)
+        m.Cpu.objects.create(nombre="Intel Core i5-4670", cores=None, speed=None)
+        d = self.report(gpus=[{"name": "NVIDIA GeForce GTX 775M", "kind": "dedicated", "vramGb": 2}],
+                        cpu={"name": "Intel Core i5-4670", "cores": 4, "maxGhz": 3.4})
+        self.assertEqual((d.gpu.kind, d.gpu.vram, d.cpu.cores, d.cpu.speed), ("dedicated", 2, 4, 3.4))
+        m.Gpu.objects.filter(pk=d.gpu.pk).update(vram=4)  # someone corrected it by hand
+        d = self.report(gpus=[{"name": "NVIDIA GeForce GTX 775M", "kind": "dedicated", "vramGb": 2}])
+        self.assertEqual(d.gpu.vram, 4)
+
+    def test_soldered_memory_has_no_modules(self):
+        d = self.report(ram={"gb": 16, "type": "DDR4", "replaceable": "yes", "modules": 2, "moduleGb": 8, "formFactor": "SO-DIMM"})
+        self.assertEqual((d.ram_modules, d.ram_mod_size, d.ram_form.nombre), (2, 8, "SO-DIMM"))
+        d = self.report(ram={"gb": 16, "type": "LPDDR5", "replaceable": "no"})
+        self.assertEqual((d.ram_modules, d.ram_mod_size, d.ram_form), (None, None, None))
+
+    def test_integrated_arc_entries_are_corrected(self):
+        from importlib import import_module
+
+        from django.apps import apps
+        wrong = m.Gpu.objects.create(nombre="Intel Arc 140V GPU (16GB)", kind="dedicated", vram=4)
+        card = m.Gpu.objects.create(nombre="Intel Arc A770 Graphics", kind="dedicated", vram=16)
+        import_module("inventory.migrations.0019_fix_integrated_arc").fix(apps, None)
+        wrong.refresh_from_db(), card.refresh_from_db()
+        self.assertEqual((wrong.nombre, wrong.kind, wrong.vram), ("Intel Arc 140V GPU", "integrated", None))
+        self.assertEqual((card.kind, card.vram), ("dedicated", 16))
+
+
+class DriveOrderTests(TestCase):
+    setUp, post, token = AgentTests.setUp, AgentTests.post, AgentTests.token
+
+    def test_details_follow_the_drive_not_its_place(self):
+        hdd = {"gb": 2000, "type": "HDD", "connector": "SATA III"}
+        ssd = {"gb": 512, "type": "SSD", "connector": "NVMe"}
+        self.post("report", {"facts": {**MAC_FACTS, "disks": [ssd, hdd]}, "loc": str(self.office.pk)}, self.token())
+        device = Device.objects.get()
+        form = m.DiskFormFactor.objects.create(nombre='3.5"')
+        device.disks.filter(size=2.0, unit="TB").update(form=form)  # set by hand
+        self.post("report", {"facts": {**MAC_FACTS, "disks": [hdd, ssd]}}, self.token())  # listed the other way round
+        forms = {(d.size, d.unit): d.form for d in device.disks.all()}
+        self.assertEqual((forms[(2.0, "TB")], forms[(512, "GB")]), (form, None))

@@ -16,7 +16,7 @@ const I18N = {
     set_brand: 'Logotipo', set_brand_sub: 'Sustituye el icono de la aplicación por el de tu empresa.', brand_upload: 'Subir imagen', brand_change: 'Cambiar imagen', brand_remove: 'Quitar logotipo', brand_formats: 'PNG, JPG, WebP, GIF o SVG de hasta 512 KB. Mejor si es cuadrada y con fondo transparente.', brand_where: 'Se verá en el menú, en la pantalla de inicio de sesión y en la pestaña del navegador.', brand_saved: 'Logotipo actualizado', brand_removed: 'Se ha vuelto al icono original', err_logo_type: 'Ese archivo no es una imagen compatible.', err_logo_size: 'La imagen pesa más de 512 KB.', go_home: 'Ir al resumen', pc_title: 'Cambia tu contraseña', pc_sub: 'Por seguridad, elige una contraseña nueva antes de continuar.', pc_current: 'Contraseña actual', pc_new: 'Contraseña nueva', pc_repeat: 'Repite la contraseña nueva', pc_btn: 'Cambiar', pc_done: 'Contraseña cambiada', err_pw_current: 'La contraseña actual no es correcta.', err_pw_same: 'La contraseña nueva debe ser distinta de la actual.', err_must_change: 'Antes de seguir, cambia tu contraseña.', f_must_change: 'Pedir que cambie la contraseña al iniciar sesión', f_must_change_d: 'Útil cuando le das una contraseña temporal.', chip_must_change: 'Debe cambiar la contraseña', chip_must_change_d: 'Tendrá que elegir una contraseña nueva la próxima vez que inicie sesión.', log_pwchanged: '{name} ha cambiado su contraseña',
     pw_h: 'Seguridad de las contraseñas', pw_enforce: 'Exigir requisitos de seguridad', pw_enforce_d: 'Las contraseñas que no los cumplan no se aceptarán.', pw_off: 'Sin requisitos: se aceptará cualquier contraseña.', pw_minlabel: 'Longitud mínima', pw_chars: 'caracteres', pw_c_upper: 'Al menos una mayúscula', pw_c_number: 'Al menos un número', pw_c_symbol: 'Al menos un símbolo', pw_c_min: 'Al menos {n} caracteres', pw_weak: 'Contraseña insegura', pw_ok: 'Contraseña aceptable', pw_strong: 'Contraseña segura', pw_empty: 'Escribe una contraseña para ver su seguridad', pw_applies: 'Se aplica a las contraseñas nuevas o cambiadas. Las actuales siguen funcionando.', set_pwpolicy: 'Contraseñas', set_pwpolicy_sub: 'Elige qué requisitos deben cumplir las contraseñas.', err_pw_minlen: 'La longitud mínima debe ser un número entre 1 y 128.',
     su_title: 'Configuración inicial', su_sub: 'Deja la aplicación lista en tres pasos.', su_step: 'Paso {n} de 3', su_org_h: 'Tu organización', su_org: 'Nombre de la organización', su_prefix: 'Prefijo de las etiquetas', su_date: 'Formato de fecha', su_currency: 'Moneda', su_token: 'Código de instalación', su_token_hint: 'Lo define quien ha desplegado la aplicación (DJANGO_SETUP_TOKEN).', su_places_h: 'Oficinas y departamentos', su_locs: 'Ubicaciones', su_locs_hint: 'Dónde están los equipos. Marca un almacén para que los equipos devueltos vuelvan allí.', su_depts: 'Departamentos', su_depts_hint: 'Opcional: también puedes añadirlos después en Ajustes.', su_add_loc: 'Añadir ubicación', su_add_dept: 'Añadir departamento', su_name: 'Nombre', su_remove: 'Quitar', su_admin_h: 'Tu cuenta de administrador', su_admin_sub: 'Con esta cuenta entrarás y podrás crear las del resto del equipo.', su_fullname: 'Nombre completo', su_email: 'Correo electrónico', su_pass: 'Contraseña', su_pass2: 'Repite la contraseña', su_back: 'Atrás', su_next: 'Siguiente', su_finish: 'Terminar', su_blocked_t: 'Falta el código de instalación', su_blocked_b: 'La instalación no se puede completar todavía: define la variable DJANGO_SETUP_TOKEN en el servidor y recarga esta página.', su_done: '¡Todo listo! Ya puedes añadir tus dispositivos.', err_su_org: 'Indica el nombre de la organización.', err_su_loc: 'Añade al menos una ubicación con nombre.', err_su_admin: 'Rellena tu nombre y un correo válido.', err_su_mismatch: 'Las contraseñas no coinciden.', err_setup_token: 'El código de instalación no es correcto.', err_setup_done: 'La aplicación ya está configurada. Inicia sesión.', log_setup: 'Instalación inicial completada',
-    err_network: 'No se ha podido conectar con el servidor. Inténtalo de nuevo.', err_forbidden: 'No tienes permiso para hacer esto.', err_invalid: 'Hay datos no válidos. Revisa el formulario.', err_conflict: 'El dispositivo ha cambiado. Recarga la página e inténtalo de nuevo.', err_not_found: 'Este registro ya no existe.', err_dates: 'La fecha de fin no puede ser anterior a la de inicio.', err_auth: 'Tu sesión ha caducado. Vuelve a iniciar sesión.', err_pass_weak: 'La contraseña no cumple los requisitos de seguridad.', login_locked: 'Demasiados intentos. Espera 15 minutos e inténtalo de nuevo.',
+    err_network: 'No se ha podido conectar con el servidor. Inténtalo de nuevo.', err_forbidden: 'No tienes permiso para hacer esto.', err_invalid: 'Hay datos no válidos. Revisa el formulario.', err_conflict: 'El dispositivo ha cambiado. Recarga la página e inténtalo de nuevo.', err_not_found: 'Este registro ya no existe.', err_dates: 'La fecha de fin no puede ser anterior a la de inicio.', err_asg_dates: 'La fecha de entrega no puede ser anterior a la última devolución de este equipo.', err_fix_dates: 'La fecha de resolución no puede ser anterior a la de la avería.', err_serial_dup: 'Ya hay otro dispositivo con ese número de serie.', err_auth: 'Tu sesión ha caducado. Vuelve a iniciar sesión.', err_pass_weak: 'La contraseña no cumple los requisitos de seguridad.', login_locked: 'Demasiados intentos. Espera 15 minutos e inténtalo de nuevo.',
     brand: 'Inventario de equipos', nav_summary: 'Resumen', nav_devices: 'Dispositivos', nav_people: 'Empleados',
     cancel: 'Cancelar', save: 'Guardar', close: 'Cerrar', lang_group: 'Idioma', theme_group: 'Tema', theme_auto: 'Usar el tema del sistema', theme_light: 'Tema claro', theme_dark: 'Tema oscuro',
     yes: 'Sí', no: 'No', none: 'Ninguno', plus_aria: 'Añadir {x}',
@@ -48,7 +48,31 @@ const I18N = {
     w_expired: 'Vencida', w_expired_on: 'Vencida el {d}', w_soon: 'Vence en {n} días',
 
     back_devices: '← Dispositivos', not_found_dev: 'No existe ese dispositivo.', back_list: 'Volver a la lista', serial_no: 'N.º de serie',
-    btn_return: 'Registrar devolución', btn_assign: 'Asignar', gen_n: n => n + '.ª gen.', ultra_s: n => 'Serie ' + n, ryzen_s: n => 'serie ' + n, reload: 'Actualizar', reloaded: 'Datos actualizados', mi_to_emp: 'A un empleado', mi_to_emp_d: 'Lo usará una persona', mi_to_dept: 'A un departamento', mi_to_dept_d: 'Equipo compartido por todo el departamento', assign_title_dept: 'Asignar {tag} a un departamento', btn_fault: 'Registrar avería', btn_status: 'Cambiar estado', btn_edit: 'Editar',
+    btn_return: 'Registrar devolución', btn_assign: 'Asignar',
+    chk_head: n => n === 1 ? '1 dato a revisar' : n + ' datos a revisar', chk_fix_app: 'Para corregirlo, vuelve a pasar la app de registro (0.9.0 o posterior) en este equipo.', chk_fix_edit: 'Corrígelo con Editar.',
+    chk_ignore: 'Ignorar', chk_ignore_title: 'Ignorar este aviso', chk_ignore_body: 'El aviso dejará de mostrarse para {tag}, para todo el equipo de IT. Hazlo solo si has comprobado que el dato es correcto.', chk_ignored_done: 'Aviso ignorado',
+    chk_show_ignored: n => n === 1 ? 'Volver a mostrar 1 aviso ignorado' : 'Volver a mostrar ' + n + ' avisos ignorados', f_review: 'Con datos a revisar', al_check: '{tag}: {n} datos a revisar',
+    log_check_ignored: '{tag}: aviso de datos ignorado', log_check_reset: '{tag}: avisos de datos ignorados, mostrados de nuevo',
+    chk_dup_serial: 'Número de serie repetido', chk_dup_serial_h: 'Otro dispositivo tiene el mismo número de serie; la app de registro actualizaría el primero que encuentre.',
+    chk_dup_mac: 'Dirección MAC repetida', chk_dup_mac_h: 'Otro dispositivo tiene una tarjeta de red con la misma MAC; una de las dos está mal.',
+    chk_usb_nic: 'Posible adaptador USB: {x}', chk_usb_nic_h: 'Parece un adaptador o una base USB, que pasa de un equipo a otro, no la tarjeta del propio equipo. Las versiones anteriores de la app lo registraban.',
+    chk_card_number: 'Chip Wi-Fi dudoso: {x}', chk_card_number_h: 'En Mac antiguos, ese número es el de la tarjeta de Apple, no el del chip.',
+    chk_eth_speed: 'Velocidad de Ethernet imposible', chk_eth_speed_h: 'Más de 100 Gbps: seguramente se escribieron megabits con la unidad en Gbps.',
+    chk_disk_size: 'Capacidad de disco exacta: {x}', chk_disk_size_h: 'Seguramente es el modelo de {y}; las versiones anteriores guardaban la capacidad exacta en lugar de la que se vende.',
+    chk_raid_conn: 'Conector «RAID»', chk_raid_conn_h: 'En Windows, un disco NVMe detrás del controlador de Intel aparecía como RAID.',
+    chk_conn_missing: 'Disco sin conector', chk_conn_missing_h: 'Un disco no reemplazable perdía el conector al editar el equipo.',
+    chk_mac_dimm: 'Memoria «DIMM» en un Mac', chk_mac_dimm_h: 'Los Mac usan SO-DIMM (salvo el Mac Pro); las versiones anteriores de la app ponían DIMM.',
+    chk_soldered_modules: 'Módulos en memoria soldada', chk_soldered_modules_h: 'La memoria es soldada pero conserva datos de módulos de un registro anterior.',
+    chk_lpddr_replaceable: 'LPDDR marcada como reemplazable', chk_lpddr_replaceable_h: 'La memoria LPDDR va soldada; algunos equipos la anunciaban como SO-DIMM.',
+    chk_arc_dedicated: 'Gráfica integrada marcada como dedicada', chk_arc_dedicated_h: 'Intel Arc de los Core Ultra va dentro del procesador, sin memoria propia.',
+    chk_vram_4: 'Memoria de vídeo de 4 GB', chk_vram_4_h: 'Windows no decía más de 4 GB; si la tarjeta tiene más, la cifra está mal.',
+    chk_model_type: 'Modelo de otro tipo', chk_model_type_h: 'El modelo pertenece a otro tipo de dispositivo distinto del del equipo.',
+    chk_in_use_nobody: 'En uso sin asignar', chk_in_use_nobody_h: 'Está en uso, pero no está asignado a nadie.',
+    chk_assigned_idle: 'Asignado sin estar en uso', chk_assigned_idle_h: 'Tiene una asignación abierta, pero su estado no es «En uso».',
+    chk_asg_overlap: 'Asignaciones solapadas', chk_asg_overlap_h: 'Hay asignaciones que se solapan o que terminan antes de empezar; el historial de quién lo tenía no es fiable.',
+    chk_fix_before: 'Avería resuelta antes de registrarse', chk_fix_before_h: 'Una avería tiene fecha de resolución anterior a la de registro.',
+    chk_warranty_before: 'Garantía anterior a la compra', chk_warranty_before_h: 'La garantía termina antes de la fecha de compra.',
+    chk_battery_range: 'Salud de batería por encima del 100 %', chk_battery_range_h: 'Una lectura de batería de más del 100 % no es posible.', gen_n: n => n + '.ª gen.', ultra_s: n => 'Serie ' + n, ryzen_s: n => 'serie ' + n, reload: 'Actualizar', reloaded: 'Datos actualizados', mi_to_emp: 'A un empleado', mi_to_emp_d: 'Lo usará una persona', mi_to_dept: 'A un departamento', mi_to_dept_d: 'Equipo compartido por todo el departamento', assign_title_dept: 'Asignar {tag} a un departamento', btn_fault: 'Registrar avería', btn_status: 'Cambiar estado', btn_edit: 'Editar',
     n_left: '{name} dejó la empresa el {date}. Recupera este equipo y registra la devolución.', n_noenc: 'El disco no está cifrado.',
     current: 'Asignación actual', since: 'Desde el {d} ({age})', delivered_with: 'Entregado con: {x}', out_service: 'Fuera de servicio.', unassigned_at: 'Sin asignar. Está en {loc}.',
     hw: 'Hardware y software', k_type: 'Tipo', cores: n => n === 1 ? '1 núcleo' : n + ' núcleos', k_cpu: 'Procesador', k_ram: 'Memoria', k_disk: 'Almacenamiento', k_os: 'Sistema', k_enc: 'Cifrado', k_loc: 'Ubicación',
@@ -274,7 +298,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     set_brand: 'Logo', set_brand_sub: 'Replace the app icon with your company’s.', brand_upload: 'Upload image', brand_change: 'Change image', brand_remove: 'Remove logo', brand_formats: 'PNG, JPG, WebP, GIF or SVG up to 512 KB. Square with a transparent background works best.', brand_where: 'It appears in the menu, on the sign-in page and in the browser tab.', brand_saved: 'Logo updated', brand_removed: 'Back to the original icon', err_logo_type: 'That file is not a supported image.', err_logo_size: 'The image is larger than 512 KB.', go_home: 'Go to the overview', pc_title: 'Change your password', pc_sub: 'For security, choose a new password before you continue.', pc_current: 'Current password', pc_new: 'New password', pc_repeat: 'Repeat the new password', pc_btn: 'Change', pc_done: 'Password changed', err_pw_current: 'The current password is not correct.', err_pw_same: 'The new password must be different from the current one.', err_must_change: 'Please change your password before continuing.', f_must_change: 'Ask them to change the password at sign-in', f_must_change_d: 'Useful when you give them a temporary password.', chip_must_change: 'Must change password', chip_must_change_d: 'They will have to choose a new password the next time they sign in.', log_pwchanged: '{name} changed their password',
     pw_h: 'Password security', pw_enforce: 'Enforce security requirements', pw_enforce_d: 'Passwords that do not meet them will not be accepted.', pw_off: 'No requirements: any password will be accepted.', pw_minlabel: 'Minimum length', pw_chars: 'characters', pw_c_upper: 'At least one uppercase letter', pw_c_number: 'At least one number', pw_c_symbol: 'At least one symbol', pw_c_min: 'At least {n} characters', pw_weak: 'Insecure password', pw_ok: 'Acceptable password', pw_strong: 'Secure password', pw_empty: 'Type a password to see how secure it is', pw_applies: 'Applies to new or changed passwords. Current ones keep working.', set_pwpolicy: 'Passwords', set_pwpolicy_sub: 'Choose which requirements passwords must meet.', err_pw_minlen: 'The minimum length must be a number from 1 to 128.',
     su_title: 'Initial setup', su_sub: 'Get the app ready in three steps.', su_step: 'Step {n} of 3', su_org_h: 'Your organisation', su_org: 'Organisation name', su_prefix: 'Asset tag prefix', su_date: 'Date format', su_currency: 'Currency', su_token: 'Setup code', su_token_hint: 'Set by whoever deployed the app (DJANGO_SETUP_TOKEN).', su_places_h: 'Offices and departments', su_locs: 'Locations', su_locs_hint: 'Where your devices are. Mark one as storage so returned devices go back there.', su_depts: 'Departments', su_depts_hint: 'Optional: you can also add them later in Settings.', su_add_loc: 'Add location', su_add_dept: 'Add department', su_name: 'Name', su_remove: 'Remove', su_admin_h: 'Your administrator account', su_admin_sub: 'You will sign in with this account and create everyone else’s.', su_fullname: 'Full name', su_email: 'Email', su_pass: 'Password', su_pass2: 'Repeat the password', su_back: 'Back', su_next: 'Next', su_finish: 'Finish', su_blocked_t: 'Setup code missing', su_blocked_b: 'Setup cannot be completed yet: set the DJANGO_SETUP_TOKEN variable on the server and reload this page.', su_done: 'All set! You can start adding your devices.', err_su_org: 'Enter the organisation’s name.', err_su_loc: 'Add at least one location with a name.', err_su_admin: 'Enter your name and a valid email.', err_su_mismatch: 'The passwords do not match.', err_setup_token: 'That setup code is not correct.', err_setup_done: 'The app is already set up. Please sign in.', log_setup: 'Initial setup completed',
-    err_network: 'Could not reach the server. Please try again.', err_forbidden: 'You do not have permission to do this.', err_invalid: 'Some data is not valid. Please check the form.', err_conflict: 'This device has changed. Reload the page and try again.', err_not_found: 'This record no longer exists.', err_dates: 'The end date cannot be before the start date.', err_auth: 'Your session has expired. Please sign in again.', err_pass_weak: 'That password does not meet the security requirements.', login_locked: 'Too many attempts. Wait 15 minutes and try again.',
+    err_network: 'Could not reach the server. Please try again.', err_forbidden: 'You do not have permission to do this.', err_invalid: 'Some data is not valid. Please check the form.', err_conflict: 'This device has changed. Reload the page and try again.', err_not_found: 'This record no longer exists.', err_dates: 'The end date cannot be before the start date.', err_asg_dates: 'The handover date cannot be before this device was last returned.', err_fix_dates: 'The date it was fixed cannot be before the fault was logged.', err_serial_dup: 'Another device already has that serial number.', err_auth: 'Your session has expired. Please sign in again.', err_pass_weak: 'That password does not meet the security requirements.', login_locked: 'Too many attempts. Wait 15 minutes and try again.',
     brand: 'Device inventory', nav_summary: 'Overview', nav_devices: 'Devices', nav_people: 'Employees',
     cancel: 'Cancel', save: 'Save', close: 'Close', lang_group: 'Language', theme_group: 'Theme', theme_auto: 'Use system theme', theme_light: 'Light theme', theme_dark: 'Dark theme',
     yes: 'Yes', no: 'No', none: 'None', plus_aria: 'Add {x}',
@@ -306,7 +330,31 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     w_expired: 'Expired', w_expired_on: 'Expired on {d}', w_soon: 'Ends in {n} days',
 
     back_devices: '← Devices', not_found_dev: 'That device does not exist.', back_list: 'Back to the list', serial_no: 'Serial no.',
-    btn_return: 'Record return', btn_assign: 'Assign', gen_n: n => n + ([11, 12, 13].includes(n % 100) ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' })[n % 10] || 'th') + ' gen', ultra_s: n => 'Series ' + n, ryzen_s: n => n + ' series', reload: 'Refresh', reloaded: 'Up to date', mi_to_emp: 'To an employee', mi_to_emp_d: 'One person will use it', mi_to_dept: 'To a department', mi_to_dept_d: 'Shared by the whole department', assign_title_dept: 'Assign {tag} to a department', btn_fault: 'Log fault', btn_status: 'Change status', btn_edit: 'Edit',
+    btn_return: 'Record return', btn_assign: 'Assign',
+    chk_head: n => n === 1 ? '1 detail to check' : n + ' details to check', chk_fix_app: 'To correct it, run the device app (0.9.0 or later) on this computer again.', chk_fix_edit: 'Correct it with Edit.',
+    chk_ignore: 'Ignore', chk_ignore_title: 'Ignore this warning', chk_ignore_body: 'The warning will no longer show for {tag}, for the whole IT team. Only do this if you have checked the detail is right.', chk_ignored_done: 'Warning ignored',
+    chk_show_ignored: n => n === 1 ? 'Show 1 ignored warning again' : 'Show ' + n + ' ignored warnings again', f_review: 'With details to check', al_check: '{tag}: {n} details to check',
+    log_check_ignored: '{tag}: data warning ignored', log_check_reset: '{tag}: ignored data warnings shown again',
+    chk_dup_serial: 'Repeated serial number', chk_dup_serial_h: 'Another device has the same serial number; the device app would update whichever it finds first.',
+    chk_dup_mac: 'Repeated MAC address', chk_dup_mac_h: 'Another device has a network card with the same MAC; one of them is wrong.',
+    chk_usb_nic: 'Possible USB adapter: {x}', chk_usb_nic_h: 'It looks like a USB adapter or dock, which moves between computers, not this computer’s own card. Earlier versions of the app saved them.',
+    chk_card_number: 'Doubtful Wi-Fi chip: {x}', chk_card_number_h: 'On older Macs that number is Apple’s card number, not the chip.',
+    chk_eth_speed: 'Impossible Ethernet speed', chk_eth_speed_h: 'Over 100 Gbps: probably megabits typed with the unit on Gbps.',
+    chk_disk_size: 'Exact drive size: {x}', chk_disk_size_h: 'Probably the {y} model; earlier versions saved the exact size instead of the size sold.',
+    chk_raid_conn: '“RAID” connector', chk_raid_conn_h: 'On Windows, an NVMe drive behind Intel’s storage controller showed as RAID.',
+    chk_conn_missing: 'Drive without a connector', chk_conn_missing_h: 'A non-replaceable drive lost its connector when the device was edited.',
+    chk_mac_dimm: '“DIMM” memory on a Mac', chk_mac_dimm_h: 'Macs use SO-DIMM (except the Mac Pro); earlier versions of the app said DIMM.',
+    chk_soldered_modules: 'Modules on soldered memory', chk_soldered_modules_h: 'The memory is soldered but keeps module details from an earlier record.',
+    chk_lpddr_replaceable: 'LPDDR marked replaceable', chk_lpddr_replaceable_h: 'LPDDR memory is soldered; some computers announced it as SO-DIMM.',
+    chk_arc_dedicated: 'Built-in graphics marked dedicated', chk_arc_dedicated_h: 'Intel Arc in Core Ultra processors is part of the processor, with no memory of its own.',
+    chk_vram_4: '4 GB of video memory', chk_vram_4_h: 'Windows said no more than 4 GB; if the card has more, the figure is wrong.',
+    chk_model_type: 'Model of another type', chk_model_type_h: 'The model belongs to a different device type from the device’s.',
+    chk_in_use_nobody: 'In use but unassigned', chk_in_use_nobody_h: 'It is in use, but not assigned to anyone.',
+    chk_assigned_idle: 'Assigned but not in use', chk_assigned_idle_h: 'It has an open assignment, but its status is not “In use”.',
+    chk_asg_overlap: 'Overlapping assignments', chk_asg_overlap_h: 'Some assignments overlap or end before they start; the history of who had it is not reliable.',
+    chk_fix_before: 'Fault fixed before it was logged', chk_fix_before_h: 'A fault has a fixed date before the date it was logged.',
+    chk_warranty_before: 'Warranty ends before purchase', chk_warranty_before_h: 'The warranty ends before the purchase date.',
+    chk_battery_range: 'Battery health above 100%', chk_battery_range_h: 'A battery reading above 100% is not possible.', gen_n: n => n + ([11, 12, 13].includes(n % 100) ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' })[n % 10] || 'th') + ' gen', ultra_s: n => 'Series ' + n, ryzen_s: n => n + ' series', reload: 'Refresh', reloaded: 'Up to date', mi_to_emp: 'To an employee', mi_to_emp_d: 'One person will use it', mi_to_dept: 'To a department', mi_to_dept_d: 'Shared by the whole department', assign_title_dept: 'Assign {tag} to a department', btn_fault: 'Log fault', btn_status: 'Change status', btn_edit: 'Edit',
     n_left: '{name} left on {date}. Recover this device and record the return.', n_noenc: 'The disk is not encrypted.',
     current: 'Current assignment', since: 'Since {d} ({age})', delivered_with: 'Handed over with: {x}', out_service: 'Out of service.', unassigned_at: 'Unassigned. Located at {loc}.',
     hw: 'Hardware and software', k_type: 'Type', cores: n => n === 1 ? '1 core' : n + ' cores', k_cpu: 'Processor', k_ram: 'Memory', k_disk: 'Storage', k_os: 'Operating system', k_enc: 'Encryption', k_loc: 'Location',
@@ -532,7 +580,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     set_brand: 'Logotip', set_brand_sub: 'Substitueix la icona de l’aplicació per la de la teva empresa.', brand_upload: 'Puja una imatge', brand_change: 'Canvia la imatge', brand_remove: 'Treu el logotip', brand_formats: 'PNG, JPG, WebP, GIF o SVG de fins a 512 KB. Millor si és quadrada i amb fons transparent.', brand_where: 'Es veurà al menú, a la pantalla d’inici de sessió i a la pestanya del navegador.', brand_saved: 'Logotip actualitzat', brand_removed: 'S’ha tornat a la icona original', err_logo_type: 'Aquest fitxer no és una imatge compatible.', err_logo_size: 'La imatge pesa més de 512 KB.', go_home: 'Ves al resum', pc_title: 'Canvia la contrasenya', pc_sub: 'Per seguretat, tria una contrasenya nova abans de continuar.', pc_current: 'Contrasenya actual', pc_new: 'Contrasenya nova', pc_repeat: 'Repeteix la contrasenya nova', pc_btn: 'Canvia', pc_done: 'Contrasenya canviada', err_pw_current: 'La contrasenya actual no és correcta.', err_pw_same: 'La contrasenya nova ha de ser diferent de l’actual.', err_must_change: 'Abans de continuar, canvia la contrasenya.', f_must_change: 'Demana que canviï la contrasenya en iniciar sessió', f_must_change_d: 'Útil quan li dones una contrasenya temporal.', chip_must_change: 'Ha de canviar la contrasenya', chip_must_change_d: 'Haurà de triar una contrasenya nova la propera vegada que iniciï sessió.', log_pwchanged: '{name} ha canviat la contrasenya',
     pw_h: 'Seguretat de les contrasenyes', pw_enforce: 'Exigeix requisits de seguretat', pw_enforce_d: 'Les contrasenyes que no els compleixin no s’acceptaran.', pw_off: 'Sense requisits: s’acceptarà qualsevol contrasenya.', pw_minlabel: 'Longitud mínima', pw_chars: 'caràcters', pw_c_upper: 'Almenys una majúscula', pw_c_number: 'Almenys un número', pw_c_symbol: 'Almenys un símbol', pw_c_min: 'Almenys {n} caràcters', pw_weak: 'Contrasenya insegura', pw_ok: 'Contrasenya acceptable', pw_strong: 'Contrasenya segura', pw_empty: 'Escriu una contrasenya per veure’n la seguretat', pw_applies: 'S’aplica a les contrasenyes noves o canviades. Les actuals continuen funcionant.', set_pwpolicy: 'Contrasenyes', set_pwpolicy_sub: 'Tria quins requisits han de complir les contrasenyes.', err_pw_minlen: 'La longitud mínima ha de ser un número entre 1 i 128.',
     su_title: 'Configuració inicial', su_sub: 'Deixa l’aplicació a punt en tres passos.', su_step: 'Pas {n} de 3', su_org_h: 'La teva organització', su_org: 'Nom de l’organització', su_prefix: 'Prefix de les etiquetes', su_date: 'Format de data', su_currency: 'Moneda', su_token: 'Codi d’instal·lació', su_token_hint: 'El defineix qui ha desplegat l’aplicació (DJANGO_SETUP_TOKEN).', su_places_h: 'Oficines i departaments', su_locs: 'Ubicacions', su_locs_hint: 'On són els equips. Marca’n una com a magatzem perquè els equips retornats hi tornin.', su_depts: 'Departaments', su_depts_hint: 'Opcional: també els pots afegir després a Configuració.', su_add_loc: 'Afegeix una ubicació', su_add_dept: 'Afegeix un departament', su_name: 'Nom', su_remove: 'Treu', su_admin_h: 'El teu compte d’administrador', su_admin_sub: 'Amb aquest compte entraràs i podràs crear els de la resta de l’equip.', su_fullname: 'Nom complet', su_email: 'Correu electrònic', su_pass: 'Contrasenya', su_pass2: 'Repeteix la contrasenya', su_back: 'Enrere', su_next: 'Següent', su_finish: 'Acaba', su_blocked_t: 'Falta el codi d’instal·lació', su_blocked_b: 'La instal·lació encara no es pot completar: defineix la variable DJANGO_SETUP_TOKEN al servidor i recarrega aquesta pàgina.', su_done: 'Tot a punt! Ja pots afegir els teus dispositius.', err_su_org: 'Indica el nom de l’organització.', err_su_loc: 'Afegeix almenys una ubicació amb nom.', err_su_admin: 'Omple el teu nom i un correu vàlid.', err_su_mismatch: 'Les contrasenyes no coincideixen.', err_setup_token: 'El codi d’instal·lació no és correcte.', err_setup_done: 'L’aplicació ja està configurada. Inicia sessió.', log_setup: 'Instal·lació inicial completada',
-    err_network: 'No s’ha pogut connectar amb el servidor. Torna-ho a provar.', err_forbidden: 'No tens permís per fer això.', err_invalid: 'Hi ha dades no vàlides. Revisa el formulari.', err_conflict: 'El dispositiu ha canviat. Recarrega la pàgina i torna-ho a provar.', err_not_found: 'Aquest registre ja no existeix.', err_dates: 'La data de fi no pot ser anterior a la d’inici.', err_auth: 'La sessió ha caducat. Torna a iniciar sessió.', err_pass_weak: 'La contrasenya no compleix els requisits de seguretat.', login_locked: 'Massa intents. Espera 15 minuts i torna-ho a provar.',
+    err_network: 'No s’ha pogut connectar amb el servidor. Torna-ho a provar.', err_forbidden: 'No tens permís per fer això.', err_invalid: 'Hi ha dades no vàlides. Revisa el formulari.', err_conflict: 'El dispositiu ha canviat. Recarrega la pàgina i torna-ho a provar.', err_not_found: 'Aquest registre ja no existeix.', err_dates: 'La data de fi no pot ser anterior a la d’inici.', err_asg_dates: 'La data de lliurament no pot ser anterior a l’última devolució d’aquest equip.', err_fix_dates: 'La data de resolució no pot ser anterior a la de l’avaria.', err_serial_dup: 'Ja hi ha un altre dispositiu amb aquest número de sèrie.', err_auth: 'La sessió ha caducat. Torna a iniciar sessió.', err_pass_weak: 'La contrasenya no compleix els requisits de seguretat.', login_locked: 'Massa intents. Espera 15 minuts i torna-ho a provar.',
     brand: 'Inventari d’equips', nav_summary: 'Resum', nav_devices: 'Dispositius', nav_people: 'Empleats',
     cancel: 'Cancel·la', save: 'Desa', close: 'Tanca', lang_group: 'Idioma', theme_group: 'Tema', theme_auto: 'Fes servir el tema del sistema', theme_light: 'Tema clar', theme_dark: 'Tema fosc',
     yes: 'Sí', no: 'No', none: 'Cap', plus_aria: 'Afegeix {x}',
@@ -564,7 +612,31 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     w_expired: 'Vençuda', w_expired_on: 'Vençuda el {d}', w_soon: 'Venç d’aquí a {n} dies',
 
     back_devices: '← Dispositius', not_found_dev: 'Aquest dispositiu no existeix.', back_list: 'Torna a la llista', serial_no: 'Núm. de sèrie',
-    btn_return: 'Registra la devolució', btn_assign: 'Assigna', gen_n: n => n + 'a gen.', ultra_s: n => 'Sèrie ' + n, ryzen_s: n => 'sèrie ' + n, reload: 'Actualitza', reloaded: 'Dades actualitzades', mi_to_emp: 'A un empleat', mi_to_emp_d: 'El farà servir una persona', mi_to_dept: 'A un departament', mi_to_dept_d: 'Equip compartit per tot el departament', assign_title_dept: 'Assigna {tag} a un departament', btn_fault: 'Registra una avaria', btn_status: 'Canvia l’estat', btn_edit: 'Edita',
+    btn_return: 'Registra la devolució', btn_assign: 'Assigna',
+    chk_head: n => n === 1 ? '1 dada a revisar' : n + ' dades a revisar', chk_fix_app: 'Per corregir-ho, torna a passar l’app de registre (0.9.0 o posterior) en aquest equip.', chk_fix_edit: 'Corregeix-ho amb Edita.',
+    chk_ignore: 'Ignora', chk_ignore_title: 'Ignora aquest avís', chk_ignore_body: 'L’avís deixarà de mostrar-se per a {tag}, per a tot l’equip d’IT. Fes-ho només si has comprovat que la dada és correcta.', chk_ignored_done: 'Avís ignorat',
+    chk_show_ignored: n => n === 1 ? 'Torna a mostrar 1 avís ignorat' : 'Torna a mostrar ' + n + ' avisos ignorats', f_review: 'Amb dades a revisar', al_check: '{tag}: {n} dades a revisar',
+    log_check_ignored: '{tag}: avís de dades ignorat', log_check_reset: '{tag}: avisos de dades ignorats, mostrats de nou',
+    chk_dup_serial: 'Número de sèrie repetit', chk_dup_serial_h: 'Un altre dispositiu té el mateix número de sèrie; l’app de registre actualitzaria el primer que trobi.',
+    chk_dup_mac: 'Adreça MAC repetida', chk_dup_mac_h: 'Un altre dispositiu té una targeta de xarxa amb la mateixa MAC; una de les dues és incorrecta.',
+    chk_usb_nic: 'Possible adaptador USB: {x}', chk_usb_nic_h: 'Sembla un adaptador o una base USB, que passa d’un equip a un altre, no la targeta del mateix equip. Les versions anteriors de l’app el registraven.',
+    chk_card_number: 'Xip Wi-Fi dubtós: {x}', chk_card_number_h: 'En Mac antics, aquest número és el de la targeta d’Apple, no el del xip.',
+    chk_eth_speed: 'Velocitat d’Ethernet impossible', chk_eth_speed_h: 'Més de 100 Gbps: segurament es van escriure megabits amb la unitat en Gbps.',
+    chk_disk_size: 'Capacitat de disc exacta: {x}', chk_disk_size_h: 'Segurament és el model de {y}; les versions anteriors guardaven la capacitat exacta en lloc de la que es ven.',
+    chk_raid_conn: 'Connector «RAID»', chk_raid_conn_h: 'A Windows, un disc NVMe darrere del controlador d’Intel apareixia com a RAID.',
+    chk_conn_missing: 'Disc sense connector', chk_conn_missing_h: 'Un disc no reemplaçable perdia el connector en editar l’equip.',
+    chk_mac_dimm: 'Memòria «DIMM» en un Mac', chk_mac_dimm_h: 'Els Mac fan servir SO-DIMM (excepte el Mac Pro); les versions anteriors de l’app hi posaven DIMM.',
+    chk_soldered_modules: 'Mòduls en memòria soldada', chk_soldered_modules_h: 'La memòria és soldada però conserva dades de mòduls d’un registre anterior.',
+    chk_lpddr_replaceable: 'LPDDR marcada com a reemplaçable', chk_lpddr_replaceable_h: 'La memòria LPDDR va soldada; alguns equips l’anunciaven com a SO-DIMM.',
+    chk_arc_dedicated: 'Gràfica integrada marcada com a dedicada', chk_arc_dedicated_h: 'Intel Arc dels Core Ultra va dins del processador, sense memòria pròpia.',
+    chk_vram_4: 'Memòria de vídeo de 4 GB', chk_vram_4_h: 'Windows no deia més de 4 GB; si la targeta en té més, la xifra és incorrecta.',
+    chk_model_type: 'Model d’un altre tipus', chk_model_type_h: 'El model pertany a un tipus de dispositiu diferent del de l’equip.',
+    chk_in_use_nobody: 'En ús sense assignar', chk_in_use_nobody_h: 'És en ús, però no està assignat a ningú.',
+    chk_assigned_idle: 'Assignat sense estar en ús', chk_assigned_idle_h: 'Té una assignació oberta, però el seu estat no és «En ús».',
+    chk_asg_overlap: 'Assignacions encavalcades', chk_asg_overlap_h: 'Hi ha assignacions que s’encavalquen o que acaben abans de començar; l’historial de qui el tenia no és fiable.',
+    chk_fix_before: 'Avaria resolta abans de registrar-se', chk_fix_before_h: 'Una avaria té data de resolució anterior a la de registre.',
+    chk_warranty_before: 'Garantia anterior a la compra', chk_warranty_before_h: 'La garantia acaba abans de la data de compra.',
+    chk_battery_range: 'Salut de la bateria per sobre del 100 %', chk_battery_range_h: 'Una lectura de bateria de més del 100 % no és possible.', gen_n: n => n + 'a gen.', ultra_s: n => 'Sèrie ' + n, ryzen_s: n => 'sèrie ' + n, reload: 'Actualitza', reloaded: 'Dades actualitzades', mi_to_emp: 'A un empleat', mi_to_emp_d: 'El farà servir una persona', mi_to_dept: 'A un departament', mi_to_dept_d: 'Equip compartit per tot el departament', assign_title_dept: 'Assigna {tag} a un departament', btn_fault: 'Registra una avaria', btn_status: 'Canvia l’estat', btn_edit: 'Edita',
     n_left: '{name} va deixar l’empresa el {date}. Recupera aquest equip i registra’n la devolució.', n_noenc: 'El disc no està xifrat.',
     current: 'Assignació actual', since: 'Des del {d} ({age})', delivered_with: 'Lliurat amb: {x}', out_service: 'Fora de servei.', unassigned_at: 'Sense assignar. És a {loc}.',
     hw: 'Maquinari i programari', k_type: 'Tipus', cores: n => n === 1 ? '1 nucli' : n + ' nuclis', k_cpu: 'Processador', k_ram: 'Memòria', k_disk: 'Emmagatzematge', k_os: 'Sistema', k_enc: 'Xifratge', k_loc: 'Ubicació',
@@ -868,6 +940,13 @@ function signedOut() { cur = null; S = emptyState(S.settings); document.querySel
 async function reload() { adopt(await api('GET', 'state')); }
 /* a button for the pages that show inventory data: fetches it again, to see what others (or the device app) changed */
 const reloadBtn = () => `<button class="iconbtn reloadbtn" type="button" data-reload aria-label="${T('reload')}" title="${T('reload')}"><svg class="i" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg></button>`;
+function ignoreCheck(id, key) {
+  const d = dev(id), c = dataChecks(d).find(x => x.k === key);
+  if (!c) return;
+  openDialog(t('chk_ignore_title'), `<p style="margin:0 0 8px"><b>${T('chk_' + key, c.args)}</b></p><p class="muted" style="margin:0">${T('chk_ignore_body', { tag: d.tag })}</p>`, async () => {
+    await mutate('POST', `devices/${id}/checks`, { key }); return t('chk_ignored_done');
+  }, t('chk_ignore'));
+}
 async function reloadNow(btn) {
   if (btn.classList.contains('busy')) return;
   btn.classList.add('busy'); btn.disabled = true;
@@ -975,6 +1054,64 @@ function cpuGen(name) {
   if ((m = n.match(/Ryzen\s*(?:\d\s*)?(?:PRO\s*)?(\d)\d{3}/i))) return t('ryzen_s', m[1] + '000');
   return '';
 }
+/* ---- data checks: details that may be wrong because of an earlier bug, or that contradict each other ----
+   Each says how it is fixed: 'app' (running the device app 0.9.0 or later on the computer again rewrites it) or 'edit'
+   (a person corrects it). Someone can also ignore one for a device, after confirming; it is then hidden for everyone. */
+const SOLD_GB = [8, 16, 32, 60, 64, 80, 120, 128, 160, 180, 240, 250, 256, 320, 400, 480, 500, 512, 640, 750, 960, 1000, 1200, 1500, 1920, 2000, 3000, 3840, 4000, 5000, 6000, 8000, 10000, 12000, 16000, 20000, 24000];
+const gbLabel = gb => gb >= 1000 ? `${nf(gb / 1000)} TB` : `${nf(gb)} GB`;
+function dataChecks(d, all) {
+  const out = [], add = (k, fix, args = {}) => { if (!out.some(c => c.k === k)) out.push({ k, fix, args }); };
+  const mdl = byId('models', d.modelId), title = devTitle(d);
+  const apple = /apple/i.test(mdl?.fabricante || '') || /\b(i?mac|macbook)/i.test(title);
+  const nics = d.nics || [], disks = d.disks || [];
+  const nicName = n => listName('nicModels', n.modelId);
+  // the same serial number or MAC address on another device
+  if (d.serial && S.devices.some(x => x !== d && (x.serial || '').toLowerCase() === d.serial.toLowerCase())) add('dup_serial', 'edit');
+  if (nics.some(n => n.mac && S.devices.some(x => x !== d && (x.nics || []).some(o => o.mac === n.mac)))) add('dup_mac', 'edit');
+  // network: USB adapters and docks saved as the computer's own card, Apple card numbers saved as chips, megabits saved as Gbps
+  nics.filter(n => /\busb\b/i.test(nicName(n))).forEach(n => add('usb_nic', 'app', { x: nicName(n) }));
+  nics.filter(n => n.type === 'wifi' && /^broadcom bcm[0-9a-f]{1,3}$/i.test(nicName(n))).forEach(n => add('card_number', 'app', { x: nicName(n) }));
+  if (nics.some(n => n.type === 'eth' && has(n.speed) && n.speedUnit === 'Gbps' && Number(n.speed) > 100)) add('eth_speed', 'edit');
+  // drives: exact sizes instead of the size sold ("1.02 TB", Apple's 500 GB), the old "RAID", a connection erased by editing
+  disks.forEach(k => {
+    if (!has(k.size)) return;
+    const gb = k.unit === 'TB' ? Number(k.size) * 1000 : k.unit === 'MB' ? Number(k.size) / 1000 : Number(k.size);
+    const appleSsd = apple && /ssd/i.test(listName('diskTypes', k.type));
+    const sizes = appleSsd ? [64, 128, 256, 512, 1000, 2000, 4000, 8000] : SOLD_GB, margin = appleSsd ? 0.06 : 0.03;
+    const near = sizes.reduce((b, x) => Math.abs(x - gb) < Math.abs(b - gb) ? x : b, sizes[0]);
+    if (Math.abs(near - gb) > 0.5 && Math.abs(near - gb) <= near * margin) add('disk_size', 'app', { x: withUnit(k.size, k.unit), y: gbLabel(near) });
+    if (/^raid$/i.test(listName('diskConns', k.conn))) add('raid_conn', 'app');
+    if (k.rep === 'no' && !k.conn && d.osFamily) add('conn_missing', 'app');
+  });
+  // memory: the old "DIMM" for Macs, module details on soldered memory, LPDDR marked replaceable
+  if (apple && listName('ramForms', d.ramForm) === 'DIMM' && !/mac ?pro/i.test(title)) add('mac_dimm', 'app');
+  if (d.ramRep === 'no' && (has(d.ramModules) || has(d.ramModSize) || d.ramForm)) add('soldered_modules', 'app');
+  if (d.ramRep === 'yes' && /^lp/i.test(listName('ramGens', d.ramGen))) add('lpddr_replaceable', 'app');
+  // graphics: Intel's built-in Arc saved as a card, video memory capped at 4 GB by Windows
+  const g = gpuOf(d);
+  if (g && g.kind === 'dedicated' && /\bintel\b.*\barc\b/i.test(g.nombre) && !/\barc\s+(pro\s+)?[ab]\d{2,3}/i.test(g.nombre)) add('arc_dedicated', 'app');
+  else if (g && g.kind === 'dedicated' && Number(g.vram) === 4 && g.vramUnit === 'GB' && d.osFamily === 'win') add('vram_4', 'app');
+  // records that contradict each other
+  if (mdl && mdl.typeId !== d.typeId) add('model_type', 'edit');
+  const a = openAsg(d.id);
+  if (d.estado === 'uso' && !a) add('in_use_nobody', 'edit');
+  if (a && (d.estado === 'disponible' || isRetired(d))) add('assigned_idle', 'edit');
+  const hist = S.assignments.filter(x => x.deviceId === d.id).sort((x, y) => x.desde.localeCompare(y.desde));
+  if (hist.some((x, i) => (x.hasta && x.hasta < x.desde) || (i > 0 && (!hist[i - 1].hasta || hist[i - 1].hasta > x.desde)))) add('asg_overlap', 'edit');
+  if (S.incidents.some(i => i.deviceId === d.id && i.resuelta && i.resuelta < i.fecha)) add('fix_before', 'edit');
+  if (d.compra && d.garantia && d.garantia < d.compra) add('warranty_before', 'edit');
+  if (has(d.batHealth) && Number(d.batHealth) > 100) add('battery_range', 'app');
+  return all ? out : out.filter(c => !(d.checksIgnored || []).includes(c.k));
+}
+/* the device page's box: each check, how to fix it, and Ignore (asks first); ignored ones can be shown again */
+function checksBox(d) {
+  const open = dataChecks(d), ignored = (d.checksIgnored || []).length, ed = can('edit');
+  if (!open.length && !ignored) return '';
+  const fix = c => c.fix === 'app' ? T('chk_fix_app') : T('chk_fix_edit');
+  return `<div class="notice checks">${open.length ? `<b>${T('chk_head', open.length)}</b><ul>${open.map(c => `<li><span><b>${T('chk_' + c.k, c.args)}</b> ${T('chk_' + c.k + '_h', c.args)} <em>${fix(c)}</em></span>${ed ? `<button class="btn small" type="button" data-ignore="${c.k}" data-id="${d.id}">${T('chk_ignore')}</button>` : ''}</li>`).join('')}</ul>` : ''}
+    ${ignored && ed ? `<button class="linkbtn" type="button" data-unignore="${d.id}">${T('chk_show_ignored', ignored)}</button>` : ''}</div>`;
+}
+
 /* what a device mostly is: processor (and generation), memory, and total storage with its kind */
 function specParts(d) {
   const c = cpuOf(d), gen = c ? cpuGen(c.nombre) : '';
@@ -2008,6 +2145,7 @@ function viewPanel() {
   activos.filter(d => d.garantia && daysUntil(d.garantia) >= 0 && daysUntil(d.garantia) <= wd).sort((a, b) => a.garantia.localeCompare(b.garantia))
     .forEach(d => alerts.push({ k: 'warn', d, t: t('al_war', { tag: d.tag, n: daysUntil(d.garantia) }), s: `${devTitle(d)} · ${fmt(d.garantia)}` }));
   activos.filter(d => d.enc === 'no').forEach(d => alerts.push({ k: 'bad', d, t: t('al_enc', { tag: d.tag }), s: t('al_enc_s') }));
+  S.devices.forEach(d => { const cs = dataChecks(d); if (cs.length) alerts.push({ k: 'warn', d, t: t('al_check', { tag: d.tag, n: cs.length }), s: t('chk_' + cs[0].k, cs[0].args) }); });
   activos.filter(d => hasBattery(devType(d)) && has(d.batHealth) && d.batHealth < 80).forEach(d => alerts.push({ k: 'warn', d, t: t('al_bat', { tag: d.tag, p: nf(d.batHealth) }), s: t('al_bat_s') }));
 
   const byDept = S.depts.map(x => [tx(x.nombre), S.assignments.filter(a => !a.hasta && (a.deptId === x.id || (emp(a.employeeId)?.depts || []).includes(x.id))).length]).sort((a, b) => b[1] - a[1]);
@@ -2061,7 +2199,7 @@ function viewDevices() {
   <div class="toolbar">
     <input type="search" id="fq" placeholder="${F.campo ? T('search_in', { x: t('sf_' + F.campo) }) : T('search_dev')}" value="${esc(F.q)}" aria-label="${T('lbl_search')}">
     <select id="fcampo" aria-label="${T('lbl_search_in')}">${opts([['', t('sf_all')], ...Object.keys(SEARCH_IN).map(k => [k, t('sf_' + k)])], F.campo)}</select>
-    <select id="festado" aria-label="${T('lbl_status')}">${opts([['activos', t('f_active')], ['', t('f_all')], ...ST.map(k => [k, st(k)]), ['retirados', t('retired_stat')]], F.estado)}</select>
+    <select id="festado" aria-label="${T('lbl_status')}">${opts([['activos', t('f_active')], ['', t('f_all')], ...ST.map(k => [k, st(k)]), ['retirados', t('retired_stat')], ['revisar', t('f_review')]], F.estado)}</select>
     <select id="fdept" aria-label="${T('lbl_dept')}">${opts([['', t('f_alldepts')], ...S.depts.map(x => [x.id, tx(x.nombre)])], F.dept)}</select>
     <select id="ftipo" aria-label="${T('lbl_type')}">${opts([['', t('f_alltypes')], ...S.types.map(x => [x.id, tx(x.nombre)])], F.tipo)}</select>
   </div>
@@ -2074,6 +2212,7 @@ function drawDeviceRows() {
     if (F.estado === 'activos' && isRetired(d)) return false;
     if (F.estado === 'retirados' && !isRetired(d)) return false;
     if (ST.includes(F.estado) && d.estado !== F.estado) return false;
+    if (F.estado === 'revisar' && !dataChecks(d).length) return false;
     if (F.dept && a?.deptId !== F.dept && !(e?.depts || []).includes(F.dept)) return false;
     if (F.tipo && devType(d) !== F.tipo) return false;
     if (q && !(F.campo ? found(SEARCH_IN[F.campo](d), q) : found([d.tag, hostOf(d), d.serial, osText(d), cpuOf(d)?.nombre, ...(d.nics || []).map(n => n.mac + ' ' + listName('nicModels', n.modelId)), gpuOf(d)?.nombre, devTitle(d), e?.nombre, a?.deptId ? deptName(a.deptId) : '', specLine(d)].join(' '), q))) return false;
@@ -2122,6 +2261,7 @@ function viewDevice(id) {
   ${e && empState(e) === 'baja' ? `<div class="notice">${T('n_onleave', { name: e.nombre, d: fmt(e.estadoFecha) })}</div>` : ''}
   ${d.estado === 'descartado' && d.destino ? `<div class="notice info">${T('k_dest')}: ${esc(dsp(d.destino))} · ${T('fc_cert')}: ${d.wipeCert ? `<span class="mono">${esc(d.wipeCert)}</span>` : T('no_cert')}</div>` : ''}
   ${d.enc === 'no' && !retired ? `<div class="notice bad">${T('n_noenc')}</div>` : ''}
+  ${checksBox(d)}
   <div class="grid3">
     <section class="panel"><h2>${T('current')}</h2>
       ${e ? `<div class="current"><b><a href="#empleado-${e.id}">${esc(e.nombre)}</a></b><span class="muted">${esc(deptNames(e))} · ${esc(locNames(e))}</span><span>${T('since', { d: fmt(a.desde), age: age(a.desde) })}</span>${tx(a.notas) ? `<span class="muted">${T('delivered_with', { x: tx(a.notas) })}</span>` : ''}</div>`
@@ -2454,10 +2594,10 @@ function diskRow(k) {
     <div class="nichead"><b class="disk-title">${T('k_disk')}</b><button type="button" class="btn small danger disk-del">${T('nic_remove')}</button></div>
     <label>${T('fd_capacity')}${numUnitN('disk_size', `f-disksize-${i}`, k.size, k.unit, UNITS.disk)}</label>
     <label>${T('fd_disk_type')}${selPlus('almacenamiento', 'disk_type', `f-disktype-${i}`, opts([['', t('not_set')], ...S.diskTypes.map(x => [x.id, x.nombre])], k.type || ''))}</label>
-    <label class="full">${T('fd_disk_rep')}<select name="disk_rep" id="f-diskrep-${i}" class="disk-rep">${repOpts(k.rep)}</select></label>
+    <label>${T('fd_disk_conn')}${selPlus('conectores', 'disk_conn', `f-diskconn-${i}`, opts([['', t('not_set')], ...S.diskConns.map(x => [x.id, x.nombre])], k.conn || ''))}</label>
+    <label>${T('fd_disk_rep')}<select name="disk_rep" id="f-diskrep-${i}" class="disk-rep">${repOpts(k.rep)}</select></label>
     <div class="subfields full disk-sub"${k.rep === 'yes' ? '' : ' hidden'}>
-      <label>${T('fd_disk_form')}${selPlus('formatosdisco', 'disk_form', `f-diskform-${i}`, opts([['', t('not_set')], ...S.diskForms.map(x => [x.id, x.nombre])], k.form || ''))}</label>
-      <label>${T('fd_disk_conn')}${selPlus('conectores', 'disk_conn', `f-diskconn-${i}`, opts([['', t('not_set')], ...S.diskConns.map(x => [x.id, x.nombre])], k.conn || ''))}</label>
+      <label class="full">${T('fd_disk_form')}${selPlus('formatosdisco', 'disk_form', `f-diskform-${i}`, opts([['', t('not_set')], ...S.diskForms.map(x => [x.id, x.nombre])], k.form || ''))}</label>
     </div>
   </div>`;
 }
@@ -2548,7 +2688,7 @@ function readDevice(v, fd, prev) {
   const ty = v.typeId, named = usesName(ty), scr = hasScreen(ty), batt = hasBattery(ty), rr = v.ramRep === 'yes';
   if (!named && !v.modelId) { toast(t('err_model_req')); return null; }
   const dk = { size: g('disk_size'), unit: g('disk_sizeUnit'), type: g('disk_type'), rep: g('disk_rep'), form: g('disk_form'), conn: g('disk_conn') };
-  const disks = dk.size.map((_, i) => ({ size: numOrNull(dk.size[i]), unit: dk.unit[i], type: dk.type[i], rep: dk.rep[i], form: dk.rep[i] === 'yes' ? dk.form[i] : '', conn: dk.rep[i] === 'yes' ? dk.conn[i] : '' }));
+  const disks = dk.size.map((_, i) => ({ size: numOrNull(dk.size[i]), unit: dk.unit[i], type: dk.type[i], rep: dk.rep[i], form: dk.rep[i] === 'yes' ? dk.form[i] : '', conn: dk.conn[i] || '' }));
   const out = { tag: v.tag.trim(), nombre: S.settings.hostnameIsTag ? (prev?.nombre || '') : (v.nombre || '').trim(), serial: v.serial.trim(), typeId: ty, modelId: named ? '' : v.modelId, customName: named ? (v.customName || '').trim() : '', cpuId: v.cpuId, cpuRep: v.cpuRep,
     ramSize: numOrNull(v.ramSize), ramUnit: v.ramSizeUnit, ramGen: v.ramGen, ramSpeed: numOrNull(v.ramSpeed), ramSpeedUnit: v.ramSpeedUnit, ramRep: v.ramRep,
     ramModules: rr ? numOrNull(v.ramModules) : null, ramModSize: rr ? numOrNull(v.ramModSize) : null, ramModUnit: v.ramModSizeUnit, ramForm: rr ? v.ramForm : '',
@@ -2785,6 +2925,10 @@ $('#themeSeg').addEventListener('click', e => {
 /* ================= routing ================= */
 const view = $('#view');
 view.addEventListener('click', ev => {
+  const ig = ev.target.closest('[data-ignore]');
+  if (ig) { if (can('edit')) ignoreCheck(ig.dataset.id, ig.dataset.ignore); return; }
+  const ui = ev.target.closest('[data-unignore]');
+  if (ui) { if (can('edit')) mutate('POST', `devices/${ui.dataset.unignore}/checks`, { reset: true }).then(route).catch(err => { if (err.status !== 401) toast(t(err.code)); }); return; }
   const rb = ev.target.closest('[data-reload]');
   if (rb) { reloadNow(rb); return; }
   const menuBtn = ev.target.closest('[data-menu]');

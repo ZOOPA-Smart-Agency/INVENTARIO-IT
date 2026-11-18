@@ -5,6 +5,7 @@ import datetime as dt
 from datetime import timedelta
 import contextlib
 import json
+import math
 import re
 from decimal import Decimal, InvalidOperation
 from functools import wraps
@@ -110,7 +111,7 @@ def text(body, key, max_len=300, required=False, error="err_invalid"):
 
 def choice(body, key, allowed):
     value = body.get(key) or ""
-    if value not in allowed:
+    if not isinstance(value, str) or value not in allowed:  # a list or object is not one of the choices
         raise ApiError("err_invalid")
     return value
 
@@ -133,7 +134,7 @@ def number(body, key, minimum=0, maximum=None):
         value = float(value)
     except (TypeError, ValueError):
         raise ApiError("err_invalid")
-    if value != value or value < minimum or (maximum is not None and value > maximum):
+    if not math.isfinite(value) or value < minimum or (maximum is not None and value > maximum):  # NaN, Infinity
         raise ApiError("err_invalid")
     return value
 
@@ -261,6 +262,14 @@ def state(request, body):
 # ---- devices -----------------------------------------------------------------
 
 
+def ethernet_speed(speed, unit):
+    """An Ethernet speed as it is shown: "1000 Gbps" (megabits typed with the unit left on Gbps; no Ethernet port is
+    that fast) becomes 1 Gbps, and 1000 Mbps or more is written in Gbps (2500 Mbps -> 2.5 Gbps)."""
+    if speed and ((unit == "Gbps" and speed > 100) or (unit == "Mbps" and speed >= 1000)):
+        return round(speed / 1000, 1), "Gbps"
+    return speed, unit
+
+
 def _apply_device(device, b):
     old_tag = device.tag
     device.tag = text(b, "tag", 50, required=True, error="err_required")
@@ -276,6 +285,8 @@ def _apply_device(device, b):
         device.model, device.custom_name = fk(b, "modelId", m.DeviceModel), ""
         if device.model is None:
             raise ApiError("err_model_req")
+        if device.model.type_id != device.type.pk:  # a model of another kind of device
+            raise ApiError("err_invalid")
 
     device.cpu, device.cpu_rep = fk(b, "cpuId", m.Cpu), choice(b, "cpuRep", TRI_VALUES)
     device.ram_size, device.ram_unit = number(b, "ramSize"), choice(b, "ramUnit", UNIT_VALUES | {""}) or "GB"
@@ -320,6 +331,9 @@ def _apply_device(device, b):
     device.garantia_ext = choice(b, "garantiaExt", TRI_VALUES)
     device.notas = text(b, "notas", 10000)
 
+    # the device app finds computers by serial number, so two devices cannot share one (ignoring case)
+    if Device.objects.filter(serial__iexact=device.serial).exclude(pk=device.pk).exists():
+        raise ApiError("err_serial_dup", 409)
     # the same tag, or (for a new or changed tag) the same identifier, as another device
     if (Device.objects.filter(tag=device.tag).exclude(pk=device.pk).exists()
             or (device.tag.lower() != (old_tag or "").lower() and tag_conflict(device.tag, device.pk))):
@@ -338,7 +352,7 @@ def _replace_children(device, b):
             device=device, size=number(k, "size"), unit=choice(k, "unit", UNIT_VALUES | {""}) or "GB",
             type=fk(k, "type", m.DiskType), rep=replaceable,
             form=fk(k, "form", m.DiskFormFactor) if replaceable == "yes" else None,
-            conn=fk(k, "conn", m.DiskConnector) if replaceable == "yes" else None,
+            conn=fk(k, "conn", m.DiskConnector),  # soldered drives have a connection too (NVMe)
         ))
     for n in b.get("nics") or []:
         kind = choice(n, "type", {"wifi", "eth"})
@@ -350,8 +364,7 @@ def _replace_children(device, b):
             device=device, type=kind, model=fk(n, "modelId", m.NicModel), mac=mac,
             wifi_gen=fk(n, "wifiGen", m.WifiGeneration) if wifi else None,
             bt_ver=fk(n, "btVer", m.BluetoothVersion) if wifi else None,
-            speed=None if wifi else number(n, "speed"),
-            speed_unit=choice(n, "speedUnit", UNIT_VALUES | {""}) or "Gbps",
+            **dict(zip(("speed", "speed_unit"), ethernet_speed(None if wifi else number(n, "speed"), choice(n, "speedUnit", UNIT_VALUES | {""}) or "Gbps"))),
         ))
     device.disks.all().delete()
     device.nics.all().delete()
@@ -387,9 +400,11 @@ def device_assign(request, body, pk):
     location = fk(body, "loc", m.Location)
     if location is None:
         raise ApiError("err_required")
-    assignment = Assignment.objects.create(
-        device=device, employee=employee, dept=dept, desde=date(body, "desde", timezone.localdate()), notas=text(body, "notas", 1000)
-    )
+    desde = date(body, "desde", timezone.localdate())
+    last = device.assignments.exclude(hasta=None).order_by("-hasta").first()
+    if last and desde < last.hasta:  # it cannot start before the previous holder gave it back
+        raise ApiError("err_asg_dates")
+    assignment = Assignment.objects.create(device=device, employee=employee, dept=dept, desde=desde, notas=text(body, "notas", 1000))
     if device.estado != Device.State.REPAIR:
         device.estado = Device.State.IN_USE
     device.loc = location
@@ -436,6 +451,8 @@ def device_incident(request, body, pk):
         piezas=text(body, "piezas"), coste=money(body, "coste"), proveedor=text(body, "proveedor", 200),
     )
     to_repair = bool(body.get("rep"))
+    if to_repair and device.estado in RETIRED:  # a retired or lost device does not go back to repair this way
+        raise ApiError("err_conflict", 409)
     if to_repair:
         device.estado = Device.State.REPAIR
         device.save()
@@ -450,6 +467,8 @@ def incident_resolve(request, body, pk):
         raise ApiError("err_conflict", 409)
     incident.estado = "resuelta"
     incident.resuelta = date(body, "resuelta", timezone.localdate())
+    if incident.resuelta < incident.fecha:
+        raise ApiError("err_fix_dates")
     incident.coste = money(body, "coste")
     incident.piezas = text(body, "piezas")
     incident.save()
@@ -471,7 +490,7 @@ def device_status(request, body, pk):
     if new_state == Device.State.IN_USE and assignment is None:
         raise ApiError("err_conflict", 409)
     if assignment and new_state in {Device.State.AVAILABLE, Device.State.RETIRED, Device.State.LOST}:
-        assignment.hasta = timezone.localdate()
+        assignment.hasta = max(timezone.localdate(), assignment.desde)  # never before it started
         assignment.save()
     device.estado = new_state
     if new_state == Device.State.RETIRED:
@@ -483,6 +502,26 @@ def device_status(request, body, pk):
         device.notas = append_note(device.notas, note, "\n")
     device.save()
     audit(request, "log_status", {"tag": device.tag, "st": new_state, "reason": reason}, device)
+
+
+CHECK_KEY = re.compile(r"[a-z_]{2,40}")
+
+
+@endpoint("POST", role="edit")
+def device_checks(request, body, pk):
+    """Ignores one of the web app's data checks for this device (after someone confirmed), or shows them all again."""
+    device = get_or_404(Device, pk)
+    if body.get("reset"):
+        device.checks_ignored = []
+    else:
+        key = text(body, "key", 40)
+        if not CHECK_KEY.fullmatch(key):
+            raise ApiError("err_invalid")
+        if key not in device.checks_ignored:
+            device.checks_ignored = [*device.checks_ignored, key]
+    device.save(update_fields=["checks_ignored"])
+    audit(request, "log_check_reset" if body.get("reset") else "log_check_ignored", {"tag": device.tag}, device)
+    return {"device": device_json(device)}
 
 
 # ---- employees ---------------------------------------------------------------

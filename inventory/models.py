@@ -285,6 +285,8 @@ class Device(models.Model):
     destino = models.CharField(max_length=10, blank=True)
     wipe_cert = models.CharField(max_length=100, blank=True)
     notas = models.TextField(blank=True)
+    # data checks someone looked at and chose to ignore for this device (their keys, as the web app names them)
+    checks_ignored = models.JSONField(default=list, blank=True)
 
     cpu = models.ForeignKey(Cpu, null=True, blank=True, on_delete=models.PROTECT)
     cpu_rep = models.CharField(max_length=3, choices=TRI, blank=True)
