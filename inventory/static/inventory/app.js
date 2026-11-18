@@ -20,7 +20,7 @@ const I18N = {
     brand: 'Inventario de equipos', nav_summary: 'Resumen', nav_devices: 'Dispositivos', nav_people: 'Empleados',
     cancel: 'Cancelar', save: 'Guardar', close: 'Cerrar', lang_group: 'Idioma', theme_group: 'Tema', theme_auto: 'Usar el tema del sistema', theme_light: 'Tema claro', theme_dark: 'Tema oscuro',
     yes: 'Sí', no: 'No', none: 'Ninguno', plus_aria: 'Añadir {x}',
-    st_uso: 'En uso', st_disponible: 'Disponible', st_reparacion: 'En reparación', st_descartado: 'Descartado', st_perdido: 'Perdido / robado',
+    st_uso: 'En uso', st_disponible: 'Disponible', st_reparacion: 'En reparación', st_averiado: 'Averiado', st_descartado: 'Descartado', st_perdido: 'Perdido / robado',
     it_fault: 'Avería', it_repair: 'Reparación', it_part: 'Cambio de pieza', it_maint: 'Mantenimiento', it_loss: 'Pérdida / robo',
     cd_good: 'Bueno', cd_worn: 'Desgastado', cd_damaged: 'Dañado',
     ds_recycle: 'Reciclado', ds_sale: 'Venta', ds_donation: 'Donación', ds_lease: 'Devuelto a la empresa que lo alquilaba',
@@ -51,6 +51,7 @@ const I18N = {
     btn_return: 'Registrar devolución', btn_assign: 'Asignar',
     health_ok: 'Estado correcto', health_warning: 'Con avisos', health_failing: 'Fallando', wear_pct: 'Desgaste {n} %', hours_on: '{n} h de uso', disk_checked: 'Leído por la app de registro el {d}', disk_prev: 'antes: {x}', bat_cycles: '{n} ciclos',
     al_places_lost: 'Ningún empleado tiene departamento ni ubicación', al_places_lost_s: 'Restaurar una copia hecha con las versiones 1.10.0 a 1.15.0 los perdía. Si restauraste una, asígnalos de nuevo o restaura una copia nueva.',
+    al_faulty: '{tag} está averiado', al_faulty_s: 'No se puede usar: envíalo a reparar, sustitúyelo o retíralo.',
     al_disk_fail: '{tag}: disco fallando', al_disk_fail_s: '{x}: el propio disco informa de que falla. Haz una copia de los datos y sustitúyelo.', al_disk_warn: '{tag}: disco con avisos', al_disk_warn_s: '{x}: el disco informa de problemas; vigílalo.', al_disk_wear: '{tag}: SSD desgastado al {n} %', al_disk_wear_s: '{x}: se acerca al final de su vida útil.',
     chk_head: n => n === 1 ? '1 dato a revisar' : n + ' datos a revisar', chk_fix_app: 'Para corregirlo, vuelve a pasar la app de registro (0.9.0 o posterior) en este equipo.', chk_fix_edit: 'Corrígelo con Editar.',
     chk_ignore: 'Ignorar', chk_ignore_title: 'Ignorar este aviso', chk_ignore_body: 'El aviso dejará de mostrarse para {tag}, para todo el equipo de IT. Hazlo solo si has comprobado que el dato es correcto.', chk_ignored_done: 'Aviso ignorado',
@@ -111,7 +112,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     fe_name: 'Nombre completo', fe_email: 'Email corporativo', fe_dept: 'Departamento', fe_depts: 'Departamentos', fe_locs: 'Ubicaciones', no_dept: 'Sin departamento', no_loc: 'Sin ubicación', add_dept: 'Añadir otro departamento', add_loc: 'Añadir otra ubicación', fe_loc: 'Ubicación', fe_hired: 'Fecha de alta', k_contract: 'Contrato', ct_indefinido: 'Indefinido', ct_temporal: 'Temporal', ct_practicas: 'Prácticas', ct_all: 'Todos los contratos', ct_unset: 'Sin definir', err_person: 'El nombre y el email son obligatorios',
     assign_title: 'Asignar {tag}', fa_dept: 'Departamento', err_dept: 'Elige un departamento', shared_dept: 'Equipo compartido del departamento', fa_emp: 'Empleado', already_has: '(ya tiene {n})', fa_date: 'Fecha de entrega', fa_acc: 'Accesorios entregados', fa_acc_ph: 'Cargador, dock, ratón…', assign_btn: 'Asignar', assigned_to: 'Asignado a {name}',
     return_title: 'Devolución de {tag}', return_intro: 'Lo devuelve {name}, que lo tiene desde el {d}.', fr_date: 'Fecha de devolución', fr_cond: 'Estado físico', fr_next: 'Después de la devolución',
-    next_avail: 'Disponible en el almacén', next_rep: 'Enviar a reparación', next_disc: 'Descartar', fr_notes_ph: 'Falta el cargador, borrado de datos hecho…', return_prefix: 'Devolución: ', return_done: 'Devolución registrada',
+    next_avail: 'Disponible en el almacén', next_rep: 'Enviar a reparación', next_faulty: 'Averiado, no se puede usar', next_disc: 'Descartar', fr_notes_ph: 'Falta el cargador, borrado de datos hecho…', return_prefix: 'Devolución: ', return_done: 'Devolución registrada',
     fault_title: 'Registrar avería en {tag}', fi_date: 'Fecha', fi_type: 'Tipo', fi_desc: 'Descripción del problema', fi_parts: 'Piezas cambiadas', fi_cost: 'Coste ({c})', fi_tech: 'Servicio técnico',
     in_war: 'En garantía hasta el {d}', out_war: 'Fuera de garantía', fi_rep: 'Enviar el equipo a reparación ahora', err_desc: 'Describe el problema',fault_done: 'Incidencia registrada',
     resolve_title: 'Cerrar incidencia', fs_date: 'Fecha de resolución', fs_cost: 'Coste final ({c})', resolve_done: 'Incidencia cerrada',
@@ -308,7 +309,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     brand: 'Device inventory', nav_summary: 'Overview', nav_devices: 'Devices', nav_people: 'Employees',
     cancel: 'Cancel', save: 'Save', close: 'Close', lang_group: 'Language', theme_group: 'Theme', theme_auto: 'Use system theme', theme_light: 'Light theme', theme_dark: 'Dark theme',
     yes: 'Yes', no: 'No', none: 'None', plus_aria: 'Add {x}',
-    st_uso: 'In use', st_disponible: 'Available', st_reparacion: 'In repair', st_descartado: 'Retired', st_perdido: 'Lost / stolen',
+    st_uso: 'In use', st_disponible: 'Available', st_reparacion: 'In repair', st_averiado: 'Faulty', st_descartado: 'Retired', st_perdido: 'Lost / stolen',
     it_fault: 'Fault', it_repair: 'Repair', it_part: 'Part replacement', it_maint: 'Maintenance', it_loss: 'Loss / theft',
     cd_good: 'Good', cd_worn: 'Worn', cd_damaged: 'Damaged',
     ds_recycle: 'Recycled', ds_sale: 'Sale', ds_donation: 'Donation', ds_lease: 'Returned to the leasing company',
@@ -339,6 +340,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     btn_return: 'Record return', btn_assign: 'Assign',
     health_ok: 'Healthy', health_warning: 'Warnings', health_failing: 'Failing', wear_pct: '{n}% worn', hours_on: '{n} h on', disk_checked: 'Read by the device app on {d}', disk_prev: 'before: {x}', bat_cycles: '{n} cycles',
     al_places_lost: 'No employee has a department or location', al_places_lost_s: 'Restoring a backup made by versions 1.10.0 to 1.15.0 lost them. If you restored one, set them again or restore a newer backup.',
+    al_faulty: '{tag} is faulty', al_faulty_s: 'It cannot be used: send it for repair, replace it or retire it.',
     al_disk_fail: '{tag}: drive failing', al_disk_fail_s: '{x}: the drive itself reports it is failing. Back up its data and replace it.', al_disk_warn: '{tag}: drive with warnings', al_disk_warn_s: '{x}: the drive reports problems; keep an eye on it.', al_disk_wear: '{tag}: SSD {n}% worn', al_disk_wear_s: '{x}: it is near the end of its rated life.',
     chk_head: n => n === 1 ? '1 detail to check' : n + ' details to check', chk_fix_app: 'To correct it, run the device app (0.9.0 or later) on this computer again.', chk_fix_edit: 'Correct it with Edit.',
     chk_ignore: 'Ignore', chk_ignore_title: 'Ignore this warning', chk_ignore_body: 'The warning will no longer show for {tag}, for the whole IT team. Only do this if you have checked the detail is right.', chk_ignored_done: 'Warning ignored',
@@ -399,7 +401,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     fe_name: 'Full name', fe_email: 'Work email', fe_dept: 'Department', fe_depts: 'Departments', fe_locs: 'Locations', no_dept: 'No department', no_loc: 'No location', add_dept: 'Add another department', add_loc: 'Add another location', fe_loc: 'Location', fe_hired: 'Start date', k_contract: 'Contract', ct_indefinido: 'Permanent', ct_temporal: 'Temporary', ct_practicas: 'Internship', ct_all: 'All contracts', ct_unset: 'Not defined', err_person: 'Name and email are required',
     assign_title: 'Assign {tag}', fa_dept: 'Department', err_dept: 'Choose a department', shared_dept: 'Shared by the department', fa_emp: 'Employee', already_has: '(already has {n})', fa_date: 'Handover date', fa_acc: 'Accessories handed over', fa_acc_ph: 'Charger, dock, mouse…', assign_btn: 'Assign', assigned_to: 'Assigned to {name}',
     return_title: 'Return of {tag}', return_intro: '{name} is returning it. They have had it since {d}.', fr_date: 'Return date', fr_cond: 'Physical condition', fr_next: 'After the return',
-    next_avail: 'Available in storage', next_rep: 'Send for repair', next_disc: 'Retire', fr_notes_ph: 'Charger missing, data wiped…', return_prefix: 'Return: ', return_done: 'Return recorded',
+    next_avail: 'Available in storage', next_rep: 'Send for repair', next_faulty: 'Faulty, cannot be used', next_disc: 'Retire', fr_notes_ph: 'Charger missing, data wiped…', return_prefix: 'Return: ', return_done: 'Return recorded',
     fault_title: 'Log fault on {tag}', fi_date: 'Date', fi_type: 'Type', fi_desc: 'Problem description', fi_parts: 'Parts replaced', fi_cost: 'Cost ({c})', fi_tech: 'Repair service',
     in_war: 'Under warranty until {d}', out_war: 'Out of warranty', fi_rep: 'Send the device for repair now', err_desc: 'Describe the problem',fault_done: 'Fault logged',
     resolve_title: 'Close fault', fs_date: 'Resolution date', fs_cost: 'Final cost ({c})', resolve_done: 'Fault closed',
@@ -596,7 +598,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     brand: 'Inventari d’equips', nav_summary: 'Resum', nav_devices: 'Dispositius', nav_people: 'Empleats',
     cancel: 'Cancel·la', save: 'Desa', close: 'Tanca', lang_group: 'Idioma', theme_group: 'Tema', theme_auto: 'Fes servir el tema del sistema', theme_light: 'Tema clar', theme_dark: 'Tema fosc',
     yes: 'Sí', no: 'No', none: 'Cap', plus_aria: 'Afegeix {x}',
-    st_uso: 'En ús', st_disponible: 'Disponible', st_reparacion: 'En reparació', st_descartado: 'Retirat', st_perdido: 'Perdut / robat',
+    st_uso: 'En ús', st_disponible: 'Disponible', st_reparacion: 'En reparació', st_averiado: 'Avariat', st_descartado: 'Retirat', st_perdido: 'Perdut / robat',
     it_fault: 'Avaria', it_repair: 'Reparació', it_part: 'Canvi de peça', it_maint: 'Manteniment', it_loss: 'Pèrdua / robatori',
     cd_good: 'Bo', cd_worn: 'Desgastat', cd_damaged: 'Malmès',
     ds_recycle: 'Reciclat', ds_sale: 'Venda', ds_donation: 'Donació', ds_lease: 'Retornat a l’empresa que el llogava',
@@ -627,6 +629,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     btn_return: 'Registra la devolució', btn_assign: 'Assigna',
     health_ok: 'Estat correcte', health_warning: 'Amb avisos', health_failing: 'Fallant', wear_pct: 'Desgast {n} %', hours_on: '{n} h d’ús', disk_checked: 'Llegit per l’app de registre el {d}', disk_prev: 'abans: {x}', bat_cycles: '{n} cicles',
     al_places_lost: 'Cap empleat no té departament ni ubicació', al_places_lost_s: 'Restaurar una còpia feta amb les versions 1.10.0 a 1.15.0 els perdia. Si en vas restaurar una, torna a assignar-los o restaura una còpia nova.',
+    al_faulty: '{tag} està avariat', al_faulty_s: 'No es pot fer servir: envia’l a reparar, substitueix-lo o retira’l.',
     al_disk_fail: '{tag}: disc fallant', al_disk_fail_s: '{x}: el mateix disc informa que falla. Fes una còpia de les dades i substitueix-lo.', al_disk_warn: '{tag}: disc amb avisos', al_disk_warn_s: '{x}: el disc informa de problemes; vigila’l.', al_disk_wear: '{tag}: SSD desgastat al {n} %', al_disk_wear_s: '{x}: s’acosta al final de la seva vida útil.',
     chk_head: n => n === 1 ? '1 dada a revisar' : n + ' dades a revisar', chk_fix_app: 'Per corregir-ho, torna a passar l’app de registre (0.9.0 o posterior) en aquest equip.', chk_fix_edit: 'Corregeix-ho amb Edita.',
     chk_ignore: 'Ignora', chk_ignore_title: 'Ignora aquest avís', chk_ignore_body: 'L’avís deixarà de mostrar-se per a {tag}, per a tot l’equip d’IT. Fes-ho només si has comprovat que la dada és correcta.', chk_ignored_done: 'Avís ignorat',
@@ -688,7 +691,7 @@ created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
     fe_name: 'Nom complet', fe_email: 'Correu corporatiu', fe_dept: 'Departament', fe_depts: 'Departaments', fe_locs: 'Ubicacions', no_dept: 'Sense departament', no_loc: 'Sense ubicació', add_dept: 'Afegeix un altre departament', add_loc: 'Afegeix una altra ubicació', fe_loc: 'Ubicació', fe_hired: 'Data d’alta', k_contract: 'Contracte', ct_indefinido: 'Indefinit', ct_temporal: 'Temporal', ct_practicas: 'Pràctiques', ct_all: 'Tots els contractes', ct_unset: 'Sense definir', err_person: 'El nom i el correu són obligatoris',
     assign_title: 'Assigna {tag}', fa_dept: 'Departament', err_dept: 'Tria un departament', shared_dept: 'Equip compartit del departament', fa_emp: 'Empleat', already_has: '(ja en té {n})', fa_date: 'Data de lliurament', fa_acc: 'Accessoris lliurats', fa_acc_ph: 'Carregador, dock, ratolí…', assign_btn: 'Assigna', assigned_to: 'Assignat a {name}',
     return_title: 'Devolució de {tag}', return_intro: 'El retorna {name}, que el té des del {d}.', fr_date: 'Data de devolució', fr_cond: 'Estat físic', fr_next: 'Després de la devolució',
-    next_avail: 'Disponible al magatzem', next_rep: 'Envia a reparar', next_disc: 'Retira', fr_notes_ph: 'Falta el carregador, esborrat de dades fet…', return_prefix: 'Devolució: ', return_done: 'Devolució registrada',
+    next_avail: 'Disponible al magatzem', next_rep: 'Envia a reparar', next_faulty: 'Avariat, no es pot fer servir', next_disc: 'Retira', fr_notes_ph: 'Falta el carregador, esborrat de dades fet…', return_prefix: 'Devolució: ', return_done: 'Devolució registrada',
     fault_title: 'Registra una avaria a {tag}', fi_date: 'Data', fi_type: 'Tipus', fi_desc: 'Descripció del problema', fi_parts: 'Peces canviades', fi_cost: 'Cost ({c})', fi_tech: 'Servei tècnic',
     in_war: 'En garantia fins al {d}', out_war: 'Fora de garantia', fi_rep: 'Envia l’equip a reparar ara', err_desc: 'Descriu el problema',fault_done: 'Incidència registrada',
     resolve_title: 'Tanca la incidència', fs_date: 'Data de resolució', fs_cost: 'Cost final ({c})', resolve_done: 'Incidència tancada',
@@ -883,7 +886,7 @@ function t(k, a) {
 const T = (k, a) => esc(t(k, a));
 const tx = v => v && typeof v === 'object' ? (v[lang] || v.es || v.en || '') : (v ?? '');
 const L = (es, en, ca) => ({ es, en, ca: ca ?? es });
-const ST = ['uso', 'disponible', 'reparacion', 'descartado', 'perdido'];
+const ST = ['uso', 'disponible', 'reparacion', 'averiado', 'descartado', 'perdido'];
 const TIPOS_INC = ['fault', 'repair', 'part', 'maint', 'loss'];
 const CONDS = ['good', 'worn', 'damaged'];
 const DISPOSAL = ['recycle', 'sale', 'donation', 'lease'];
@@ -2180,6 +2183,7 @@ function viewPanel() {
   // restoring a backup made by 1.10.0 to 1.15.0 dropped every employee's departments and offices
   if (S.employees.length > 1 && (S.depts.length || S.locations.length) && S.employees.every(e => !(e.depts || []).length && !(e.locs || []).length))
     alerts.push({ k: 'bad', href: '#empleados', t: t('al_places_lost'), s: t('al_places_lost_s') });
+  S.devices.filter(d => d.estado === 'averiado').forEach(d => alerts.push({ k: 'bad', d, t: t('al_faulty', { tag: d.tag }), s: t('al_faulty_s') }));
   activos.forEach(d => (d.disks || []).forEach(k => {
     if (k.health === 'failing') alerts.push({ k: 'bad', d, t: t('al_disk_fail', { tag: d.tag }), s: t('al_disk_fail_s', { x: driveLabel(k) }) });
     else if (k.health === 'warning') alerts.push({ k: 'warn', d, t: t('al_disk_warn', { tag: d.tag }), s: t('al_disk_warn_s', { x: driveLabel(k) }) });
@@ -2191,13 +2195,13 @@ function viewPanel() {
   const byDept = S.depts.map(x => [tx(x.nombre), S.assignments.filter(a => !a.hasta && (a.deptId === x.id || (emp(a.employeeId)?.depts || []).includes(x.id))).length]).sort((a, b) => b[1] - a[1]);
   const max = Math.max(1, ...byDept.map(x => x[1]));
   const valor = activos.reduce((s, d) => s + (Number(d.precio) || 0), 0);
-  const col = { uso: 'var(--info)', disponible: 'var(--ok)', reparacion: 'var(--warn)' };
+  const col = { uso: 'var(--info)', disponible: 'var(--ok)', reparacion: 'var(--warn)', averiado: 'var(--bad)' };
   const uname = id => byId('users', id)?.nombre;
 
   return `
   <div class="head"><div><h1>${T('summary_title')}</h1><p class="sub">${T('summary_sub', { n: activos.length, v: money(valor) })}</p></div>${reloadBtn()}</div>
   <div class="stats">
-    ${['uso', 'disponible', 'reparacion'].map(k => `<a class="stat" href="#dispositivos" data-filter="${k}"><b>${c(k)}</b><span><i class="dot" style="background:${col[k]}"></i>${esc(st(k))}</span></a>`).join('')}
+    ${['uso', 'disponible', 'reparacion', 'averiado'].map(k => `<a class="stat" href="#dispositivos" data-filter="${k}"><b>${c(k)}</b><span><i class="dot" style="background:${col[k]}"></i>${esc(st(k))}</span></a>`).join('')}
     <a class="stat" href="#dispositivos" data-filter="retirados"><b>${c('descartado') + c('perdido')}</b><span><i class="dot" style="background:var(--mute)"></i>${T('retired_stat')}</span></a>
   </div>
   <div class="grid2">
@@ -2291,7 +2295,7 @@ function viewDevice(id) {
       <p class="sub">${[esc(typeName(devType(d))), hostExtra(d), `${T('serial_no')} <span class="mono">${esc(d.serial)}</span>`].filter(Boolean).join(' · ')}</p>
     </div>
     ${ed ? `<div class="row">
-      ${retired ? '' : (a ? `<button class="btn primary" type="button" data-act="devolver" data-id="${d.id}">${T('btn_return')}</button>` : assignMenu(d))}
+      ${retired ? '' : (a ? `<button class="btn primary" type="button" data-act="devolver" data-id="${d.id}">${T('btn_return')}</button>` : d.estado === 'averiado' ? '' : assignMenu(d))}
       ${retired ? '' : `<button class="btn" type="button" data-act="incidencia" data-id="${d.id}">${T('btn_fault')}</button>`}
       <button class="btn" type="button" data-act="estado" data-id="${d.id}">${T('btn_status')}</button>
       <button class="btn" type="button" data-act="editar" data-id="${d.id}">${T('btn_edit')}</button>
@@ -2835,7 +2839,7 @@ const ACTIONS = {
     openDialog(t('return_title', { tag: d.tag }), `<p class="muted" style="margin:0 0 12px">${T('return_intro', { name: holderName(a), d: fmt(a.desde) })}</p><div class="fields">
       <label>${T('fr_date')}<input type="date" name="hasta" id="r-hasta" value="${today()}"></label>
       <label>${T('fr_cond')}<select name="condicion" id="r-cond">${kopts(CONDS, cd)}</select></label>
-      <label class="full">${T('fr_next')}<select name="next" id="r-next">${opts([['disponible', t('next_avail')], ['reparacion', t('next_rep')], ['descartado', t('next_disc')]])}</select></label>
+      <label class="full">${T('fr_next')}<select name="next" id="r-next">${opts([['disponible', t('next_avail')], ['reparacion', t('next_rep')], ['averiado', t('next_faulty')], ['descartado', t('next_disc')]])}</select></label>
       <label class="full">${T('notes')}<input name="notas" id="r-notas" placeholder="${T('fr_notes_ph')}"></label></div>`, async v => {
       await mutate('POST', `devices/${d.id}/return`, { hasta: v.hasta, condicion: v.condicion, next: v.next, notas: v.notas ? t('return_prefix') + v.notas : '' }); return t('return_done');
     }, t('ok_record'));

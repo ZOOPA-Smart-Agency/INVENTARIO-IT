@@ -109,8 +109,8 @@ h2 { font-family: var(--f-display); font-size: 17px; font-weight: 600; margin: 0
 .stack { display: grid; gap: 20px; align-content: start; min-width: 0; }
 @media (max-width: 420px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
 
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+.stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, 1fr); } .stats .stat:last-child { grid-column: 1 / -1; } }
 .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; text-decoration: none; color: inherit; display: grid; gap: 2px; }
 .stat:hover { border-color: var(--accent); }
 .stat b { font-family: var(--f-display); font-size: 30px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
@@ -128,6 +128,7 @@ dd.mono, dd .mono { white-space: nowrap; overflow-wrap: normal; }
 .st-uso, .st-tech { background: var(--info-bg); color: var(--info); }
 .st-disponible, .st-on { background: var(--ok-bg); color: var(--ok); }
 .st-reparacion, .st-abierta, .st-admin { background: var(--warn-bg); color: var(--warn); }
+.st-averiado { background: var(--bad-bg); color: var(--bad); }
 .st-descartado, .st-resuelta, .st-read, .st-off { background: var(--mute-bg); color: var(--mute); }
 .st-perdido { background: var(--bad-bg); color: var(--bad); }
 .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }

@@ -429,3 +429,28 @@ class DataCheckTests(ApiTestCase):
         self.send(client, "post", f"devices/{device.pk}/checks", {"reset": True})
         device.refresh_from_db()
         self.assertEqual(device.checks_ignored, [])
+
+
+class FaultyStatusTests(ApiTestCase):
+    """A faulty device is unusable: it cannot be handed out, and comes back when its fault is fixed."""
+
+    def test_faulty_devices(self):
+        client = self.as_user(self.tech)
+        device, employee = self.available_device(), self.active_employee()
+        loc = str(device.loc_id)
+        # assigned, then it breaks: still assigned, so the return can be recorded
+        self.send(client, "post", f"devices/{device.pk}/assign", {"employeeId": str(employee.pk), "loc": loc})
+        self.assertEqual(self.send(client, "post", f"devices/{device.pk}/status", {"estado": "averiado"}).status_code, 200)
+        device.refresh_from_db()
+        self.assertEqual(device.estado, "averiado")
+        self.assertIsNotNone(m.Assignment.objects.filter(device=device, hasta=None).first())
+        # returned as faulty: cannot be handed out again
+        back = self.send(client, "post", f"devices/{device.pk}/return", {"condicion": "damaged", "next": "averiado"})
+        self.assertEqual(back.status_code, 200, back.content)
+        again = self.send(client, "post", f"devices/{device.pk}/assign", {"employeeId": str(employee.pk), "loc": loc})
+        self.assertEqual(again.status_code, 409)
+        # its fault is fixed: usable again
+        fault = self.send(client, "post", f"devices/{device.pk}/incidents", {"descripcion": "No enciende", "tipo": "fault"}).json()
+        self.send(client, "post", f"incidents/{fault['incident']['id']}/resolve", {})
+        device.refresh_from_db()
+        self.assertEqual(device.estado, "disponible")

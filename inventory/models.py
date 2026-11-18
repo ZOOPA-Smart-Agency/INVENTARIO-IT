@@ -261,6 +261,7 @@ class Device(models.Model):
         IN_USE = "uso"
         AVAILABLE = "disponible"
         REPAIR = "reparacion"
+        FAULTY = "averiado"  # broken and unusable, not yet sent for repair, replaced or retired
         RETIRED = "descartado"
         LOST = "perdido"
 

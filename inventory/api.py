@@ -403,8 +403,8 @@ def device_assign(request, body, pk):
     employee, dept = fk(body, "employeeId", Employee), fk(body, "deptId", m.Department)
     if (employee is None) == (dept is None) or (employee is not None and employee.estado != Employee.State.ACTIVE):
         raise ApiError("err_invalid")
-    if device.estado in RETIRED or open_assignment(device):
-        raise ApiError("err_conflict", 409)
+    if device.estado in RETIRED or device.estado == Device.State.FAULTY or open_assignment(device):
+        raise ApiError("err_conflict", 409)  # retired, lost or unusable devices are not handed out
     location = fk(body, "loc", m.Location)
     if location is None:
         raise ApiError("err_required")
@@ -427,7 +427,7 @@ def device_return(request, body, pk):
     assignment = open_assignment(device)
     if assignment is None:
         raise ApiError("err_conflict", 409)
-    next_state = choice(body, "next", {Device.State.AVAILABLE, Device.State.REPAIR, Device.State.RETIRED})
+    next_state = choice(body, "next", {Device.State.AVAILABLE, Device.State.REPAIR, Device.State.FAULTY, Device.State.RETIRED})
     if not next_state:
         raise ApiError("err_invalid")
     assignment.hasta = date(body, "hasta", timezone.localdate())
@@ -482,7 +482,7 @@ def incident_resolve(request, body, pk):
     incident.save()
     device = Device.objects.select_for_update().get(pk=incident.device_id)
     still_open = device.incidents.filter(estado="abierta").exists()
-    if device.estado == Device.State.REPAIR and not still_open:
+    if device.estado in (Device.State.REPAIR, Device.State.FAULTY) and not still_open:  # fixed: usable again
         device.estado = Device.State.IN_USE if open_assignment(device) else Device.State.AVAILABLE
         device.save()
     audit(request, "log_resolved", {"tag": device.tag}, device)
