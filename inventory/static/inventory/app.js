@@ -53,7 +53,7 @@ const I18N = {
     al_places_lost: 'Ningún empleado tiene departamento ni ubicación', al_places_lost_s: 'Restaurar una copia hecha con las versiones 1.10.0 a 1.15.0 los perdía. Si restauraste una, asígnalos de nuevo o restaura una copia nueva.',
     al_faulty: '{tag} está averiado', al_faulty_s: 'No se puede usar: envíalo a reparar, sustitúyelo o retíralo.',
     al_disk_fail: '{tag}: disco fallando', al_disk_fail_s: '{x}: el propio disco informa de que falla. Haz una copia de los datos y sustitúyelo.', al_disk_warn: '{tag}: disco con avisos', al_disk_warn_s: '{x}: el disco informa de problemas; vigílalo.', al_disk_wear: '{tag}: SSD desgastado al {n} %', al_disk_wear_s: '{x}: se acerca al final de su vida útil.',
-    chk_head: n => n === 1 ? '1 dato a revisar' : n + ' datos a revisar', chk_fix_app: 'Para corregirlo, vuelve a pasar la app de registro (0.9.0 o posterior) en este equipo.', chk_fix_edit: 'Corrígelo con Editar.',
+    chk_head: n => n === 1 ? '1 dato a revisar' : n + ' datos a revisar', chk_fix_app: 'Para corregirlo, vuelve a pasar la app de registro ({v} o posterior) en este equipo.', chk_fix_edit: 'Corrígelo con Editar.',
     chk_ignore: 'Ignorar', chk_ignore_title: 'Ignorar este aviso', chk_ignore_body: 'El aviso dejará de mostrarse para {tag}, para todo el equipo de IT. Hazlo solo si has comprobado que el dato es correcto.', chk_ignored_done: 'Aviso ignorado',
     chk_show_ignored: n => n === 1 ? 'Volver a mostrar 1 aviso ignorado' : 'Volver a mostrar ' + n + ' avisos ignorados', f_review: 'Con datos a revisar', al_check: '{tag}: {n} datos a revisar',
     log_check_ignored: '{tag}: aviso de datos ignorado', log_check_reset: '{tag}: avisos de datos ignorados, mostrados de nuevo',
@@ -342,7 +342,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     al_places_lost: 'No employee has a department or location', al_places_lost_s: 'Restoring a backup made by versions 1.10.0 to 1.15.0 lost them. If you restored one, set them again or restore a newer backup.',
     al_faulty: '{tag} is faulty', al_faulty_s: 'It cannot be used: send it for repair, replace it or retire it.',
     al_disk_fail: '{tag}: drive failing', al_disk_fail_s: '{x}: the drive itself reports it is failing. Back up its data and replace it.', al_disk_warn: '{tag}: drive with warnings', al_disk_warn_s: '{x}: the drive reports problems; keep an eye on it.', al_disk_wear: '{tag}: SSD {n}% worn', al_disk_wear_s: '{x}: it is near the end of its rated life.',
-    chk_head: n => n === 1 ? '1 detail to check' : n + ' details to check', chk_fix_app: 'To correct it, run the device app (0.9.0 or later) on this computer again.', chk_fix_edit: 'Correct it with Edit.',
+    chk_head: n => n === 1 ? '1 detail to check' : n + ' details to check', chk_fix_app: 'To correct it, run the device app ({v} or later) on this computer again.', chk_fix_edit: 'Correct it with Edit.',
     chk_ignore: 'Ignore', chk_ignore_title: 'Ignore this warning', chk_ignore_body: 'The warning will no longer show for {tag}, for the whole IT team. Only do this if you have checked the detail is right.', chk_ignored_done: 'Warning ignored',
     chk_show_ignored: n => n === 1 ? 'Show 1 ignored warning again' : 'Show ' + n + ' ignored warnings again', f_review: 'With details to check', al_check: '{tag}: {n} details to check',
     log_check_ignored: '{tag}: data warning ignored', log_check_reset: '{tag}: ignored data warnings shown again',
@@ -631,7 +631,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     al_places_lost: 'Cap empleat no té departament ni ubicació', al_places_lost_s: 'Restaurar una còpia feta amb les versions 1.10.0 a 1.15.0 els perdia. Si en vas restaurar una, torna a assignar-los o restaura una còpia nova.',
     al_faulty: '{tag} està avariat', al_faulty_s: 'No es pot fer servir: envia’l a reparar, substitueix-lo o retira’l.',
     al_disk_fail: '{tag}: disc fallant', al_disk_fail_s: '{x}: el mateix disc informa que falla. Fes una còpia de les dades i substitueix-lo.', al_disk_warn: '{tag}: disc amb avisos', al_disk_warn_s: '{x}: el disc informa de problemes; vigila’l.', al_disk_wear: '{tag}: SSD desgastat al {n} %', al_disk_wear_s: '{x}: s’acosta al final de la seva vida útil.',
-    chk_head: n => n === 1 ? '1 dada a revisar' : n + ' dades a revisar', chk_fix_app: 'Per corregir-ho, torna a passar l’app de registre (0.9.0 o posterior) en aquest equip.', chk_fix_edit: 'Corregeix-ho amb Edita.',
+    chk_head: n => n === 1 ? '1 dada a revisar' : n + ' dades a revisar', chk_fix_app: 'Per corregir-ho, torna a passar l’app de registre ({v} o posterior) en aquest equip.', chk_fix_edit: 'Corregeix-ho amb Edita.',
     chk_ignore: 'Ignora', chk_ignore_title: 'Ignora aquest avís', chk_ignore_body: 'L’avís deixarà de mostrar-se per a {tag}, per a tot l’equip d’IT. Fes-ho només si has comprovat que la dada és correcta.', chk_ignored_done: 'Avís ignorat',
     chk_show_ignored: n => n === 1 ? 'Torna a mostrar 1 avís ignorat' : 'Torna a mostrar ' + n + ' avisos ignorats', f_review: 'Amb dades a revisar', al_check: '{tag}: {n} dades a revisar',
     log_check_ignored: '{tag}: avís de dades ignorat', log_check_reset: '{tag}: avisos de dades ignorats, mostrats de nou',
@@ -1086,8 +1086,10 @@ function cpuGen(name) {
   return '';
 }
 /* ---- data checks: details that may be wrong because of an earlier bug, or that contradict each other ----
-   Each says how it is fixed: 'app' (running the device app 0.9.0 or later on the computer again rewrites it) or 'edit'
+   Each says how it is fixed: 'app' (running the device app again rewrites it; FIXED_IN names the first version that does,
+   0.9.0 unless listed) or 'edit'
    (a person corrects it). Someone can also ignore one for a device, after confirming; it is then hidden for everyone. */
+const FIXED_IN = { eth_model_missing: '0.11.0' };
 const SOLD_GB = [8, 16, 32, 60, 64, 80, 120, 128, 160, 180, 240, 250, 256, 320, 400, 480, 500, 512, 640, 750, 960, 1000, 1200, 1500, 1920, 2000, 3000, 3840, 4000, 5000, 6000, 8000, 10000, 12000, 16000, 20000, 24000];
 const gbLabel = gb => gb >= 1000 ? `${nf(gb / 1000)} TB` : `${nf(gb)} GB`;
 function dataChecks(d, all) {
@@ -1142,7 +1144,7 @@ function dataChecks(d, all) {
 function checksBox(d) {
   const open = dataChecks(d), ignored = (d.checksIgnored || []).length, ed = can('edit');
   if (!open.length && !ignored) return '';
-  const fix = c => c.fix === 'app' ? T('chk_fix_app') : T('chk_fix_edit');
+  const fix = c => c.fix === 'app' ? T('chk_fix_app', { v: FIXED_IN[c.k] || '0.9.0' }) : T('chk_fix_edit');
   return `<div class="notice checks">${open.length ? `<b>${T('chk_head', open.length)}</b><ul>${open.map(c => `<li><span><b>${T('chk_' + c.k, c.args)}</b> ${T('chk_' + c.k + '_h', c.args)} <em>${fix(c)}</em></span>${ed ? `<button class="btn small" type="button" data-ignore="${c.k}" data-id="${d.id}">${T('chk_ignore')}</button>` : ''}</li>`).join('')}</ul>` : ''}
     ${ignored && ed ? `<button class="linkbtn" type="button" data-unignore="${d.id}">${T('chk_show_ignored', ignored)}</button>` : ''}</div>`;
 }
