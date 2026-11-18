@@ -144,6 +144,12 @@ def _generation(model, label):
     return found or model.objects.create(nombre=label)
 
 
+def _drive_label(disk):
+    """"512 GB SSD": enough to tell a device's drives apart in the history."""
+    size = f"{disk.size:g} {disk.unit}" if disk.size is not None else ""
+    return " ".join(x for x in (size, disk.type.nombre if disk.type else "") if x)[:60]
+
+
 def _nic_speed(n, before):
     """An Ethernet port's fastest speed, from speedMbps (device app 0.9.0): 1000 -> 1 Gbps, 2500 -> 2.5 Gbps, 100 Mbps."""
     mbps = _number(n.get("speedMbps"), 10, 400_000) if n.get("type") == "eth" else None
@@ -377,12 +383,16 @@ def _apply_facts(device, f):
             device.touch = _tri(f.get("touch"))
     battery = f.get("battery") if isinstance(f.get("battery"), dict) else {}
     health = _number(battery.get("healthPct"), 1, 150)
+    cycles = _number(f.get("batteryCycles"), 1, 100_000)  # device app 0.10.0
     if device.type.has_battery and health:
         health = min(100.0, round(health))
         today = timezone.localdate()
         if device.pk and device.bat_health and (device.bat_health != health or device.bat_date != today):
-            device._previous_battery = (device.bat_date, device.bat_health)  # kept in the battery history
+            # kept in the battery history, with the cycles it had then
+            device._previous_battery = (device.bat_date, device.bat_health, device.bat_cycles)
         device.bat_health, device.bat_date = health, today
+    if device.type.has_battery and cycles:
+        device.bat_cycles = int(cycles)
 
     os_info = f.get("os") if isinstance(f.get("os"), dict) else {}
     family = os_info.get("family") if os_info.get("family") in ("mac", "win", "linux") else ""
@@ -412,7 +422,7 @@ def _apply_parts(device, f):
     are kept from the previous record when the same drive or card is found again."""
     previous_battery = getattr(device, "_previous_battery", None)
     if previous_battery and previous_battery[1]:
-        m.BatteryReading.objects.create(device=device, fecha=previous_battery[0], salud=previous_battery[1])
+        m.BatteryReading.objects.create(device=device, fecha=previous_battery[0], salud=previous_battery[1], ciclos=previous_battery[2])
 
     disks = [d for d in (f.get("disks") or []) if isinstance(d, dict) and _number(d.get("gb"), 0.1, 1_000_000)][:16]
     if disks:
@@ -427,13 +437,25 @@ def _apply_parts(device, f):
                       or (old[i] if i < len(old) and old[i] in unused else None))
             if before is not None:
                 unused.remove(before)
-            m.Disk.objects.create(
+            # its own health data (device app 0.10.0); an older app sends none, and the last reading stays
+            health = d.get("health") if d.get("health") in ("ok", "warning", "failing") else ""
+            wear, hours = _number(d.get("wearPct"), 0, 1000), _number(d.get("hours"), 0, 10_000_000)
+            reported = bool(health or wear is not None or hours)
+            disk = m.Disk.objects.create(
                 device=device, size=size, unit=unit,
                 type=_item(m.DiskType, d.get("type")) or (before.type if before else None),
                 conn=_item(m.DiskConnector, d.get("connector")) or (before.conn if before else None),
                 rep=_tri(d.get("replaceable")) or (before.rep if before else ""),
                 form=_item(m.DiskFormFactor, d.get("formFactor")) or (before.form if before else None),
+                health=health if reported else (before.health if before else ""),
+                wear=wear if reported else (before.wear if before else None),
+                hours=int(hours) if reported and hours else (before.hours if before and not reported else None),
+                checked=timezone.localdate() if reported else (before.checked if before else None),
             )
+            # the previous reading goes to the history when the drive's health or wear changed
+            if reported and before is not None and (before.health or before.wear is not None) and (before.health != disk.health or before.wear != disk.wear):
+                m.DiskReading.objects.create(device=device, fecha=before.checked, drive=_drive_label(disk),
+                                             health=before.health, wear=before.wear, hours=before.hours)
 
     nics = []
     for n in (f.get("nics") or [])[:16]:

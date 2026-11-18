@@ -49,10 +49,16 @@ const I18N = {
 
     back_devices: '← Dispositivos', not_found_dev: 'No existe ese dispositivo.', back_list: 'Volver a la lista', serial_no: 'N.º de serie',
     btn_return: 'Registrar devolución', btn_assign: 'Asignar',
+    health_ok: 'Estado correcto', health_warning: 'Con avisos', health_failing: 'Fallando', wear_pct: 'Desgaste {n} %', hours_on: '{n} h de uso', disk_checked: 'Leído por la app de registro el {d}', disk_prev: 'antes: {x}', bat_cycles: '{n} ciclos',
+    al_places_lost: 'Ningún empleado tiene departamento ni ubicación', al_places_lost_s: 'Restaurar una copia hecha con las versiones 1.10.0 a 1.15.0 los perdía. Si restauraste una, asígnalos de nuevo o restaura una copia nueva.',
+    al_disk_fail: '{tag}: disco fallando', al_disk_fail_s: '{x}: el propio disco informa de que falla. Haz una copia de los datos y sustitúyelo.', al_disk_warn: '{tag}: disco con avisos', al_disk_warn_s: '{x}: el disco informa de problemas; vigílalo.', al_disk_wear: '{tag}: SSD desgastado al {n} %', al_disk_wear_s: '{x}: se acerca al final de su vida útil.',
     chk_head: n => n === 1 ? '1 dato a revisar' : n + ' datos a revisar', chk_fix_app: 'Para corregirlo, vuelve a pasar la app de registro (0.9.0 o posterior) en este equipo.', chk_fix_edit: 'Corrígelo con Editar.',
     chk_ignore: 'Ignorar', chk_ignore_title: 'Ignorar este aviso', chk_ignore_body: 'El aviso dejará de mostrarse para {tag}, para todo el equipo de IT. Hazlo solo si has comprobado que el dato es correcto.', chk_ignored_done: 'Aviso ignorado',
     chk_show_ignored: n => n === 1 ? 'Volver a mostrar 1 aviso ignorado' : 'Volver a mostrar ' + n + ' avisos ignorados', f_review: 'Con datos a revisar', al_check: '{tag}: {n} datos a revisar',
     log_check_ignored: '{tag}: aviso de datos ignorado', log_check_reset: '{tag}: avisos de datos ignorados, mostrados de nuevo',
+    chk_screen_missing: 'Falta el tamaño de pantalla', chk_screen_missing_h: 'Las versiones anteriores de la app no lo leían en los Mac ni en algunos portátiles con Windows.',
+    chk_battery_missing: 'Falta la salud de la batería', chk_battery_missing_h: 'En muchos portátiles con Windows, las versiones anteriores de la app no la leían.',
+    chk_eth_model_missing: 'Falta el modelo de la tarjeta Ethernet', chk_eth_model_missing_h: 'En los Mac, las versiones anteriores de la app no lo leían.',
     chk_dup_serial: 'Número de serie repetido', chk_dup_serial_h: 'Otro dispositivo tiene el mismo número de serie; la app de registro actualizaría el primero que encuentre.',
     chk_dup_mac: 'Dirección MAC repetida', chk_dup_mac_h: 'Otro dispositivo tiene una tarjeta de red con la misma MAC; una de las dos está mal.',
     chk_usb_nic: 'Posible adaptador USB: {x}', chk_usb_nic_h: 'Parece un adaptador o una base USB, que pasa de un equipo a otro, no la tarjeta del propio equipo. Las versiones anteriores de la app lo registraban.',
@@ -331,10 +337,16 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
 
     back_devices: '← Devices', not_found_dev: 'That device does not exist.', back_list: 'Back to the list', serial_no: 'Serial no.',
     btn_return: 'Record return', btn_assign: 'Assign',
+    health_ok: 'Healthy', health_warning: 'Warnings', health_failing: 'Failing', wear_pct: '{n}% worn', hours_on: '{n} h on', disk_checked: 'Read by the device app on {d}', disk_prev: 'before: {x}', bat_cycles: '{n} cycles',
+    al_places_lost: 'No employee has a department or location', al_places_lost_s: 'Restoring a backup made by versions 1.10.0 to 1.15.0 lost them. If you restored one, set them again or restore a newer backup.',
+    al_disk_fail: '{tag}: drive failing', al_disk_fail_s: '{x}: the drive itself reports it is failing. Back up its data and replace it.', al_disk_warn: '{tag}: drive with warnings', al_disk_warn_s: '{x}: the drive reports problems; keep an eye on it.', al_disk_wear: '{tag}: SSD {n}% worn', al_disk_wear_s: '{x}: it is near the end of its rated life.',
     chk_head: n => n === 1 ? '1 detail to check' : n + ' details to check', chk_fix_app: 'To correct it, run the device app (0.9.0 or later) on this computer again.', chk_fix_edit: 'Correct it with Edit.',
     chk_ignore: 'Ignore', chk_ignore_title: 'Ignore this warning', chk_ignore_body: 'The warning will no longer show for {tag}, for the whole IT team. Only do this if you have checked the detail is right.', chk_ignored_done: 'Warning ignored',
     chk_show_ignored: n => n === 1 ? 'Show 1 ignored warning again' : 'Show ' + n + ' ignored warnings again', f_review: 'With details to check', al_check: '{tag}: {n} details to check',
     log_check_ignored: '{tag}: data warning ignored', log_check_reset: '{tag}: ignored data warnings shown again',
+    chk_screen_missing: 'Screen size missing', chk_screen_missing_h: 'Earlier versions of the app did not read it on Macs and on some Windows laptops.',
+    chk_battery_missing: 'Battery health missing', chk_battery_missing_h: 'On many Windows laptops, earlier versions of the app did not read it.',
+    chk_eth_model_missing: 'Ethernet card model missing', chk_eth_model_missing_h: 'On Macs, earlier versions of the app did not read it.',
     chk_dup_serial: 'Repeated serial number', chk_dup_serial_h: 'Another device has the same serial number; the device app would update whichever it finds first.',
     chk_dup_mac: 'Repeated MAC address', chk_dup_mac_h: 'Another device has a network card with the same MAC; one of them is wrong.',
     chk_usb_nic: 'Possible USB adapter: {x}', chk_usb_nic_h: 'It looks like a USB adapter or dock, which moves between computers, not this computer’s own card. Earlier versions of the app saved them.',
@@ -613,10 +625,16 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
 
     back_devices: '← Dispositius', not_found_dev: 'Aquest dispositiu no existeix.', back_list: 'Torna a la llista', serial_no: 'Núm. de sèrie',
     btn_return: 'Registra la devolució', btn_assign: 'Assigna',
+    health_ok: 'Estat correcte', health_warning: 'Amb avisos', health_failing: 'Fallant', wear_pct: 'Desgast {n} %', hours_on: '{n} h d’ús', disk_checked: 'Llegit per l’app de registre el {d}', disk_prev: 'abans: {x}', bat_cycles: '{n} cicles',
+    al_places_lost: 'Cap empleat no té departament ni ubicació', al_places_lost_s: 'Restaurar una còpia feta amb les versions 1.10.0 a 1.15.0 els perdia. Si en vas restaurar una, torna a assignar-los o restaura una còpia nova.',
+    al_disk_fail: '{tag}: disc fallant', al_disk_fail_s: '{x}: el mateix disc informa que falla. Fes una còpia de les dades i substitueix-lo.', al_disk_warn: '{tag}: disc amb avisos', al_disk_warn_s: '{x}: el disc informa de problemes; vigila’l.', al_disk_wear: '{tag}: SSD desgastat al {n} %', al_disk_wear_s: '{x}: s’acosta al final de la seva vida útil.',
     chk_head: n => n === 1 ? '1 dada a revisar' : n + ' dades a revisar', chk_fix_app: 'Per corregir-ho, torna a passar l’app de registre (0.9.0 o posterior) en aquest equip.', chk_fix_edit: 'Corregeix-ho amb Edita.',
     chk_ignore: 'Ignora', chk_ignore_title: 'Ignora aquest avís', chk_ignore_body: 'L’avís deixarà de mostrar-se per a {tag}, per a tot l’equip d’IT. Fes-ho només si has comprovat que la dada és correcta.', chk_ignored_done: 'Avís ignorat',
     chk_show_ignored: n => n === 1 ? 'Torna a mostrar 1 avís ignorat' : 'Torna a mostrar ' + n + ' avisos ignorats', f_review: 'Amb dades a revisar', al_check: '{tag}: {n} dades a revisar',
     log_check_ignored: '{tag}: avís de dades ignorat', log_check_reset: '{tag}: avisos de dades ignorats, mostrats de nou',
+    chk_screen_missing: 'Falta la mida de la pantalla', chk_screen_missing_h: 'Les versions anteriors de l’app no la llegien als Mac ni en alguns portàtils amb Windows.',
+    chk_battery_missing: 'Falta la salut de la bateria', chk_battery_missing_h: 'En molts portàtils amb Windows, les versions anteriors de l’app no la llegien.',
+    chk_eth_model_missing: 'Falta el model de la targeta Ethernet', chk_eth_model_missing_h: 'Als Mac, les versions anteriors de l’app no el llegien.',
     chk_dup_serial: 'Número de sèrie repetit', chk_dup_serial_h: 'Un altre dispositiu té el mateix número de sèrie; l’app de registre actualitzaria el primer que trobi.',
     chk_dup_mac: 'Adreça MAC repetida', chk_dup_mac_h: 'Un altre dispositiu té una targeta de xarxa amb la mateixa MAC; una de les dues és incorrecta.',
     chk_usb_nic: 'Possible adaptador USB: {x}', chk_usb_nic_h: 'Sembla un adaptador o una base USB, que passa d’un equip a un altre, no la targeta del mateix equip. Les versions anteriors de l’app el registraven.',
@@ -1010,6 +1028,16 @@ const nf = v => Number(v).toLocaleString(locale(), { maximumFractionDigits: 2, u
 const has = v => v !== '' && v !== null && v !== undefined && !isNaN(Number(v)) && Number(v) > 0;
 const withUnit = (v, u) => has(v) ? `${nf(v)} ${u}` : '';
 const listName = (coll, id) => byId(coll, id)?.nombre || '';
+/* a drive's own health data, as the device app read it: state, SSD wear, hours on, and its earlier readings */
+const driveLabel = k => [has(k.size) ? `${String(Number(k.size))} ${k.unit}` : '', listName('diskTypes', k.type)].filter(Boolean).join(' ');
+function diskHealth(d, k) {
+  const cls = { ok: 'yes', warning: 'warn', failing: 'bad' }[k.health];
+  const wear = k.wear !== null && k.wear !== undefined ? `<span class="chip ${k.wear >= 80 ? 'warn' : ''}">${T('wear_pct', { n: nf(k.wear) })}</span>` : '';
+  const line = [k.health ? `<span class="chip ${cls}">${T('health_' + k.health)}</span>` : '', wear, has(k.hours) ? `<span class="chip">${T('hours_on', { n: nf(k.hours) })}</span>` : ''];
+  const prev = (d.diskLog || []).filter(r => r.drive === driveLabel(k)).map(r => [r.health ? t('health_' + r.health) : '', r.wear !== null ? t('wear_pct', { n: nf(r.wear) }) : '', r.fecha ? `(${fmt(r.fecha)})` : ''].filter(Boolean).join(' '));
+  if (!line.some(Boolean)) return '';
+  return `${chips(line)}${k.checked ? `<span class="muted" style="display:block;font-size:12.5px">${T('disk_checked', { d: fmt(k.checked) })}${prev.length ? ' · ' + T('disk_prev', { x: prev.join(', ') }) : ''}</span>` : ''}`;
+}
 const repChip = v => v === 'yes' ? `<span class="chip yes">${T('rp_yes_s')}</span>` : v === 'no' ? `<span class="chip no">${T('rp_no_s')}</span>` : '';
 const chips = list => { const h = list.filter(Boolean).join(''); return h ? `<span class="chips">${h}</span>` : ''; };
 const cpuOf = d => byId('cpus', d.cpuId);
@@ -1091,6 +1119,10 @@ function dataChecks(d, all) {
   const g = gpuOf(d);
   if (g && g.kind === 'dedicated' && /\bintel\b.*\barc\b/i.test(g.nombre) && !/\barc\s+(pro\s+)?[ab]\d{2,3}/i.test(g.nombre)) add('arc_dedicated', 'app');
   else if (g && g.kind === 'dedicated' && Number(g.vram) === 4 && g.vramUnit === 'GB' && d.osFamily === 'win') add('vram_4', 'app');
+  // details earlier versions of the device app failed to read on some computers (left empty)
+  if (d.osFamily && hasScreen(devType(d)) && !has(d.screen) && (d.osFamily === 'mac' || d.osFamily === 'win')) add('screen_missing', 'app');
+  if (d.osFamily === 'win' && hasBattery(devType(d)) && !has(d.batHealth)) add('battery_missing', 'app');
+  if (d.osFamily === 'mac' && nics.some(n => n.type === 'eth' && !n.modelId)) add('eth_model_missing', 'app');
   // records that contradict each other
   if (mdl && mdl.typeId !== d.typeId) add('model_type', 'edit');
   const a = openAsg(d.id);
@@ -2145,6 +2177,14 @@ function viewPanel() {
   activos.filter(d => d.garantia && daysUntil(d.garantia) >= 0 && daysUntil(d.garantia) <= wd).sort((a, b) => a.garantia.localeCompare(b.garantia))
     .forEach(d => alerts.push({ k: 'warn', d, t: t('al_war', { tag: d.tag, n: daysUntil(d.garantia) }), s: `${devTitle(d)} · ${fmt(d.garantia)}` }));
   activos.filter(d => d.enc === 'no').forEach(d => alerts.push({ k: 'bad', d, t: t('al_enc', { tag: d.tag }), s: t('al_enc_s') }));
+  // restoring a backup made by 1.10.0 to 1.15.0 dropped every employee's departments and offices
+  if (S.employees.length > 1 && (S.depts.length || S.locations.length) && S.employees.every(e => !(e.depts || []).length && !(e.locs || []).length))
+    alerts.push({ k: 'bad', href: '#empleados', t: t('al_places_lost'), s: t('al_places_lost_s') });
+  activos.forEach(d => (d.disks || []).forEach(k => {
+    if (k.health === 'failing') alerts.push({ k: 'bad', d, t: t('al_disk_fail', { tag: d.tag }), s: t('al_disk_fail_s', { x: driveLabel(k) }) });
+    else if (k.health === 'warning') alerts.push({ k: 'warn', d, t: t('al_disk_warn', { tag: d.tag }), s: t('al_disk_warn_s', { x: driveLabel(k) }) });
+    else if (k.wear !== null && k.wear !== undefined && k.wear >= 80) alerts.push({ k: 'warn', d, t: t('al_disk_wear', { tag: d.tag, n: nf(k.wear) }), s: t('al_disk_wear_s', { x: driveLabel(k) }) });
+  }));
   S.devices.forEach(d => { const cs = dataChecks(d); if (cs.length) alerts.push({ k: 'warn', d, t: t('al_check', { tag: d.tag, n: cs.length }), s: t('chk_' + cs[0].k, cs[0].args) }); });
   activos.filter(d => hasBattery(devType(d)) && has(d.batHealth) && d.batHealth < 80).forEach(d => alerts.push({ k: 'warn', d, t: t('al_bat', { tag: d.tag, p: nf(d.batHealth) }), s: t('al_bat_s') }));
 
@@ -2162,7 +2202,7 @@ function viewPanel() {
   </div>
   <div class="grid2">
     <section class="panel"><h2>${T('attention')} <span class="muted" style="font-weight:500">· ${alerts.length}</span></h2>
-      <div class="alerts">${alerts.length ? alerts.map(a => `<a class="alert" href="#dispositivo-${a.d.id}"><span class="bar" style="background:var(--${a.k})"></span><span class="txt"><b>${esc(a.t)}</b><small>${esc(a.s)}</small></span><span class="tag">${esc(a.d.tag)}</span></a>`).join('') : `<p class="muted">${T('nothing')}</p>`}</div>
+      <div class="alerts">${alerts.length ? alerts.map(a => `<a class="alert" href="${a.d ? '#dispositivo-' + a.d.id : a.href}"><span class="bar" style="background:var(--${a.k})"></span><span class="txt"><b>${esc(a.t)}</b><small>${esc(a.s)}</small></span>${a.d ? `<span class="tag">${esc(a.d.tag)}</span>` : ''}</a>`).join('') : `<p class="muted">${T('nothing')}</p>`}</div>
     </section>
     <div class="stack">
       <section class="panel"><h2>${T('by_dept')}</h2>
@@ -2272,7 +2312,7 @@ function viewDevice(id) {
       <dl class="kv">
         <dt>${T('k_cpu')}</dt><dd>${c ? esc(c.nombre) : '—'}${sub(cpuDetail(c))}${chips([repChip(d.cpuRep)])}</dd>
         <dt>${T('k_ram')}</dt><dd>${esc(withUnit(d.ramSize, d.ramUnit)) || '—'}${sub(ramDetail(d))}${chips([chip(modules), chip(listName('ramForms', d.ramForm)), repChip(d.ramRep)])}</dd>
-        ${(d.disks || []).length ? d.disks.map((k, i) => `<dt>${d.disks.length > 1 ? T('disk_n', { n: i + 1 }) : T('k_disk')}</dt><dd>${esc(withUnit(k.size, k.unit)) || '—'}${chips([chip(listName('diskTypes', k.type)), chip(listName('diskForms', k.form)), chip(listName('diskConns', k.conn)), repChip(k.rep)])}</dd>`).join('') : `<dt>${T('k_disk')}</dt><dd>—</dd>`}
+        ${(d.disks || []).length ? d.disks.map((k, i) => `<dt>${d.disks.length > 1 ? T('disk_n', { n: i + 1 }) : T('k_disk')}</dt><dd>${esc(withUnit(k.size, k.unit)) || '—'}${chips([chip(listName('diskTypes', k.type)), chip(listName('diskForms', k.form)), chip(listName('diskConns', k.conn)), repChip(k.rep)])}${diskHealth(d, k)}</dd>`).join('') : `<dt>${T('k_disk')}</dt><dd>—</dd>`}
         <dt>${T('k_gpu')}</dt><dd>${gp ? esc(gp.nombre) : '—'}${chips([gp?.kind ? chip(t('gpu_' + gp.kind)) : '', gp && withUnit(gp.vram, gp.vramUnit) ? chip('VRAM ' + withUnit(gp.vram, gp.vramUnit)) : ''])}</dd>
         <dt>${T('k_os')}</dt><dd>${esc(osText(d)) || '—'}${chips([d.oclp === 'yes' ? chip(d.oclpVersion ? t('chip_oclp_v', { v: d.oclpVersion }) : t('chip_oclp')) : '', d.hackintosh === 'yes' ? chip('Hackintosh') : ''])}</dd>
         <dt>${esc(encLabel(d.osFamily))}</dt><dd>${d.enc === 'yes' ? T('yes') : d.enc === 'no' ? `<span class="w-past">${T('no')}</span>` : '—'}</dd>
@@ -2282,7 +2322,7 @@ function viewDevice(id) {
     ${scr || batt ? `<section class="panel"><h2>${esc(screenTitle(devType(d)))}</h2>
       <dl class="kv">
         ${scr ? `<dt>${T('k_screen')}</dt><dd>${has(d.screen) ? esc(nf(d.screen) + '"') : '—'}${chips([d.touch === 'yes' ? chip(t('touch_s')) : d.touch === 'no' ? chip(t('notouch_s'), 'no') : ''])}</dd>` : ''}
-        ${batt ? `<dt>${T('k_battery')}</dt><dd>${bat !== null ? `<span class="${bat < 80 ? 'w-soon' : ''}">${esc(nf(bat))} %</span>${sub(d.batDate ? t('bat_measured', { d: fmt(d.batDate) }) : '')}` : '—'}${(d.batLog || []).length ? sub(t('bat_prev', { x: d.batLog.map(r => `${nf(r.salud)} % (${fmt(r.fecha)})`).join(', ') })) : ''}</dd>` : ''}
+        ${batt ? `<dt>${T('k_battery')}</dt><dd>${bat !== null ? `<span class="${bat < 80 ? 'w-soon' : ''}">${esc(nf(bat))} %</span>${sub(d.batDate ? t('bat_measured', { d: fmt(d.batDate) }) : '')}` : '—'}${has(d.batCycles) ? sub(t('bat_cycles', { n: nf(d.batCycles) })) : ''}${(d.batLog || []).length ? sub(t('bat_prev', { x: d.batLog.map(r => `${nf(r.salud)} %${has(r.ciclos) ? ', ' + t('bat_cycles', { n: nf(r.ciclos) }) : ''} (${fmt(r.fecha)})`).join('; ') })) : ''}</dd>` : ''}
       </dl></section>` : ''}
     <section class="panel"><h2>${T('net')}</h2>
       ${nics.length ? `<dl class="kv">${nics.map(n => `<dt>${n.type === 'wifi' ? 'Wi-Fi' : 'Ethernet'}</dt><dd>${esc(listName('nicModels', n.modelId)) || '—'}${n.mac ? `<span class="mono" style="display:block;font-size:12px">${esc(n.mac)}</span>` : ''}${chips(n.type === 'wifi' ? [chip(listName('wifiGens', n.wifiGen)), chip(listName('btVers', n.btVer))] : [chip(withUnit(n.speed, n.speedUnit))])}</dd>`).join('')}</dl>` : `<p class="muted">${T('no_nics')}</p>`}

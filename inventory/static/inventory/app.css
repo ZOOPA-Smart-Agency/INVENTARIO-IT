@@ -133,6 +133,8 @@ dd.mono, dd .mono { white-space: nowrap; overflow-wrap: normal; }
 .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
 .chip.yes { background: var(--ok-bg); color: var(--ok); }
 .chip.no { background: var(--mute-bg); color: var(--mute); }
+.chip.warn { background: var(--warn-bg); color: var(--warn); }
+.chip.bad { background: var(--bad-bg); color: var(--bad); }
 .chip { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 4px; background: var(--surface-2); color: var(--ink); white-space: nowrap; }
 .w-past { color: var(--bad); font-weight: 600; }
 .w-soon { color: var(--warn); font-weight: 600; }

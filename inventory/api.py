@@ -305,7 +305,7 @@ def _apply_device(device, b):
     keep_reading = (
         device.pk and device.bat_health and new_health and (device.bat_health != new_health or device.bat_date != new_date)
     )
-    previous = (device.bat_date, device.bat_health) if keep_reading else None
+    previous = (device.bat_date, device.bat_health, device.bat_cycles) if keep_reading else None
     device.bat_health, device.bat_date = new_health, new_date
     device.screen = number(b, "screen") if device.type.has_screen else None
     device.touch = choice(b, "touch", TRI_VALUES) if device.type.has_screen else ""
@@ -340,7 +340,7 @@ def _apply_device(device, b):
         raise ApiError("err_dup", 409)
     device.save()
     if previous:
-        m.BatteryReading.objects.create(device=device, fecha=previous[0], salud=previous[1])
+        m.BatteryReading.objects.create(device=device, fecha=previous[0], salud=previous[1], ciclos=previous[2])
     _replace_children(device, b)
 
 
@@ -366,8 +366,16 @@ def _replace_children(device, b):
             bt_ver=fk(n, "btVer", m.BluetoothVersion) if wifi else None,
             **dict(zip(("speed", "speed_unit"), ethernet_speed(None if wifi else number(n, "speed"), choice(n, "speedUnit", UNIT_VALUES | {""}) or "Gbps"))),
         ))
-    device.disks.all().delete()
     device.nics.all().delete()
+    # the drives' health data comes from the device app, not the form: carry it over to the same drive
+    unused = list(device.disks.all()) if device.pk else []
+    for i, disk in enumerate(disks):
+        before = (next((o for o in unused if o.size == disk.size and o.unit == disk.unit), None)
+                  or (unused[0] if len(unused) == len(disks) - i and unused else None))
+        if before is not None:
+            unused.remove(before)
+            disk.health, disk.wear, disk.hours, disk.checked = before.health, before.wear, before.hours, before.checked
+    device.disks.all().delete()
     m.Disk.objects.bulk_create(disks)
     m.NetworkCard.objects.bulk_create(nics)
 

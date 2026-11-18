@@ -50,9 +50,15 @@ MODELS = [
     m.AppSettings, m.User, m.DeviceType, m.Department, m.Location, m.DeviceModel, m.Cpu, m.Gpu,
     m.RamGeneration, m.RamFormFactor, m.DiskType, m.DiskFormFactor, m.DiskConnector, m.WifiGeneration,
     m.BluetoothVersion, m.MacVersion, m.WinVersion, m.WinEdition, m.LinuxDistro, m.LinuxVersion, m.NicModel,
-    m.Employee, m.Device, m.Disk, m.NetworkCard, m.BatteryReading, m.Assignment, m.Incident, m.AuditEvent,
+    m.Employee, m.Employee.depts.through, m.Employee.locs.through,  # an employee's departments and offices
+    m.Device, m.Disk, m.NetworkCard, m.BatteryReading, m.DiskReading, m.Assignment, m.Incident, m.AuditEvent,
 ]
 SKIP = {(m.AppSettings, "logo")}  # stored as its own file
+# Tables deliberately left out (a test checks every other table is in MODELS, so a new one cannot be forgotten):
+NOT_BACKED_UP = {
+    m.User.groups.through, m.User.user_permissions.through,  # Django's permission groups, which the app does not use
+    m.Maintenance, m.UpdaterState, m.UpdateJob,  # the progress of the running restore or update, not inventory data
+}
 
 
 class BackupError(Exception):
@@ -192,6 +198,66 @@ def read(raw, password=None):
     return summary, data, logo
 
 
+# ---- backups from older versions ------------------------------------------------------
+# A backup holds the data as its version stored it. Restoring one made by an older version fills in what later
+# versions added, the same way their database updates did, so nothing is lost on the way.
+
+EMPLOYEE_DEPTS, EMPLOYEE_LOCS = m.Employee.depts.through._meta.label_lower, m.Employee.locs.through._meta.label_lower
+
+
+def upgrade(data):
+    employees = data.get("inventory.employee", [])
+    # before 1.10.0: one department and one office per employee
+    if EMPLOYEE_DEPTS not in data and any(isinstance(e, dict) and "dept_id" in e for e in employees):
+        rows = [e for e in employees if isinstance(e, dict)]
+        data[EMPLOYEE_DEPTS] = [{"id": i + 1, "employee_id": e["id"], "department_id": e["dept_id"]}
+                                for i, e in enumerate(x for x in rows if x.get("dept_id"))]
+        data[EMPLOYEE_LOCS] = [{"id": i + 1, "employee_id": e["id"], "location_id": e["loc_id"]}
+                               for i, e in enumerate(x for x in rows if x.get("loc_id"))]
+    for e in employees:
+        if isinstance(e, dict) and "contrato" not in e:  # before 1.9.0: a "temporary or intern" checkbox
+            e["contrato"] = "temporal" if e.get("temporal") else ""
+    for t in data.get("inventory.devicetype", []):
+        if isinstance(t, dict) and "auto_apple" not in t and t.get("auto_not_mac"):  # 1.5.0: "except Macs"
+            t["auto_apple"] = "except"
+    users = [u for u in data.get("inventory.user", []) if isinstance(u, dict)]
+    taken = {u["username"] for u in users if u.get("username")}
+    for u in users:  # before 1.7.0: no usernames
+        if not u.get("username"):
+            u["username"] = m.suggest_username(u.get("email", ""), taken)
+            taken.add(u["username"])
+    for card in data.get("inventory.networkcard", []):  # 1.15.0: megabits typed as Gbps
+        if isinstance(card, dict) and card.get("type") == "eth" and isinstance(card.get("speed"), (int, float)):
+            if (card.get("speed_unit") == "Gbps" and card["speed"] > 100) or (card.get("speed_unit") == "Mbps" and card["speed"] >= 1000):
+                card["speed"], card["speed_unit"] = round(card["speed"] / 1000, 1), "Gbps"
+    return data
+
+
+def _upgrade_types(data):
+    """Device type codes, words and rules (1.3.0 to 1.6.0), and Intel's built-in Arc (1.15.0), for older backups.
+    Runs on the restored records, with the same steps as those versions' database updates."""
+    from importlib import import_module
+
+    from django.apps import apps
+
+    types = [t for t in data.get("inventory.devicetype", []) if isinstance(t, dict)]
+    if types and "code" not in types[0]:
+        import_module("inventory.migrations.0007_type_code").fill_codes(apps, None)
+        import_module("inventory.migrations.0008_apple_types").add_apple_types(apps, None)
+    if types and "match" not in types[0]:
+        import_module("inventory.migrations.0009_type_match").fill_apple(apps, None)
+    if types and "auto_chassis" not in types[0]:
+        rules = import_module("inventory.migrations.0010_type_auto_rules")
+        for dtype in m.DeviceType.objects.all():
+            rule = rules.RULES.get(dtype.code) or ((rules.CUSTOM if dtype.uses_name else rules.PREBUILT) if dtype.code == "PC" else None)
+            if rule:
+                words, chassis, not_mac = rule
+                dtype.match = dtype.match or words
+                dtype.auto_chassis, dtype.auto_apple = chassis, "except" if not_mac else ""
+                dtype.save()
+    import_module("inventory.migrations.0019_fix_integrated_arc").fix(apps, None)
+
+
 # ---- restore ---------------------------------------------------------------------
 
 
@@ -238,6 +304,7 @@ def restore(raw, password=None, report=None):
     report = report or (lambda phase, done, total: None)
     report("reading", 0, 0)
     _, data, logo = read(raw, password)
+    data = upgrade(data)
     plan = _objects(data, logo)
     total, done = sum(len(objects) for _, objects in plan), 0
     report("replacing", 0, total)
@@ -257,4 +324,5 @@ def restore(raw, password=None, report=None):
     with connection.cursor() as cursor:  # new records continue after the restored ids
         for sql in connection.ops.sequence_reset_sql(no_style(), MODELS):
             cursor.execute(sql)
+    _upgrade_types(data)
     Session.objects.all().delete()  # everyone signs in again against the restored accounts

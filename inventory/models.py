@@ -306,6 +306,7 @@ class Device(models.Model):
     touch = models.CharField(max_length=3, choices=TRI, blank=True)
     bat_health = models.FloatField(null=True, blank=True)
     bat_date = models.DateField(null=True, blank=True)
+    bat_cycles = models.PositiveIntegerField(null=True, blank=True)  # full charge cycles, as the device app reports them
 
     os_family = models.CharField(max_length=5, choices=OS_FAMILIES, blank=True)
     mac_version = models.ForeignKey(MacVersion, null=True, blank=True, on_delete=models.PROTECT)
@@ -331,6 +332,11 @@ class Disk(models.Model):
     rep = models.CharField(max_length=3, choices=TRI, blank=True)
     form = models.ForeignKey(DiskFormFactor, null=True, blank=True, on_delete=models.PROTECT)
     conn = models.ForeignKey(DiskConnector, null=True, blank=True, on_delete=models.PROTECT)
+    # what the drive says about itself (SMART), as the device app reports it; nobody types these
+    health = models.CharField(max_length=10, blank=True)  # "ok", "warning", "failing"
+    wear = models.FloatField(null=True, blank=True)  # SSDs: percent of rated life used
+    hours = models.PositiveIntegerField(null=True, blank=True)  # hours powered on
+    checked = models.DateField(null=True, blank=True)  # when the device app last read them
 
     class Meta:
         ordering = ["id"]
@@ -354,6 +360,20 @@ class BatteryReading(models.Model):
     device = models.ForeignKey(Device, related_name="battery_readings", on_delete=models.CASCADE)
     fecha = models.DateField(null=True, blank=True)
     salud = models.FloatField()
+    ciclos = models.PositiveIntegerField(null=True, blank=True)
+
+
+class DiskReading(models.Model):
+    """An earlier health reading of one of a device's drives, kept when a newer one differs (to see wear grow)."""
+    device = models.ForeignKey(Device, related_name="disk_readings", on_delete=models.CASCADE)
+    fecha = models.DateField(null=True, blank=True)
+    drive = models.CharField(max_length=60)  # "512 GB SSD", to tell the device's drives apart
+    health = models.CharField(max_length=10, blank=True)
+    wear = models.FloatField(null=True, blank=True)
+    hours = models.PositiveIntegerField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["-id"]
 
     class Meta:
         ordering = ["-id"]

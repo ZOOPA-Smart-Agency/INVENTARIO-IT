@@ -87,12 +87,15 @@ def device_json(d):
         "ramModules": d.ram_modules, "ramModSize": d.ram_mod_size, "ramModUnit": d.ram_mod_unit,
         "ramForm": sid(d.ram_form_id), "gpuId": sid(d.gpu_id),
         "screen": d.screen, "touch": d.touch, "batHealth": d.bat_health, "batDate": iso(d.bat_date),
-        "batLog": [{"fecha": iso(r.fecha), "salud": r.salud} for r in d.battery_readings.all()],
+        "batLog": [{"fecha": iso(r.fecha), "salud": r.salud, "ciclos": r.ciclos} for r in d.battery_readings.all()],
+        "batCycles": d.bat_cycles,
+        "diskLog": [{"fecha": iso(r.fecha, None), "drive": r.drive, "health": r.health, "wear": r.wear, "hours": r.hours} for r in d.disk_readings.all()],
         "osFamily": d.os_family, "osVerId": sid(os_version), "osVersion": "",
         "osEditionId": sid(d.win_edition_id), "osDistroId": sid(d.linux_distro_id),
         "oclp": d.oclp, "oclpVersion": d.oclp_version, "hackintosh": d.hackintosh, "enc": d.enc, "ad": d.ad,
         "disks": [
-            {"size": k.size, "unit": k.unit, "type": sid(k.type_id), "rep": k.rep, "form": sid(k.form_id), "conn": sid(k.conn_id)}
+            {"size": k.size, "unit": k.unit, "type": sid(k.type_id), "rep": k.rep, "form": sid(k.form_id), "conn": sid(k.conn_id),
+             "health": k.health, "wear": k.wear, "hours": k.hours, "checked": iso(k.checked, None)}
             for k in d.disks.all()
         ],
         "nics": [
@@ -134,7 +137,7 @@ def full_state(user):
         state["settings"]["pwPolicy"] = password_policy_json()
     state["users"] = [user_json(u, is_admin) for u in User.objects.order_by("id")]
     state["employees"] = [employee_json(e) for e in Employee.objects.prefetch_related("depts", "locs")]
-    devices = Device.objects.prefetch_related("disks", "nics", "battery_readings")
+    devices = Device.objects.prefetch_related("disks", "nics", "battery_readings", "disk_readings")
     state["devices"] = [device_json(d) for d in devices]
     state["assignments"] = [assignment_json(a) for a in Assignment.objects.all()]
     state["incidents"] = [incident_json(i) for i in Incident.objects.all()]

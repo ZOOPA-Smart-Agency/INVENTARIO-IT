@@ -61,6 +61,8 @@ class BackupTests(TestCase):
             "devices": sorted(Device.objects.values_list("tag", "serial", "estado", "loc_id", "cpu_id", "garantia")),
             "disks": m.Disk.objects.count(), "nics": sorted(m.NetworkCard.objects.values_list("device_id", "mac")),
             "employees": sorted(Employee.objects.values_list("id", "nombre", "estado")),
+            "places": sorted(Employee.depts.through.objects.values_list("employee_id", "department_id"))
+                      + sorted(Employee.locs.through.objects.values_list("employee_id", "location_id")),
             "assignments": sorted(m.Assignment.objects.values_list("id", "device_id", "employee_id", "desde", "hasta")),
             "incidents": sorted(m.Incident.objects.values_list("id", "coste", "estado")),
             "users": sorted(User.objects.values_list("email", "rol", "is_active", "password")),
@@ -72,6 +74,7 @@ class BackupTests(TestCase):
     def change_everything(self):
         Device.objects.filter(tag="INV-0001").update(estado="perdido")
         m.Disk.objects.all().delete()
+        Employee.depts.through.objects.all().delete()
         Employee.objects.create(nombre="Nuevo", email="n@x.es", alta="2026-01-01")
         m.AppSettings.objects.filter(pk=1).update(org_name="Changed", logo=None, logo_type="")
 
@@ -284,3 +287,72 @@ class BackupTests(TestCase):
         with mock.patch.object(backups, "MAX_BYTES", 100):
             response = self.upload("restore", b"x" * 101)
         self.assertEqual((response.status_code, response.json()["error"]), (413, "err_backup_size"))
+
+
+class OldBackupTests(TestCase):
+    """A backup made by an older version is brought up to date while it is restored."""
+
+    databases = BackupTests.databases
+    setUpTestData, setUp, export, upload = BackupTests.setUpTestData, BackupTests.setUp, BackupTests.export, BackupTests.upload
+
+    def test_old_format_is_upgraded(self):
+        files = unzip(self.export().content)
+        data = json.loads(files["data.json"])
+        places = {(r["employee_id"], r["department_id"]) for r in data.pop("inventory.employee_depts")}
+        offices = {(r["employee_id"], r["location_id"]) for r in data.pop("inventory.employee_locs")}
+        for e in data["inventory.employee"]:  # as 1.9 stored them: one department and office, a checkbox
+            e["dept_id"] = next(d for emp, d in places if emp == e["id"])
+            e["loc_id"] = next(lc for emp, lc in offices if emp == e["id"])
+            e.pop("contrato")
+            e["temporal"] = e["id"] == data["inventory.employee"][0]["id"]
+        for u in data["inventory.user"]:
+            u.pop("username")
+        for t in data["inventory.devicetype"]:  # as 1.2 stored them: no codes, words or rules
+            for key in ("code", "match", "auto_chassis", "auto_apple"):
+                t.pop(key)
+        files["data.json"] = json.dumps(data)
+        response = self.upload("restore", rezip(files))
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertEqual(set(Employee.depts.through.objects.values_list("employee_id", "department_id")), places)
+        self.assertEqual(set(Employee.locs.through.objects.values_list("employee_id", "location_id")), offices)
+        first = Employee.objects.order_by("id").first()
+        self.assertEqual((first.contrato, Employee.objects.exclude(pk=first.pk).filter(contrato="temporal").count()), ("temporal", 0))
+        self.assertTrue(all(User.objects.values_list("username", flat=True)))
+        laptop = m.DeviceType.objects.get(nombre__es="Portátil")
+        self.assertEqual((laptop.code, laptop.auto_chassis, laptop.auto_apple), ("LAP", "laptop", "except"))
+        self.assertTrue(m.DeviceType.objects.filter(code="MB").exists())
+
+
+class BackupCompletenessTests(TestCase):
+    """Backups hold everything: every table is backed up or deliberately left out, and every column comes back."""
+
+    databases = BackupTests.databases
+    setUpTestData, setUp, export, upload = BackupTests.setUpTestData, BackupTests.setUp, BackupTests.export, BackupTests.upload
+
+    def test_every_table_is_backed_up_or_left_out_on_purpose(self):
+        from django.apps import apps
+        tables = set(apps.get_app_config("inventory").get_models(include_auto_created=True))
+        self.assertEqual(tables - set(backups.MODELS) - backups.NOT_BACKED_UP, set())
+        self.assertEqual(set(backups.MODELS) & backups.NOT_BACKED_UP, set())
+
+    def dump(self):
+        return {model._meta.label_lower: [{f.attname: backups._dump(getattr(o, f.attname)) for f in backups._fields(model)}
+                                          for o in model.objects.order_by("pk")]
+                for model in backups.MODELS if model is not m.AuditEvent}
+
+    def test_every_column_comes_back(self):
+        # some of each newer kind of record, so they are part of the round trip
+        device = Device.objects.first()
+        m.DiskReading.objects.create(device=device, fecha="2026-01-01", drive="512 GB SSD", health="ok", wear=3, hours=100)
+        m.Disk.objects.filter(device=device).update(health="warning", wear=12.5, hours=4321, checked="2026-06-01")
+        Device.objects.filter(pk=device.pk).update(bat_cycles=321, checks_ignored=["usb_nic"])
+        m.BatteryReading.objects.create(device=device, fecha="2026-02-01", salud=91, ciclos=300)
+        before = self.dump()
+        raw = self.export(password=BACKUP_PW).content
+        BackupTests.change_everything(self)
+        m.DiskReading.objects.all().delete()
+        response = self.upload("restore", raw, password=BACKUP_PW)
+        self.assertEqual(response.status_code, 200, response.content)
+        after = self.dump()
+        for label in before:
+            self.assertEqual(after[label], before[label], label)

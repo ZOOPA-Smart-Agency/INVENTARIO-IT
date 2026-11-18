@@ -142,7 +142,7 @@ class DeviceTests(ApiTestCase):
         client = self.as_user(self.tech)
         created = self.send(client, "post", "devices", self.device_body(batHealth=90, batDate="2026-01-01")).json()["device"]
         updated = self.send(client, "put", f"devices/{created['id']}", self.device_body(batHealth=80, batDate="2026-06-01")).json()["device"]
-        self.assertEqual(updated["batLog"], [{"fecha": "2026-01-01", "salud": 90.0}])
+        self.assertEqual(updated["batLog"], [{"fecha": "2026-01-01", "salud": 90.0, "ciclos": None}])
         self.assertEqual(updated["batHealth"], 80.0)
 
     def test_assign_then_return(self):
