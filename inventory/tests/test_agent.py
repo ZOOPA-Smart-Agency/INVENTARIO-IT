@@ -226,6 +226,17 @@ class OclpAndDrivesTests(TestCase):
         d = Device.objects.get()
         self.assertEqual((d.oclp, d.oclp_version), ("yes", "1.0.0"))
 
+    def test_exact_macos_version(self):
+        d = self.report(os={"family": "mac", "version": "26 Tahoe", "number": "26.2.1"})
+        self.assertEqual((str(d.mac_version.nombre), d.os_number), ("26 Tahoe", "26.2.1"))
+        d = self.report(os={"family": "mac", "version": "26 Tahoe"})  # an older device app: the number stays
+        self.assertEqual(d.os_number, "26.2.1")
+        d = self.report(os={"family": "mac", "version": "26 Tahoe", "number": "26.2 beta"})  # not a version number
+        self.assertEqual(d.os_number, "")
+        self.report(os={"family": "mac", "version": "26 Tahoe", "number": "26.3"})
+        d = self.report(os={"family": "win", "version": "11 24H2", "edition": "Pro", "number": "26.3"})
+        self.assertEqual(d.os_number, "", "only Macs keep it")
+
     def test_replaceable_drive(self):
         d = self.report(disks=[{"gb": 1000, "type": "SSD", "connector": "SATA", "replaceable": "yes"}])
         self.assertEqual([k.rep for k in d.disks.all()], ["yes"])

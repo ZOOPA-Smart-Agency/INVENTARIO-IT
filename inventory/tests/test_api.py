@@ -374,6 +374,20 @@ class IntegrityTests(ApiTestCase):
         client, body = self.device_body(b, serial=a.serial.lower())
         self.assertEqual(self.send(client, "put", f"devices/{b.pk}", body).json()["error"], "err_serial_dup")
 
+    def test_exact_macos_version(self):
+        mac = m.MacVersion.objects.first() or m.MacVersion.objects.create(nombre="26 Tahoe")
+        device = Device.objects.first()
+        client, body = self.device_body(device, osFamily="mac", osVerId=str(mac.pk), oclp="", hackintosh="", osNumber="26.2.1")
+        self.assertEqual(self.send(client, "put", f"devices/{device.pk}", body).status_code, 200)
+        device.refresh_from_db()
+        self.assertEqual(device.os_number, "26.2.1")
+        body["osNumber"] = "26.2 beta"
+        self.assertEqual(self.send(client, "put", f"devices/{device.pk}", body).json()["error"], "err_os_number")
+        body.update(osFamily="win", osVerId="", osNumber="26.2.1")
+        self.send(client, "put", f"devices/{device.pk}", body)
+        device.refresh_from_db()
+        self.assertEqual(device.os_number, "", "only Macs keep it")
+
     def test_model_must_match_the_type(self):
         device = Device.objects.exclude(model=None).first()
         other = m.DeviceModel.objects.exclude(type=device.type).first()

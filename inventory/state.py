@@ -92,7 +92,7 @@ def device_json(d):
         "diskLog": [{"fecha": iso(r.fecha, None), "drive": r.drive, "health": r.health, "wear": r.wear, "hours": r.hours} for r in d.disk_readings.all()],
         "osFamily": d.os_family, "osVerId": sid(os_version), "osVersion": "",
         "osEditionId": sid(d.win_edition_id), "osDistroId": sid(d.linux_distro_id),
-        "oclp": d.oclp, "oclpVersion": d.oclp_version, "hackintosh": d.hackintosh, "enc": d.enc, "ad": d.ad,
+        "oclp": d.oclp, "oclpVersion": d.oclp_version, "osNumber": d.os_number, "hackintosh": d.hackintosh, "enc": d.enc, "ad": d.ad,
         "disks": [
             {"size": k.size, "unit": k.unit, "type": sid(k.type_id), "rep": k.rep, "form": sid(k.form_id), "conn": sid(k.conn_id),
              "health": k.health, "wear": k.wear, "hours": k.hours, "checked": iso(k.checked, None)}

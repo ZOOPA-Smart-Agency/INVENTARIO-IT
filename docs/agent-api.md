@@ -64,7 +64,7 @@ Every field is optional except `serial`. Unknown fields are ignored, and values 
 | `screenInches`, `touch` | `14.2`, `"no"` | Only for types with a screen. |
 | `battery` | `{"healthPct": 92}` | Only for types with a battery. The previous reading moves to the history. |
 | `batteryCycles` | `612` | Full charge cycles (device app 0.10.0). Kept with each battery reading in the history. |
-| `os` | `{"family": "win", "version": "11 23H2", "edition": "Pro"}` | `family` is `mac`, `win` or `linux`. Linux uses `distro` and `version`. |
+| `os` | `{"family": "win", "version": "11 23H2", "edition": "Pro"}` | `family` is `mac`, `win` or `linux`. Linux uses `distro` and `version`. Macs also send `number`, the exact version (`"26.2.1"`, from 0.12.0); a report without it leaves the saved one alone. |
 | `oclp` | `"2.1.0"` | Macs only, from device app 0.8.0 (and inventory 1.11.0): OpenCore Legacy Patcher's version when the Mac starts through it, `"yes"` when it starts through OpenCore without saying which version, `""` when it does not. Sets "Patched with OCLP" and its version. Left out by older apps, which then change neither. |
 | `encryption` | `"yes"` | FileVault, BitLocker or LUKS. |
 | `domainJoined` | `"no"` | Active Directory. |

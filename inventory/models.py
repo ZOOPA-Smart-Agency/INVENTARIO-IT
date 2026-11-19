@@ -317,6 +317,7 @@ class Device(models.Model):
     linux_version = models.ForeignKey(LinuxVersion, null=True, blank=True, on_delete=models.PROTECT)
     oclp = models.CharField(max_length=3, choices=TRI, blank=True)
     oclp_version = models.CharField(max_length=20, blank=True)  # OpenCore Legacy Patcher's version, when known
+    os_number = models.CharField(max_length=20, blank=True)  # the exact system version with its updates ("26.2.1"); macOS
     hackintosh = models.CharField(max_length=3, choices=TRI, blank=True)
     enc = models.CharField(max_length=3, choices=TRI, blank=True)
     ad = models.CharField(max_length=3, choices=TRI, blank=True)

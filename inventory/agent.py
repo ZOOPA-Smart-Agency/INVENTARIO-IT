@@ -114,6 +114,12 @@ def _text(value, limit=200):
     return re.sub(r"\s+", " ", str(value or "")).strip()[:limit]
 
 
+def _os_number(value):
+    """The exact system version ("26.2.1"): numbers and dots only, else nothing."""
+    value = _text(value, 20)
+    return value if re.fullmatch(r"\d+(\.\d+){0,3}", value) else ""
+
+
 def _number(value, low=0, high=1_000_000):
     try:
         value = float(value)
@@ -399,6 +405,10 @@ def _apply_facts(device, f):
     if family:
         device.os_family = family
         device.mac_version = _item(m.MacVersion, os_info.get("version")) if family == "mac" else None
+        if family != "mac":
+            device.os_number = ""
+        elif isinstance(os_info.get("number"), str):  # sent by the device app from 0.12.0; older ones leave it alone
+            device.os_number = _os_number(os_info["number"])
         device.win_version = _item(m.WinVersion, os_info.get("version")) if family == "win" else None
         device.win_edition = _item(m.WinEdition, os_info.get("edition")) if family == "win" else None
         distro = _item(m.LinuxDistro, os_info.get("distro")) if family == "linux" else None

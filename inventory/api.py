@@ -37,6 +37,7 @@ LOGIN_WINDOW_SECONDS = 15 * 60
 PASSWORD_MAX_LENGTH = 128
 MAC_RE = re.compile(r"^([0-9A-F]{2}:){5}[0-9A-F]{2}$")
 TRI_VALUES = {"", "yes", "no"}
+OS_NUMBER = re.compile(r"\d+(\.\d+){0,3}")  # an exact system version: "26.2.1"
 UNIT_VALUES = {"GHz", "MHz", "GB", "MB", "TB", "MT/s", "Mbps", "Gbps"}
 INCIDENT_TYPES = {"fault", "repair", "part", "maint", "loss"}
 CONDITIONS = {"good", "worn", "damaged"}
@@ -322,6 +323,9 @@ def _apply_device(device, b):
     device.oclp = choice(b, "oclp", TRI_VALUES) if family == "mac" else ""
     device.oclp_version = text(b, "oclpVersion", 20) if device.oclp == "yes" else ""
     device.hackintosh = choice(b, "hackintosh", TRI_VALUES) if family == "mac" else ""
+    device.os_number = text(b, "osNumber", 20) if family == "mac" else ""
+    if device.os_number and not OS_NUMBER.fullmatch(device.os_number):
+        raise ApiError("err_os_number")
     device.enc, device.ad = choice(b, "enc", TRI_VALUES), choice(b, "ad", TRI_VALUES)
 
     device.compra, device.precio = date(b, "compra"), money(b, "precio")
