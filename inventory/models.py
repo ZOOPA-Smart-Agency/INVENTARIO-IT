@@ -57,10 +57,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     must_change_password = models.BooleanField(default=False)
+    # The profile picture's version: 0 without one; it changes with every upload, so its address does too.
+    photo_version = models.PositiveIntegerField(default=0)
 
     objects = UserManager()
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["nombre"]
+
+
+class ProfilePhoto(models.Model):
+    """An account's profile picture: a 256-pixel square JPEG, made by the server from the uploaded image.
+    Kept apart from User so loading accounts never loads pictures."""
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="photo")
+    data = models.BinaryField()
 
 
 class AppSettings(models.Model):
@@ -74,6 +84,8 @@ class AppSettings(models.Model):
     currency = models.CharField(max_length=3, default="EUR")
     warranty_days = models.PositiveIntegerField(default=90)
     hostname_is_tag = models.BooleanField(default=False)
+    # The activity log's largest size in MB (0: no limit); past it the oldest entries are deleted (see logsize.py).
+    log_max_mb = models.PositiveIntegerField(default=0)
 
     # Password rules, applied to new and changed passwords.
     pw_enforce = models.BooleanField(default=True)

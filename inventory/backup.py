@@ -50,6 +50,7 @@ MODELS = [
     m.AppSettings, m.User, m.DeviceType, m.Department, m.Location, m.DeviceModel, m.Cpu, m.Gpu,
     m.RamGeneration, m.RamFormFactor, m.DiskType, m.DiskFormFactor, m.DiskConnector, m.WifiGeneration,
     m.BluetoothVersion, m.MacVersion, m.WinVersion, m.WinEdition, m.LinuxDistro, m.LinuxVersion, m.NicModel,
+    m.ProfilePhoto,  # accounts' pictures, in data.json as base64
     m.Employee, m.Employee.depts.through, m.Employee.locs.through,  # an employee's departments and offices
     m.Device, m.Disk, m.NetworkCard, m.BatteryReading, m.DiskReading, m.Assignment, m.Incident, m.AuditEvent,
 ]
@@ -73,6 +74,8 @@ class BackupError(Exception):
 
 
 def _dump(value):
+    if isinstance(value, (bytes, bytearray, memoryview)):  # pictures
+        return base64.b64encode(bytes(value)).decode()
     if isinstance(value, (dt.date, dt.datetime)):
         return value.isoformat()
     if isinstance(value, Decimal):
@@ -264,6 +267,13 @@ def _upgrade_types(data):
 def _load(value, field):
     if value is None or isinstance(field, dj.JSONField):
         return value
+    if isinstance(field, dj.BinaryField):
+        if not isinstance(value, str):
+            raise ValueError("not base64")
+        try:
+            return base64.b64decode(value, validate=True)
+        except binascii.Error:
+            raise ValueError("not base64")
     return field.to_python(value)
 
 
@@ -276,7 +286,7 @@ def _objects(data, logo):
         fields = {f.attname: f for f in _fields(model)}
         objects = []
         for row in rows:
-            if not isinstance(row, dict) or row.get("id") is None:
+            if not isinstance(row, dict) or row.get(model._meta.pk.attname) is None:  # "id", or a picture's "user_id"
                 raise BackupError("err_backup_invalid")
             try:  # unknown keys are ignored; only real columns are written
                 objects.append(model(**{k: _load(v, fields[k]) for k, v in row.items() if k in fields}))

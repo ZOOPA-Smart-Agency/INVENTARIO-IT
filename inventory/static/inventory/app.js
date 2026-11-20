@@ -13,8 +13,8 @@ const I18N = {
     pr_export: 'Exportando copia', pr_prepare: 'Preparando los datos…', pr_prepare_enc: 'Preparando y cifrando los datos…', pr_download: 'Descargando el archivo…', pr_check: 'Comprobando la copia', pr_upload: 'Subiendo el archivo…', pr_read: 'Leyendo la copia…', pr_restore: 'Restaurando copia', pr_restoring: 'Sustituyendo los datos…', pr_step: 'Paso {n} de {total}', pr_left: 'Quedan unos {t}', pr_elapsed: '{t} en curso', pr_leave: 'Hay una copia de seguridad en curso.',
     bk_encrypt: 'Proteger con contraseña (recomendado)', bk_encrypt_d: 'La copia se cifra con AES-256 y solo se puede abrir con esta contraseña.', bk_pw: 'Contraseña de la copia', bk_pw2: 'Repite la contraseña', bk_pw_lost: 'Guárdala en un lugar seguro: si la pierdes, no habrá forma de restaurar esta copia.', bk_plain_warn: 'Sin contraseña, cualquiera que tenga el archivo podrá leer todos los datos.', bk_pw_t: 'Copia protegida', bk_pw_d: 'Esta copia está protegida con contraseña. Escríbela para ver qué contiene.', bk_unlock: 'Abrir', bk_enc_yes: 'Protegida con contraseña', err_bk_pw_short: 'La contraseña de la copia debe tener al menos 10 caracteres.', err_backup_password: 'La contraseña no es correcta o el archivo está dañado.', err_backup_password_required: 'Esta copia está protegida con contraseña.',
     grp_data: 'Datos', grp_data_d: 'Copias de seguridad y restauración', set_data: 'Copias de seguridad', set_data_sub: 'Exporta todos los datos o restaura una copia anterior', bk_export_h: 'Exportar una copia', bk_export_d: 'Descarga un archivo .invbackup con todos los datos y ajustes: dispositivos, empleados, historial, averías, usuarios, listas, logotipo y configuración.', bk_export_warn: 'Contiene datos personales y las contraseñas de los usuarios (cifradas). Guarda el archivo en un lugar seguro.', bk_export_btn: 'Descargar copia', bk_exported: 'Copia descargada', bk_restore_h: 'Restaurar una copia', bk_restore_d: 'Carga un archivo .invbackup exportado desde esta aplicación.', bk_restore_warn: 'Se sustituirán todos los datos y ajustes actuales por los de la copia y se cerrará la sesión de todos los usuarios, incluida la tuya. No se puede deshacer.', bk_restore_btn: 'Restaurar desde un archivo', bk_confirm_t: 'Restaurar copia', bk_confirm_b: 'Copia del {d}, hecha por {by}. Contiene:', bk_n_devices: '{n} dispositivos', bk_n_employees: '{n} empleados', bk_n_users: '{n} usuarios', bk_n_log: '{n} entradas del historial', bk_first: 'Descargar antes una copia de los datos actuales', bk_restore_ok: 'Restaurar', bk_restored: 'Copia restaurada. Vuelve a iniciar sesión.', err_backup_invalid: 'El archivo no es una copia válida de esta aplicación.', err_backup_version: 'Esta copia es de otra versión de la aplicación y no se puede restaurar aquí.', err_backup_no_admin: 'La copia no tiene ningún administrador activo, así que nadie podría entrar.', err_backup_size: 'El archivo es demasiado grande (máximo 50 MB).', log_backup_export: 'Copia de seguridad exportada', log_backup_restore: 'Copia de seguridad restaurada',
-    set_brand: 'Logotipo', set_brand_sub: 'Sustituye el icono de la aplicación por el de tu empresa.', brand_upload: 'Subir imagen', brand_change: 'Cambiar imagen', brand_remove: 'Quitar logotipo', brand_formats: 'PNG, JPG, WebP, GIF o SVG de hasta 512 KB. Mejor si es cuadrada y con fondo transparente.', brand_where: 'Se verá en el menú, en la pantalla de inicio de sesión y en la pestaña del navegador.', brand_saved: 'Logotipo actualizado', brand_removed: 'Se ha vuelto al icono original', err_logo_type: 'Ese archivo no es una imagen compatible.', err_logo_size: 'La imagen pesa más de 512 KB.', go_home: 'Ir al resumen', pc_title: 'Cambia tu contraseña', pc_sub: 'Por seguridad, elige una contraseña nueva antes de continuar.', pc_current: 'Contraseña actual', pc_new: 'Contraseña nueva', pc_repeat: 'Repite la contraseña nueva', pc_btn: 'Cambiar', pc_done: 'Contraseña cambiada', err_pw_current: 'La contraseña actual no es correcta.', err_pw_same: 'La contraseña nueva debe ser distinta de la actual.', err_must_change: 'Antes de seguir, cambia tu contraseña.', f_must_change: 'Pedir que cambie la contraseña al iniciar sesión', f_must_change_d: 'Útil cuando le das una contraseña temporal.', chip_must_change: 'Debe cambiar la contraseña', chip_must_change_d: 'Tendrá que elegir una contraseña nueva la próxima vez que inicie sesión.', log_pwchanged: '{name} ha cambiado su contraseña',
-    pw_h: 'Seguridad de las contraseñas', pw_enforce: 'Exigir requisitos de seguridad', pw_enforce_d: 'Las contraseñas que no los cumplan no se aceptarán.', pw_off: 'Sin requisitos: se aceptará cualquier contraseña.', pw_minlabel: 'Longitud mínima', pw_chars: 'caracteres', pw_c_upper: 'Al menos una mayúscula', pw_c_number: 'Al menos un número', pw_c_symbol: 'Al menos un símbolo', pw_c_min: 'Al menos {n} caracteres', pw_weak: 'Contraseña insegura', pw_ok: 'Contraseña aceptable', pw_strong: 'Contraseña segura', pw_empty: 'Escribe una contraseña para ver su seguridad', pw_applies: 'Se aplica a las contraseñas nuevas o cambiadas. Las actuales siguen funcionando.', set_pwpolicy: 'Contraseñas', set_pwpolicy_sub: 'Elige qué requisitos deben cumplir las contraseñas.', err_pw_minlen: 'La longitud mínima debe ser un número entre 1 y 128.',
+    set_brand: 'Logotipo', set_brand_sub: 'Sustituye el icono de la aplicación por el de tu empresa.', brand_upload: 'Subir imagen', brand_change: 'Cambiar imagen', brand_remove: 'Quitar logotipo', brand_formats: 'PNG, JPG, WebP, GIF o SVG de hasta 512 KB. Mejor si es cuadrada y con fondo transparente.', brand_where: 'Se verá en el menú, en la pantalla de inicio de sesión y en la pestaña del navegador.', brand_saved: 'Logotipo actualizado', brand_removed: 'Se ha vuelto al icono original', err_logo_type: 'Ese archivo no es una imagen compatible.', err_logo_size: 'La imagen pesa más de 512 KB.', go_home: 'Ir al resumen', pc_title: 'Cambia tu contraseña', pc_sub: 'Por seguridad, elige una contraseña nueva antes de continuar.', pc_current: 'Contraseña actual', pc_new: 'Contraseña nueva', pc_repeat: 'Repite la contraseña nueva', pc_btn: 'Cambiar', pc_done: 'Contraseña cambiada', err_pw_current: 'La contraseña actual no es correcta.', err_pw_same: 'La contraseña nueva debe ser distinta de la actual.', err_must_change: 'Antes de seguir, cambia tu contraseña.', f_must_change: 'Pedir que cambie la contraseña al iniciar sesión', f_must_change_d: 'Útil cuando le das una contraseña temporal.', chip_must_change: 'Debe cambiar la contraseña', chip_must_change_d: 'Tendrá que elegir una contraseña nueva la próxima vez que inicie sesión.', log_pwchanged: '{name} ha cambiado su contraseña', log_photo_removed: 'Foto de perfil de {name} quitada', photo_remove_other: 'Quitar su foto', photo_remove_sure: '¿Quitarla? Pulsa otra vez', photo_removed_other: 'Foto quitada',
+    pw_h: 'Seguridad de las contraseñas', pw_enforce: 'Exigir requisitos de seguridad', pw_enforce_d: 'Las contraseñas que no los cumplan no se aceptarán.', pw_off: 'Sin requisitos: se aceptará cualquier contraseña.', pw_minlabel: 'Longitud mínima', pw_chars: 'caracteres', pw_c_upper: 'Al menos una mayúscula', pw_c_number: 'Al menos un número', pw_c_symbol: 'Al menos un símbolo', pw_c_min: 'Al menos {n} caracteres', pw_weak: 'Contraseña insegura', pw_ok: 'Contraseña aceptable', pw_strong: 'Contraseña segura', pw_empty: 'Escribe una contraseña para ver su seguridad', pw_applies: 'Se aplica a las contraseñas nuevas o cambiadas. Las actuales siguen funcionando.', set_pwpolicy: 'Contraseñas', set_pwpolicy_sub: 'Elige qué requisitos deben cumplir las contraseñas.', set_logs: 'Registro de actividad', set_logs_sub: 'Todo lo que se ha hecho en el inventario: cambios, inicios de sesión y copias de seguridad.', lg_all: 'Toda la actividad', lg_devices: 'Dispositivos', lg_people: 'Empleados', lg_access: 'Accesos y cuentas', lg_system: 'Ajustes y sistema', lg_anyone: 'Cualquier usuario', lg_nobody: 'Sin usuario (sistema)', lg_from: 'Desde', lg_to: 'Hasta', lg_search: 'Buscar por nombre, etiqueta, dirección IP…', lg_more: 'Cargar más', lg_none: 'No hay actividad con estos filtros.', lg_loading: 'Cargando…', lg_clear: 'Quitar filtros', lg_limit: 'Tamaño máximo', lg_limit_ph: 'Sin límite', lg_limit_hint: 'Al pasarlo se borran las entradas más antiguas. Déjalo vacío para no poner límite (de 10 MB a 1 TB).', lg_usage: 'Ahora ocupa unos {size} ({n} entradas).', lg_limit_save: 'Guardar límite', lg_limit_sure: 'Borrará entradas antiguas ya. Pulsa otra vez', lg_limit_saved: 'Límite guardado', lg_pruned_now: 'Límite guardado: se borraron {n} entradas antiguas', log_pruned: 'Se borraron las {n} entradas más antiguas del registro (límite: {mb} MB)', err_log_limit: 'El límite debe ser de 10 MB a 1 TB, o quedar vacío.', th_when: 'Cuándo', th_who: 'Quién', th_what: 'Qué', log_login: '{name} ha iniciado sesión', log_login_failed: 'Inicio de sesión fallido: {who}', log_logout: '{name} ha cerrado sesión', log_user_created: 'Usuario {name} creado', log_user_edited: 'Usuario {name} modificado', log_user_on: 'Usuario {name} activado', log_user_off: 'Usuario {name} desactivado', log_emp_created: 'Empleado {name} añadido', log_emp_edited: 'Datos de {name} modificados', err_pw_minlen: 'La longitud mínima debe ser un número entre 1 y 128.',
     su_title: 'Configuración inicial', su_sub: 'Deja la aplicación lista en tres pasos.', su_step: 'Paso {n} de 3', su_org_h: 'Tu organización', su_org: 'Nombre de la organización', su_prefix: 'Prefijo de las etiquetas', su_date: 'Formato de fecha', su_currency: 'Moneda', su_token: 'Código de instalación', su_token_hint: 'Lo define quien ha desplegado la aplicación (DJANGO_SETUP_TOKEN).', su_places_h: 'Oficinas y departamentos', su_locs: 'Ubicaciones', su_locs_hint: 'Dónde están los equipos. Marca un almacén para que los equipos devueltos vuelvan allí.', su_depts: 'Departamentos', su_depts_hint: 'Opcional: también puedes añadirlos después en Ajustes.', su_add_loc: 'Añadir ubicación', su_add_dept: 'Añadir departamento', su_name: 'Nombre', su_remove: 'Quitar', su_admin_h: 'Tu cuenta de administrador', su_admin_sub: 'Con esta cuenta entrarás y podrás crear las del resto del equipo.', su_fullname: 'Nombre completo', su_email: 'Correo electrónico', su_pass: 'Contraseña', su_pass2: 'Repite la contraseña', su_back: 'Atrás', su_next: 'Siguiente', su_finish: 'Terminar', su_blocked_t: 'Falta el código de instalación', su_blocked_b: 'La instalación no se puede completar todavía: define la variable DJANGO_SETUP_TOKEN en el servidor y recarga esta página.', su_done: '¡Todo listo! Ya puedes añadir tus dispositivos.', err_su_org: 'Indica el nombre de la organización.', err_su_loc: 'Añade al menos una ubicación con nombre.', err_su_admin: 'Rellena tu nombre y un correo válido.', err_su_mismatch: 'Las contraseñas no coinciden.', err_setup_token: 'El código de instalación no es correcto.', err_setup_done: 'La aplicación ya está configurada. Inicia sesión.', log_setup: 'Instalación inicial completada',
     err_network: 'No se ha podido conectar con el servidor. Inténtalo de nuevo.', err_forbidden: 'No tienes permiso para hacer esto.', err_invalid: 'Hay datos no válidos. Revisa el formulario.', err_conflict: 'El dispositivo ha cambiado. Recarga la página e inténtalo de nuevo.', err_not_found: 'Este registro ya no existe.', err_dates: 'La fecha de fin no puede ser anterior a la de inicio.', err_asg_dates: 'La fecha de entrega no puede ser anterior a la última devolución de este equipo.', err_fix_dates: 'La fecha de resolución no puede ser anterior a la de la avería.', err_serial_dup: 'Ya hay otro dispositivo con ese número de serie.', err_os_number: 'La versión exacta solo lleva números y puntos, como 26.2.1.', err_auth: 'Tu sesión ha caducado. Vuelve a iniciar sesión.', err_pass_weak: 'La contraseña no cumple los requisitos de seguridad.', login_locked: 'Demasiados intentos. Espera 15 minutos e inténtalo de nuevo.',
     brand: 'Inventario de equipos', nav_summary: 'Resumen', nav_devices: 'Dispositivos', nav_people: 'Empleados',
@@ -137,6 +137,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     set_wifi: 'Chips Wi-Fi', set_wifi_sub: 'Tarjetas de red inalámbrica y la generación Wi-Fi que soportan',
     set_ram: 'Generaciones de memoria', set_ram_sub: 'Generaciones de RAM, como DDR4, DDR5 o LPDDR5X', set_disk: 'Tipos de almacenamiento', set_disk_sub: 'Tecnologías de disco, como SSD, HDD o eMMC',
     item_ram: 'generación de memoria', item_disk: 'tipo de almacenamiento', f_simple_name: 'Nombre',
+    menu_photo: 'Foto de perfil', photo_pick: 'Elegir imagen', photo_change: 'Cambiar imagen', photo_remove: 'Quitar foto', photo_hint: 'PNG, JPEG, WebP o GIF. Se recorta en un cuadrado desde el centro y se guarda sin los datos de la foto (lugar, cámara, fecha). La ve cualquiera que use el inventario.', photo_saved: 'Foto de perfil guardada', photo_removed: 'Foto de perfil quitada', err_photo_type: 'Esa imagen no se puede usar. Prueba con un PNG, JPEG, WebP o GIF.', err_photo_size: 'La imagen es demasiado grande.',
     menu_lang: 'Idioma', menu_theme: 'Tema', menu_ui: 'Diseño', ui_classic: 'Clásico', ui_glass: 'Cristal', add_menu: 'Añadir', add_device_d: 'Portátil, sobremesa, monitor…', add_person_d: 'Persona a la que asignar equipos', account_menu: 'Menú de la cuenta',
     item_dept: 'departamento', item_loc: 'ubicación', item_type: 'tipo de dispositivo', item_model: 'modelo', item_wifi: 'chip Wi-Fi', item_user: 'usuario',
     add_x: 'Añadir {x}', edit_x: 'Editar {x}', delete: 'Eliminar', delete_title: 'Eliminar {name}', delete_body: 'Se eliminará «{name}». No se puede deshacer.', deleted: 'Eliminado',
@@ -302,8 +303,8 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     pr_export: 'Exporting backup', pr_prepare: 'Preparing the data…', pr_prepare_enc: 'Preparing and encrypting the data…', pr_download: 'Downloading the file…', pr_check: 'Checking the backup', pr_upload: 'Uploading the file…', pr_read: 'Reading the backup…', pr_restore: 'Restoring backup', pr_restoring: 'Replacing the data…', pr_step: 'Step {n} of {total}', pr_left: 'About {t} left', pr_elapsed: '{t} so far', pr_leave: 'A backup is in progress.',
     bk_encrypt: 'Protect with a password (recommended)', bk_encrypt_d: 'The backup is encrypted with AES-256 and can only be opened with this password.', bk_pw: 'Backup password', bk_pw2: 'Repeat the password', bk_pw_lost: 'Keep it somewhere safe: if you lose it, there is no way to restore this backup.', bk_plain_warn: 'Without a password, anyone who has the file can read all the data.', bk_pw_t: 'Protected backup', bk_pw_d: 'This backup is protected with a password. Enter it to see what it contains.', bk_unlock: 'Open', bk_enc_yes: 'Password protected', err_bk_pw_short: 'The backup password must be at least 10 characters.', err_backup_password: 'The password is not correct, or the file is damaged.', err_backup_password_required: 'This backup is protected with a password.',
     grp_data: 'Data', grp_data_d: 'Backups and restore', set_data: 'Backups', set_data_sub: 'Export all data or restore an earlier backup', bk_export_h: 'Export a backup', bk_export_d: 'Downloads one .invbackup file with all data and settings: devices, employees, history, faults, users, lists, logo and configuration.', bk_export_warn: 'It contains personal data and users’ passwords (encrypted). Keep the file somewhere safe.', bk_export_btn: 'Download backup', bk_exported: 'Backup downloaded', bk_restore_h: 'Restore a backup', bk_restore_d: 'Load an .invbackup file exported from this app.', bk_restore_warn: 'All current data and settings will be replaced with the backup’s, and every user will be signed out, including you. This cannot be undone.', bk_restore_btn: 'Restore from a file', bk_confirm_t: 'Restore backup', bk_confirm_b: 'Backup from {d}, made by {by}. It contains:', bk_n_devices: '{n} devices', bk_n_employees: '{n} employees', bk_n_users: '{n} users', bk_n_log: '{n} history entries', bk_first: 'Download a backup of the current data first', bk_restore_ok: 'Restore', bk_restored: 'Backup restored. Please sign in again.', err_backup_invalid: 'That file is not a valid backup of this app.', err_backup_version: 'This backup is from a different version of the app and cannot be restored here.', err_backup_no_admin: 'The backup has no active administrator, so nobody could sign in.', err_backup_size: 'The file is too large (50 MB maximum).', log_backup_export: 'Backup exported', log_backup_restore: 'Backup restored',
-    set_brand: 'Logo', set_brand_sub: 'Replace the app icon with your company’s.', brand_upload: 'Upload image', brand_change: 'Change image', brand_remove: 'Remove logo', brand_formats: 'PNG, JPG, WebP, GIF or SVG up to 512 KB. Square with a transparent background works best.', brand_where: 'It appears in the menu, on the sign-in page and in the browser tab.', brand_saved: 'Logo updated', brand_removed: 'Back to the original icon', err_logo_type: 'That file is not a supported image.', err_logo_size: 'The image is larger than 512 KB.', go_home: 'Go to the overview', pc_title: 'Change your password', pc_sub: 'For security, choose a new password before you continue.', pc_current: 'Current password', pc_new: 'New password', pc_repeat: 'Repeat the new password', pc_btn: 'Change', pc_done: 'Password changed', err_pw_current: 'The current password is not correct.', err_pw_same: 'The new password must be different from the current one.', err_must_change: 'Please change your password before continuing.', f_must_change: 'Ask them to change the password at sign-in', f_must_change_d: 'Useful when you give them a temporary password.', chip_must_change: 'Must change password', chip_must_change_d: 'They will have to choose a new password the next time they sign in.', log_pwchanged: '{name} changed their password',
-    pw_h: 'Password security', pw_enforce: 'Enforce security requirements', pw_enforce_d: 'Passwords that do not meet them will not be accepted.', pw_off: 'No requirements: any password will be accepted.', pw_minlabel: 'Minimum length', pw_chars: 'characters', pw_c_upper: 'At least one uppercase letter', pw_c_number: 'At least one number', pw_c_symbol: 'At least one symbol', pw_c_min: 'At least {n} characters', pw_weak: 'Insecure password', pw_ok: 'Acceptable password', pw_strong: 'Secure password', pw_empty: 'Type a password to see how secure it is', pw_applies: 'Applies to new or changed passwords. Current ones keep working.', set_pwpolicy: 'Passwords', set_pwpolicy_sub: 'Choose which requirements passwords must meet.', err_pw_minlen: 'The minimum length must be a number from 1 to 128.',
+    set_brand: 'Logo', set_brand_sub: 'Replace the app icon with your company’s.', brand_upload: 'Upload image', brand_change: 'Change image', brand_remove: 'Remove logo', brand_formats: 'PNG, JPG, WebP, GIF or SVG up to 512 KB. Square with a transparent background works best.', brand_where: 'It appears in the menu, on the sign-in page and in the browser tab.', brand_saved: 'Logo updated', brand_removed: 'Back to the original icon', err_logo_type: 'That file is not a supported image.', err_logo_size: 'The image is larger than 512 KB.', go_home: 'Go to the overview', pc_title: 'Change your password', pc_sub: 'For security, choose a new password before you continue.', pc_current: 'Current password', pc_new: 'New password', pc_repeat: 'Repeat the new password', pc_btn: 'Change', pc_done: 'Password changed', err_pw_current: 'The current password is not correct.', err_pw_same: 'The new password must be different from the current one.', err_must_change: 'Please change your password before continuing.', f_must_change: 'Ask them to change the password at sign-in', f_must_change_d: 'Useful when you give them a temporary password.', chip_must_change: 'Must change password', chip_must_change_d: 'They will have to choose a new password the next time they sign in.', log_pwchanged: '{name} changed their password', log_photo_removed: '{name}’s profile picture removed', photo_remove_other: 'Remove their picture', photo_remove_sure: 'Remove it? Click again', photo_removed_other: 'Picture removed',
+    pw_h: 'Password security', pw_enforce: 'Enforce security requirements', pw_enforce_d: 'Passwords that do not meet them will not be accepted.', pw_off: 'No requirements: any password will be accepted.', pw_minlabel: 'Minimum length', pw_chars: 'characters', pw_c_upper: 'At least one uppercase letter', pw_c_number: 'At least one number', pw_c_symbol: 'At least one symbol', pw_c_min: 'At least {n} characters', pw_weak: 'Insecure password', pw_ok: 'Acceptable password', pw_strong: 'Secure password', pw_empty: 'Type a password to see how secure it is', pw_applies: 'Applies to new or changed passwords. Current ones keep working.', set_pwpolicy: 'Passwords', set_pwpolicy_sub: 'Choose which requirements passwords must meet.', set_logs: 'Activity log', set_logs_sub: 'Everything done in the inventory: changes, sign-ins and backups.', lg_all: 'All activity', lg_devices: 'Devices', lg_people: 'Employees', lg_access: 'Sign-ins and accounts', lg_system: 'Settings and system', lg_anyone: 'Any user', lg_nobody: 'No user (system)', lg_from: 'From', lg_to: 'To', lg_search: 'Search by name, tag, IP address…', lg_more: 'Load more', lg_none: 'No activity with these filters.', lg_loading: 'Loading…', lg_clear: 'Clear filters', lg_limit: 'Maximum size', lg_limit_ph: 'No limit', lg_limit_hint: 'Past it, the oldest entries are deleted. Leave it empty for no limit (10 MB to 1 TB).', lg_usage: 'It now takes about {size} ({n} entries).', lg_limit_save: 'Save limit', lg_limit_sure: 'Old entries will be deleted now. Click again', lg_limit_saved: 'Limit saved', lg_pruned_now: 'Limit saved: {n} old entries deleted', log_pruned: 'The {n} oldest log entries were deleted (limit: {mb} MB)', err_log_limit: 'The limit must be 10 MB to 1 TB, or empty.', th_when: 'When', th_who: 'Who', th_what: 'What', log_login: '{name} signed in', log_login_failed: 'Failed sign-in: {who}', log_logout: '{name} signed out', log_user_created: 'User {name} created', log_user_edited: 'User {name} changed', log_user_on: 'User {name} activated', log_user_off: 'User {name} deactivated', log_emp_created: 'Employee {name} added', log_emp_edited: '{name}’s details changed', err_pw_minlen: 'The minimum length must be a number from 1 to 128.',
     su_title: 'Initial setup', su_sub: 'Get the app ready in three steps.', su_step: 'Step {n} of 3', su_org_h: 'Your organisation', su_org: 'Organisation name', su_prefix: 'Asset tag prefix', su_date: 'Date format', su_currency: 'Currency', su_token: 'Setup code', su_token_hint: 'Set by whoever deployed the app (DJANGO_SETUP_TOKEN).', su_places_h: 'Offices and departments', su_locs: 'Locations', su_locs_hint: 'Where your devices are. Mark one as storage so returned devices go back there.', su_depts: 'Departments', su_depts_hint: 'Optional: you can also add them later in Settings.', su_add_loc: 'Add location', su_add_dept: 'Add department', su_name: 'Name', su_remove: 'Remove', su_admin_h: 'Your administrator account', su_admin_sub: 'You will sign in with this account and create everyone else’s.', su_fullname: 'Full name', su_email: 'Email', su_pass: 'Password', su_pass2: 'Repeat the password', su_back: 'Back', su_next: 'Next', su_finish: 'Finish', su_blocked_t: 'Setup code missing', su_blocked_b: 'Setup cannot be completed yet: set the DJANGO_SETUP_TOKEN variable on the server and reload this page.', su_done: 'All set! You can start adding your devices.', err_su_org: 'Enter the organisation’s name.', err_su_loc: 'Add at least one location with a name.', err_su_admin: 'Enter your name and a valid email.', err_su_mismatch: 'The passwords do not match.', err_setup_token: 'That setup code is not correct.', err_setup_done: 'The app is already set up. Please sign in.', log_setup: 'Initial setup completed',
     err_network: 'Could not reach the server. Please try again.', err_forbidden: 'You do not have permission to do this.', err_invalid: 'Some data is not valid. Please check the form.', err_conflict: 'This device has changed. Reload the page and try again.', err_not_found: 'This record no longer exists.', err_dates: 'The end date cannot be before the start date.', err_asg_dates: 'The handover date cannot be before this device was last returned.', err_fix_dates: 'The date it was fixed cannot be before the fault was logged.', err_serial_dup: 'Another device already has that serial number.', err_os_number: 'The exact version has only numbers and dots, such as 26.2.1.', err_auth: 'Your session has expired. Please sign in again.', err_pass_weak: 'That password does not meet the security requirements.', login_locked: 'Too many attempts. Wait 15 minutes and try again.',
     brand: 'Device inventory', nav_summary: 'Overview', nav_devices: 'Devices', nav_people: 'Employees',
@@ -426,6 +427,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     set_wifi: 'Wi-Fi chips', set_wifi_sub: 'Wireless network cards and the Wi-Fi generation they support',
     set_ram: 'Memory generations', set_ram_sub: 'RAM generations such as DDR4, DDR5 or LPDDR5X', set_disk: 'Storage types', set_disk_sub: 'Drive technologies such as SSD, HDD or eMMC',
     item_ram: 'memory generation', item_disk: 'storage type', f_simple_name: 'Name',
+    menu_photo: 'Profile picture', photo_pick: 'Choose image', photo_change: 'Change image', photo_remove: 'Remove picture', photo_hint: 'PNG, JPEG, WebP or GIF. It is cropped to a square from the middle and saved without the photo’s details (place, camera, date). Everyone who uses the inventory can see it.', photo_saved: 'Profile picture saved', photo_removed: 'Profile picture removed', err_photo_type: 'That image cannot be used. Try a PNG, JPEG, WebP or GIF.', err_photo_size: 'The image is too big.',
     menu_lang: 'Language', menu_theme: 'Theme', menu_ui: 'Design', ui_classic: 'Classic', ui_glass: 'Glass', add_menu: 'Add', add_device_d: 'Laptop, desktop, monitor…', add_person_d: 'Someone to assign devices to', account_menu: 'Account menu',
     item_dept: 'department', item_loc: 'location', item_type: 'device type', item_model: 'model', item_wifi: 'Wi-Fi chip', item_user: 'user',
     add_x: 'Add {x}', edit_x: 'Edit {x}', delete: 'Delete', delete_title: 'Delete {name}', delete_body: '“{name}” will be deleted. This cannot be undone.', deleted: 'Deleted',
@@ -591,8 +593,8 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     pr_export: 'Exportant la còpia', pr_prepare: 'Preparant les dades…', pr_prepare_enc: 'Preparant i xifrant les dades…', pr_download: 'Descarregant el fitxer…', pr_check: 'Comprovant la còpia', pr_upload: 'Pujant el fitxer…', pr_read: 'Llegint la còpia…', pr_restore: 'Restaurant la còpia', pr_restoring: 'Substituint les dades…', pr_step: 'Pas {n} de {total}', pr_left: 'Queden uns {t}', pr_elapsed: '{t} en curs', pr_leave: 'Hi ha una còpia de seguretat en curs.',
     bk_encrypt: 'Protegeix amb contrasenya (recomanat)', bk_encrypt_d: 'La còpia es xifra amb AES-256 i només es pot obrir amb aquesta contrasenya.', bk_pw: 'Contrasenya de la còpia', bk_pw2: 'Repeteix la contrasenya', bk_pw_lost: 'Desa-la en un lloc segur: si la perds, no hi haurà manera de restaurar aquesta còpia.', bk_plain_warn: 'Sense contrasenya, qualsevol que tingui el fitxer podrà llegir totes les dades.', bk_pw_t: 'Còpia protegida', bk_pw_d: 'Aquesta còpia està protegida amb contrasenya. Escriu-la per veure què conté.', bk_unlock: 'Obre', bk_enc_yes: 'Protegida amb contrasenya', err_bk_pw_short: 'La contrasenya de la còpia ha de tenir almenys 10 caràcters.', err_backup_password: 'La contrasenya no és correcta o el fitxer està malmès.', err_backup_password_required: 'Aquesta còpia està protegida amb contrasenya.',
     grp_data: 'Dades', grp_data_d: 'Còpies de seguretat i restauració', set_data: 'Còpies de seguretat', set_data_sub: 'Exporta totes les dades o restaura una còpia anterior', bk_export_h: 'Exporta una còpia', bk_export_d: 'Descarrega un fitxer .invbackup amb totes les dades i la configuració: dispositius, empleats, historial, avaries, usuaris, llistes, logotip i ajustos.', bk_export_warn: 'Conté dades personals i les contrasenyes dels usuaris (xifrades). Desa el fitxer en un lloc segur.', bk_export_btn: 'Descarrega la còpia', bk_exported: 'Còpia descarregada', bk_restore_h: 'Restaura una còpia', bk_restore_d: 'Carrega un fitxer .invbackup exportat des d’aquesta aplicació.', bk_restore_warn: 'Se substituiran totes les dades i la configuració actuals per les de la còpia i es tancarà la sessió de tots els usuaris, inclosa la teva. No es pot desfer.', bk_restore_btn: 'Restaura des d’un fitxer', bk_confirm_t: 'Restaura la còpia', bk_confirm_b: 'Còpia del {d}, feta per {by}. Conté:', bk_n_devices: '{n} dispositius', bk_n_employees: '{n} empleats', bk_n_users: '{n} usuaris', bk_n_log: '{n} entrades de l’historial', bk_first: 'Descarrega abans una còpia de les dades actuals', bk_restore_ok: 'Restaura', bk_restored: 'Còpia restaurada. Torna a iniciar sessió.', err_backup_invalid: 'Aquest fitxer no és una còpia vàlida d’aquesta aplicació.', err_backup_version: 'Aquesta còpia és d’una altra versió de l’aplicació i no es pot restaurar aquí.', err_backup_no_admin: 'La còpia no té cap administrador actiu, així que ningú no podria entrar.', err_backup_size: 'El fitxer és massa gran (màxim 50 MB).', log_backup_export: 'Còpia de seguretat exportada', log_backup_restore: 'Còpia de seguretat restaurada',
-    set_brand: 'Logotip', set_brand_sub: 'Substitueix la icona de l’aplicació per la de la teva empresa.', brand_upload: 'Puja una imatge', brand_change: 'Canvia la imatge', brand_remove: 'Treu el logotip', brand_formats: 'PNG, JPG, WebP, GIF o SVG de fins a 512 KB. Millor si és quadrada i amb fons transparent.', brand_where: 'Es veurà al menú, a la pantalla d’inici de sessió i a la pestanya del navegador.', brand_saved: 'Logotip actualitzat', brand_removed: 'S’ha tornat a la icona original', err_logo_type: 'Aquest fitxer no és una imatge compatible.', err_logo_size: 'La imatge pesa més de 512 KB.', go_home: 'Ves al resum', pc_title: 'Canvia la contrasenya', pc_sub: 'Per seguretat, tria una contrasenya nova abans de continuar.', pc_current: 'Contrasenya actual', pc_new: 'Contrasenya nova', pc_repeat: 'Repeteix la contrasenya nova', pc_btn: 'Canvia', pc_done: 'Contrasenya canviada', err_pw_current: 'La contrasenya actual no és correcta.', err_pw_same: 'La contrasenya nova ha de ser diferent de l’actual.', err_must_change: 'Abans de continuar, canvia la contrasenya.', f_must_change: 'Demana que canviï la contrasenya en iniciar sessió', f_must_change_d: 'Útil quan li dones una contrasenya temporal.', chip_must_change: 'Ha de canviar la contrasenya', chip_must_change_d: 'Haurà de triar una contrasenya nova la propera vegada que iniciï sessió.', log_pwchanged: '{name} ha canviat la contrasenya',
-    pw_h: 'Seguretat de les contrasenyes', pw_enforce: 'Exigeix requisits de seguretat', pw_enforce_d: 'Les contrasenyes que no els compleixin no s’acceptaran.', pw_off: 'Sense requisits: s’acceptarà qualsevol contrasenya.', pw_minlabel: 'Longitud mínima', pw_chars: 'caràcters', pw_c_upper: 'Almenys una majúscula', pw_c_number: 'Almenys un número', pw_c_symbol: 'Almenys un símbol', pw_c_min: 'Almenys {n} caràcters', pw_weak: 'Contrasenya insegura', pw_ok: 'Contrasenya acceptable', pw_strong: 'Contrasenya segura', pw_empty: 'Escriu una contrasenya per veure’n la seguretat', pw_applies: 'S’aplica a les contrasenyes noves o canviades. Les actuals continuen funcionant.', set_pwpolicy: 'Contrasenyes', set_pwpolicy_sub: 'Tria quins requisits han de complir les contrasenyes.', err_pw_minlen: 'La longitud mínima ha de ser un número entre 1 i 128.',
+    set_brand: 'Logotip', set_brand_sub: 'Substitueix la icona de l’aplicació per la de la teva empresa.', brand_upload: 'Puja una imatge', brand_change: 'Canvia la imatge', brand_remove: 'Treu el logotip', brand_formats: 'PNG, JPG, WebP, GIF o SVG de fins a 512 KB. Millor si és quadrada i amb fons transparent.', brand_where: 'Es veurà al menú, a la pantalla d’inici de sessió i a la pestanya del navegador.', brand_saved: 'Logotip actualitzat', brand_removed: 'S’ha tornat a la icona original', err_logo_type: 'Aquest fitxer no és una imatge compatible.', err_logo_size: 'La imatge pesa més de 512 KB.', go_home: 'Ves al resum', pc_title: 'Canvia la contrasenya', pc_sub: 'Per seguretat, tria una contrasenya nova abans de continuar.', pc_current: 'Contrasenya actual', pc_new: 'Contrasenya nova', pc_repeat: 'Repeteix la contrasenya nova', pc_btn: 'Canvia', pc_done: 'Contrasenya canviada', err_pw_current: 'La contrasenya actual no és correcta.', err_pw_same: 'La contrasenya nova ha de ser diferent de l’actual.', err_must_change: 'Abans de continuar, canvia la contrasenya.', f_must_change: 'Demana que canviï la contrasenya en iniciar sessió', f_must_change_d: 'Útil quan li dones una contrasenya temporal.', chip_must_change: 'Ha de canviar la contrasenya', chip_must_change_d: 'Haurà de triar una contrasenya nova la propera vegada que iniciï sessió.', log_pwchanged: '{name} ha canviat la contrasenya', log_photo_removed: 'Foto de perfil de {name} treta', photo_remove_other: 'Treu la seva foto', photo_remove_sure: 'Treure-la? Prem un altre cop', photo_removed_other: 'Foto treta',
+    pw_h: 'Seguretat de les contrasenyes', pw_enforce: 'Exigeix requisits de seguretat', pw_enforce_d: 'Les contrasenyes que no els compleixin no s’acceptaran.', pw_off: 'Sense requisits: s’acceptarà qualsevol contrasenya.', pw_minlabel: 'Longitud mínima', pw_chars: 'caràcters', pw_c_upper: 'Almenys una majúscula', pw_c_number: 'Almenys un número', pw_c_symbol: 'Almenys un símbol', pw_c_min: 'Almenys {n} caràcters', pw_weak: 'Contrasenya insegura', pw_ok: 'Contrasenya acceptable', pw_strong: 'Contrasenya segura', pw_empty: 'Escriu una contrasenya per veure’n la seguretat', pw_applies: 'S’aplica a les contrasenyes noves o canviades. Les actuals continuen funcionant.', set_pwpolicy: 'Contrasenyes', set_pwpolicy_sub: 'Tria quins requisits han de complir les contrasenyes.', set_logs: 'Registre d’activitat', set_logs_sub: 'Tot el que s’ha fet a l’inventari: canvis, inicis de sessió i còpies de seguretat.', lg_all: 'Tota l’activitat', lg_devices: 'Dispositius', lg_people: 'Empleats', lg_access: 'Accessos i comptes', lg_system: 'Configuració i sistema', lg_anyone: 'Qualsevol usuari', lg_nobody: 'Sense usuari (sistema)', lg_from: 'Des de', lg_to: 'Fins a', lg_search: 'Cerca per nom, etiqueta, adreça IP…', lg_more: 'Carrega’n més', lg_none: 'No hi ha activitat amb aquests filtres.', lg_loading: 'Carregant…', lg_clear: 'Treu els filtres', lg_limit: 'Mida màxima', lg_limit_ph: 'Sense límit', lg_limit_hint: 'En passar-la s’esborren les entrades més antigues. Deixa-ho buit per no posar límit (de 10 MB a 1 TB).', lg_usage: 'Ara ocupa uns {size} ({n} entrades).', lg_limit_save: 'Desa el límit', lg_limit_sure: 'S’esborraran entrades antigues ara. Prem un altre cop', lg_limit_saved: 'Límit desat', lg_pruned_now: 'Límit desat: s’han esborrat {n} entrades antigues', log_pruned: 'S’han esborrat les {n} entrades més antigues del registre (límit: {mb} MB)', err_log_limit: 'El límit ha de ser de 10 MB a 1 TB, o quedar buit.', th_when: 'Quan', th_who: 'Qui', th_what: 'Què', log_login: '{name} ha iniciat la sessió', log_login_failed: 'Inici de sessió fallit: {who}', log_logout: '{name} ha tancat la sessió', log_user_created: 'Usuari {name} creat', log_user_edited: 'Usuari {name} modificat', log_user_on: 'Usuari {name} activat', log_user_off: 'Usuari {name} desactivat', log_emp_created: 'Empleat {name} afegit', log_emp_edited: 'Dades de {name} modificades', err_pw_minlen: 'La longitud mínima ha de ser un número entre 1 i 128.',
     su_title: 'Configuració inicial', su_sub: 'Deixa l’aplicació a punt en tres passos.', su_step: 'Pas {n} de 3', su_org_h: 'La teva organització', su_org: 'Nom de l’organització', su_prefix: 'Prefix de les etiquetes', su_date: 'Format de data', su_currency: 'Moneda', su_token: 'Codi d’instal·lació', su_token_hint: 'El defineix qui ha desplegat l’aplicació (DJANGO_SETUP_TOKEN).', su_places_h: 'Oficines i departaments', su_locs: 'Ubicacions', su_locs_hint: 'On són els equips. Marca’n una com a magatzem perquè els equips retornats hi tornin.', su_depts: 'Departaments', su_depts_hint: 'Opcional: també els pots afegir després a Configuració.', su_add_loc: 'Afegeix una ubicació', su_add_dept: 'Afegeix un departament', su_name: 'Nom', su_remove: 'Treu', su_admin_h: 'El teu compte d’administrador', su_admin_sub: 'Amb aquest compte entraràs i podràs crear els de la resta de l’equip.', su_fullname: 'Nom complet', su_email: 'Correu electrònic', su_pass: 'Contrasenya', su_pass2: 'Repeteix la contrasenya', su_back: 'Enrere', su_next: 'Següent', su_finish: 'Acaba', su_blocked_t: 'Falta el codi d’instal·lació', su_blocked_b: 'La instal·lació encara no es pot completar: defineix la variable DJANGO_SETUP_TOKEN al servidor i recarrega aquesta pàgina.', su_done: 'Tot a punt! Ja pots afegir els teus dispositius.', err_su_org: 'Indica el nom de l’organització.', err_su_loc: 'Afegeix almenys una ubicació amb nom.', err_su_admin: 'Omple el teu nom i un correu vàlid.', err_su_mismatch: 'Les contrasenyes no coincideixen.', err_setup_token: 'El codi d’instal·lació no és correcte.', err_setup_done: 'L’aplicació ja està configurada. Inicia sessió.', log_setup: 'Instal·lació inicial completada',
     err_network: 'No s’ha pogut connectar amb el servidor. Torna-ho a provar.', err_forbidden: 'No tens permís per fer això.', err_invalid: 'Hi ha dades no vàlides. Revisa el formulari.', err_conflict: 'El dispositiu ha canviat. Recarrega la pàgina i torna-ho a provar.', err_not_found: 'Aquest registre ja no existeix.', err_dates: 'La data de fi no pot ser anterior a la d’inici.', err_asg_dates: 'La data de lliurament no pot ser anterior a l’última devolució d’aquest equip.', err_fix_dates: 'La data de resolució no pot ser anterior a la de l’avaria.', err_serial_dup: 'Ja hi ha un altre dispositiu amb aquest número de sèrie.', err_os_number: 'La versió exacta només porta números i punts, com 26.2.1.', err_auth: 'La sessió ha caducat. Torna a iniciar sessió.', err_pass_weak: 'La contrasenya no compleix els requisits de seguretat.', login_locked: 'Massa intents. Espera 15 minuts i torna-ho a provar.',
     brand: 'Inventari d’equips', nav_summary: 'Resum', nav_devices: 'Dispositius', nav_people: 'Empleats',
@@ -716,6 +718,7 @@ created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
     set_wifi: 'Xips Wi-Fi', set_wifi_sub: 'Targetes de xarxa sense fil i la generació Wi-Fi que admeten',
     set_ram: 'Generacions de memòria', set_ram_sub: 'Generacions de RAM, com ara DDR4, DDR5 o LPDDR5X', set_disk: 'Tipus d’emmagatzematge', set_disk_sub: 'Tecnologies de disc, com ara SSD, HDD o eMMC',
     item_ram: 'generació de memòria', item_disk: 'tipus d’emmagatzematge', f_simple_name: 'Nom',
+    menu_photo: 'Foto de perfil', photo_pick: 'Tria una imatge', photo_change: 'Canvia la imatge', photo_remove: 'Treu la foto', photo_hint: 'PNG, JPEG, WebP o GIF. Es retalla en un quadrat des del centre i es desa sense les dades de la foto (lloc, càmera, data). La veu tothom qui fa servir l’inventari.', photo_saved: 'Foto de perfil desada', photo_removed: 'Foto de perfil treta', err_photo_type: 'Aquesta imatge no es pot fer servir. Prova amb un PNG, JPEG, WebP o GIF.', err_photo_size: 'La imatge és massa gran.',
     menu_lang: 'Idioma', menu_theme: 'Tema', menu_ui: 'Disseny', ui_classic: 'Clàssic', ui_glass: 'Vidre', add_menu: 'Afegeix', add_device_d: 'Portàtil, sobretaula, monitor…', add_person_d: 'Persona a qui assignar equips', account_menu: 'Menú del compte',
     item_dept: 'departament', item_loc: 'ubicació', item_type: 'tipus de dispositiu', item_model: 'model', item_wifi: 'xip Wi-Fi', item_user: 'usuari',
     add_x: 'Afegeix {x}', edit_x: 'Edita {x}', delete: 'Elimina', delete_title: 'Elimina {name}', delete_body: 'S’eliminarà «{name}». No es pot desfer.', deleted: 'Eliminat',
@@ -971,7 +974,7 @@ function ignoreCheck(id, key) {
 async function reloadNow(btn) {
   if (btn.classList.contains('busy')) return;
   btn.classList.add('busy'); btn.disabled = true;
-  try { await reload(); applyChrome(); route(); toast(t('reloaded'), true); }
+  try { await reload(); LOG.loaded = false; applyChrome(); route(); toast(t('reloaded'), true); }
   catch (err) { if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); }
   finally { btn.classList.remove('busy'); btn.disabled = false; }
 }
@@ -982,6 +985,8 @@ async function mutate(method, url, body) { const d = await api(method, url, body
 let cur = null;
 const can = p => !!cur && (p === 'admin' ? cur.rol === 'admin' : p === 'edit' ? cur.rol !== 'read' : true);
 const initials = n => n.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+/* what goes inside an .avatar: the account's picture, or its initials */
+const avatarHtml = u => u.photo ? `<img src="/api/users/${encodeURIComponent(u.id)}/photo?v=${encodeURIComponent(u.photo)}" alt="">` : esc(initials(u.nombre || ''));
 
 /* ================= helpers ================= */
 const $ = s => document.querySelector(s);
@@ -2129,6 +2134,152 @@ function bindBrand() {
   const rm = $('#logoRemove'); if (rm) rm.onclick = () => done('DELETE', undefined, 'brand_removed');
 }
 
+/* ================= activity log (Settings > Logs) ================= */
+/* fetched from the server a page at a time (the page itself only keeps the latest changes); the filters stay while
+   the page is open */
+const LOG = { f: { q: '', kind: '', user: '', from: '', to: '' }, events: [], more: false, loaded: false, seq: 0, size: null, count: 0, maxMb: 0 };
+/* the limit as typed: a number and MB or GB; shown in GB when it is whole gigabytes */
+const limitParts = mb => !mb ? ['', 'MB'] : mb % 1024 === 0 ? [String(mb / 1024), 'GB'] : [String(mb), 'MB'];
+function logUsage() {
+  return LOG.size === null ? '' : t('lg_usage', { size: fmtBytes(LOG.size), n: LOG.count.toLocaleString(locale()) });
+}
+const LOG_KINDS = ['devices', 'people', 'access', 'system'];
+function logRow(l) {
+  const when = new Date(l.at), u = l.by ? byId('users', l.by) : null, d = l.deviceId ? dev(l.deviceId) : null;
+  const time = when.toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  return `<tr><td class="nowrap">${fmt(l.fecha)}<span class="t2">${esc(time)}</span></td>
+    <td>${u ? `<div class="usercell"><span class="avatar sm">${avatarHtml(u)}</span><span>${esc(u.nombre)}</span></div>` : '<span class="muted">—</span>'}</td>
+    <td>${d ? `<a href="#dispositivo-${esc(d.id)}">${esc(logText(l))}</a>` : esc(logText(l))}${l.a && l.a.ip ? `<span class="t2">IP ${esc(l.a.ip)}</span>` : ''}</td></tr>`;
+}
+function logRows() {
+  if (!LOG.loaded) return `<tr><td colspan="3" class="muted">${T('lg_loading')}</td></tr>`;
+  if (!LOG.events.length) return `<tr><td colspan="3" class="muted">${T('lg_none')}</td></tr>`;
+  return LOG.events.map(logRow).join('');
+}
+function settingsLogs() {
+  const f = LOG.f, any = f.q || f.kind || f.user || f.from || f.to;
+  return `<section class="panel">
+    <div class="head"><div><h2>${T('set_logs')}</h2><p class="sub">${T('set_logs_sub')}</p></div>${reloadBtn()}</div>
+    <form class="loglimit" id="logLimit" novalidate>
+      <label>${T('lg_limit')}<span class="row tight"><input type="number" name="n" min="1" step="any" inputmode="decimal" value="${esc(limitParts(LOG.maxMb)[0])}" placeholder="${T('lg_limit_ph')}">
+        <select name="unit">${['MB', 'GB'].map(u => `<option${limitParts(LOG.maxMb)[1] === u ? ' selected' : ''}>${u}</option>`).join('')}</select>
+        <button class="btn small" type="submit" id="logLimitSave">${T('lg_limit_save')}</button></span></label>
+      <p class="muted"><span id="logUsage">${esc(logUsage())}</span> ${T('lg_limit_hint')}</p>
+    </form>
+    <form class="logfilters" id="logForm" novalidate>
+      <input type="search" name="q" value="${esc(f.q)}" placeholder="${T('lg_search')}" aria-label="${T('lg_search')}" maxlength="100">
+      <select name="kind" aria-label="${T('lg_all')}"><option value="">${T('lg_all')}</option>${LOG_KINDS.map(k => `<option value="${k}"${f.kind === k ? ' selected' : ''}>${T('lg_' + k)}</option>`).join('')}</select>
+      <select name="user" aria-label="${T('th_who')}"><option value="">${T('lg_anyone')}</option>${S.users.map(u => `<option value="${esc(u.id)}"${f.user === u.id ? ' selected' : ''}>${esc(u.nombre)}</option>`).join('')}<option value="none"${f.user === 'none' ? ' selected' : ''}>${T('lg_nobody')}</option></select>
+      <label>${T('lg_from')}<input type="date" name="from" value="${esc(f.from)}"></label>
+      <label>${T('lg_to')}<input type="date" name="to" value="${esc(f.to)}"></label>
+      <button class="btn small" type="button" id="logClear"${any ? '' : ' hidden'}>${T('lg_clear')}</button>
+    </form>
+    <div class="tablebox"><table><thead><tr><th>${T('th_when')}</th><th>${T('th_who')}</th><th>${T('th_what')}</th></tr></thead><tbody id="logBody">${logRows()}</tbody></table></div>
+    <div class="row" style="justify-content:center"><button class="btn" type="button" id="logMore"${LOG.more ? '' : ' hidden'}>${T('lg_more')}</button></div>
+  </section>`;
+}
+async function loadLogs(more) {
+  const seq = ++LOG.seq, f = LOG.f, p = new URLSearchParams();
+  for (const k of ['q', 'kind', 'user', 'from', 'to']) if (f[k]) p.set(k, f[k]);
+  if (more && LOG.events.length) p.set('before', LOG.events[LOG.events.length - 1].id);
+  try {
+    const d = await api('GET', 'logs?' + p.toString());
+    if (seq !== LOG.seq) return;   // the filters changed meanwhile: a newer answer is on its way
+    LOG.events = more ? LOG.events.concat(d.events) : d.events;
+    LOG.more = d.more; LOG.loaded = true;
+    if (!more) { LOG.size = d.size; LOG.count = d.count; LOG.maxMb = d.maxMb; }
+  } catch (err) { if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); }
+  if (seq !== LOG.seq || !$('#logBody')) return;
+  $('#logBody').innerHTML = logRows();
+  $('#logMore').hidden = !LOG.more; $('#logMore').disabled = false;
+  if (!more) {
+    $('#logUsage').textContent = logUsage();
+    const [n, unit] = limitParts(LOG.maxMb), lim = $('#logLimit');
+    if (document.activeElement !== lim.elements.n) { lim.elements.n.value = n; lim.elements.unit.value = unit; }
+  }
+}
+function bindLogs() {
+  const form = $('#logForm'); if (!form) return;
+  let timer;
+  const apply = () => {
+    const v = Object.fromEntries(new FormData(form));
+    const changed = ['q', 'kind', 'user', 'from', 'to'].some(k => (v[k] || '') !== LOG.f[k]);
+    if (!changed) return;
+    Object.assign(LOG.f, { q: (v.q || '').trim(), kind: v.kind || '', user: v.user || '', from: v.from || '', to: v.to || '' });
+    LOG.loaded = false; $('#logBody').innerHTML = logRows();
+    loadLogs(false);
+    $('#logClear').hidden = !(LOG.f.q || LOG.f.kind || LOG.f.user || LOG.f.from || LOG.f.to);
+  };
+  form.addEventListener('input', e => { clearTimeout(timer); timer = setTimeout(apply, e.target.name === 'q' ? 350 : 0); });
+  form.addEventListener('submit', e => { e.preventDefault(); clearTimeout(timer); apply(); });
+  $('#logClear').onclick = () => { Object.assign(LOG.f, { q: '', kind: '', user: '', from: '', to: '' }); LOG.loaded = false; route(); };
+  $('#logMore').onclick = () => { $('#logMore').disabled = true; loadLogs(true); };
+  const lim = $('#logLimit'), save = $('#logLimitSave');
+  lim.addEventListener('input', () => { delete save.dataset.sure; save.textContent = t('lg_limit_save'); });
+  lim.addEventListener('submit', async e => {
+    e.preventDefault();
+    const raw = lim.elements.n.value.trim(), num = Number(raw);
+    const maxMb = raw === '' ? 0 : Math.round(num * (lim.elements.unit.value === 'GB' ? 1024 : 1));
+    if (raw !== '' && (!Number.isFinite(num) || maxMb < 10 || maxMb > 1024 * 1024)) { toast(t('err_log_limit')); shake('#logLimit'); return; }
+    // a limit below what the log takes now deletes old entries at once: a second click confirms
+    if (maxMb && LOG.size !== null && maxMb * 1048576 < LOG.size && !save.dataset.sure) { save.dataset.sure = '1'; save.textContent = t('lg_limit_sure'); return; }
+    save.disabled = true;
+    try {
+      const d = await api('PUT', 'logs/limit', { maxMb });
+      Object.assign(LOG, { maxMb: d.maxMb, size: d.size, count: d.count });
+      toast(d.deleted ? t('lg_pruned_now', { n: d.deleted.toLocaleString(locale()) }) : t('lg_limit_saved'), true);
+      LOG.loaded = false; route();
+    } catch (err) { if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); }
+    finally { save.disabled = false; }
+  });
+  if (!LOG.loaded) loadLogs(false);
+}
+
+/* ================= profile picture ================= */
+/* a big photo is shrunk here first (at most 1024 pixels a side), so little is sent; the server makes the final
+   256-pixel square from it */
+async function shrinkImage(file) {
+  const img = await createImageBitmap(file);   // turned the way the photo was taken
+  const scale = Math.min(1, 1024 / Math.max(img.width, img.height));
+  const c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(img.width * scale)); c.height = Math.max(1, Math.round(img.height * scale));
+  const g = c.getContext('2d'); g.fillStyle = '#ffffff'; g.fillRect(0, 0, c.width, c.height);
+  g.drawImage(img, 0, 0, c.width, c.height);
+  if (img.close) img.close();
+  return c.toDataURL('image/jpeg', 0.9);
+}
+function photoBody() {
+  return `<div class="photoedit"><span class="avatar xl">${avatarHtml(cur)}</span>
+    <div class="row"><button class="btn primary" type="button" id="phPick">${T(cur.photo ? 'photo_change' : 'photo_pick')}</button>
+      <input type="file" id="phFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      ${cur.photo ? `<button class="btn danger" type="button" id="phRemove">${T('photo_remove')}</button>` : ''}</div>
+    <p class="muted" style="margin:0;font-size:13px">${T('photo_hint')}</p></div>`;
+}
+function bindPhoto() {
+  const file = $('#phFile'), busy = on => $('#dlgBody').querySelectorAll('button').forEach(b => { b.disabled = on; });
+  const done = async (method, body, msg) => {
+    busy(true);
+    try { await mutate(method, 'account/photo', body); }
+    catch (err) { busy(false); if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) { toast(t(err.code)); shake('.photoedit'); } return; }
+    applyChrome(); route(); toast(t(msg), true);
+    $('#dlgBody').innerHTML = photoBody(); bindPhoto();
+  };
+  $('#phPick').onclick = () => file.click();
+  file.onchange = async () => {
+    const f = file.files[0]; file.value = ''; if (!f) return;
+    if (!/^image\/(png|jpeg|webp|gif)$/.test(f.type)) { toast(t('err_photo_type')); shake('.photoedit'); return; }
+    let data;
+    try { data = await shrinkImage(f); } catch (e) { toast(t('err_photo_type')); shake('.photoedit'); return; }
+    done('PUT', { data }, 'photo_saved');
+  };
+  const rm = $('#phRemove'); if (rm) rm.onclick = () => done('DELETE', undefined, 'photo_removed');
+}
+$('#miPhoto').onclick = () => {
+  closeMenus();
+  openDialog(t('menu_photo'), photoBody(), null);
+  bindPhoto();
+};
+
 /* ================= tooltips ================= */
 function showTip(target) {
   const tip = $('#tip'); tip.textContent = target.dataset.tip; tip.hidden = false;
@@ -2424,7 +2575,7 @@ function viewEmployee(id) {
 /* ================= settings ================= */
 const SET_GROUPS = [
   { id: 'general', items: [['acerca', 'set_about', null], ['actualizaciones', 'set_updates', null], ['region', 'set_region', null], ['marca', 'set_brand', null]] },
-  { id: 'access', items: [['usuarios', 'set_users', () => S.users.filter(u => u.activo).length], ['contrasenas', 'set_pwpolicy', null]] },
+  { id: 'access', items: [['usuarios', 'set_users', () => S.users.filter(u => u.activo).length], ['contrasenas', 'set_pwpolicy', null], ['registro', 'set_logs', null]] },
   { id: 'org', items: [['departamentos', 'set_depts', () => S.depts.length], ['ubicaciones', 'set_locs', () => S.locations.length]] },
   { id: 'catalog', items: [['tipos', 'set_types', () => S.types.length], ['modelos', 'set_models', () => S.models.length]] },
   { id: 'parts', items: [['procesadores', 'set_cpus', () => S.cpus.length], ['graficas', 'set_gpus', () => S.gpus.length], ['memoria', 'set_ram', () => S.ramGens.length], ['formatosram', 'set_ramforms', () => S.ramForms.length],
@@ -2458,6 +2609,7 @@ function viewSettings(sec) {
   else if (sec === 'marca') body = settingsBrand();
   else if (sec === 'datos') body = settingsData();
   else if (sec === 'acerca') body = settingsAbout();
+  else if (sec === 'registro') body = settingsLogs();
   else if (sec === 'actualizaciones') body = settingsUpdates();
   else body = settingsList(sec);
   const crumb = found ? `<p class="crumb"><a href="#ajustes">${T('set_title')}</a> <span>/</span> ${T('grp_' + found[3])}</p>` : '';
@@ -2484,7 +2636,7 @@ function settingsUsers() {
   return `<section class="panel">
     <div class="head"><div><h2>${T('set_users')}</h2><p class="sub">${T('set_users_sub')}</p></div><button class="btn primary" type="button" data-set="addUser">${T('add_x', { x: t('item_user') })}</button></div>
     <div class="tablebox"><table><thead><tr><th>${T('th_name')}</th><th>${T('th_role')}</th><th>${T('th_status')}</th><th>${T('th_last')}</th><th></th></tr></thead><tbody>
-      ${S.users.map(u => `<tr><td><b>${esc(u.nombre)}</b> ${u.id === cur.id ? `<span class="muted">${T('you')}</span>` : ''}<span class="t2">${esc(u.email)}${u.username ? ' · ' + esc(u.username) : ''}</span></td>
+      ${S.users.map(u => `<tr><td><div class="usercell"><span class="avatar sm">${avatarHtml(u)}</span><div><b>${esc(u.nombre)}</b> ${u.id === cur.id ? `<span class="muted">${T('you')}</span>` : ''}<span class="t2">${esc(u.email)}${u.username ? ' · ' + esc(u.username) : ''}</span></div></div></td>
         <td><span class="pill st-${esc(u.rol)}" tabindex="0" data-tip="${T('role_' + u.rol + '_d')}">${esc(rl(u.rol))}</span></td><td>${u.activo ? pill('on', t('u_active')) : pill('off', t('u_inactive'))}${u.mustChange ? ` <span class="chip" tabindex="0" data-tip="${T('chip_must_change_d')}">${T('chip_must_change')}</span>` : ''}</td><td>${u.last ? fmt(u.last) : `<span class="muted">${T('never')}</span>`}</td>
         <td class="act"><div class="row" style="justify-content:flex-end"><button class="btn small" type="button" data-set="editUser" data-id="${u.id}">${T('btn_edit')}</button>
         <button class="btn small${u.activo ? ' danger' : ''}" type="button" data-set="toggleUser" data-id="${u.id}"${u.id === cur.id ? ' disabled' : ''}>${u.activo ? T('deactivate') : T('activate')}</button></div></td></tr>`).join('')}
@@ -2531,7 +2683,20 @@ function userForm(u) {
     <label>${u ? T('f_pass_new') : T('f_pass_tmp')}<input name="pass" id="u-pass" type="password" autocomplete="new-password">${u ? `<span class="hint">${T('f_pass_hint')}</span>` : ''}</label>
     <div class="full"><div id="u-meter"></div></div>
     ${u && u.id === cur.id ? '' : `<label class="check full"><input type="checkbox" name="mustChange" id="u-must"${u ? (u.mustChange ? ' checked' : '') : ' checked'}> ${T('f_must_change')}</label><span class="hint full" style="margin-top:-6px">${T('f_must_change_d')}</span>`}
+    ${u && u.id !== cur.id && u.photo ? `<div class="full photorow"><span class="avatar sm">${avatarHtml(u)}</span><button class="btn small danger" type="button" id="u-photo-rm" data-id="${esc(u.id)}">${T('photo_remove_other')}</button></div>` : ''}
     <div class="full" id="u-roledesc"></div></div>`;
+}
+/* in someone's edit dialog: removes their picture, after a second click (it cannot be undone; they can upload another) */
+function bindPhotoRemove() {
+  const b = $('#u-photo-rm'); if (!b) return;
+  b.onclick = async () => {
+    if (!b.dataset.sure) { b.dataset.sure = '1'; b.textContent = t('photo_remove_sure'); return; }
+    b.disabled = true;
+    try { await mutate('DELETE', `users/${b.dataset.id}/photo`); }
+    catch (err) { b.disabled = false; if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); return; }
+    b.closest('.photorow').innerHTML = `<span class="muted">${T('photo_removed_other')}</span>`;
+    route();
+  };
 }
 function readUser(v, u) {
   const nombre = v.nombre.trim(), email = v.email.trim().toLowerCase();
@@ -2559,7 +2724,7 @@ const SET_ACTIONS = {
     const mail = $('#u-email'), name = $('#u-username'); let auto = '';
     mail.addEventListener('input', () => { if (name.value === auto) name.value = auto = mail.value.split('@')[0].toLowerCase().replace(/[^a-z0-9._-]/g, ''); });
   },
-  editUser(_, id) { const u = byId('users', id); openDialog(t('edit_x', { x: u.nombre }), userForm(u), async v => { const r = readUser(v, u); if (!r) return false; await mutate('PUT', 'users/' + id, r); applyChrome(); return t('saved'); }); bindRoleDesc(); },
+  editUser(_, id) { const u = byId('users', id); openDialog(t('edit_x', { x: u.nombre }), userForm(u), async v => { const r = readUser(v, u); if (!r) return false; await mutate('PUT', 'users/' + id, r); applyChrome(); return t('saved'); }); bindRoleDesc(); bindPhotoRemove(); },
   async toggleUser(_, id) {
     const u = byId('users', id);
     if (u.id === cur.id) { toast(t('err_self')); return; }
@@ -2966,7 +3131,8 @@ function applyChrome() {
   $('#addBtn').title = t('add_menu'); $('#addBtn').setAttribute('aria-label', t('add_menu'));
   $('#miAddDev').textContent = t('new_device'); $('#miAddDevD').textContent = t('add_device_d');
   $('#miAddPer').textContent = t('new_person'); $('#miAddPerD').textContent = t('add_person_d');
-  if (cur) { $('#whoAvatar').textContent = initials(cur.nombre); $('#whoName').textContent = cur.nombre; $('#whoRole').textContent = rl(cur.rol); $('#mName').textContent = cur.nombre; $('#mEmail').textContent = cur.email; }
+  $('#miPhotoTxt').textContent = t('menu_photo');
+  if (cur) { $('#whoAvatar').innerHTML = avatarHtml(cur); $('#whoName').textContent = cur.nombre; $('#whoRole').textContent = rl(cur.rol); $('#mName').textContent = cur.nombre; $('#mEmail').textContent = cur.email; }
 }
 $('#langSeg').addEventListener('click', e => {
   const b = e.target.closest('[data-lang]'); if (!b || b.dataset.lang === lang) return;
@@ -3006,6 +3172,7 @@ function route() {
   if (cur && cur.mustChange) { renderPwChange(); document.querySelectorAll('#tabs a').forEach(a => a.classList.remove('on')); return; }
   if (!cur) { setupInfo ? renderSetup() : renderLogin(); document.querySelectorAll('#tabs a').forEach(a => a.classList.remove('on')); return; }
   const h = location.hash.slice(1) || 'panel';
+  if (h !== 'ajustes-registro') LOG.loaded = false;   // the log is fetched again each time it is opened
   const sec = h.startsWith('dispositivo') ? 'dispositivos' : h.startsWith('empleado') ? 'empleados' : h.startsWith('ajustes') ? 'ajustes' : 'panel';
   document.querySelectorAll('#tabs a').forEach(a => a.classList.toggle('on', a.dataset.r === sec));
   if (h === 'dispositivos') {
@@ -3022,7 +3189,7 @@ function route() {
     $('#eactivos').onchange = e => { FE.activos = e.target.value; drawEmpRows(); };
     $('#econtrato').onchange = e => { FE.contrato = e.target.value; drawEmpRows(); };
   } else if (h.startsWith('empleado-')) view.innerHTML = viewEmployee(h.slice(9));
-  else if (sec === 'ajustes') { view.innerHTML = viewSettings(h.slice(8)); bindRegion(); bindPwForm(); bindBrand(); bindData(); bindAbout(); bindUpdates(); }
+  else if (sec === 'ajustes') { view.innerHTML = viewSettings(h.slice(8)); bindRegion(); bindPwForm(); bindBrand(); bindData(); bindAbout(); bindUpdates(); bindLogs(); }
   else view.innerHTML = viewPanel();
   requestAnimationFrame(moveTabInd);
 }

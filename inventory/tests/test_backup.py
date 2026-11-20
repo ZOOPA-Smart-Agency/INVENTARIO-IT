@@ -40,6 +40,9 @@ class BackupTests(TestCase):
     def setUpTestData(cls):
         call_command("load_demo_data", password=PASSWORD, verbosity=0, stdout=open("/dev/null", "w"))
         m.AppSettings.objects.filter(pk=1).update(logo=PNG, logo_type="image/png", logo_version=3, pw_min_length=14)
+        admin = User.objects.get(email="admin@empresa.es")
+        m.ProfilePhoto.objects.create(user=admin, data=b"\xff\xd8\xff picture bytes \x00\x01")
+        User.objects.filter(pk=admin.pk).update(photo_version=4)
 
     def setUp(self):
         cache.clear()
@@ -65,7 +68,8 @@ class BackupTests(TestCase):
                       + sorted(Employee.locs.through.objects.values_list("employee_id", "location_id")),
             "assignments": sorted(m.Assignment.objects.values_list("id", "device_id", "employee_id", "desde", "hasta")),
             "incidents": sorted(m.Incident.objects.values_list("id", "coste", "estado")),
-            "users": sorted(User.objects.values_list("email", "rol", "is_active", "password")),
+            "users": sorted(User.objects.values_list("email", "rol", "is_active", "password", "photo_version")),
+            "photos": sorted((p.user_id, bytes(p.data)) for p in m.ProfilePhoto.objects.all()),
             "types": sorted(m.DeviceType.objects.values_list("id", "nombre")),
             "settings": m.AppSettings.objects.values("org_name", "pw_min_length", "logo_type", "logo_version").get(),
             "logo": bytes(m.AppSettings.load().logo or b""),
@@ -77,6 +81,8 @@ class BackupTests(TestCase):
         Employee.depts.through.objects.all().delete()
         Employee.objects.create(nombre="Nuevo", email="n@x.es", alta="2026-01-01")
         m.AppSettings.objects.filter(pk=1).update(org_name="Changed", logo=None, logo_type="")
+        m.ProfilePhoto.objects.all().delete()
+        User.objects.update(photo_version=0)
 
     # ---- access
 

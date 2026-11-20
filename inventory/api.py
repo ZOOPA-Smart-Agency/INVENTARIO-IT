@@ -16,20 +16,23 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import IntegrityError, transaction
-from django.db.models import ProtectedError
+from django.db.models import F, ProtectedError, Q, TextField
+from django.db.models.functions import Cast
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from django.utils.crypto import constant_time_compare
 
 from . import backup as backups
+from . import logsize
 from . import maintenance as maint
+from . import photos
 from . import models as m
 from .catalog import load_catalog
 from .models import Assignment, AuditEvent, Device, Employee, Incident, User, clean_username, suggest_username
 from .registry import LISTS
 from .tags import SCOPES
 from .tags import conflict as tag_conflict
-from .state import (assignment_json, device_json, employee_json, full_state, incident_json, list_item_json,
+from .state import (assignment_json, device_json, employee_json, full_state, incident_json, list_item_json, log_json,
                     me_json, password_policy_json, settings_json)
 
 LOGIN_MAX_ATTEMPTS = 10
@@ -185,6 +188,7 @@ def get_or_404(model, pk):
 
 def audit(request, key, args=None, device=None):
     AuditEvent.objects.create(key=key, args=args or {}, device=device, user=request.user)
+    logsize.enforce()  # within the size limit, if one is set (checked every few minutes)
 
 
 def open_assignment(device):
@@ -198,9 +202,12 @@ def append_note(existing, note, sep):
 # ---- session -----------------------------------------------------------------
 
 
+def _client_ip(request):
+    return request.META.get("HTTP_X_FORWARDED_FOR", request.META.get("REMOTE_ADDR", "")).split(",")[0].strip()[:45]
+
+
 def _throttle_key(request, email):
-    ip = request.META.get("HTTP_X_FORWARDED_FOR", request.META.get("REMOTE_ADDR", "")).split(",")[0].strip()
-    return f"login:{ip}:{email}"
+    return f"login:{_client_ip(request)}:{email}"
 
 
 def login_email(identifier):
@@ -211,22 +218,30 @@ def login_email(identifier):
     return User.objects.filter(username=identifier).values_list("email", flat=True).first() or ""
 
 
-@endpoint("POST", auth=False)
+# not in one transaction: a failed sign-in is recorded, although the request then answers with an error
+@endpoint("POST", auth=False, atomic=False)
 def session_login(request, body):
     email = login_email(body.get("email"))
     password = body.get("password") or ""
-    key = _throttle_key(request, email or str(body.get("email") or "").strip().lower()[:254])
+    typed = str(body.get("email") or "").strip().lower()[:254]
+    key = _throttle_key(request, email or typed)
     if cache.get(key, 0) >= LOGIN_MAX_ATTEMPTS:
         raise ApiError("login_locked", 429)
     user = authenticate(request, username=email, password=str(password))  # also for unknown names: same timing
     if user is None:
         inactive = User.objects.filter(email=email, is_active=False).first() if email else None
+        # who it was for: the account, when the name or address is one; what was typed, otherwise
+        known = inactive or (User.objects.filter(email=email).first() if email else None)
+        AuditEvent.objects.create(key="log_login_failed", user=known,
+                                  args={"who": known.nombre if known else typed[:80], "ip": _client_ip(request)})
         if inactive and inactive.check_password(str(password)):
             raise ApiError("login_off", 403)
         cache.set(key, cache.get(key, 0) + 1, LOGIN_WINDOW_SECONDS)
         raise ApiError("login_err", 401)
     cache.delete(key)
     login(request, user)
+    AuditEvent.objects.create(key="log_login", user=user, args={"name": user.nombre, "ip": _client_ip(request)})
+    logsize.enforce()
     if user.must_change_password:  # nothing else until a new password is chosen
         return {"me": me_json(user), "settings": settings_json()}
     return {"me": me_json(user), "state": full_state(user)}
@@ -234,6 +249,8 @@ def session_login(request, body):
 
 @endpoint("POST", allow_pending=True, during_maintenance=True)
 def session_logout(request, body):
+    if request.user.is_authenticated:
+        audit(request, "log_logout", {"name": request.user.nombre})
     logout(request)
 
 
@@ -560,6 +577,7 @@ def _apply_employee(employee, b):
 def employee_create(request, body):
     employee = Employee()
     _apply_employee(employee, body)
+    audit(request, "log_emp_created", {"name": employee.nombre})
     return {"employee": employee_json(employee)}
 
 
@@ -567,6 +585,7 @@ def employee_create(request, body):
 def employee_update(request, body, pk):
     employee = get_or_404(Employee, pk)
     _apply_employee(employee, body)
+    audit(request, "log_emp_edited", {"name": employee.nombre})
     return {"employee": employee_json(employee)}
 
 
@@ -708,6 +727,7 @@ def _active_admins():
 
 
 def _apply_user(request, user, b):
+    created = not user.pk
     was_active_admin = bool(user.pk) and user.is_active and user.rol == User.Role.ADMIN
     user.nombre = text(b, "nombre", 200, required=True, error="err_user")
     user.email = text(b, "email", 254, required=True, error="err_user").lower()
@@ -742,7 +762,7 @@ def _apply_user(request, user, b):
     user.save()
     if password and user.pk == request.user.pk:
         update_session_auth_hash(request, user)  # changing your own password keeps you signed in
-    audit(request, "log_setting", {"xKey": "set_users"})
+    audit(request, "log_user_created" if created else "log_user_edited", {"name": user.nombre})
 
 
 @endpoint("POST", role="admin")
@@ -764,7 +784,7 @@ def user_toggle(request, body, pk):
         raise ApiError("err_last_admin", 409)
     user.is_active = not user.is_active
     user.save()
-    audit(request, "log_setting", {"xKey": "set_users"})
+    audit(request, "log_user_on" if user.is_active else "log_user_off", {"name": user.nombre})
     return {"activo": user.is_active}
 
 
@@ -846,6 +866,34 @@ def setup(request, body):
 # ---- own account ---------------------------------------------------------------
 
 
+@endpoint("PUT", "DELETE")
+def account_photo(request, body):
+    """Your own profile picture: PUT {data: a data: URL of the image}, or DELETE to remove it."""
+    user = request.user
+    if request.method == "DELETE":
+        m.ProfilePhoto.objects.filter(user=user).delete()
+    else:
+        try:
+            data = photos.from_data_url(body.get("data"))
+        except photos.PhotoError as e:
+            raise ApiError(e.code)
+        m.ProfilePhoto.objects.update_or_create(user=user, defaults={"data": data})
+        # counts every upload, never back to an earlier number: each picture gets an address of its own
+        User.objects.filter(pk=user.pk).update(photo_version=F("photo_version") + 1)
+        user.refresh_from_db(fields=["photo_version"])
+    return {"me": me_json(user)}
+
+
+@endpoint("DELETE", role="admin")
+def user_photo_delete(request, body, pk):
+    """An administrator removes someone's picture (one that should not be there); logged."""
+    user = get_or_404(User, pk)
+    deleted, _ = m.ProfilePhoto.objects.filter(user=user).delete()
+    if deleted:
+        audit(request, "log_photo_removed", {"name": user.nombre})
+    return {"ok": True}
+
+
 @endpoint("POST", allow_pending=True)
 def account_password(request, body):
     """Changes your own password; also how a required change is completed."""
@@ -870,6 +918,83 @@ def account_password(request, body):
     cache.delete(key)
     audit(request, "log_pwchanged", {"name": user.nombre})
     return {"me": me_json(user), "state": full_state(user)}
+
+
+# ---- activity log (Settings > Logs) ---------------------------------------------------
+
+LOG_KINDS = {
+    "devices": ("log_created", "log_edited", "log_assigned", "log_returned", "log_incident", "log_repair", "log_resolved",
+                "log_status", "log_check_ignored", "log_check_reset", "log_agent_created", "log_agent_updated"),
+    "people": ("log_emp_created", "log_emp_edited", "log_left", "log_back", "log_onleave"),
+    "access": ("log_login", "log_login_failed", "log_logout", "log_user_created", "log_user_edited", "log_user_on",
+               "log_user_off", "log_pwchanged", "log_photo_removed"),
+    "system": ("log_setting", "log_pruned", "log_setup", "log_backup_export", "log_backup_restore", "log_update_requested"),
+}
+LOG_PAGE = 100
+
+
+def _log_date(value):
+    if not value:
+        return None
+    try:
+        return dt.date.fromisoformat(value)
+    except ValueError:
+        raise ApiError("err_invalid")
+
+
+@endpoint("GET", role="admin")
+def logs(request, body):
+    """The whole history, newest first, a page at a time (`before`: the last id already shown), with filters:
+    kind (LOG_KINDS), user (an account id, or "none" for what no account did), from/to (dates), q (text)."""
+    q = request.GET
+    events = AuditEvent.objects.order_by("-id")
+    kind = q.get("kind", "")
+    if kind:
+        if kind not in LOG_KINDS:
+            raise ApiError("err_invalid")
+        events = events.filter(key__in=LOG_KINDS[kind])
+    who = q.get("user", "")
+    if who == "none":
+        events = events.filter(user__isnull=True)
+    elif who:
+        if not who.isdigit():
+            raise ApiError("err_invalid")
+        events = events.filter(user_id=int(who))
+    start, end = _log_date(q.get("from")), _log_date(q.get("to"))
+    if start:
+        events = events.filter(at__date__gte=start)
+    if end:
+        events = events.filter(at__date__lte=end)
+    search = q.get("q", "").strip()[:100]
+    if search:  # names, tags and the other details each entry keeps, the device's tag and who did it
+        events = events.annotate(details=Cast("args", TextField())).filter(
+            Q(details__icontains=search) | Q(device__tag__icontains=search) | Q(user__nombre__icontains=search) | Q(user__email__icontains=search))
+    before = q.get("before", "")
+    if before:
+        if not before.isdigit():
+            raise ApiError("err_invalid")
+        events = events.filter(id__lt=int(before))
+    rows = list(events[:LOG_PAGE + 1])
+    out = {"events": [{**log_json(e), "id": str(e.id), "at": e.at.isoformat()} for e in rows[:LOG_PAGE]], "more": len(rows) > LOG_PAGE}
+    if not before:  # the first page also says how big the whole log is
+        out["size"], out["count"] = logsize.usage()
+        out["maxMb"] = m.AppSettings.load().log_max_mb
+    return out
+
+
+@endpoint("PUT", role="admin")
+def log_limit_update(request, body):
+    """The activity log's size limit in MB: 0 for none, else 10 MB to 1 TB. Applied at once."""
+    value = body.get("maxMb")
+    if isinstance(value, bool) or not isinstance(value, int) or not (value == 0 or logsize.MIN_MB <= value <= logsize.MAX_MB):
+        raise ApiError("err_log_limit")
+    s = m.AppSettings.load()
+    s.log_max_mb = value
+    s.save(update_fields=["log_max_mb"])
+    deleted = logsize.enforce(force=True)  # before the entry below, which would check it first and keep the count
+    audit(request, "log_setting", {"xKey": "set_logs"})
+    size, count = logsize.usage()
+    return {"maxMb": value, "deleted": deleted, "size": size, "count": count}
 
 
 # ---- company logo ----------------------------------------------------------------

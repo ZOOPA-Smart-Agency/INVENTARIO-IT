@@ -1,5 +1,5 @@
 """Builds the JSON snapshot the interface renders from."""
-from .models import AppSettings, Assignment, AuditEvent, Device, Employee, Incident, User
+from .models import AppSettings, Assignment, AuditEvent, Device, Employee, Incident, ProfilePhoto, User
 from .registry import LISTS
 
 
@@ -43,8 +43,14 @@ def list_item_json(spec, obj):
     return out
 
 
-def user_json(u, full):
-    out = {"id": str(u.pk), "nombre": u.nombre, "rol": u.rol, "activo": u.is_active}
+def photo_of(u, with_photo=None):
+    """The address part of an account's picture (its version), or 0 without one. `with_photo`: the ids that have one."""
+    has = u.pk in with_photo if with_photo is not None else ProfilePhoto.objects.filter(user_id=u.pk).exists()
+    return u.photo_version if has and u.photo_version else 0
+
+
+def user_json(u, full, with_photo=None):
+    out = {"id": str(u.pk), "nombre": u.nombre, "rol": u.rol, "activo": u.is_active, "photo": photo_of(u, with_photo)}
     if full:  # addresses and sign-in dates are only for administrators
         out.update(email=u.email, username=u.username or "", last=iso(u.last_login.date() if u.last_login else None, None), mustChange=u.must_change_password)
     return out
@@ -52,7 +58,7 @@ def user_json(u, full):
 
 def me_json(u):
     out = {"id": str(u.pk), "nombre": u.nombre, "rol": u.rol, "email": u.email, "username": u.username or "", "activo": u.is_active,
-           "mustChange": u.must_change_password}
+           "mustChange": u.must_change_password, "photo": photo_of(u)}
     if u.must_change_password:  # the change-password screen shows the rules
         out["pwPolicy"] = password_policy_json()
     return out
@@ -121,6 +127,9 @@ def incident_json(i):
     }
 
 
+SIGN_IN_KEYS = ("log_login", "log_login_failed", "log_logout")
+
+
 def log_json(e):
     return {
         "fecha": e.at.date().isoformat(), "k": e.key, "a": e.args,
@@ -135,11 +144,13 @@ def full_state(user):
     is_admin = user.rol == User.Role.ADMIN
     if is_admin:  # only administrators set passwords
         state["settings"]["pwPolicy"] = password_policy_json()
-    state["users"] = [user_json(u, is_admin) for u in User.objects.order_by("id")]
+    with_photo = set(ProfilePhoto.objects.values_list("user_id", flat=True))
+    state["users"] = [user_json(u, is_admin, with_photo) for u in User.objects.order_by("id")]
     state["employees"] = [employee_json(e) for e in Employee.objects.prefetch_related("depts", "locs")]
     devices = Device.objects.prefetch_related("disks", "nics", "battery_readings", "disk_readings")
     state["devices"] = [device_json(d) for d in devices]
     state["assignments"] = [assignment_json(a) for a in Assignment.objects.all()]
     state["incidents"] = [incident_json(i) for i in Incident.objects.all()]
-    state["log"] = [log_json(e) for e in AuditEvent.objects.all()[:500]]
+    # sign-ins are only in Settings > Logs: here they would push the changes out of the Overview feed
+    state["log"] = [log_json(e) for e in AuditEvent.objects.exclude(key__in=SIGN_IN_KEYS)[:500]]
     return state

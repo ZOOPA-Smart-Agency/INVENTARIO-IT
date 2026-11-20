@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET
 
-from .models import AppSettings
+from .models import AppSettings, ProfilePhoto
 
 
 ASSETS = Path(__file__).resolve().parent / "static" / "inventory"
@@ -52,6 +52,26 @@ def logo(request):
     response["Cache-Control"] = "public, max-age=31536000, immutable"
     # an SVG opened directly must not run scripts
     response["Content-Security-Policy"] = "default-src 'none'; style-src 'unsafe-inline'; sandbox"
+    response["X-Content-Type-Options"] = "nosniff"
+    return response
+
+
+def user_photo(request, pk):
+    """An account's profile picture, for anyone signed in (it is shown next to names). Made by the server, always JPEG.
+    DELETE: an administrator removes it (api.user_photo_delete)."""
+    if request.method == "DELETE":
+        from .api import user_photo_delete
+        return user_photo_delete(request, pk=pk)
+    if request.method != "GET":
+        return JsonResponse({"error": "err_invalid"}, status=405)
+    if not request.user.is_authenticated or not request.user.is_active:
+        return JsonResponse({"error": "err_auth"}, status=401)
+    photo = ProfilePhoto.objects.filter(user_id=pk).only("data").first()
+    if not photo:
+        raise Http404
+    response = HttpResponse(bytes(photo.data), content_type="image/jpeg")
+    # the address changes with every new picture (?v=), so the browser can keep it; not shared caches
+    response["Cache-Control"] = "private, max-age=31536000, immutable"
     response["X-Content-Type-Options"] = "nosniff"
     return response
 
