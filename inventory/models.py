@@ -446,7 +446,10 @@ class AuditEvent(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
-        ordering = ["-id"]
+        # newest first by when it happened: some entries are written after the fact (how an update ended, at the
+        # time it did); the id settles entries of the same moment
+        ordering = ["-at", "-id"]
+        indexes = [models.Index(fields=["-at", "-id"], name="auditevent_newest")]
 
 
 class Maintenance(models.Model):

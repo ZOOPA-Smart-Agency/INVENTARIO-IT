@@ -6,6 +6,7 @@ deleted rows for new ones, so the table does not shrink when entries are deleted
 """
 from django.core.cache import cache
 from django.db import connection
+from django.db.models import Q
 
 from .models import AppSettings, AuditEvent
 
@@ -48,10 +49,11 @@ def enforce(force=False):
         return 0
     # down to 95% of the limit: room for what is logged next, so it is not trimmed (with a note) at every check
     keep = max(1, int(fits * TRIM_TO))
-    oldest_kept = AuditEvent.objects.order_by("-id").values_list("id", flat=True)[keep - 1:keep].first()
+    oldest_kept = AuditEvent.objects.order_by("-at", "-id").values_list("at", "id")[keep - 1:keep].first()
     if oldest_kept is None:
         return 0
-    deleted, _ = AuditEvent.objects.filter(id__lt=oldest_kept).delete()
+    at, pk = oldest_kept  # everything older than it, in the log's own order, goes
+    deleted, _ = AuditEvent.objects.filter(Q(at__lt=at) | Q(at=at, id__lt=pk)).delete()
     if deleted:
         AuditEvent.objects.create(key="log_pruned", args={"n": deleted, "mb": limit_mb})
     return deleted

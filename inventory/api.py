@@ -1013,7 +1013,7 @@ def logs(request, body):
     from .updates import record_results
     record_results()
     q = request.GET
-    events = AuditEvent.objects.order_by("-id")
+    events = AuditEvent.objects.order_by("-at", "-id")
     kind = q.get("kind", "")
     if kind:
         if kind not in LOG_KINDS:
@@ -1036,10 +1036,13 @@ def logs(request, body):
         events = events.annotate(details=Cast("args", TextField())).filter(
             Q(details__icontains=search) | Q(device__tag__icontains=search) | Q(user__nombre__icontains=search) | Q(user__email__icontains=search))
     before = q.get("before", "")
-    if before:
+    if before:  # the last entry already shown: the next page continues after it, in the same order
         if not before.isdigit():
             raise ApiError("err_invalid")
-        events = events.filter(id__lt=int(before))
+        last = AuditEvent.objects.filter(pk=int(before)).values_list("at", flat=True).first()
+        if last is None:
+            raise ApiError("err_invalid")  # deleted meanwhile (the size limit): start again from the top
+        events = events.filter(Q(at__lt=last) | Q(at=last, id__lt=int(before)))
     rows = list(events[:LOG_PAGE + 1])
     out = {"events": [{**log_json(e), "id": str(e.id), "at": e.at.isoformat()} for e in rows[:LOG_PAGE]], "more": len(rows) > LOG_PAGE}
     if not before:  # the first page also says how big the whole log is

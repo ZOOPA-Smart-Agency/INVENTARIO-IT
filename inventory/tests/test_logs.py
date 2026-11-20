@@ -224,3 +224,24 @@ class ClearerEntriesTests(LogsBase):
         self.assertEqual((back.args["msg"], back.user_id, back.args["auto"]), ("The new version did not answer.", None, True))
         self.assertEqual(AuditEvent.objects.filter(key__startswith="log_update_").exclude(key="log_update_requested").count(), 2)
         self.assertIn("log_update_done", [e["k"] for e in self.logs(kind="system")["events"]])
+
+
+class LogOrderTests(LogsBase):
+    def test_by_time_even_when_written_later(self):
+        AuditEvent.objects.all().delete()
+        now = timezone.now()
+        a = AuditEvent.objects.create(key="log_setting", args={"i": 1}, at=now - timedelta(hours=2))
+        b = AuditEvent.objects.create(key="log_setting", args={"i": 2}, at=now)
+        late = AuditEvent.objects.create(key="log_update_done", args={"v": "v1.19.0"}, at=now - timedelta(hours=1))  # written last
+        self.assertEqual([e["id"] for e in self.logs()["events"]], [str(b.pk), str(late.pk), str(a.pk)])
+        self.assertEqual([e["k"] for e in self.client_for(self.admin).get("/api/state").json()["state"]["log"]][:3],
+                         ["log_setting", "log_update_done", "log_setting"])
+
+    def test_pages_across_the_same_moment(self):
+        AuditEvent.objects.all().delete()
+        moment = timezone.now()
+        AuditEvent.objects.bulk_create([AuditEvent(key="log_setting", args={"i": i}, at=moment) for i in range(150)])
+        first = self.logs()
+        second = self.logs(before=first["events"][-1]["id"])
+        ids = [e["id"] for e in first["events"] + second["events"]]
+        self.assertEqual((len(ids), len(set(ids)), second["more"]), (150, 150, False))
