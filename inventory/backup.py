@@ -313,7 +313,7 @@ def restore(raw, password=None, report=None):
     """
     report = report or (lambda phase, done, total: None)
     report("reading", 0, 0)
-    _, data, logo = read(raw, password)
+    summary, data, logo = read(raw, password)
     data = upgrade(data)
     plan = _objects(data, logo)
     total, done = sum(len(objects) for _, objects in plan), 0
@@ -336,3 +336,4 @@ def restore(raw, password=None, report=None):
             cursor.execute(sql)
     _upgrade_types(data)
     Session.objects.all().delete()  # everyone signs in again against the restored accounts
+    return summary

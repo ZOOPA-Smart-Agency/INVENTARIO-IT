@@ -1,6 +1,7 @@
 """Builds the JSON snapshot the interface renders from."""
 from .models import AppSettings, Assignment, AuditEvent, Device, Employee, Incident, ProfilePhoto, User
 from .registry import LISTS
+from .updates import record_results
 
 
 def sid(value):
@@ -152,5 +153,6 @@ def full_state(user):
     state["assignments"] = [assignment_json(a) for a in Assignment.objects.all()]
     state["incidents"] = [incident_json(i) for i in Incident.objects.all()]
     # sign-ins are only in Settings > Logs: here they would push the changes out of the Overview feed
+    record_results()  # how installed updates ended
     state["log"] = [log_json(e) for e in AuditEvent.objects.exclude(key__in=SIGN_IN_KEYS)[:500]]
     return state

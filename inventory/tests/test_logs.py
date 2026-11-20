@@ -11,7 +11,7 @@ from inventory.models import AuditEvent, Device, Employee, User
 PASSWORD = "Correct-Horse-Battery-7"
 
 
-class LogsTests(TestCase):
+class LogsBase(TestCase):
     @classmethod
     def setUpTestData(cls):
         call_command("load_demo_data", password=PASSWORD, verbosity=0, stdout=open("/dev/null", "w"))
@@ -31,6 +31,14 @@ class LogsTests(TestCase):
 
     def last(self):
         return AuditEvent.objects.order_by("-id").first()
+
+    def logs(self, client=None, **params):
+        response = (client or self.client_for(self.admin)).get("/api/logs", params)
+        self.assertEqual(response.status_code, 200, response.content)
+        return response.json()
+
+
+class LogsTests(LogsBase):
 
     # ---- what is recorded
 
@@ -53,25 +61,27 @@ class LogsTests(TestCase):
         admin = self.client_for(self.admin)
         response = self.send(admin, "post", "users", {"nombre": "Nueva Persona", "email": "nueva@empresa.es", "rol": "read", "pass": "Another-Long-Pass-91!"})
         self.assertEqual(response.status_code, 200, response.content)
-        self.assertEqual((self.last().key, self.last().args), ("log_user_created", {"name": "Nueva Persona"}))
+        self.assertEqual((self.last().key, self.last().args), ("log_user_created", {"name": "Nueva Persona", "rol": "read"}))
         new = User.objects.get(email="nueva@empresa.es")
         self.send(admin, "post", f"users/{new.pk}/toggle")
         self.assertEqual(self.last().key, "log_user_off")
         self.send(admin, "post", f"users/{new.pk}/toggle")
         self.assertEqual(self.last().key, "log_user_on")
-        self.send(admin, "put", f"users/{new.pk}", {"nombre": "Nueva P.", "email": "nueva@empresa.es", "rol": "read"})
-        self.assertEqual((self.last().key, self.last().args), ("log_user_edited", {"name": "Nueva P."}))
+        self.send(admin, "put", f"users/{new.pk}", {"nombre": "Nueva P.", "email": "nueva@empresa.es", "username": "nueva", "rol": "tech", "pass": "Yet-Another-Pass-77!"})
+        self.assertEqual((self.last().key, self.last().args), ("log_user_edited", {
+            "name": "Nueva P.", "ch": [["nombre", "Nueva Persona", "Nueva P."], ["rol", "read", "tech"], ["password", None, None]]}))
+        self.assertNotIn("Yet-Another", json.dumps(self.last().args))
+        before = AuditEvent.objects.count()
+        self.send(admin, "put", f"users/{new.pk}", {"nombre": "Nueva P.", "email": "nueva@empresa.es", "username": "nueva", "rol": "tech"})
+        self.assertEqual(AuditEvent.objects.count(), before, "saved without changes: nothing to record")
         employee = Employee.objects.first()
         body = next(e for e in admin.get("/api/state").json()["state"]["employees"] if e["id"] == str(employee.pk))
-        self.assertEqual(self.send(admin, "put", f"employees/{employee.pk}", body).status_code, 200)
-        self.assertEqual((self.last().key, self.last().args["name"]), ("log_emp_edited", employee.nombre))
+        self.send(admin, "put", f"employees/{employee.pk}", body)
+        self.assertEqual(AuditEvent.objects.count(), before)
+        self.assertEqual(self.send(admin, "put", f"employees/{employee.pk}", {**body, "contrato": "temporal", "email": "otro@x.es"}).status_code, 200)
+        self.assertEqual((self.last().key, self.last().args["parts"]), ("log_emp_edited", ["email", "contrato"]))
 
     # ---- the Logs page
-
-    def logs(self, client=None, **params):
-        response = (client or self.client_for(self.admin)).get("/api/logs", params)
-        self.assertEqual(response.status_code, 200, response.content)
-        return response.json()
 
     def test_only_admins(self):
         self.assertEqual(self.client_for(self.tech).get("/api/logs").status_code, 403)
@@ -116,7 +126,7 @@ class LogsTests(TestCase):
             self.assertEqual(admin.get("/api/logs", bad).status_code, 400, bad)
 
 
-class LogLimitTests(LogsTests):
+class LogLimitTests(LogsBase):
     """Settings > Logs: a maximum size, past which the oldest entries are deleted."""
 
     def put_limit(self, value, client=None):
@@ -157,3 +167,60 @@ class LogLimitTests(LogsTests):
             self.assertEqual(logsize.enforce(), 0, "checked a moment ago")
         self.put_limit(0)
         self.assertEqual(logsize.enforce(force=True), 0, "no limit: nothing is deleted")
+
+
+class ClearerEntriesTests(LogsBase):
+    """Entries say what changed: settings, lists, devices, backups and how updates ended."""
+
+    def test_settings(self):
+        admin = self.client_for(self.admin)
+        from inventory.models import AppSettings
+        from inventory.state import settings_json
+        body = {**settings_json(AppSettings.load()), "dateFmt": "ymd", "currency": "USD"}
+        self.assertEqual(self.send(admin, "put", "settings", body).status_code, 200)
+        self.assertEqual(self.last().args, {"xKey": "set_region", "ch": [["dateFmt", "dmy", "ymd"], ["currency", "EUR", "USD"]]})
+        count = AuditEvent.objects.count()
+        self.send(admin, "put", "settings", body)
+        self.assertEqual(AuditEvent.objects.count(), count, "nothing changed")
+        self.send(admin, "put", "logs/limit", {"maxMb": 100})
+        self.assertEqual(self.last().args, {"xKey": "set_logs", "ch": [["logMax", 0, 100]]})
+        self.send(admin, "put", "updates/auto", {"enabled": True, "hour": 4})
+        self.assertEqual(self.last().args["ch"][0][0], "autoUpdate")
+
+    def test_lists(self):
+        admin = self.client_for(self.admin)
+        created = self.send(admin, "post", "lists/cpus", {"nombre": "Intel Core i9-14900K", "cores": 24}).json()["item"]
+        self.assertEqual((self.last().key, self.last().args), ("log_item_added", {"xKey": "set_cpus", "name": "Intel Core i9-14900K"}))
+        self.send(admin, "put", f"lists/cpus/{created['id']}", {"nombre": "Intel Core i9-14900KF", "cores": 24})
+        self.assertEqual((self.last().key, self.last().args["ch"]), ("log_item_edited", [["nombre", "Intel Core i9-14900K", "Intel Core i9-14900KF"]]))
+        self.send(admin, "delete", f"lists/cpus/{created['id']}")
+        self.assertEqual((self.last().key, self.last().args["name"]), ("log_item_deleted", "Intel Core i9-14900KF"))
+
+    def test_device_parts(self):
+        from inventory.api import device_parts_changed
+        before = {"estado": "uso", "ramSize": 8, "disks": [{"size": 512, "checked": "2026-01-01"}], "batHealth": 90}
+        after = {"estado": "uso", "ramSize": 16, "disks": [{"size": 512, "checked": "2026-02-01"}], "batHealth": 90}
+        self.assertEqual(device_parts_changed(before, after), ["ram"])  # a new reading date alone is no change
+        self.assertEqual(device_parts_changed(after, after), [])
+
+    def test_backups_and_checks(self):
+        admin = self.client_for(self.admin)
+        admin.post("/api/backup/export", data=json.dumps({"password": "Long-enough-password-1"}), content_type="application/json")
+        self.assertEqual((self.last().key, self.last().args), ("log_backup_export", {"enc": True}))
+
+    def test_update_results(self):
+        from inventory import models as m
+        from inventory.updates import record_results
+        finished = timezone.now() - timedelta(hours=3)
+        ok = m.UpdateJob.objects.create(requested_by=self.admin.nombre, from_version="1.18.1", target="v1.19.0", status="done", finished_at=finished)
+        bad = m.UpdateJob.objects.create(automatic=True, from_version="1.19.0", target="v1.20.0", status="rolled_back",
+                                         message="The new version did not answer.", finished_at=finished)
+        m.UpdateJob.objects.create(target="v1.21.0", status="running")  # not finished: nothing yet
+        record_results()
+        record_results()  # once each
+        done = AuditEvent.objects.get(key="log_update_done")
+        self.assertEqual((done.args, done.user_id, done.at), ({"job": ok.id, "v": "v1.19.0", "from": "1.18.1", "auto": False}, self.admin.pk, finished))
+        back = AuditEvent.objects.get(key="log_update_rolled_back")
+        self.assertEqual((back.args["msg"], back.user_id, back.args["auto"]), ("The new version did not answer.", None, True))
+        self.assertEqual(AuditEvent.objects.filter(key__startswith="log_update_").exclude(key="log_update_requested").count(), 2)
+        self.assertIn("log_update_done", [e["k"] for e in self.logs(kind="system")["events"]])

@@ -30,7 +30,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from . import maintenance as maint
 from . import models as m
-from .api import LOGIN_MAX_ATTEMPTS, LOGIN_WINDOW_SECONDS, MAC_RE, ApiError, _throttle_key, login_email
+from .api import LOGIN_MAX_ATTEMPTS, LOGIN_WINDOW_SECONDS, MAC_RE, ApiError, _throttle_key, device_parts_changed, login_email
 from .models import AuditEvent, Device, User
 from .state import device_json
 from .tags import conflict as tag_conflict
@@ -308,10 +308,14 @@ def report(request, body):
         device = Device(tag=tag, serial=serial, type=dtype, loc=loc, estado=Device.State.AVAILABLE)
     else:
         device = Device.objects.select_for_update().get(pk=device.pk)
+    before = None if created else device_json(device)
     _apply_facts(device, facts)
     device.save()
     _apply_parts(device, facts)
-    AuditEvent.objects.create(key="log_agent_created" if created else "log_agent_updated", args={"tag": device.tag},
+    args = {"tag": device.tag}
+    if before is not None:
+        args["parts"] = device_parts_changed(before, device_json(device))  # empty: read again, nothing changed
+    AuditEvent.objects.create(key="log_agent_created" if created else "log_agent_updated", args=args,
                               device=device, user=request.user)
     return {"created": created, "device": device_json(device)}
 

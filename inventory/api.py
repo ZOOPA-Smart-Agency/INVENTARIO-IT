@@ -186,6 +186,40 @@ def get_or_404(model, pk):
         raise ApiError("err_not_found", 404)
 
 
+def _diff(before, after):
+    """[[field, before, after], ...] for each field whose value changed: shown in the activity log."""
+    return [[k, before.get(k), v] for k, v in after.items() if before.get(k) != v]
+
+
+# what each part of a device is called in the log; values that change on every report are left out
+DEVICE_PARTS = {
+    "tag": "tag", "nombre": "name", "serial": "serial", "typeId": "model", "modelId": "model", "customName": "model",
+    "estado": "status", "loc": "loc", "compra": "purchase", "precio": "purchase", "proveedor": "purchase", "factura": "purchase",
+    "garantia": "warranty", "garantiaExt": "warranty", "garantiaEnded": "warranty", "destino": "disposal", "wipeCert": "disposal",
+    "notas": "notes", "cpuId": "cpu", "cpuRep": "cpu", "ramSize": "ram", "ramUnit": "ram", "ramGen": "ram", "ramSpeed": "ram",
+    "ramSpeedUnit": "ram", "ramRep": "ram", "ramModules": "ram", "ramModSize": "ram", "ramModUnit": "ram", "ramForm": "ram",
+    "gpuId": "gpu", "screen": "screen", "touch": "screen", "batHealth": "battery", "batCycles": "battery",
+    "osFamily": "os", "osVerId": "os", "osEditionId": "os", "osDistroId": "os", "osNumber": "os", "oclp": "os",
+    "oclpVersion": "os", "hackintosh": "os", "enc": "enc", "ad": "ad", "disks": "disks", "nics": "nics",
+}
+
+
+def _same_disks(disks):
+    return [{k: v for k, v in d.items() if k != "checked"} for d in disks or []]  # the date drives were last read
+
+
+def device_parts_changed(before, after):
+    """The parts of a device that changed between two device_json(): ["status", "ram", ...], in form order."""
+    out = []
+    for key, part in DEVICE_PARTS.items():
+        old, new = before.get(key), after.get(key)
+        if key == "disks":
+            old, new = _same_disks(old), _same_disks(new)
+        if old != new and part not in out:
+            out.append(part)
+    return out
+
+
 def audit(request, key, args=None, device=None):
     AuditEvent.objects.create(key=key, args=args or {}, device=device, user=request.user)
     logsize.enforce()  # within the size limit, if one is set (checked every few minutes)
@@ -412,8 +446,11 @@ def device_create(request, body):
 @endpoint("PUT", role="edit")
 def device_update(request, body, pk):
     device = get_or_404(Device, pk)
+    before = device_json(device)
     _apply_device(device, body)
-    audit(request, "log_edited", {"tag": device.tag}, device)
+    parts = device_parts_changed(before, device_json(device))
+    if parts:
+        audit(request, "log_edited", {"tag": device.tag, "parts": parts}, device)
     return {"device": device_json(device)}
 
 
@@ -549,7 +586,8 @@ def device_checks(request, body, pk):
         if key not in device.checks_ignored:
             device.checks_ignored = [*device.checks_ignored, key]
     device.save(update_fields=["checks_ignored"])
-    audit(request, "log_check_reset" if body.get("reset") else "log_check_ignored", {"tag": device.tag}, device)
+    args = {"tag": device.tag} if body.get("reset") else {"tag": device.tag, "chk": str(body.get("key") or "")[:40]}
+    audit(request, "log_check_reset" if body.get("reset") else "log_check_ignored", args, device)
     return {"device": device_json(device)}
 
 
@@ -584,8 +622,12 @@ def employee_create(request, body):
 @endpoint("PUT", role="edit")
 def employee_update(request, body, pk):
     employee = get_or_404(Employee, pk)
+    before = employee_json(employee)
     _apply_employee(employee, body)
-    audit(request, "log_emp_edited", {"name": employee.nombre})
+    after = employee_json(employee)
+    parts = [k for k in ("nombre", "email", "depts", "locs", "alta", "estado", "contrato") if before.get(k) != after.get(k)]
+    if parts:
+        audit(request, "log_emp_edited", {"name": employee.nombre, "parts": parts})
     return {"employee": employee_json(employee)}
 
 
@@ -627,8 +669,11 @@ def _apply_settings(s, body):
 @endpoint("PUT", role="admin")
 def settings_update(request, body):
     s = m.AppSettings.load()
+    before = settings_json(s)
     _apply_settings(s, body)
-    audit(request, "log_setting", {"xKey": "set_region"})
+    changes = _diff(before, {k: v for k, v in settings_json(s).items() if k != "logo"})
+    if changes:
+        audit(request, "log_setting", {"xKey": "set_region", "ch": changes})
     return {"settings": settings_json(s)}
 
 
@@ -661,8 +706,11 @@ def _password_allowed(password, s):
 @endpoint("PUT", role="admin")
 def password_policy_update(request, body):
     s = m.AppSettings.load()
+    before = password_policy_json(s)
     _apply_password_policy(s, body)
-    audit(request, "log_setting", {"xKey": "set_pwpolicy"})
+    changes = _diff(before, password_policy_json(s))
+    if changes:
+        audit(request, "log_setting", {"xKey": "set_pwpolicy", "ch": changes})
     return {"pwPolicy": password_policy_json(s)}
 
 
@@ -703,7 +751,7 @@ def list_create(request, body, coll):
     spec = _spec(coll)
     item = spec.model()
     _apply_item(spec, item, body)
-    audit(request, "log_setting", {"xKey": spec.title})
+    audit(request, "log_item_added", {"xKey": spec.title, "name": item.nombre})
     return {"item": list_item_json(spec, item)}
 
 
@@ -714,11 +762,15 @@ def list_item(request, body, coll, pk):
     if request.method == "DELETE":
         if hasattr(item, "employees") and item.employees.exists():
             raise ApiError("in_use_cant", 409)  # a department or office people still belong to (not protected by the database)
+        name = item.nombre
         item.delete()
-        audit(request, "log_setting", {"xKey": spec.title})
+        audit(request, "log_item_deleted", {"xKey": spec.title, "name": name})
         return None
+    before = list_item_json(spec, item)
     _apply_item(spec, item, body)
-    audit(request, "log_setting", {"xKey": spec.title})
+    changes = [c for c in _diff(before, list_item_json(spec, item)) if c[0] != "id"]
+    if changes:
+        audit(request, "log_item_edited", {"xKey": spec.title, "name": item.nombre, "ch": changes})
     return {"item": list_item_json(spec, item)}
 
 
@@ -728,6 +780,8 @@ def _active_admins():
 
 def _apply_user(request, user, b):
     created = not user.pk
+    before = {} if created else {"nombre": user.nombre, "email": user.email, "username": user.username or "", "rol": user.rol,
+                                 "mustChange": user.must_change_password}
     was_active_admin = bool(user.pk) and user.is_active and user.rol == User.Role.ADMIN
     user.nombre = text(b, "nombre", 200, required=True, error="err_user")
     user.email = text(b, "email", 254, required=True, error="err_user").lower()
@@ -762,7 +816,15 @@ def _apply_user(request, user, b):
     user.save()
     if password and user.pk == request.user.pk:
         update_session_auth_hash(request, user)  # changing your own password keeps you signed in
-    audit(request, "log_user_created" if created else "log_user_edited", {"name": user.nombre})
+    if created:
+        audit(request, "log_user_created", {"name": user.nombre, "rol": user.rol})
+        return
+    changes = _diff(before, {"nombre": user.nombre, "email": user.email, "username": user.username or "", "rol": user.rol,
+                             "mustChange": user.must_change_password})
+    if password:
+        changes.append(["password", None, None])  # never the password itself
+    if changes:
+        audit(request, "log_user_edited", {"name": user.nombre, "ch": changes})
 
 
 @endpoint("POST", role="admin")
@@ -928,7 +990,9 @@ LOG_KINDS = {
     "people": ("log_emp_created", "log_emp_edited", "log_left", "log_back", "log_onleave"),
     "access": ("log_login", "log_login_failed", "log_logout", "log_user_created", "log_user_edited", "log_user_on",
                "log_user_off", "log_pwchanged", "log_photo_removed"),
-    "system": ("log_setting", "log_pruned", "log_setup", "log_backup_export", "log_backup_restore", "log_update_requested"),
+    "system": ("log_setting", "log_pruned", "log_setup", "log_backup_export", "log_backup_restore", "log_update_requested",
+               "log_update_done", "log_update_failed", "log_update_rolled_back", "log_logo_set", "log_logo_removed",
+               "log_item_added", "log_item_edited", "log_item_deleted"),
 }
 LOG_PAGE = 100
 
@@ -946,6 +1010,8 @@ def _log_date(value):
 def logs(request, body):
     """The whole history, newest first, a page at a time (`before`: the last id already shown), with filters:
     kind (LOG_KINDS), user (an account id, or "none" for what no account did), from/to (dates), q (text)."""
+    from .updates import record_results
+    record_results()
     q = request.GET
     events = AuditEvent.objects.order_by("-id")
     kind = q.get("kind", "")
@@ -989,10 +1055,12 @@ def log_limit_update(request, body):
     if isinstance(value, bool) or not isinstance(value, int) or not (value == 0 or logsize.MIN_MB <= value <= logsize.MAX_MB):
         raise ApiError("err_log_limit")
     s = m.AppSettings.load()
+    old = s.log_max_mb
     s.log_max_mb = value
     s.save(update_fields=["log_max_mb"])
     deleted = logsize.enforce(force=True)  # before the entry below, which would check it first and keep the count
-    audit(request, "log_setting", {"xKey": "set_logs"})
+    if old != value:
+        audit(request, "log_setting", {"xKey": "set_logs", "ch": [["logMax", old, value]]})
     size, count = logsize.usage()
     return {"maxMb": value, "deleted": deleted, "size": size, "count": count}
 
@@ -1039,7 +1107,7 @@ def logo_update(request, body):
         s.logo, s.logo_type = data, match.group(1)
     s.logo_version += 1
     s.save()
-    audit(request, "log_setting", {"xKey": "set_brand"})
+    audit(request, "log_logo_removed" if request.method == "DELETE" else "log_logo_set")
     return {"logo": s.logo_version if s.logo_type else 0}
 
 
@@ -1051,7 +1119,7 @@ def backup_export(request, body):
     password = str(body.get("password") or "")
     if password and len(password) < backups.MIN_PASSWORD:
         raise ApiError("err_bk_pw_short")
-    audit(request, "log_backup_export")
+    audit(request, "log_backup_export", {"enc": bool(password)})
     content = backups.build(request.user, password or None)
     response = HttpResponse(content, content_type="application/octet-stream")
     name = f"inventario-copia-{timezone.localdate().isoformat()}{backups.EXTENSION}"
@@ -1091,8 +1159,10 @@ def backup_restore(request, body):
         raise ApiError("err_maintenance_busy", 409)
     try:
         with transaction.atomic():
-            backups.restore(raw, password, report=maint.Reporter())
-            AuditEvent.objects.create(key="log_backup_restore", args={}, user=User.objects.filter(email=email).first())
+            summary = backups.restore(raw, password, report=maint.Reporter())
+            made = str(summary.get("created") or "")[:10]  # the date the backup was made
+            AuditEvent.objects.create(key="log_backup_restore", args={"made": made, "by": str(summary.get("createdBy") or "")[:254]},
+                                      user=User.objects.filter(email=email).first())
     except backups.BackupError as e:
         raise ApiError(e.code)
     finally:
@@ -1217,7 +1287,10 @@ def updates_auto(request, body):
     hour = number(body, "hour", 0, 23)
     if hour is None or hour != int(hour):
         raise ApiError("err_invalid")
+    before = {"autoUpdate": s.auto_update, "autoHour": s.auto_update_hour}
     s.auto_update, s.auto_update_hour = bool(body.get("enabled")), int(hour)
     s.save()
-    audit(request, "log_setting", {"xKey": "set_updates"})
+    changes = _diff(before, {"autoUpdate": s.auto_update, "autoHour": s.auto_update_hour})
+    if changes:
+        audit(request, "log_setting", {"xKey": "set_updates", "ch": changes})
     return {"auto": {"enabled": s.auto_update, "hour": s.auto_update_hour}}

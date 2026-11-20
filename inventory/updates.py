@@ -151,3 +151,34 @@ def check():
     result["checked"] = timezone.now().isoformat()
     cache.set(CACHE_KEY, result, CACHE_SECONDS)
     return result
+
+
+# ---- results in the activity log ---------------------------------------------------------------
+
+RESULTS_LOCK = 7_310_412  # any number of this app's own
+RESULT_KEYS = {"done": "log_update_done", "failed": "log_update_failed", "rolled_back": "log_update_rolled_back"}
+
+
+def record_results():
+    """Adds each finished installation's result to the activity log, once. The updater service, which installs them,
+    only writes the job (and may itself be an older version); the web app notes how it ended, at the time it did."""
+    from django.db import connection, transaction
+
+    from .models import AuditEvent, UpdateJob, User
+
+    finished = list(UpdateJob.objects.filter(status__in=RESULT_KEYS, finished_at__isnull=False))
+    if not finished:
+        return
+    with transaction.atomic():
+        # one request at a time, or two at once could both add the same results (held until the transaction ends)
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT pg_advisory_xact_lock(%s)", [RESULTS_LOCK])
+        logged = set(AuditEvent.objects.filter(key__in=RESULT_KEYS.values()).values_list("args__job", flat=True))
+        for job in finished:
+            if job.id in logged:
+                continue
+            args = {"job": job.id, "v": job.target, "from": job.from_version, "auto": job.automatic}
+            if job.status != "done":
+                args["msg"] = job.message[:300]
+            by = User.objects.filter(nombre=job.requested_by).first() if job.requested_by else None
+            AuditEvent.objects.create(key=RESULT_KEYS[job.status], args=args, user=by, at=job.finished_at)

@@ -118,7 +118,10 @@ class BackupTests(TestCase):
         self.assertEqual(response.status_code, 200, response.content)
         self.assertEqual(self.snapshot(), before)
         self.assertEqual(AuditEvent.objects.order_by("id").first().at.isoformat(), logged_at)
-        self.assertEqual(AuditEvent.objects.first().key, "log_backup_restore")
+        restored = AuditEvent.objects.first()
+        self.assertEqual(restored.key, "log_backup_restore")
+        self.assertEqual(restored.args["by"], "admin@empresa.es")  # which backup: who made it and when
+        self.assertRegex(restored.args["made"], r"^\d{4}-\d{2}-\d{2}$")
 
     def test_inspect_changes_nothing(self):
         raw = self.export().content

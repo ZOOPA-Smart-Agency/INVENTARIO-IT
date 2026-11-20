@@ -57,7 +57,7 @@ class MakePictureTests(TestCase):
                 photos.from_data_url(value)
 
 
-class PhotoApiTests(TestCase):
+class PhotoBase(TestCase):
     @classmethod
     def setUpTestData(cls):
         call_command("load_demo_data", password=PASSWORD, verbosity=0, stdout=open("/dev/null", "w"))
@@ -75,6 +75,9 @@ class PhotoApiTests(TestCase):
     def put(self, client, body):
         return client.put("/api/account/photo", data=json.dumps(body), content_type="application/json")
 
+
+
+class PhotoApiTests(PhotoBase):
     def test_upload_show_and_remove(self):
         me = self.client_for(self.reader)  # any role sets its own picture
         response = self.put(me, {"data": data_url(image())})
@@ -109,7 +112,7 @@ class PhotoApiTests(TestCase):
         self.assertFalse(m.ProfilePhoto.objects.exists())
 
 
-class AdminRemovesPhotoTests(PhotoApiTests):
+class AdminRemovesPhotoTests(PhotoBase):
     """An administrator can remove someone's picture; nobody else can, and it is logged."""
 
     def test_admin_removes(self):
