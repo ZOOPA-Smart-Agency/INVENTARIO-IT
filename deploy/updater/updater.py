@@ -54,6 +54,16 @@ class Failed(Exception):
     """A step that did not work; the message is shown in the update history."""
 
 
+def release_version(source):
+    """The version a release's code says it is (inventory/version.py), or "" if it does not say."""
+    try:
+        text = (source / "inventory" / "version.py").read_text(encoding="utf-8")
+    except OSError:
+        return ""
+    match = re.search(r"""^VERSION\s*=\s*["']([^"']+)["']""", text, re.M)
+    return match.group(1) if match else ""
+
+
 def version_tuple(value):
     match = TAG.match(value if str(value).startswith("v") else f"v{value}")
     return tuple(int(n) for n in match.groups()) if match else None
@@ -402,6 +412,12 @@ class Updater:
         roots = [p for p in work.iterdir() if p.is_dir()]
         if len(roots) != 1 or not (roots[0] / "Dockerfile").exists():
             raise Failed("the release does not contain the app")
+        # a tag made on the wrong commit: that code would answer with another version, and after waiting for the
+        # one asked for, the update would be rolled back. Better refused now, saying why.
+        found = release_version(roots[0])
+        if found != target.lstrip("v"):
+            raise Failed(f"the release {target} contains version {found or 'unknown'} (inventory/version.py): its tag points at "
+                         f"the wrong commit. Move the tag to the commit where VERSION is \"{target.lstrip('v')}\" and try again.")
         return roots[0]
 
     def build(self, target, source):

@@ -125,7 +125,7 @@ These backups are for moving or recovering the app's data. The hosting database 
 To publish a release:
 
 1. Raise `VERSION` in `inventory/version.py` (for example `1.1.0`) and commit.
-2. On GitHub, create a release with the tag `v1.1.0` and write what changed in its notes. Mark it as a pre-release if it is not ready for everyone.
+2. Commit and push that change **first**, then on GitHub create a release with the tag `v1.1.0` on that commit (the latest on `main`) and write what changed in its notes. Mark it as a pre-release if it is not ready for everyone. A tag made before the version change is committed points at the old code: the server's updater refuses such a release straight away ("contains version 1.0.0 … its tag points at the wrong commit"), and nothing changes.
 3. The **Release** workflow (`.github/workflows/release.yml`) runs the tests, checks that the tag matches `VERSION`, and publishes the app image to GitHub's container registry as `ghcr.io/zoopa-smart-agency/inventario-it:1.1.0`, plus `:latest` for normal releases. If the tag and `VERSION` differ, it stops without publishing.
 4. On a server installed with `deploy/install.sh`, install it from **Settings > General > Updates**, or let it install itself at night. On other hosting, make a backup and deploy that image.
 

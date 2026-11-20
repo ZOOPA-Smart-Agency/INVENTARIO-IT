@@ -31,7 +31,8 @@ def archive(files, root="acme-inventario-abc1234"):
 
 
 RELEASE_FILES = {"Dockerfile": "FROM python", "deploy/docker-compose.yml": "new compose", "deploy/Caddyfile": "new caddy",
-                 "deploy/maintenance.html": "new page", "deploy/updater/updater.py": "same updater"}
+                 "deploy/maintenance.html": "new page", "deploy/updater/updater.py": "same updater",
+                 "inventory/version.py": '"""The version."""\nimport os\n\nVERSION = "1.1.0"\n'}
 
 
 class FakeDb:
@@ -212,6 +213,19 @@ class InstallTests(UpdaterTestCase):
         self.assertFalse((self.dir / "escape.txt").exists())
         self.assertFalse((self.dir.parent / "escape.txt").exists())
         self.assertEqual(self.env()["APP_VERSION"], "1.0.0")
+
+    def test_tag_on_the_wrong_commit_is_refused_at_once(self):
+        files = dict(RELEASE_FILES, **{"inventory/version.py": 'VERSION = "1.0.0"\n'})  # tagged v1.1.0 before the bump
+        self.make(FakeGitHub(files=files)).install(self.job, "1.0.0")
+        final = self.db.final(7)
+        self.assertEqual(final["status"], "failed")
+        self.assertIn("Nothing was changed", final["message"])
+        self.assertIn("contains version 1.0.0", final["message"])
+        self.assertFalse(any(c.startswith("docker build") for c in self.commands()), "not built, nothing switched")
+        self.assertEqual(self.env()["APP_VERSION"], "1.0.0")
+        without = {k: v for k, v in RELEASE_FILES.items() if k != "inventory/version.py"}
+        self.make(FakeGitHub(files=without)).install(self.job, "1.0.0")
+        self.assertIn("contains version unknown", self.db.final(7)["message"])
 
     def test_archive_without_the_app_is_refused(self):
         self.make(FakeGitHub(files={"README.md": "hello"})).install(self.job, "1.0.0")
