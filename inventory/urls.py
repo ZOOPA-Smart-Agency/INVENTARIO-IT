@@ -9,6 +9,10 @@ urlpatterns = [
     path("sw.js", views.service_worker),
     path("offline", views.offline),
     path("app-icon/<str:purpose>-<int:size>.png", views.app_icon),
+    # where some browsers look without being told (older iPhones, bookmarks, tab icons)
+    path("apple-touch-icon.png", views.app_icon, {"purpose": "apple", "size": 180}),
+    path("apple-touch-icon-precomposed.png", views.app_icon, {"purpose": "apple", "size": 180}),
+    path("favicon.ico", views.app_icon, {"purpose": "any", "size": 32}),
     path("api/logo", views.logo),
     path("api/bootstrap", api.bootstrap),
     path("api/state", api.state),
@@ -34,6 +38,7 @@ urlpatterns = [
     path("api/settings", api.settings_update),
     path("api/settings/password-policy", api.password_policy_update),
     path("api/settings/logo", api.logo_update),
+    path("api/settings/logo-shape", api.logo_shape_update),
     path("api/backup/export", api.backup_export),
     path("api/backup/inspect", api.backup_inspect),
     path("api/backup/restore", api.backup_restore),

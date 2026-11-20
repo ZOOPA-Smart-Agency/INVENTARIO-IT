@@ -78,6 +78,8 @@ With the server's own certificate (`TLS_MODE=internal`), the device app asks the
 docker compose exec -T caddy cat /data/caddy/pki/authorities/local/root.crt | openssl x509 -noout -fingerprint -sha256
 ```
 
+**iPhone and iPad home-screen icon.** With the server's own certificate, an iPhone only downloads the app's home-screen icon once it trusts that certificate (tapping through Safari's warning is not enough: without it the icon is a generic one). On the iPhone: open `https://<server>/ca.crt` in Safari and allow the download, install it in **Settings > Profile Downloaded**, then turn it on in **Settings > General > About > Certificate Trust Settings**. Then remove the app from the Home Screen if it was added already, and add it again. The app's **Install the app** menu item shows these steps on iPhones when the server uses its own certificate. A public certificate (`TLS_MODE` set to an email address) needs none of this.
+
 ## Other hosting
 
 The app is one container (`Dockerfile`) plus a PostgreSQL database, and also runs on any host that runs containers. It applies database migrations on start. Without the updater, **Settings > General > Updates** can only check for new versions; installing them is done by deploying the new version.

@@ -1,4 +1,6 @@
 """Builds the JSON snapshot the interface renders from."""
+from django.conf import settings as django_settings
+
 from .models import AppSettings, Assignment, AuditEvent, Device, Employee, Incident, ProfilePhoto, User
 from .registry import LISTS
 from .updates import record_results
@@ -17,6 +19,9 @@ def settings_json(s=None):
     s = s or AppSettings.objects.defer("logo").filter(pk=1).first() or AppSettings.load()
     return {
         "logo": s.logo_version if s.logo_type else 0,
+        "logoShape": s.logo_shape,
+        "ownCert": django_settings.OWN_CERTIFICATE,
+        "logoSvg": s.logo_type == "image/svg+xml",  # the browser icons can only be made from pictures
         "orgName": s.org_name,
         "tagPrefix": s.tag_prefix,
         "tagNumbering": s.tag_numbering,

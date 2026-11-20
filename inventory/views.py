@@ -23,8 +23,9 @@ def asset_version():
 
 
 def _logo_version():
-    s = AppSettings.objects.filter(pk=1).only("logo_version").first()
-    return s.logo_version if s else 0
+    """What the logo's addresses change with: a new logo, or a new shape for it."""
+    s = AppSettings.objects.filter(pk=1).only("logo_version", "logo_shape").first()
+    return f"{s.logo_version}{s.logo_shape}" if s else "0"
 
 
 @ensure_csrf_cookie
@@ -86,8 +87,47 @@ LOGO_PADDING = {"any": 0.1, "apple": 0.12, "maskable": 0.22}
 RASTER_LOGOS = {"image/png", "image/jpeg", "image/webp", "image/gif"}
 
 
-def _logo_icon(logo, size, purpose):
-    """The company logo centred on a white square, as a PNG; None if it cannot be read."""
+APP_RADIUS = 0.225  # the app icon's rounded corners, as a share of its side
+
+
+def _shape_mask(size, shape):
+    """White where the shaped logo shows: a rounded square like the app icon, or a circle."""
+    from PIL import Image, ImageDraw
+
+    big = size * 4  # drawn larger and reduced, for smooth edges
+    mask = Image.new("L", (big, big), 0)
+    draw = ImageDraw.Draw(mask)
+    if shape == "circle":
+        draw.ellipse((0, 0, big - 1, big - 1), fill=255)
+    else:
+        draw.rounded_rectangle((0, 0, big - 1, big - 1), radius=round(big * APP_RADIUS), fill=255)
+    return mask.resize((size, size), Image.LANCZOS)
+
+
+def _shaped_icon(img, size, purpose, shape):
+    """The logo cropped from its centre to fill the shape. Browser icons keep transparent corners; home-screen
+    icons need a solid square (phones round them themselves), so the shape sits on white there."""
+    from PIL import Image, ImageOps
+
+    if purpose == "apple" and shape == "app":
+        inner = size  # iPhone rounds the square to the same shape
+    elif purpose == "any":
+        inner = size
+    else:
+        inner = round(size * (1 - 2 * LOGO_PADDING[purpose]))  # inside the part phones always show
+    face = ImageOps.fit(img, (inner, inner), Image.LANCZOS)
+    if not (purpose == "apple" and shape == "app"):
+        face.putalpha(Image.composite(face.getchannel("A"), Image.new("L", face.size, 0), _shape_mask(inner, shape)))
+    background = (0, 0, 0, 0) if purpose == "any" else (255, 255, 255, 255)
+    canvas = Image.new("RGBA", (size, size), background)
+    canvas.alpha_composite(face, ((size - inner) // 2, (size - inner) // 2))
+    out = io.BytesIO()
+    (canvas if purpose == "any" else canvas.convert("RGB")).save(out, "PNG", optimize=True)
+    return out.getvalue()
+
+
+def _logo_icon(logo, size, purpose, shape=""):
+    """The company logo as an icon PNG: centred on a white square, or cropped to `shape`; None if it cannot be read."""
     from PIL import Image, ImageOps
 
     try:
@@ -97,6 +137,8 @@ def _logo_icon(logo, size, purpose):
         img = ImageOps.exif_transpose(img).convert("RGBA")
     except Exception:
         return None
+    if shape in ("app", "circle"):
+        return _shaped_icon(img, size, purpose, shape)
     inner = round(size * (1 - 2 * LOGO_PADDING[purpose]))
     scale = inner / max(img.width, img.height)
     img = img.resize((max(1, round(img.width * scale)), max(1, round(img.height * scale))), Image.LANCZOS)
@@ -114,12 +156,12 @@ def app_icon(request, purpose, size):
     if name is None:
         raise Http404
     data = None
-    s = AppSettings.objects.filter(pk=1).only("logo", "logo_type", "logo_version").first()
+    s = AppSettings.objects.filter(pk=1).only("logo", "logo_type", "logo_version", "logo_shape").first()
     if s and s.logo_type in RASTER_LOGOS and s.logo:
-        key = f"app-icon:{s.logo_version}:{purpose}:{size}"
+        key = f"app-icon:{s.logo_version}:{s.logo_shape}:{purpose}:{size}"
         data = cache.get(key)
         if data is None:
-            data = _logo_icon(bytes(s.logo), size, purpose) or b""
+            data = _logo_icon(bytes(s.logo), size, purpose, s.logo_shape) or b""
             cache.set(key, data, 24 * 3600)
     response = HttpResponse(data or (ICONS / name).read_bytes(), content_type="image/png")
     response["Cache-Control"] = "public, max-age=31536000, immutable"  # its address changes with the logo

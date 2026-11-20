@@ -29,6 +29,7 @@ services:
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?DJANGO_SECRET_KEY must be set in .env}
       DJANGO_SITE_HOSTS: ${SITE_HOST}  # one address or several, separated by commas
       DJANGO_HTTPS_PORT: ${HTTPS_PORT:-443}
+      DJANGO_TLS_MODE: ${TLS_MODE:-internal}  # "internal": the server's own certificate, which phones must be told to trust
       DJANGO_ALLOWED_HOSTS: web,localhost  # how the updater and health checks reach the app inside the server
       DJANGO_SETUP_TOKEN: ${DJANGO_SETUP_TOKEN:-}
       APP_UPDATE_REPO: ""  # the updater checks GitHub; the app shows what it found

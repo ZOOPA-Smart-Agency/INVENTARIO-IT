@@ -99,6 +99,8 @@ class AppSettings(models.Model):
     logo = models.BinaryField(null=True, blank=True)
     logo_type = models.CharField(max_length=40, blank=True)
     logo_version = models.PositiveIntegerField(default=0)
+    # How the logo is shown: "" as uploaded, "app" cropped to the app icon's rounded square, "circle"
+    logo_shape = models.CharField(max_length=10, blank=True, default="")
 
     # Updates installed by themselves at this hour (server time) when a new release is published.
     auto_update = models.BooleanField(default=False)

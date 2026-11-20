@@ -41,6 +41,9 @@ CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")
 # The addresses people open the app with (SITE_HOST in deploy/.env), for example
 # "inventario.example.com, 192.168.1.20": each is accepted, and sign-ins from each are trusted.
 SITE_HOSTS = env_list("DJANGO_SITE_HOSTS")
+# The server's own certificate (deploy/.env TLS_MODE=internal): iPhones only fetch the home-screen icon once it is
+# trusted, so the app's "Add to Home Screen" steps start with installing it.
+OWN_CERTIFICATE = os.environ.get("DJANGO_TLS_MODE", "") == "internal"
 _https_port = os.environ.get("DJANGO_HTTPS_PORT", "443").strip()
 ALLOWED_HOSTS += [h for h in SITE_HOSTS if h not in ALLOWED_HOSTS]
 CSRF_TRUSTED_ORIGINS += [f"https://{h}" + ("" if _https_port in ("", "443") else f":{_https_port}") for h in SITE_HOSTS]

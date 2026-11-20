@@ -1091,6 +1091,22 @@ def _logo_matches(kind, data):
         return False
 
 
+LOGO_SHAPES = ("", "app", "circle")
+
+
+@endpoint("PUT", role="admin")
+def logo_shape_update(request, body):
+    """How the logo is shown: as uploaded, cropped to the app icon's rounded square, or to a circle."""
+    shape = choice(body, "shape", set(LOGO_SHAPES))
+    s = m.AppSettings.load()
+    old = s.logo_shape
+    if shape != old:
+        s.logo_shape = shape
+        s.save(update_fields=["logo_shape"])
+        audit(request, "log_setting", {"xKey": "set_brand", "ch": [["logoShape", old, shape]]})
+    return {"settings": settings_json(s)}
+
+
 @endpoint("PUT", "DELETE", role="admin")
 def logo_update(request, body):
     s = m.AppSettings.load()
