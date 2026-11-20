@@ -334,10 +334,13 @@ footer { color: var(--muted); font-size: 12.5px; padding-block: 0 32px; display:
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35); --scrim: rgba(0, 0, 0, 0.45);
   --blob1: #1d3a8c; --blob2: #6a1f4f; --blob3: #0c5b4f; color-scheme: dark;
 }
-[data-ui="glass"] body {
+[data-ui="glass"] body { background: var(--bg); -webkit-font-smoothing: antialiased; letter-spacing: -0.005em; }
+/* the colours sit on their own fixed layer, behind everything: when macOS bounces the page past its top or bottom,
+   or on iPhone and iPad (where Safari ignores fixed backgrounds), they stay put instead of moving with the page */
+[data-ui="glass"] body::after {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background: radial-gradient(55% 45% at 8% 0%, var(--blob1), transparent 70%), radial-gradient(45% 40% at 96% 12%, var(--blob2), transparent 70%),
     radial-gradient(60% 50% at 55% 105%, var(--blob3), transparent 70%), var(--bg);
-  background-attachment: fixed; -webkit-font-smoothing: antialiased; letter-spacing: -0.005em;
 }
 [data-ui="glass"] body::before { background: transparent; }
 [data-ui="glass"] h1 { letter-spacing: -0.025em; }
