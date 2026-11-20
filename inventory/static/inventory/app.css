@@ -72,12 +72,10 @@ nav.tabs a.on { background: var(--surface-2); color: var(--ink); }
 .logfilters input[type="date"] { width: 100%; min-width: 0; }
 @media (max-width: 1100px) { .logfilters { grid-template-columns: 1fr 1fr; } .logfilters > input[type="search"] { grid-column: 1 / -1; } }
 td.nowrap { white-space: nowrap; }
-a.feedlink { display: block; color: inherit; text-decoration: none; cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+/* Overview's Recent activity opens Activity: it reacts like the number boxes above it */
+a.feedlink { display: block; color: inherit; text-decoration: none; }
 a.feedlink:hover { border-color: var(--accent); }
 a.feedlink:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-a.feedlink h2 { display: flex; justify-content: space-between; align-items: center; }
-a.feedlink .more { color: var(--muted); font-weight: 500; }
-a.feedlink .seeall { display: block; margin-top: 10px; color: var(--accent); font-size: 13.5px; font-weight: 600; }
 .loglimit { display: grid; gap: 6px; margin: 0; }
 .loglimit label { display: grid; gap: 6px; font-size: 13px; font-weight: 600; }
 .loglimit input { width: 130px; }
@@ -610,12 +608,12 @@ footer { color: var(--muted); font-size: 12.5px; padding-block: 0 32px; display:
   .btn, .iconbtn, .plus, .seg button, .demo button, .userbtn, .mi { transition: transform 0.4s var(--spring), background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.25s, filter 0.2s; }
   .btn:active, .iconbtn:active, .plus:active, .seg button:active, .demo button:active, .userbtn:active { transform: scale(0.94); transition-duration: 0.1s; }
   .mi:active { transform: scale(0.97); transition-duration: 0.1s; }
-  .stat, .setcard { transition: transform 0.45s var(--spring), box-shadow 0.3s, border-color 0.2s; }
-  .stat:hover, .setcard:hover { transform: translateY(-3px); }
-  [data-ui="glass"] .stat:hover, [data-ui="glass"] .setcard:hover { box-shadow: inset 0 1px 0 var(--hl), 0 18px 40px rgba(30, 40, 70, 0.16); }
+  .stat, .setcard, a.feedlink { transition: transform 0.45s var(--spring), box-shadow 0.3s, border-color 0.2s; }
+  .stat:hover, .setcard:hover, a.feedlink:hover { transform: translateY(-3px); }
+  [data-ui="glass"] .stat:hover, [data-ui="glass"] .setcard:hover, [data-ui="glass"] a.feedlink:hover { box-shadow: inset 0 1px 0 var(--hl), 0 18px 40px rgba(30, 40, 70, 0.16); }
   .alert, .setlinks a { transition: transform 0.4s var(--spring); }
   .alert:hover, .setlinks a:hover { transform: translateX(4px); }
-  .stat:active, .alert:active { transform: scale(0.98); transition-duration: 0.1s; }
+  .stat:active, .alert:active, a.feedlink:active { transform: scale(0.98); transition-duration: 0.1s; }
   .addbtn svg.i { transition: transform 0.45s var(--spring); }
   .addbtn[aria-expanded="true"] svg.i { transform: rotate(135deg); }
   .userbtn > svg.i { transition: transform 0.4s var(--spring); }

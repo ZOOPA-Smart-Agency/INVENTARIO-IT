@@ -2430,7 +2430,7 @@ function viewPanel() {
       ${(() => {   // administrators open the whole activity from here
         const feed = `<ul class="feed">${S.log.slice(0, 7).map(l => `<li><time>${fmt(l.fecha)}</time><span>${esc(logText(l))}${uname(l.by) ? ` <span class="by">· ${esc(uname(l.by))}</span>` : ''}</span></li>`).join('')}</ul>`;
         return can('admin')
-          ? `<a class="panel feedlink" href="#actividad"><h2>${T('activity')} <span class="more">›</span></h2>${feed}<span class="seeall">${T('see_all_activity')} ›</span></a>`
+          ? `<a class="panel feedlink" href="#actividad" aria-label="${T('see_all_activity')}"><h2>${T('activity')}</h2>${feed}</a>`
           : `<section class="panel"><h2>${T('activity')}</h2>${feed}</section>`;
       })()}
     </div>
