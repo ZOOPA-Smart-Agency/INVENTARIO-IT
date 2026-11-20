@@ -140,11 +140,12 @@ class LogLimitTests(LogsBase):
             self.assertEqual(self.put_limit(good).json()["maxMb"], good)
         from inventory.models import AppSettings
         self.assertEqual(AppSettings.load().log_max_mb, 1024 * 1024)
-        first = self.logs()
-        self.assertEqual(first["maxMb"], 1024 * 1024)
-        self.assertGreater(first["size"], 0)
-        self.assertEqual(first["count"], AuditEvent.objects.count())
-        self.assertNotIn("size", self.logs(before=first["events"][-1]["id"]))
+        usage = self.client_for(self.admin).get("/api/logs/limit").json()
+        self.assertEqual(usage["maxMb"], 1024 * 1024)
+        self.assertGreater(usage["size"], 0)
+        self.assertEqual(usage["count"], AuditEvent.objects.count())
+        self.assertEqual(self.client_for(self.tech).get("/api/logs/limit").status_code, 403)
+        self.assertNotIn("size", self.logs())
 
     def test_oldest_deleted_past_the_limit(self):
         from unittest import mock

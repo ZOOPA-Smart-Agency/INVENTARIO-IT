@@ -1045,15 +1045,16 @@ def logs(request, body):
         events = events.filter(Q(at__lt=last) | Q(at=last, id__lt=int(before)))
     rows = list(events[:LOG_PAGE + 1])
     out = {"events": [{**log_json(e), "id": str(e.id), "at": e.at.isoformat()} for e in rows[:LOG_PAGE]], "more": len(rows) > LOG_PAGE}
-    if not before:  # the first page also says how big the whole log is
-        out["size"], out["count"] = logsize.usage()
-        out["maxMb"] = m.AppSettings.load().log_max_mb
     return out
 
 
-@endpoint("PUT", role="admin")
+@endpoint("GET", "PUT", role="admin")
 def log_limit_update(request, body):
-    """The activity log's size limit in MB: 0 for none, else 10 MB to 1 TB. Applied at once."""
+    """The activity log's size limit in MB: 0 for none, else 10 MB to 1 TB. Applied at once.
+    GET: the limit and how big the log is now (Settings > Activity log)."""
+    if request.method == "GET":
+        size, count = logsize.usage()
+        return {"maxMb": m.AppSettings.load().log_max_mb, "size": size, "count": count}
     value = body.get("maxMb")
     if isinstance(value, bool) or not isinstance(value, int) or not (value == 0 or logsize.MIN_MB <= value <= logsize.MAX_MB):
         raise ApiError("err_log_limit")
