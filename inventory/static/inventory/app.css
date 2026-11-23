@@ -854,9 +854,10 @@ dialog#busy::backdrop { background: var(--bg); }
 
 /* a new version is available: a dot by Settings (account menu) and by Updates */
 .has-dot { position: relative; }
-#miSettings.has-dot::after, .setnav a.has-dot::after, .setlinks a.has-dot .txt b::after {
+#miSettings.has-dot::after, #tabSettings.has-dot::after, .setnav a.has-dot::after, .setlinks a.has-dot .txt b::after {
   content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-left: 8px; vertical-align: 1px; }
 #miSettings.has-dot::after { margin-left: auto; }
+[data-ui="glass"] body.authed nav.tabs > #tabSettings.has-dot::after { margin-left: auto; }
 
 /* sortable list headers: the whole header is the button; the arrow shows the order */
 .sortbtn { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font: inherit; color: inherit; border-radius: 4px; }
@@ -975,6 +976,9 @@ dl.kbd dt kbd { font: 600 12px/1 var(--f-mono, ui-monospace, monospace); border:
 /* the sidebar's Settings link: desktop only (phones reach it from the account menu, the bottom bar has no room) */
 @media (max-width: 899px) { [data-ui="glass"] body.authed nav.tabs > #tabSettings { display: none; } }
 @media (min-width: 900px) { [data-ui="glass"] body.authed nav.tabs > #tabSettings { margin-top: 6px; } }
+/* the account menu's Settings: only where the bar above has none, so it is never there twice */
+html:not([data-ui="glass"]) #miSettings { display: none; }
+@media (min-width: 900px) { [data-ui="glass"] #miSettings { display: none; } }
 /* tick boxes on the device list: shown on hover, or all of them once anything is ticked; always on touch screens */
 @media (hover: hover) {
   #devTable.bulk:not(.selecting) tbody .selcol input { opacity: 0; transition: opacity 0.12s; }
@@ -1011,7 +1015,7 @@ dl.kbd dt kbd { font: 600 12px/1 var(--f-mono, ui-monospace, monospace); border:
 .agroup + .agroup { margin-top: 12px; }
 .agroup-h { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 2px 2px 4px; }
 .agroup-h .dot { width: 8px; height: 8px; border-radius: 50%; }
-.agroup-more { justify-self: start; margin: 6px 0 0 14px; padding: 4px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface-2); color: var(--accent); font-size: 12.5px; font-weight: 600; text-decoration: none; transition: background 0.15s, border-color 0.15s; }
+.agroup-more { justify-self: end; margin: 4px 0 0; padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface-2); color: var(--accent); font-size: 12px; font-weight: 600; text-decoration: none; transition: background 0.15s, border-color 0.15s; }
 .agroup-more:hover { border-color: var(--accent); }
 
 /* the device form's section bar */

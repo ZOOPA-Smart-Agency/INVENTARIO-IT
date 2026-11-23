@@ -2115,6 +2115,8 @@ function applyUpdateDots() {
   const dot = UPD.tag && can('admin');
   $('#miSettings').classList.toggle('has-dot', !!dot);
   $('#miSettings').title = dot ? t('up_avail_dot') : '';
+  $('#tabSettings').classList.toggle('has-dot', !!dot);
+  $('#tabSettings').title = dot ? t('up_avail_dot') : '';
   document.querySelectorAll('a[href="#ajustes-actualizaciones"]').forEach(a => a.classList.toggle('has-dot', !!dot));
 }
 async function backgroundUpdateCheck() {
