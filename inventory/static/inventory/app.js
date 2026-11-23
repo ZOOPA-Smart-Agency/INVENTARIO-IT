@@ -2084,8 +2084,8 @@ async function bindUpdatesWithoutUpdater() {   // no updater on this server: the
   $('#abAccess').textContent = t('ab_access_' + (a.updates.access || 'none'));
   drawUpdate(a.updates.last);
   noteUpdate(a.updates.last);
-  $('#upMore').innerHTML = `<p class="notice info" style="margin:0">${T('up_no_updater')}</p>
-    <section class="panel"><h2>${T('ab_how_h')}</h2><ol class="ab-steps"><li>${T('ab_how_1')}</li><li>${T('ab_how_2')}</li><li>${T('ab_how_3')}</li></ol></section>`;
+  $('#abUpd').insertAdjacentHTML('afterend', `<p class="notice info" style="margin:0">${T('up_no_updater')}</p>`);   // inside the Updates card
+  $('#upMore').innerHTML = `<section class="panel"><h2>${T('ab_how_h')}</h2><ol class="ab-steps"><li>${T('ab_how_1')}</li><li>${T('ab_how_2')}</li><li>${T('ab_how_3')}</li></ol></section>`;
   const b = $('#abCheck'); b.disabled = !a.updates.repo;
   const run = async auto => {
     b.disabled = true; b.textContent = t('ab_checking');
@@ -3110,8 +3110,8 @@ function settingsRegion() {
 const encRequired = () => S.settings.requireEncryption !== false;
 function settingsSecurity() {
   return `<section class="panel"><div><h2>${T('set_security')}</h2><p class="sub">${T('set_security_sub')}</p></div>
-    <label class="check"><input type="checkbox" id="secEnc"${encRequired() ? ' checked' : ''}> ${T('sec_enc')}</label>
-    <p class="muted" style="margin:0;font-size:13px">${T('sec_enc_d')}</p></section>`;
+    <div class="regionform"><div class="setrow"><label class="check"><input type="checkbox" id="secEnc"${encRequired() ? ' checked' : ''}> ${T('sec_enc')}</label>
+      <p class="check-d">${T('sec_enc_d')}</p></div></div></section>`;
 }
 function bindSecurity() {
   const box = $('#secEnc'); if (!box) return;

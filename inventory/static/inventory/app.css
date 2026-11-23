@@ -189,7 +189,6 @@ td .t2.spec .nw { white-space: nowrap; }
 .alert .bar { align-self: stretch; border-radius: 2px; }
 .alert .txt { min-width: 0; }
 .alert .txt small { display: block; color: var(--muted); }
-.alert:hover .txt b { text-decoration: underline; }
 
 .bars { display: grid; gap: 10px; }
 .barrow { display: grid; grid-template-columns: 120px 1fr 28px; gap: 10px; align-items: center; font-size: 13.5px; }
@@ -245,7 +244,6 @@ dl.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
 .sethead svg.i { width: 34px; height: 34px; padding: 7px; border-radius: 8px; background: var(--surface-2); color: var(--accent); }
 .setlinks { display: grid; }
 .setlinks a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
-.setlinks a:hover b { text-decoration: underline; }
 .setlinks .txt { display: grid; min-width: 0; }
 .setlinks .txt small { color: var(--muted); }
 .setlinks .count { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; flex: none; }
@@ -1026,3 +1024,17 @@ dl.kbd dt kbd { font: 600 12px/1 var(--f-mono, ui-monospace, monospace); border:
 #dlgBody .sect, #dlgBody .fields { scroll-margin-top: 64px; }
 .reqmark { color: var(--bad); font-weight: 700; }
 @media (pointer: coarse) { .formnav button { min-height: 36px; } }
+
+/* a switch and its label, wherever it is: on one line, centred */
+label.check { display: flex; align-items: center; gap: 10px; color: var(--ink); font-size: 14px; }
+/* a setting with an explanation: the text lines up under the label, not under the switch */
+.setrow { display: grid; gap: 4px; }
+.check-d { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted); max-width: 62ch; }
+[data-ui="glass"] .setrow .check-d { padding-left: 54px; }   /* the switch (44 px) and the gap */
+/* Settings: explanations and notices at a comfortable reading width, however wide the panel */
+.settings .panel :is(p.sub, p.muted, .notice, .hint) { max-width: 75ch; }
+/* the Settings side list scrolls on its own when it is taller than the window (it has ~25 sections) */
+@media (min-width: 761px) {
+  .setnav { max-height: calc(100vh - 104px - env(safe-area-inset-top, 0px)); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+  [data-ui="glass"] body.authed .setnav { max-height: calc(100vh - 150px); }   /* fits from where it starts, under the page title */
+}
