@@ -1011,7 +1011,8 @@ dl.kbd dt kbd { font: 600 12px/1 var(--f-mono, ui-monospace, monospace); border:
 .agroup + .agroup { margin-top: 12px; }
 .agroup-h { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 2px 2px 4px; }
 .agroup-h .dot { width: 8px; height: 8px; border-radius: 50%; }
-.agroup-more { justify-self: start; margin: 2px 0 0 14px; font-size: 13px; }
+.agroup-more { justify-self: start; margin: 6px 0 0 14px; padding: 4px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface-2); color: var(--accent); font-size: 12.5px; font-weight: 600; text-decoration: none; transition: background 0.15s, border-color 0.15s; }
+.agroup-more:hover { border-color: var(--accent); }
 
 /* the device form's section bar */
 .formnav { position: sticky; top: -18px; z-index: 3; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: -18px -20px 16px; padding: 10px 20px;
