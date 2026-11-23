@@ -468,3 +468,46 @@ class FaultyStatusTests(ApiTestCase):
         self.send(client, "post", f"incidents/{fault['incident']['id']}/resolve", {})
         device.refresh_from_db()
         self.assertEqual(device.estado, "disponible")
+
+
+class BulkTests(ApiTestCase):
+    """The device list's bulk actions: each device changed as on its own page; what cannot be is reported."""
+
+    def bulk(self, client, **body):
+        return self.send(client, "post", "devices/bulk", body)
+
+    def test_status(self):
+        tech = self.as_user(self.tech)
+        free = list(Device.objects.filter(estado="disponible")[:2])
+        used = Device.objects.filter(estado="uso").first()
+        ids = [str(d.pk) for d in free] + [str(used.pk)]
+        r = self.bulk(tech, ids=ids, action="status", estado="reparacion", motivo="Revisión anual").json()
+        self.assertEqual(sorted(r["done"]), sorted(ids), "a device in use goes to repair as on its own page")
+        self.assertEqual(Device.objects.filter(pk__in=ids, estado="reparacion").count(), 3)
+        self.assertIn("Revisión anual", Device.objects.get(pk=free[0].pk).notas)
+        self.assertEqual(AuditEvent.objects.filter(key="log_status", device_id__in=ids).count(), 3)
+        again = self.bulk(tech, ids=ids[:1], action="status", estado="reparacion").json()
+        self.assertEqual((again["done"], again["skipped"][0]["error"]), ([], "err_bulk_same"))
+        used.refresh_from_db()
+        # "in use" needs an assignment: refused for a device that has none, the others still change
+        r = self.bulk(tech, ids=[str(free[0].pk)], action="status", estado="uso").json()
+        self.assertEqual((r["done"], r["skipped"][0]["error"]), ([], "err_conflict"))
+
+    def test_location(self):
+        tech = self.as_user(self.tech)
+        loc = m.Location.objects.last()
+        devices = list(Device.objects.exclude(loc=loc)[:3])
+        r = self.bulk(tech, ids=[d.pk for d in devices] + ["999999"], action="location", loc=str(loc.pk)).json()
+        self.assertEqual(len(r["done"]), 3)
+        self.assertEqual(r["skipped"], [{"id": "999999", "tag": "", "error": "err_not_found"}])
+        self.assertEqual(Device.objects.filter(pk__in=[d.pk for d in devices], loc=loc).count(), 3)
+        self.assertEqual(AuditEvent.objects.filter(key="log_edited", args__parts=["loc"]).count(), 3)
+
+    def test_refused(self):
+        reader = self.as_user(self.reader)
+        d = Device.objects.first()
+        self.assertEqual(self.bulk(reader, ids=[d.pk], action="location", loc="1").status_code, 403)
+        tech = self.as_user(self.tech)
+        for body in ({"ids": [], "action": "status"}, {"ids": ["x"], "action": "status"}, {"ids": [d.pk], "action": "delete"},
+                     {"ids": [d.pk], "action": "location"}, {"ids": list(range(1, 600)), "action": "status", "estado": "perdido"}):
+            self.assertEqual(self.bulk(tech, **body).status_code, 400, body)

@@ -49,7 +49,17 @@ To change the addresses later, edit `SITE_HOST` in `/opt/inventario/.env` (for e
 
 Everything lives in `/opt/inventario`: `.env` (settings and secrets: keep it private), `keys/` (the GitHub App key), `backups/` (the database backups taken before each update) and the container definitions. Useful commands, run in that folder: `docker compose ps`, `docker compose logs -f updater`, `docker compose restart web`.
 
-### Installing new versions
+#### Automatic backups
+
+On a server installed with `deploy/install.sh`, the update service also makes a backup of the whole database every day (**Settings > Backups > Automatic backups**: on by default, at 02:00, keeping the last 14). They are kept in the install folder, in `backups/auto-YYYYMMDD-HHMM.sql.gz`, next to the backups made before each update, which are kept apart. To restore one, from the install folder:
+
+```bash
+gunzip -c backups/auto-20261123-0200.sql.gz | docker compose exec -T db psql -U inventario -d inventario
+```
+
+They stay on the server: copy them elsewhere too (a NAS, another disk) to be safe if the server itself is lost. The downloadable `.invbackup` files in the same page are still the way to move data between servers.
+
+## Installing new versions
 
 **Settings > General > Updates** shows the installed version and the latest release on GitHub (the updater checks every hour, or on **Check for updates**). When there is a new one, **Install** does the rest, while administrators watch the progress and everyone else sees a maintenance page:
 

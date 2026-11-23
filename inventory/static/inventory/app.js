@@ -14,7 +14,7 @@ const I18N = {
     bk_encrypt: 'Proteger con contraseña (recomendado)', bk_encrypt_d: 'La copia se cifra con AES-256 y solo se puede abrir con esta contraseña.', bk_pw: 'Contraseña de la copia', bk_pw2: 'Repite la contraseña', bk_pw_lost: 'Guárdala en un lugar seguro: si la pierdes, no habrá forma de restaurar esta copia.', bk_plain_warn: 'Sin contraseña, cualquiera que tenga el archivo podrá leer todos los datos.', bk_pw_t: 'Copia protegida', bk_pw_d: 'Esta copia está protegida con contraseña. Escríbela para ver qué contiene.', bk_unlock: 'Abrir', bk_enc_yes: 'Protegida con contraseña', err_bk_pw_short: 'La contraseña de la copia debe tener al menos 10 caracteres.', err_backup_password: 'La contraseña no es correcta o el archivo está dañado.', err_backup_password_required: 'Esta copia está protegida con contraseña.',
     grp_data: 'Datos', grp_data_d: 'Copias de seguridad y restauración', set_data: 'Copias de seguridad', set_data_sub: 'Exporta todos los datos o restaura una copia anterior', bk_export_h: 'Exportar una copia', bk_export_d: 'Descarga un archivo .invbackup con todos los datos y ajustes: dispositivos, empleados, historial, averías, usuarios, listas, logotipo y configuración.', bk_export_warn: 'Contiene datos personales y las contraseñas de los usuarios (cifradas). Guarda el archivo en un lugar seguro.', bk_export_btn: 'Descargar copia', bk_exported: 'Copia descargada', bk_restore_h: 'Restaurar una copia', bk_restore_d: 'Carga un archivo .invbackup exportado desde esta aplicación.', bk_restore_warn: 'Se sustituirán todos los datos y ajustes actuales por los de la copia y se cerrará la sesión de todos los usuarios, incluida la tuya. No se puede deshacer.', bk_restore_btn: 'Restaurar desde un archivo', bk_confirm_t: 'Restaurar copia', bk_confirm_b: 'Copia del {d}, hecha por {by}. Contiene:', bk_n_devices: '{n} dispositivos', bk_n_employees: '{n} empleados', bk_n_users: '{n} usuarios', bk_n_log: '{n} entradas del historial', bk_first: 'Descargar antes una copia de los datos actuales', bk_restore_ok: 'Restaurar', bk_restored: 'Copia restaurada. Vuelve a iniciar sesión.', err_backup_invalid: 'El archivo no es una copia válida de esta aplicación.', err_backup_version: 'Esta copia es de otra versión de la aplicación y no se puede restaurar aquí.', err_backup_no_admin: 'La copia no tiene ningún administrador activo, así que nadie podría entrar.', err_backup_size: 'El archivo es demasiado grande (máximo 50 MB).', log_backup_export: 'Copia de seguridad exportada', log_backup_restore: 'Copia de seguridad restaurada',
     set_brand: 'Logotipo', set_brand_sub: 'Sustituye el icono de la aplicación por el de tu empresa.', brand_upload: 'Subir imagen', brand_change: 'Cambiar imagen', brand_remove: 'Quitar logotipo', brand_formats: 'PNG, JPG, WebP, GIF o SVG de hasta 512 KB. Mejor si es cuadrada y con fondo transparente.', brand_shape: "Forma", brand_shape_d: "El logotipo se recorta desde el centro para llenar la forma, aquí y en el icono del navegador y de la pantalla de inicio.", shape_: "Tal cual", shape_app: "Icono de app", shape_circle: "Círculo", brand_shape_saved: "Forma del logotipo guardada", lc_logoShape: "forma del logotipo", brand_where: 'Se verá en el menú, en la pantalla de inicio de sesión y en la pestaña del navegador.', brand_saved: 'Logotipo actualizado', brand_removed: 'Se ha vuelto al icono original', err_logo_type: 'Ese archivo no es una imagen compatible.', err_logo_size: 'La imagen pesa más de 512 KB.', go_home: 'Ir al resumen', pc_title: 'Cambia tu contraseña', pc_sub: 'Por seguridad, elige una contraseña nueva antes de continuar.', pc_current: 'Contraseña actual', pc_new: 'Contraseña nueva', pc_repeat: 'Repite la contraseña nueva', pc_btn: 'Cambiar', pc_done: 'Contraseña cambiada', err_pw_current: 'La contraseña actual no es correcta.', err_pw_same: 'La contraseña nueva debe ser distinta de la actual.', err_must_change: 'Antes de seguir, cambia tu contraseña.', f_must_change: 'Pedir que cambie la contraseña al iniciar sesión', f_must_change_d: 'Útil cuando le das una contraseña temporal.', chip_must_change: 'Debe cambiar la contraseña', chip_must_change_d: 'Tendrá que elegir una contraseña nueva la próxima vez que inicie sesión.', log_pwchanged: '{name} ha cambiado su contraseña', log_photo_removed: 'Foto de perfil de {name} quitada', photo_remove_other: 'Quitar su foto', photo_remove_sure: '¿Quitarla? Pulsa otra vez', photo_removed_other: 'Foto quitada',
-    pw_h: 'Seguridad de las contraseñas', pw_enforce: 'Exigir requisitos de seguridad', pw_enforce_d: 'Las contraseñas que no los cumplan no se aceptarán.', pw_off: 'Sin requisitos: se aceptará cualquier contraseña.', pw_minlabel: 'Longitud mínima', pw_chars: 'caracteres', pw_c_upper: 'Al menos una mayúscula', pw_c_number: 'Al menos un número', pw_c_symbol: 'Al menos un símbolo', pw_c_min: 'Al menos {n} caracteres', pw_weak: 'Contraseña insegura', pw_ok: 'Contraseña aceptable', pw_strong: 'Contraseña segura', pw_empty: 'Escribe una contraseña para ver su seguridad', pw_applies: 'Se aplica a las contraseñas nuevas o cambiadas. Las actuales siguen funcionando.', set_pwpolicy: 'Contraseñas', set_pwpolicy_sub: 'Elige qué requisitos deben cumplir las contraseñas.', set_logs: 'Registro de actividad', set_logs_sub: 'Todo lo que se ha hecho en el inventario: cambios, inicios de sesión y copias de seguridad.', lg_all: 'Toda la actividad', lg_devices: 'Dispositivos', lg_people: 'Empleados', lg_access: 'Accesos y cuentas', lg_system: 'Ajustes y sistema', lg_anyone: 'Cualquier usuario', lg_nobody: 'Sin usuario (sistema)', lg_from: 'Desde', lg_to: 'Hasta', lg_search: 'Buscar por nombre, etiqueta, dirección IP…', lg_more: 'Cargar más', lg_none: 'No hay actividad con estos filtros.', lg_loading: 'Cargando…', lg_clear: 'Quitar filtros', lg_limit: 'Tamaño máximo', lg_limit_ph: 'Sin límite', lg_limit_hint: 'Al pasarlo se borran las entradas más antiguas. Déjalo vacío para no poner límite (de 10 MB a 1 TB).', lg_usage: 'Ahora ocupa unos {size} ({n} entradas).', lg_limit_save: 'Guardar límite', lg_limit_sure: 'Borrará entradas antiguas ya. Pulsa otra vez', lg_limit_saved: 'Límite guardado', lg_pruned_now: 'Límite guardado: se borraron {n} entradas antiguas', log_pruned: 'Se borraron las {n} entradas más antiguas del registro (límite: {mb} MB)', err_log_limit: 'El límite debe ser de 10 MB a 1 TB, o quedar vacío.', th_when: 'Cuándo', th_who: 'Quién', th_what: 'Qué', log_login: '{name} ha iniciado sesión', log_login_failed: 'Inicio de sesión fallido: {who}', log_logout: '{name} ha cerrado sesión', log_edited_ch: "{tag}: cambios en {parts}", log_agent_updated_ch: "{tag} actualizado por la aplicación de dispositivos: {parts}", log_agent_same: "{tag} leído de nuevo por la aplicación de dispositivos, sin cambios", log_emp_edited_ch: "Datos de {name} modificados: {parts}", log_user_created_r: "Usuario {name} creado ({rol})", log_user_edited_ch: "Usuario {name} modificado: {ch}", log_setting_ch: "Ajustes · {x}: {ch}", log_item_added: "Añadido a {x}: {name}", log_item_edited_ch: "{x} · {name}: {ch}", log_item_deleted: "Eliminado de {x}: {name}", log_logo_set: "Logotipo cambiado", log_logo_removed: "Logotipo quitado: se vuelve a usar el icono de la aplicación", log_backup_export_enc: "Copia de seguridad exportada (cifrada con contraseña)", log_backup_export_plain: "Copia de seguridad exportada (sin cifrar)", log_backup_restore_m: "Restaurada la copia de seguridad del {made}", log_backup_restore_mb: "Restaurada la copia de seguridad del {made}, hecha por {by}", log_check_ignored_c: "{tag}: aviso «{c}» ignorado", log_update_done: "Versión {v} instalada correctamente (antes {from})", log_update_done_auto: "Versión {v} instalada automáticamente (antes {from})", log_update_failed: "No se pudo instalar la versión {v}; no se cambió nada. {msg}", log_update_rolled_back: "La versión {v} no funcionó: se volvió a {from} con sus datos. {msg}", lc_none: "ninguno", lc_password: "contraseña restablecida", lc_orgName: "nombre de la organización", lc_tagPrefix: "prefijo de etiquetas", lc_tagNumbering: "numeración", lc_dateFmt: "formato de fecha", lc_currency: "moneda", lc_warrantyDays: "aviso de garantía (días)", lc_hostnameIsTag: "hostname como etiqueta", lc_enforce: "exigir requisitos", lc_minOn: "longitud mínima", lc_minLen: "caracteres mínimos", lc_upper: "mayúscula", lc_number: "número", lc_symbol: "símbolo", lc_nombre: "nombre", lc_email: "correo", lc_username: "nombre de usuario", lc_rol: "rol", lc_mustChange: "debe cambiar la contraseña", lc_logMax: "tamaño máximo del registro", lc_autoUpdate: "actualizar automáticamente", lc_autoHour: "hora", lc_hasScreen: "pantalla", lc_hasBattery: "batería", lc_usesName: "usa nombre", lc_code: "código", lc_match: "palabras", lc_autoChassis: "formato automático", lc_autoApple: "Apple", lc_tipo: "tipo", lc_direccion: "dirección", lc_fabricante: "fabricante", lc_typeId: "tipo", lc_cores: "núcleos", lc_speed: "velocidad", lc_speedUnit: "unidad", lc_kind: "clase", lc_vram: "memoria", lc_vramUnit: "unidad", lc_distroId: "distribución", lc_type: "tipo", lp_tag: "etiqueta", lp_name: "nombre", lp_serial: "número de serie", lp_model: "modelo", lp_status: "estado", lp_loc: "ubicación", lp_purchase: "compra", lp_warranty: "garantía", lp_disposal: "retirada", lp_notes: "notas", lp_cpu: "procesador", lp_ram: "memoria", lp_gpu: "gráfica", lp_screen: "pantalla", lp_battery: "batería", lp_os: "sistema operativo", lp_enc: "cifrado", lp_ad: "dominio", lp_disks: "almacenamiento", lp_nics: "red", lp_nombre: "nombre", lp_email: "correo", lp_depts: "departamentos", lp_locs: "oficinas", lp_alta: "fecha de alta", lp_estado: "estado", lp_contrato: "contrato", log_user_created: 'Usuario {name} creado', log_user_edited: 'Usuario {name} modificado', log_user_on: 'Usuario {name} activado', log_user_off: 'Usuario {name} desactivado', log_emp_created: 'Empleado {name} añadido', log_emp_edited: 'Datos de {name} modificados', err_pw_minlen: 'La longitud mínima debe ser un número entre 1 y 128.',
+    pw_h: 'Seguridad de las contraseñas', pw_enforce: 'Exigir requisitos de seguridad', pw_enforce_d: 'Las contraseñas que no los cumplan no se aceptarán.', pw_off: 'Sin requisitos: se aceptará cualquier contraseña.', pw_minlabel: 'Longitud mínima', pw_chars: 'caracteres', pw_c_upper: 'Al menos una mayúscula', pw_c_number: 'Al menos un número', pw_c_symbol: 'Al menos un símbolo', pw_c_min: 'Al menos {n} caracteres', pw_weak: 'Contraseña insegura', pw_ok: 'Contraseña aceptable', pw_strong: 'Contraseña segura', pw_empty: 'Escribe una contraseña para ver su seguridad', pw_applies: 'Se aplica a las contraseñas nuevas o cambiadas. Las actuales siguen funcionando.', set_pwpolicy: 'Contraseñas', set_pwpolicy_sub: 'Elige qué requisitos deben cumplir las contraseñas.', set_logs: 'Registro de actividad', set_logs_sub: 'Todo lo que se ha hecho en el inventario: cambios, inicios de sesión y copias de seguridad.', lg_all: 'Toda la actividad', lg_devices: 'Dispositivos', lg_people: 'Empleados', lg_access: 'Accesos y cuentas', lg_system: 'Ajustes y sistema', lg_anyone: 'Cualquier usuario', lg_nobody: 'Sin usuario (sistema)', lg_from: 'Desde', lg_to: 'Hasta', lg_search: 'Buscar por nombre, etiqueta, dirección IP…', lg_more: 'Cargar más', lg_none: 'No hay actividad con estos filtros.', lg_loading: 'Cargando…', lg_clear: 'Quitar filtros', lg_limit: 'Tamaño máximo', lg_limit_ph: 'Sin límite', lg_limit_hint: 'Al pasarlo se borran las entradas más antiguas. Déjalo vacío para no poner límite (de 10 MB a 1 TB).', lg_usage: 'Ahora ocupa unos {size} ({n} entradas).', lg_limit_save: 'Guardar límite', lg_limit_sure: 'Borrará entradas antiguas ya. Pulsa otra vez', lg_limit_saved: 'Límite guardado', lg_pruned_now: 'Límite guardado: se borraron {n} entradas antiguas', log_pruned: 'Se borraron las {n} entradas más antiguas del registro (límite: {mb} MB)', err_log_limit: 'El límite debe ser de 10 MB a 1 TB, o quedar vacío.', th_when: 'Cuándo', th_who: 'Quién', th_what: 'Qué', log_login: '{name} ha iniciado sesión', log_login_failed: 'Inicio de sesión fallido: {who}', log_logout: '{name} ha cerrado sesión', qs_label: "Buscar", qs_ph: "Busca equipos, personas, ajustes…", qs_hint: "↑↓ para moverte · Intro para abrir · Esc para cerrar · / o Ctrl+K para buscar", qs_none: "Sin resultados", qs_recent: "Vistos hace poco", qs_pages: "Páginas", qs_devices: "Dispositivos", qs_people: "Empleados", qs_settings: "Ajustes", qs_actions: "Acciones", kb_title: "Atajos de teclado", kb_search: "Buscar en cualquier sitio", kb_slash: "Buscar en la lista (o en todo)", kb_help: "Ver estos atajos", kb_esc: "Cerrar", recent_title: "Vistos hace poco", btn_duplicate: "Duplicar", dup_title: "Nuevo equipo como {tag}", dup_note: "Copia de {tag}: revisa el número de serie, el nombre y las direcciones MAC.", hist_title: "Historial de cambios", hist_loading: "Cargando…", hist_none: "Todavía no hay nada registrado.", hist_more: "Cargar más", btn_share: "Compartir", share_title: "Compartir {tag}", share_d: "Un enlace de solo lectura con el hardware, la garantía y las averías del equipo, para alguien sin cuenta (un taller, un auditor). No muestra a quién está asignado ni lo que costó.", share_for: "Para quién (opcional)", share_for_ph: "Taller, auditor…", share_days: "Válido durante", share_d1: "1 día", share_d7: "7 días", share_d30: "30 días", share_d90: "90 días", share_make: "Crear enlace", share_made: "Enlace creado. Cópialo ahora: por seguridad no se vuelve a mostrar.", share_copy: "Copiar", share_copied: "Enlace copiado", share_links: "Enlaces", share_none: "Todavía no hay enlaces.", share_until: "Caduca el {d}", share_ended: "Caducado el {d}", share_revoked: "Anulado", share_views: a => a.n === 1 ? "1 visita" : a.n + " visitas", share_revoke: "Anular", share_revoked_ok: "Enlace anulado", lv_title: "Lista de salida", lv_done: "{n} de {t} hecho", lv_dev: "Devolver {tag}", lv_dev_done: "Ninguno pendiente de devolver", lv_accounts: "Desactivar sus cuentas (correo, aplicaciones)", lv_mail: "Reenviar o archivar su correo", lv_licences: "Liberar sus licencias de software", lv_access: "Recuperar llaves, tarjetas y acreditación", lv_files: "Guardar o traspasar sus archivos", lv_on: "Hecho el {d}", al_leaver: "Lista de salida de {name} sin terminar", al_leaver_s: a => `${a.n === 1 ? "Falta 1 tarea" : "Faltan " + a.n + " tareas"} · salió el ${a.d}`, menu_sessions: "Dispositivos con sesión", ss_title: "Dónde has iniciado sesión", ss_d: "Cada navegador en el que has entrado. Cierra la sesión de los que no reconozcas.", ss_this: "Este dispositivo", ss_last: "Último uso: {d}", ss_since: "Desde el {d}", ss_end: "Cerrar sesión", ss_end_all: "Cerrar sesión en todos los demás", ss_ended: "Sesión cerrada", ss_ended_all: "Se cerró la sesión en los demás dispositivos", ss_only: "Solo tienes la sesión de este dispositivo.", ss_unknown: "Navegador desconocido", ss_on: "{b} en {o}", bk_auto_h: "Copias automáticas", bk_auto_d: "El servidor guarda cada día una copia completa de la base de datos y conserva las más recientes. Son copias del servidor (no se descargan): sirven para recuperar los datos si algo sale mal.", bk_auto_on: "Hacer una copia cada día", bk_auto_hour: "A las", bk_auto_keep: "Conservar", bk_auto_keep_u: "copias", bk_auto_last_ok: "Última copia: {d}", bk_auto_last_fail: "La última copia falló ({d}): {msg}", bk_auto_never: "Todavía no se ha hecho ninguna copia automática.", bk_auto_noupd: "Este servidor no tiene el servicio de actualizaciones (deploy/install.sh), que es quien hace las copias automáticas. Usa las copias manuales de arriba.", bk_auto_files: "Copias guardadas", bk_auto_restore: "Para restaurar una, en la carpeta de instalación del servidor:", lc_autoBackup: "copias automáticas", lc_autoBackupHour: "hora de las copias", lc_autoBackupKeep: "copias que se conservan", log_share_created: "Enlace para compartir {tag} creado ({days} días)", log_share_revoked: "Enlace para compartir {tag} anulado", log_sessions_ended: a => `${a.name} cerró ${a.n === 1 ? "1 sesión" : a.n + " sesiones"} en otros dispositivos`, log_leaver_done: "Lista de salida de {name}: «{taskT}» hecho", log_leaver_undone: "Lista de salida de {name}: «{taskT}» desmarcado", err_not_left: "Esta persona no ha dejado la empresa.", err_this_session: "Para cerrar esta sesión, usa «Cerrar sesión».", log_edited_ch: "{tag}: cambios en {parts}", log_agent_updated_ch: "{tag} actualizado por la aplicación de dispositivos: {parts}", log_agent_same: "{tag} leído de nuevo por la aplicación de dispositivos, sin cambios", log_emp_edited_ch: "Datos de {name} modificados: {parts}", log_user_created_r: "Usuario {name} creado ({rol})", log_user_edited_ch: "Usuario {name} modificado: {ch}", log_setting_ch: "Ajustes · {x}: {ch}", log_item_added: "Añadido a {x}: {name}", log_item_edited_ch: "{x} · {name}: {ch}", log_item_deleted: "Eliminado de {x}: {name}", log_logo_set: "Logotipo cambiado", log_logo_removed: "Logotipo quitado: se vuelve a usar el icono de la aplicación", log_backup_export_enc: "Copia de seguridad exportada (cifrada con contraseña)", log_backup_export_plain: "Copia de seguridad exportada (sin cifrar)", log_backup_restore_m: "Restaurada la copia de seguridad del {made}", log_backup_restore_mb: "Restaurada la copia de seguridad del {made}, hecha por {by}", log_check_ignored_c: "{tag}: aviso «{c}» ignorado", log_update_done: "Versión {v} instalada correctamente (antes {from})", log_update_done_auto: "Versión {v} instalada automáticamente (antes {from})", log_update_failed: "No se pudo instalar la versión {v}; no se cambió nada. {msg}", log_update_rolled_back: "La versión {v} no funcionó: se volvió a {from} con sus datos. {msg}", lc_none: "ninguno", lc_password: "contraseña restablecida", lc_orgName: "nombre de la organización", lc_tagPrefix: "prefijo de etiquetas", lc_tagNumbering: "numeración", lc_dateFmt: "formato de fecha", lc_currency: "moneda", lc_warrantyDays: "aviso de garantía (días)", lc_hostnameIsTag: "hostname como etiqueta", lc_enforce: "exigir requisitos", lc_minOn: "longitud mínima", lc_minLen: "caracteres mínimos", lc_upper: "mayúscula", lc_number: "número", lc_symbol: "símbolo", lc_nombre: "nombre", lc_email: "correo", lc_username: "nombre de usuario", lc_rol: "rol", lc_mustChange: "debe cambiar la contraseña", lc_logMax: "tamaño máximo del registro", lc_autoUpdate: "actualizar automáticamente", lc_autoHour: "hora", lc_hasScreen: "pantalla", lc_hasBattery: "batería", lc_usesName: "usa nombre", lc_code: "código", lc_match: "palabras", lc_autoChassis: "formato automático", lc_autoApple: "Apple", lc_tipo: "tipo", lc_direccion: "dirección", lc_fabricante: "fabricante", lc_typeId: "tipo", lc_cores: "núcleos", lc_speed: "velocidad", lc_speedUnit: "unidad", lc_kind: "clase", lc_vram: "memoria", lc_vramUnit: "unidad", lc_distroId: "distribución", lc_type: "tipo", lp_tag: "etiqueta", lp_name: "nombre", lp_serial: "número de serie", lp_model: "modelo", lp_status: "estado", lp_loc: "ubicación", lp_purchase: "compra", lp_warranty: "garantía", lp_disposal: "retirada", lp_notes: "notas", lp_cpu: "procesador", lp_ram: "memoria", lp_gpu: "gráfica", lp_screen: "pantalla", lp_battery: "batería", lp_os: "sistema operativo", lp_enc: "cifrado", lp_ad: "dominio", lp_disks: "almacenamiento", lp_nics: "red", lp_nombre: "nombre", lp_email: "correo", lp_depts: "departamentos", lp_locs: "oficinas", lp_alta: "fecha de alta", lp_estado: "estado", lp_contrato: "contrato", log_user_created: 'Usuario {name} creado', log_user_edited: 'Usuario {name} modificado', log_user_on: 'Usuario {name} activado', log_user_off: 'Usuario {name} desactivado', log_emp_created: 'Empleado {name} añadido', log_emp_edited: 'Datos de {name} modificados', err_pw_minlen: 'La longitud mínima debe ser un número entre 1 y 128.',
     su_title: 'Configuración inicial', su_sub: 'Deja la aplicación lista en tres pasos.', su_step: 'Paso {n} de 3', su_org_h: 'Tu organización', su_org: 'Nombre de la organización', su_prefix: 'Prefijo de las etiquetas', su_date: 'Formato de fecha', su_currency: 'Moneda', su_token: 'Código de instalación', su_token_hint: 'Lo define quien ha desplegado la aplicación (DJANGO_SETUP_TOKEN).', su_places_h: 'Oficinas y departamentos', su_locs: 'Ubicaciones', su_locs_hint: 'Dónde están los equipos. Marca un almacén para que los equipos devueltos vuelvan allí.', su_depts: 'Departamentos', su_depts_hint: 'Opcional: también puedes añadirlos después en Ajustes.', su_add_loc: 'Añadir ubicación', su_add_dept: 'Añadir departamento', su_name: 'Nombre', su_remove: 'Quitar', su_admin_h: 'Tu cuenta de administrador', su_admin_sub: 'Con esta cuenta entrarás y podrás crear las del resto del equipo.', su_fullname: 'Nombre completo', su_email: 'Correo electrónico', su_pass: 'Contraseña', su_pass2: 'Repite la contraseña', su_back: 'Atrás', su_next: 'Siguiente', su_finish: 'Terminar', su_blocked_t: 'Falta el código de instalación', su_blocked_b: 'La instalación no se puede completar todavía: define la variable DJANGO_SETUP_TOKEN en el servidor y recarga esta página.', su_done: '¡Todo listo! Ya puedes añadir tus dispositivos.', err_su_org: 'Indica el nombre de la organización.', err_su_loc: 'Añade al menos una ubicación con nombre.', err_su_admin: 'Rellena tu nombre y un correo válido.', err_su_mismatch: 'Las contraseñas no coinciden.', err_setup_token: 'El código de instalación no es correcto.', err_setup_done: 'La aplicación ya está configurada. Inicia sesión.', log_setup: 'Instalación inicial completada',
     err_network: 'No se ha podido conectar con el servidor. Inténtalo de nuevo.', err_forbidden: 'No tienes permiso para hacer esto.', err_invalid: 'Hay datos no válidos. Revisa el formulario.', err_conflict: 'El dispositivo ha cambiado. Recarga la página e inténtalo de nuevo.', err_not_found: 'Este registro ya no existe.', err_dates: 'La fecha de fin no puede ser anterior a la de inicio.', err_asg_dates: 'La fecha de entrega no puede ser anterior a la última devolución de este equipo.', err_fix_dates: 'La fecha de resolución no puede ser anterior a la de la avería.', err_serial_dup: 'Ya hay otro dispositivo con ese número de serie.', err_os_number: 'La versión exacta solo lleva números y puntos, como 26.2.1.', err_auth: 'Tu sesión ha caducado. Vuelve a iniciar sesión.', err_pass_weak: 'La contraseña no cumple los requisitos de seguridad.', login_locked: 'Demasiados intentos. Espera 15 minutos e inténtalo de nuevo.',
     brand: 'Inventario de equipos', nav_summary: 'Resumen', nav_devices: 'Dispositivos', nav_people: 'Empleados', nav_activity: 'Actividad', see_all_activity: 'Ver toda la actividad', no_perm_activity: 'Solo los administradores pueden ver la actividad.', set_loglimit: 'Registro de actividad', set_security: "Seguridad de los equipos", set_security_sub: "Qué se considera un problema en los equipos", sec_enc: "Exigir el cifrado del disco", sec_enc_d: "Los equipos sin cifrado (BitLocker, FileVault o LUKS) aparecen como un problema en el Resumen y en su página. Desactivado, solo se indica en sus datos.", sec_saved: "Ajuste guardado", lc_requireEncryption: "exigir cifrado del disco", set_loglimit_sub: 'Cuánto puede ocupar el registro de actividad',
@@ -41,9 +41,9 @@ const I18N = {
     by_dept: 'Equipos en uso por departamento', activity: 'Actividad reciente',
 
     devices_title: 'Dispositivos', devices_sub: 'Equipos de la empresa',
-    search_dev: 'Buscar por etiqueta, nombre, n.º de serie, MAC, modelo o persona', lbl_search_in: 'Buscar en', search_in: 'Buscar en «{x}»', sf_all: 'Todos los datos', sf_tag: 'Etiqueta', sf_name: 'Nombre del equipo', sf_serial: 'N.º de serie', sf_model: 'Modelo', sf_cpu: 'Procesador', sf_ram: 'Memoria', sf_disk: 'Almacenamiento', sf_gpu: 'Gráficos', sf_os: 'Sistema', sf_mac: 'MAC', sf_person: 'Asignado a', lbl_search: 'Buscar', lbl_status: 'Estado', lbl_dept: 'Departamento', lbl_type: 'Tipo',
+    search_dev: 'Buscar por etiqueta, nombre, n.º de serie, MAC, modelo o persona', lbl_search_in: 'Buscar en', search_in: 'Buscar en «{x}»', sf_all: 'Buscar en: todos los datos', fn_main: "Identificación", fn_sections: "Secciones del formulario", fn_required: "* obligatorio", ag_recover: "Equipos que recuperar", ag_faulty: "Equipos averiados", ag_disk: "Discos con problemas", ag_enc: "Sin cifrado de disco", ag_places: "Datos que restaurar", ag_faults: "Averías abiertas", ag_leaver: "Listas de salida", ag_warranty: "Garantías que vencen", ag_battery: "Baterías gastadas", ag_checks: "Datos que revisar", ag_more: "Ver {n} más", ag_less: "Ver menos", btn_more: "Más", dev_count: "{n} dispositivos", dev_count_of: "{n} de {t} dispositivos", emp_count: "{n} personas", emp_count_of: "{n} de {t} personas", f_status_all: "Situación: todas", still_has: "Aún tiene: ", clear_filters: "Quitar filtros", today_at: "Hoy {h}", yesterday_at: "Ayer {h}", no_inc_act: "Si se estropea, regístralo para llevar el historial de reparaciones.", no_dev_yet: "Todavía no hay dispositivos.", sf_tag: 'Etiqueta', sf_name: 'Nombre del equipo', sf_serial: 'N.º de serie', sf_model: 'Modelo', sf_cpu: 'Procesador', sf_ram: 'Memoria', sf_disk: 'Almacenamiento', sf_gpu: 'Gráficos', sf_os: 'Sistema', sf_mac: 'MAC', sf_person: 'Asignado a', lbl_search: 'Buscar', lbl_status: 'Estado', lbl_dept: 'Departamento', lbl_type: 'Tipo',
     f_active: 'Todos los activos', f_all: 'Todos', f_alldepts: 'Todos los departamentos', f_alltypes: 'Todos los tipos',
-    th_tag: 'Etiqueta', th_device: 'Equipo', th_assigned: 'Asignado a', th_status: 'Estado', th_warranty: 'Garantía',
+    th_tag: 'Etiqueta', sort_by: "Ordenar por", sort_default: "Orden normal", sort_asc: "ascendente", sort_desc: "descendente", th_devcount: "Equipos", bulk_n: a => a.n === 1 ? "1 seleccionado" : a.n + " seleccionados", bulk_status: "Cambiar estado", bulk_loc: "Cambiar ubicación", bulk_clear: "Quitar selección", "bulk_status_s": "Estado", "bulk_loc_s": "Ubicación", bulk_all: "Seleccionar todos los mostrados", bulk_one: "Seleccionar", bulk_status_t: a => a.n === 1 ? "Cambiar el estado de 1 equipo" : `Cambiar el estado de ${a.n} equipos`, bulk_loc_t: a => a.n === 1 ? "Cambiar la ubicación de 1 equipo" : `Cambiar la ubicación de ${a.n} equipos`, bulk_no_use: "«En uso» no está: necesita una asignación, que se hace equipo a equipo.", bulk_done: a => a.n === 1 ? "1 equipo cambiado" : a.n + " equipos cambiados", bulk_skipped: "{n} sin cambiar: {list}", bulk_loc_new: "Nueva ubicación", bulk_err_err_bulk_same: "ya estaba así", bulk_err_err_conflict: "no se puede con su asignación actual", th_device: 'Equipo', th_assigned: 'Asignado a', th_status: 'Estado', th_warranty: 'Garantía',
     left_badge: 'ha dejado la empresa', no_match_dev: 'Ningún dispositivo coincide con los filtros.',
     w_expired: 'Vencida', w_expired_on: 'Vencida el {d}', w_soon: 'Vence en {n} días',
 
@@ -144,7 +144,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     in_use_cant: 'No se puede eliminar porque está en uso', added_x: '{x} añadido',
     th_usage: 'En uso', u_people: n => n === 1 ? '1 empleado' : n + ' empleados', u_devices: n => n === 1 ? '1 equipo' : n + ' equipos', u_models: n => n === 1 ? '1 modelo' : n + ' modelos', u_none: 'Sin uso',
     f_name_es: 'Nombre en español', f_name_en: 'Nombre en inglés', f_name_ca: 'Nombre en catalán', f_name_hint: 'Si dejas alguno vacío, se usa uno de los otros nombres.', err_name: 'Escribe un nombre',
-    f_loc_kind: 'Tipo de ubicación', f_address: 'Dirección', th_address: 'Dirección', th_kind: 'Tipo',
+    f_loc_kind: 'Tipo de ubicación', f_address: 'Dirección', th_address: 'Dirección',
     f_maker: 'Fabricante', f_model_name: 'Modelo', f_type: 'Tipo de dispositivo', th_maker: 'Fabricante', th_model: 'Modelo', err_model: 'El fabricante y el modelo son obligatorios',
     f_chip: 'Nombre del chip', f_chip_ph: 'Intel Wi-Fi 7 BE200', f_gen: 'Generación Wi-Fi', th_chip: 'Chip', th_gen: 'Generación', f_bt: 'Bluetooth', th_bt: 'Bluetooth',
     th_role: 'Rol', th_last: 'Último acceso', never: 'Nunca', f_role: 'Rol', f_pass_tmp: 'Contraseña inicial', f_pass_new: 'Nueva contraseña', f_pass_hint: 'Déjala vacía para no cambiarla.',
@@ -304,7 +304,7 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     bk_encrypt: 'Protect with a password (recommended)', bk_encrypt_d: 'The backup is encrypted with AES-256 and can only be opened with this password.', bk_pw: 'Backup password', bk_pw2: 'Repeat the password', bk_pw_lost: 'Keep it somewhere safe: if you lose it, there is no way to restore this backup.', bk_plain_warn: 'Without a password, anyone who has the file can read all the data.', bk_pw_t: 'Protected backup', bk_pw_d: 'This backup is protected with a password. Enter it to see what it contains.', bk_unlock: 'Open', bk_enc_yes: 'Password protected', err_bk_pw_short: 'The backup password must be at least 10 characters.', err_backup_password: 'The password is not correct, or the file is damaged.', err_backup_password_required: 'This backup is protected with a password.',
     grp_data: 'Data', grp_data_d: 'Backups and restore', set_data: 'Backups', set_data_sub: 'Export all data or restore an earlier backup', bk_export_h: 'Export a backup', bk_export_d: 'Downloads one .invbackup file with all data and settings: devices, employees, history, faults, users, lists, logo and configuration.', bk_export_warn: 'It contains personal data and users’ passwords (encrypted). Keep the file somewhere safe.', bk_export_btn: 'Download backup', bk_exported: 'Backup downloaded', bk_restore_h: 'Restore a backup', bk_restore_d: 'Load an .invbackup file exported from this app.', bk_restore_warn: 'All current data and settings will be replaced with the backup’s, and every user will be signed out, including you. This cannot be undone.', bk_restore_btn: 'Restore from a file', bk_confirm_t: 'Restore backup', bk_confirm_b: 'Backup from {d}, made by {by}. It contains:', bk_n_devices: '{n} devices', bk_n_employees: '{n} employees', bk_n_users: '{n} users', bk_n_log: '{n} history entries', bk_first: 'Download a backup of the current data first', bk_restore_ok: 'Restore', bk_restored: 'Backup restored. Please sign in again.', err_backup_invalid: 'That file is not a valid backup of this app.', err_backup_version: 'This backup is from a different version of the app and cannot be restored here.', err_backup_no_admin: 'The backup has no active administrator, so nobody could sign in.', err_backup_size: 'The file is too large (50 MB maximum).', log_backup_export: 'Backup exported', log_backup_restore: 'Backup restored',
     set_brand: 'Logo', set_brand_sub: 'Replace the app icon with your company’s.', brand_upload: 'Upload image', brand_change: 'Change image', brand_remove: 'Remove logo', brand_formats: 'PNG, JPG, WebP, GIF or SVG up to 512 KB. Square with a transparent background works best.', brand_shape: "Shape", brand_shape_d: "The logo is cropped from its centre to fill the shape, here and in the browser tab and home-screen icons.", shape_: "As uploaded", shape_app: "App icon", shape_circle: "Circle", brand_shape_saved: "Logo shape saved", lc_logoShape: "logo shape", brand_where: 'It appears in the menu, on the sign-in page and in the browser tab.', brand_saved: 'Logo updated', brand_removed: 'Back to the original icon', err_logo_type: 'That file is not a supported image.', err_logo_size: 'The image is larger than 512 KB.', go_home: 'Go to the overview', pc_title: 'Change your password', pc_sub: 'For security, choose a new password before you continue.', pc_current: 'Current password', pc_new: 'New password', pc_repeat: 'Repeat the new password', pc_btn: 'Change', pc_done: 'Password changed', err_pw_current: 'The current password is not correct.', err_pw_same: 'The new password must be different from the current one.', err_must_change: 'Please change your password before continuing.', f_must_change: 'Ask them to change the password at sign-in', f_must_change_d: 'Useful when you give them a temporary password.', chip_must_change: 'Must change password', chip_must_change_d: 'They will have to choose a new password the next time they sign in.', log_pwchanged: '{name} changed their password', log_photo_removed: '{name}’s profile picture removed', photo_remove_other: 'Remove their picture', photo_remove_sure: 'Remove it? Click again', photo_removed_other: 'Picture removed',
-    pw_h: 'Password security', pw_enforce: 'Enforce security requirements', pw_enforce_d: 'Passwords that do not meet them will not be accepted.', pw_off: 'No requirements: any password will be accepted.', pw_minlabel: 'Minimum length', pw_chars: 'characters', pw_c_upper: 'At least one uppercase letter', pw_c_number: 'At least one number', pw_c_symbol: 'At least one symbol', pw_c_min: 'At least {n} characters', pw_weak: 'Insecure password', pw_ok: 'Acceptable password', pw_strong: 'Secure password', pw_empty: 'Type a password to see how secure it is', pw_applies: 'Applies to new or changed passwords. Current ones keep working.', set_pwpolicy: 'Passwords', set_pwpolicy_sub: 'Choose which requirements passwords must meet.', set_logs: 'Activity log', set_logs_sub: 'Everything done in the inventory: changes, sign-ins and backups.', lg_all: 'All activity', lg_devices: 'Devices', lg_people: 'Employees', lg_access: 'Sign-ins and accounts', lg_system: 'Settings and system', lg_anyone: 'Any user', lg_nobody: 'No user (system)', lg_from: 'From', lg_to: 'To', lg_search: 'Search by name, tag, IP address…', lg_more: 'Load more', lg_none: 'No activity with these filters.', lg_loading: 'Loading…', lg_clear: 'Clear filters', lg_limit: 'Maximum size', lg_limit_ph: 'No limit', lg_limit_hint: 'Past it, the oldest entries are deleted. Leave it empty for no limit (10 MB to 1 TB).', lg_usage: 'It now takes about {size} ({n} entries).', lg_limit_save: 'Save limit', lg_limit_sure: 'Old entries will be deleted now. Click again', lg_limit_saved: 'Limit saved', lg_pruned_now: 'Limit saved: {n} old entries deleted', log_pruned: 'The {n} oldest log entries were deleted (limit: {mb} MB)', err_log_limit: 'The limit must be 10 MB to 1 TB, or empty.', th_when: 'When', th_who: 'Who', th_what: 'What', log_login: '{name} signed in', log_login_failed: 'Failed sign-in: {who}', log_logout: '{name} signed out', log_edited_ch: "{tag}: {parts} changed", log_agent_updated_ch: "{tag} updated by the device app: {parts}", log_agent_same: "{tag} read again by the device app: nothing changed", log_emp_edited_ch: "{name}’s details changed: {parts}", log_user_created_r: "User {name} created ({rol})", log_user_edited_ch: "User {name} changed: {ch}", log_setting_ch: "Settings · {x}: {ch}", log_item_added: "Added to {x}: {name}", log_item_edited_ch: "{x} · {name}: {ch}", log_item_deleted: "Deleted from {x}: {name}", log_logo_set: "Logo changed", log_logo_removed: "Logo removed: the app icon is used again", log_backup_export_enc: "Backup exported (encrypted with a password)", log_backup_export_plain: "Backup exported (not encrypted)", log_backup_restore_m: "Backup from {made} restored", log_backup_restore_mb: "Backup from {made}, made by {by}, restored", log_check_ignored_c: "{tag}: data warning “{c}” ignored", log_update_done: "Version {v} installed successfully (was {from})", log_update_done_auto: "Version {v} installed automatically (was {from})", log_update_failed: "Version {v} could not be installed; nothing was changed. {msg}", log_update_rolled_back: "Version {v} did not work: back to {from} with its data. {msg}", lc_none: "none", lc_password: "password reset", lc_orgName: "organisation name", lc_tagPrefix: "tag prefix", lc_tagNumbering: "numbering", lc_dateFmt: "date format", lc_currency: "currency", lc_warrantyDays: "warranty warning (days)", lc_hostnameIsTag: "hostname as tag", lc_enforce: "enforce requirements", lc_minOn: "minimum length", lc_minLen: "minimum characters", lc_upper: "capital letter", lc_number: "number", lc_symbol: "symbol", lc_nombre: "name", lc_email: "email", lc_username: "username", lc_rol: "role", lc_mustChange: "must change password", lc_logMax: "log size limit", lc_autoUpdate: "automatic updates", lc_autoHour: "time", lc_hasScreen: "screen", lc_hasBattery: "battery", lc_usesName: "uses a name", lc_code: "code", lc_match: "words", lc_autoChassis: "automatic shape", lc_autoApple: "Apple", lc_tipo: "type", lc_direccion: "address", lc_fabricante: "maker", lc_typeId: "type", lc_cores: "cores", lc_speed: "speed", lc_speedUnit: "unit", lc_kind: "kind", lc_vram: "memory", lc_vramUnit: "unit", lc_distroId: "distribution", lc_type: "type", lp_tag: "tag", lp_name: "name", lp_serial: "serial number", lp_model: "model", lp_status: "status", lp_loc: "location", lp_purchase: "purchase", lp_warranty: "warranty", lp_disposal: "disposal", lp_notes: "notes", lp_cpu: "processor", lp_ram: "memory", lp_gpu: "graphics", lp_screen: "screen", lp_battery: "battery", lp_os: "operating system", lp_enc: "encryption", lp_ad: "domain", lp_disks: "storage", lp_nics: "network", lp_nombre: "name", lp_email: "email", lp_depts: "departments", lp_locs: "offices", lp_alta: "start date", lp_estado: "status", lp_contrato: "contract", log_user_created: 'User {name} created', log_user_edited: 'User {name} changed', log_user_on: 'User {name} activated', log_user_off: 'User {name} deactivated', log_emp_created: 'Employee {name} added', log_emp_edited: '{name}’s details changed', err_pw_minlen: 'The minimum length must be a number from 1 to 128.',
+    pw_h: 'Password security', pw_enforce: 'Enforce security requirements', pw_enforce_d: 'Passwords that do not meet them will not be accepted.', pw_off: 'No requirements: any password will be accepted.', pw_minlabel: 'Minimum length', pw_chars: 'characters', pw_c_upper: 'At least one uppercase letter', pw_c_number: 'At least one number', pw_c_symbol: 'At least one symbol', pw_c_min: 'At least {n} characters', pw_weak: 'Insecure password', pw_ok: 'Acceptable password', pw_strong: 'Secure password', pw_empty: 'Type a password to see how secure it is', pw_applies: 'Applies to new or changed passwords. Current ones keep working.', set_pwpolicy: 'Passwords', set_pwpolicy_sub: 'Choose which requirements passwords must meet.', set_logs: 'Activity log', set_logs_sub: 'Everything done in the inventory: changes, sign-ins and backups.', lg_all: 'All activity', lg_devices: 'Devices', lg_people: 'Employees', lg_access: 'Sign-ins and accounts', lg_system: 'Settings and system', lg_anyone: 'Any user', lg_nobody: 'No user (system)', lg_from: 'From', lg_to: 'To', lg_search: 'Search by name, tag, IP address…', lg_more: 'Load more', lg_none: 'No activity with these filters.', lg_loading: 'Loading…', lg_clear: 'Clear filters', lg_limit: 'Maximum size', lg_limit_ph: 'No limit', lg_limit_hint: 'Past it, the oldest entries are deleted. Leave it empty for no limit (10 MB to 1 TB).', lg_usage: 'It now takes about {size} ({n} entries).', lg_limit_save: 'Save limit', lg_limit_sure: 'Old entries will be deleted now. Click again', lg_limit_saved: 'Limit saved', lg_pruned_now: 'Limit saved: {n} old entries deleted', log_pruned: 'The {n} oldest log entries were deleted (limit: {mb} MB)', err_log_limit: 'The limit must be 10 MB to 1 TB, or empty.', th_when: 'When', th_who: 'Who', th_what: 'What', log_login: '{name} signed in', log_login_failed: 'Failed sign-in: {who}', log_logout: '{name} signed out', qs_label: "Search", qs_ph: "Search devices, people, settings…", qs_hint: "↑↓ to move · Enter to open · Esc to close · / or Ctrl+K to search", qs_none: "No results", qs_recent: "Recently viewed", qs_pages: "Pages", qs_devices: "Devices", qs_people: "Employees", qs_settings: "Settings", qs_actions: "Actions", kb_title: "Keyboard shortcuts", kb_search: "Search anywhere", kb_slash: "Search the list (or everything)", kb_help: "Show these shortcuts", kb_esc: "Close", recent_title: "Recently viewed", btn_duplicate: "Duplicate", dup_title: "New device like {tag}", dup_note: "Copied from {tag}: check the serial number, name and MAC addresses.", hist_title: "Change history", hist_loading: "Loading…", hist_none: "Nothing recorded yet.", hist_more: "Load more", btn_share: "Share", share_title: "Share {tag}", share_d: "A read-only link to the device’s hardware, warranty and faults, for someone without an account (a repair shop, an auditor). It does not show who has it or what it cost.", share_for: "Who it is for (optional)", share_for_ph: "Repair shop, auditor…", share_days: "Valid for", share_d1: "1 day", share_d7: "7 days", share_d30: "30 days", share_d90: "90 days", share_make: "Create link", share_made: "Link created. Copy it now: for safety it is not shown again.", share_copy: "Copy", share_copied: "Link copied", share_links: "Links", share_none: "No links yet.", share_until: "Expires on {d}", share_ended: "Expired on {d}", share_revoked: "Revoked", share_views: a => a.n === 1 ? "1 view" : a.n + " views", share_revoke: "Revoke", share_revoked_ok: "Link revoked", lv_title: "Leaver checklist", lv_done: "{n} of {t} done", lv_dev: "Return {tag}", lv_dev_done: "No devices left to return", lv_accounts: "Disable their accounts (email, apps)", lv_mail: "Forward or archive their email", lv_licences: "Free their software licences", lv_access: "Recover keys, cards and badge", lv_files: "Keep or hand over their files", lv_on: "Done on {d}", al_leaver: "{name}’s leaver checklist is not finished", al_leaver_s: a => `${a.n === 1 ? "1 task left" : a.n + " tasks left"} · left on ${a.d}`, menu_sessions: "Signed-in devices", ss_title: "Where you are signed in", ss_d: "Each browser you have signed in with. Sign out of any you do not recognise.", ss_this: "This device", ss_last: "Last used: {d}", ss_since: "Since {d}", ss_end: "Sign out", ss_end_all: "Sign out of all other devices", ss_ended: "Signed out", ss_ended_all: "Signed out of the other devices", ss_only: "You are only signed in on this device.", ss_unknown: "Unknown browser", ss_on: "{b} on {o}", bk_auto_h: "Automatic backups", bk_auto_d: "Every day the server keeps a full copy of the database, and keeps the most recent ones. They stay on the server (they are not downloaded): they are there to get the data back if something goes wrong.", bk_auto_on: "Make a backup every day", bk_auto_hour: "At", bk_auto_keep: "Keep", bk_auto_keep_u: "backups", bk_auto_last_ok: "Last backup: {d}", bk_auto_last_fail: "The last backup failed ({d}): {msg}", bk_auto_never: "No automatic backup has been made yet.", bk_auto_noupd: "This server does not have the update service (deploy/install.sh), which is what makes automatic backups. Use the manual backups above.", bk_auto_files: "Backups kept", bk_auto_restore: "To restore one, in the server’s install folder:", lc_autoBackup: "automatic backups", lc_autoBackupHour: "backup time", lc_autoBackupKeep: "backups kept", log_share_created: "Share link for {tag} created ({days} days)", log_share_revoked: "Share link for {tag} revoked", log_sessions_ended: a => `${a.name} signed out ${a.n === 1 ? "1 other session" : a.n + " other sessions"}`, log_leaver_done: "{name}’s leaver checklist: “{taskT}” done", log_leaver_undone: "{name}’s leaver checklist: “{taskT}” unticked", err_not_left: "This person has not left.", err_this_session: "To end this session, use “Sign out”.", log_edited_ch: "{tag}: {parts} changed", log_agent_updated_ch: "{tag} updated by the device app: {parts}", log_agent_same: "{tag} read again by the device app: nothing changed", log_emp_edited_ch: "{name}’s details changed: {parts}", log_user_created_r: "User {name} created ({rol})", log_user_edited_ch: "User {name} changed: {ch}", log_setting_ch: "Settings · {x}: {ch}", log_item_added: "Added to {x}: {name}", log_item_edited_ch: "{x} · {name}: {ch}", log_item_deleted: "Deleted from {x}: {name}", log_logo_set: "Logo changed", log_logo_removed: "Logo removed: the app icon is used again", log_backup_export_enc: "Backup exported (encrypted with a password)", log_backup_export_plain: "Backup exported (not encrypted)", log_backup_restore_m: "Backup from {made} restored", log_backup_restore_mb: "Backup from {made}, made by {by}, restored", log_check_ignored_c: "{tag}: data warning “{c}” ignored", log_update_done: "Version {v} installed successfully (was {from})", log_update_done_auto: "Version {v} installed automatically (was {from})", log_update_failed: "Version {v} could not be installed; nothing was changed. {msg}", log_update_rolled_back: "Version {v} did not work: back to {from} with its data. {msg}", lc_none: "none", lc_password: "password reset", lc_orgName: "organisation name", lc_tagPrefix: "tag prefix", lc_tagNumbering: "numbering", lc_dateFmt: "date format", lc_currency: "currency", lc_warrantyDays: "warranty warning (days)", lc_hostnameIsTag: "hostname as tag", lc_enforce: "enforce requirements", lc_minOn: "minimum length", lc_minLen: "minimum characters", lc_upper: "capital letter", lc_number: "number", lc_symbol: "symbol", lc_nombre: "name", lc_email: "email", lc_username: "username", lc_rol: "role", lc_mustChange: "must change password", lc_logMax: "log size limit", lc_autoUpdate: "automatic updates", lc_autoHour: "time", lc_hasScreen: "screen", lc_hasBattery: "battery", lc_usesName: "uses a name", lc_code: "code", lc_match: "words", lc_autoChassis: "automatic shape", lc_autoApple: "Apple", lc_tipo: "type", lc_direccion: "address", lc_fabricante: "maker", lc_typeId: "type", lc_cores: "cores", lc_speed: "speed", lc_speedUnit: "unit", lc_kind: "kind", lc_vram: "memory", lc_vramUnit: "unit", lc_distroId: "distribution", lc_type: "type", lp_tag: "tag", lp_name: "name", lp_serial: "serial number", lp_model: "model", lp_status: "status", lp_loc: "location", lp_purchase: "purchase", lp_warranty: "warranty", lp_disposal: "disposal", lp_notes: "notes", lp_cpu: "processor", lp_ram: "memory", lp_gpu: "graphics", lp_screen: "screen", lp_battery: "battery", lp_os: "operating system", lp_enc: "encryption", lp_ad: "domain", lp_disks: "storage", lp_nics: "network", lp_nombre: "name", lp_email: "email", lp_depts: "departments", lp_locs: "offices", lp_alta: "start date", lp_estado: "status", lp_contrato: "contract", log_user_created: 'User {name} created', log_user_edited: 'User {name} changed', log_user_on: 'User {name} activated', log_user_off: 'User {name} deactivated', log_emp_created: 'Employee {name} added', log_emp_edited: '{name}’s details changed', err_pw_minlen: 'The minimum length must be a number from 1 to 128.',
     su_title: 'Initial setup', su_sub: 'Get the app ready in three steps.', su_step: 'Step {n} of 3', su_org_h: 'Your organisation', su_org: 'Organisation name', su_prefix: 'Asset tag prefix', su_date: 'Date format', su_currency: 'Currency', su_token: 'Setup code', su_token_hint: 'Set by whoever deployed the app (DJANGO_SETUP_TOKEN).', su_places_h: 'Offices and departments', su_locs: 'Locations', su_locs_hint: 'Where your devices are. Mark one as storage so returned devices go back there.', su_depts: 'Departments', su_depts_hint: 'Optional: you can also add them later in Settings.', su_add_loc: 'Add location', su_add_dept: 'Add department', su_name: 'Name', su_remove: 'Remove', su_admin_h: 'Your administrator account', su_admin_sub: 'You will sign in with this account and create everyone else’s.', su_fullname: 'Full name', su_email: 'Email', su_pass: 'Password', su_pass2: 'Repeat the password', su_back: 'Back', su_next: 'Next', su_finish: 'Finish', su_blocked_t: 'Setup code missing', su_blocked_b: 'Setup cannot be completed yet: set the DJANGO_SETUP_TOKEN variable on the server and reload this page.', su_done: 'All set! You can start adding your devices.', err_su_org: 'Enter the organisation’s name.', err_su_loc: 'Add at least one location with a name.', err_su_admin: 'Enter your name and a valid email.', err_su_mismatch: 'The passwords do not match.', err_setup_token: 'That setup code is not correct.', err_setup_done: 'The app is already set up. Please sign in.', log_setup: 'Initial setup completed',
     err_network: 'Could not reach the server. Please try again.', err_forbidden: 'You do not have permission to do this.', err_invalid: 'Some data is not valid. Please check the form.', err_conflict: 'This device has changed. Reload the page and try again.', err_not_found: 'This record no longer exists.', err_dates: 'The end date cannot be before the start date.', err_asg_dates: 'The handover date cannot be before this device was last returned.', err_fix_dates: 'The date it was fixed cannot be before the fault was logged.', err_serial_dup: 'Another device already has that serial number.', err_os_number: 'The exact version has only numbers and dots, such as 26.2.1.', err_auth: 'Your session has expired. Please sign in again.', err_pass_weak: 'That password does not meet the security requirements.', login_locked: 'Too many attempts. Wait 15 minutes and try again.',
     brand: 'Device inventory', nav_summary: 'Overview', nav_devices: 'Devices', nav_people: 'Employees', nav_activity: 'Activity', see_all_activity: 'See all activity', no_perm_activity: 'Only administrators can see the activity.', set_loglimit: 'Activity log', set_security: "Device security", set_security_sub: "What counts as a problem on devices", sec_enc: "Require disk encryption", sec_enc_d: "Devices without encryption (BitLocker, FileVault or LUKS) show as a problem in the Overview and on their page. Off, it is only noted in their details.", sec_saved: "Setting saved", lc_requireEncryption: "require disk encryption", set_loglimit_sub: 'How much space the activity log may take',
@@ -331,9 +331,9 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     by_dept: 'Devices in use by department', activity: 'Recent activity',
 
     devices_title: 'Devices', devices_sub: 'Company equipment',
-    search_dev: 'Search by tag, name, serial number, MAC, model or person', lbl_search_in: 'Search in', search_in: 'Search in “{x}”', sf_all: 'All details', sf_tag: 'Tag', sf_name: 'Computer name', sf_serial: 'Serial number', sf_model: 'Model', sf_cpu: 'Processor', sf_ram: 'Memory', sf_disk: 'Storage', sf_gpu: 'Graphics', sf_os: 'System', sf_mac: 'MAC', sf_person: 'Assigned to', lbl_search: 'Search', lbl_status: 'Status', lbl_dept: 'Department', lbl_type: 'Type',
+    search_dev: 'Search by tag, name, serial number, MAC, model or person', lbl_search_in: 'Search in', search_in: 'Search in “{x}”', sf_all: 'Search in: all fields', fn_main: "Identity", fn_sections: "Form sections", fn_required: "* required", ag_recover: "Devices to recover", ag_faulty: "Faulty devices", ag_disk: "Drives with problems", ag_enc: "Without disk encryption", ag_places: "Data to restore", ag_faults: "Open faults", ag_leaver: "Leaver checklists", ag_warranty: "Warranties ending", ag_battery: "Worn batteries", ag_checks: "Details to check", ag_more: "Show {n} more", ag_less: "Show less", btn_more: "More", dev_count: "{n} devices", dev_count_of: "{n} of {t} devices", emp_count: "{n} people", emp_count_of: "{n} of {t} people", f_status_all: "Status: all", still_has: "Still has: ", clear_filters: "Clear filters", today_at: "Today {h}", yesterday_at: "Yesterday {h}", no_inc_act: "If it breaks, log it here to keep a repair history.", no_dev_yet: "No devices yet.", sf_tag: 'Tag', sf_name: 'Computer name', sf_serial: 'Serial number', sf_model: 'Model', sf_cpu: 'Processor', sf_ram: 'Memory', sf_disk: 'Storage', sf_gpu: 'Graphics', sf_os: 'System', sf_mac: 'MAC', sf_person: 'Assigned to', lbl_search: 'Search', lbl_status: 'Status', lbl_dept: 'Department', lbl_type: 'Type',
     f_active: 'All active', f_all: 'All', f_alldepts: 'All departments', f_alltypes: 'All types',
-    th_tag: 'Tag', th_device: 'Device', th_assigned: 'Assigned to', th_status: 'Status', th_warranty: 'Warranty',
+    th_tag: 'Tag', sort_by: "Sort by", sort_default: "Default order", sort_asc: "ascending", sort_desc: "descending", th_devcount: "Devices", bulk_n: a => a.n + " selected", bulk_status: "Change status", bulk_loc: "Change location", bulk_clear: "Clear selection", "bulk_status_s": "Status", "bulk_loc_s": "Location", bulk_all: "Select all shown", bulk_one: "Select", bulk_status_t: a => a.n === 1 ? "Change the status of 1 device" : `Change the status of ${a.n} devices`, bulk_loc_t: a => a.n === 1 ? "Change the location of 1 device" : `Change the location of ${a.n} devices`, bulk_no_use: "“In use” is not here: it needs an assignment, made one device at a time.", bulk_done: a => a.n === 1 ? "1 device changed" : a.n + " devices changed", bulk_skipped: "{n} not changed: {list}", bulk_loc_new: "New location", bulk_err_err_bulk_same: "already like that", bulk_err_err_conflict: "not possible with its current assignment", th_device: 'Device', th_assigned: 'Assigned to', th_status: 'Status', th_warranty: 'Warranty',
     left_badge: 'left', no_match_dev: 'No devices match these filters.',
     w_expired: 'Expired', w_expired_on: 'Expired on {d}', w_soon: 'Ends in {n} days',
 
@@ -434,7 +434,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     in_use_cant: 'Cannot be deleted because it is in use', added_x: '{x} added',
     th_usage: 'In use', u_people: n => n === 1 ? '1 employee' : n + ' employees', u_devices: n => n === 1 ? '1 device' : n + ' devices', u_models: n => n === 1 ? '1 model' : n + ' models', u_none: 'Not used',
     f_name_es: 'Name in Spanish', f_name_en: 'Name in English', f_name_ca: 'Name in Catalan', f_name_hint: 'If you leave one empty, one of the other names is used.', err_name: 'Enter a name',
-    f_loc_kind: 'Location type', f_address: 'Address', th_address: 'Address', th_kind: 'Type',
+    f_loc_kind: 'Location type', f_address: 'Address', th_address: 'Address',
     f_maker: 'Manufacturer', f_model_name: 'Model', f_type: 'Device type', th_maker: 'Manufacturer', th_model: 'Model', err_model: 'Manufacturer and model are required',
     f_chip: 'Chip name', f_chip_ph: 'Intel Wi-Fi 7 BE200', f_gen: 'Wi-Fi generation', th_chip: 'Chip', th_gen: 'Generation', f_bt: 'Bluetooth', th_bt: 'Bluetooth',
     th_role: 'Role', th_last: 'Last sign-in', never: 'Never', f_role: 'Role', f_pass_tmp: 'Initial password', f_pass_new: 'New password', f_pass_hint: 'Leave empty to keep the current one.',
@@ -594,7 +594,7 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     bk_encrypt: 'Protegeix amb contrasenya (recomanat)', bk_encrypt_d: 'La còpia es xifra amb AES-256 i només es pot obrir amb aquesta contrasenya.', bk_pw: 'Contrasenya de la còpia', bk_pw2: 'Repeteix la contrasenya', bk_pw_lost: 'Desa-la en un lloc segur: si la perds, no hi haurà manera de restaurar aquesta còpia.', bk_plain_warn: 'Sense contrasenya, qualsevol que tingui el fitxer podrà llegir totes les dades.', bk_pw_t: 'Còpia protegida', bk_pw_d: 'Aquesta còpia està protegida amb contrasenya. Escriu-la per veure què conté.', bk_unlock: 'Obre', bk_enc_yes: 'Protegida amb contrasenya', err_bk_pw_short: 'La contrasenya de la còpia ha de tenir almenys 10 caràcters.', err_backup_password: 'La contrasenya no és correcta o el fitxer està malmès.', err_backup_password_required: 'Aquesta còpia està protegida amb contrasenya.',
     grp_data: 'Dades', grp_data_d: 'Còpies de seguretat i restauració', set_data: 'Còpies de seguretat', set_data_sub: 'Exporta totes les dades o restaura una còpia anterior', bk_export_h: 'Exporta una còpia', bk_export_d: 'Descarrega un fitxer .invbackup amb totes les dades i la configuració: dispositius, empleats, historial, avaries, usuaris, llistes, logotip i ajustos.', bk_export_warn: 'Conté dades personals i les contrasenyes dels usuaris (xifrades). Desa el fitxer en un lloc segur.', bk_export_btn: 'Descarrega la còpia', bk_exported: 'Còpia descarregada', bk_restore_h: 'Restaura una còpia', bk_restore_d: 'Carrega un fitxer .invbackup exportat des d’aquesta aplicació.', bk_restore_warn: 'Se substituiran totes les dades i la configuració actuals per les de la còpia i es tancarà la sessió de tots els usuaris, inclosa la teva. No es pot desfer.', bk_restore_btn: 'Restaura des d’un fitxer', bk_confirm_t: 'Restaura la còpia', bk_confirm_b: 'Còpia del {d}, feta per {by}. Conté:', bk_n_devices: '{n} dispositius', bk_n_employees: '{n} empleats', bk_n_users: '{n} usuaris', bk_n_log: '{n} entrades de l’historial', bk_first: 'Descarrega abans una còpia de les dades actuals', bk_restore_ok: 'Restaura', bk_restored: 'Còpia restaurada. Torna a iniciar sessió.', err_backup_invalid: 'Aquest fitxer no és una còpia vàlida d’aquesta aplicació.', err_backup_version: 'Aquesta còpia és d’una altra versió de l’aplicació i no es pot restaurar aquí.', err_backup_no_admin: 'La còpia no té cap administrador actiu, així que ningú no podria entrar.', err_backup_size: 'El fitxer és massa gran (màxim 50 MB).', log_backup_export: 'Còpia de seguretat exportada', log_backup_restore: 'Còpia de seguretat restaurada',
     set_brand: 'Logotip', set_brand_sub: 'Substitueix la icona de l’aplicació per la de la teva empresa.', brand_upload: 'Puja una imatge', brand_change: 'Canvia la imatge', brand_remove: 'Treu el logotip', brand_formats: 'PNG, JPG, WebP, GIF o SVG de fins a 512 KB. Millor si és quadrada i amb fons transparent.', brand_shape: "Forma", brand_shape_d: "El logotip es retalla des del centre per omplir la forma, aquí i a la icona del navegador i de la pantalla d’inici.", shape_: "Tal com és", shape_app: "Icona d’app", shape_circle: "Cercle", brand_shape_saved: "Forma del logotip desada", lc_logoShape: "forma del logotip", brand_where: 'Es veurà al menú, a la pantalla d’inici de sessió i a la pestanya del navegador.', brand_saved: 'Logotip actualitzat', brand_removed: 'S’ha tornat a la icona original', err_logo_type: 'Aquest fitxer no és una imatge compatible.', err_logo_size: 'La imatge pesa més de 512 KB.', go_home: 'Ves al resum', pc_title: 'Canvia la contrasenya', pc_sub: 'Per seguretat, tria una contrasenya nova abans de continuar.', pc_current: 'Contrasenya actual', pc_new: 'Contrasenya nova', pc_repeat: 'Repeteix la contrasenya nova', pc_btn: 'Canvia', pc_done: 'Contrasenya canviada', err_pw_current: 'La contrasenya actual no és correcta.', err_pw_same: 'La contrasenya nova ha de ser diferent de l’actual.', err_must_change: 'Abans de continuar, canvia la contrasenya.', f_must_change: 'Demana que canviï la contrasenya en iniciar sessió', f_must_change_d: 'Útil quan li dones una contrasenya temporal.', chip_must_change: 'Ha de canviar la contrasenya', chip_must_change_d: 'Haurà de triar una contrasenya nova la propera vegada que iniciï sessió.', log_pwchanged: '{name} ha canviat la contrasenya', log_photo_removed: 'Foto de perfil de {name} treta', photo_remove_other: 'Treu la seva foto', photo_remove_sure: 'Treure-la? Prem un altre cop', photo_removed_other: 'Foto treta',
-    pw_h: 'Seguretat de les contrasenyes', pw_enforce: 'Exigeix requisits de seguretat', pw_enforce_d: 'Les contrasenyes que no els compleixin no s’acceptaran.', pw_off: 'Sense requisits: s’acceptarà qualsevol contrasenya.', pw_minlabel: 'Longitud mínima', pw_chars: 'caràcters', pw_c_upper: 'Almenys una majúscula', pw_c_number: 'Almenys un número', pw_c_symbol: 'Almenys un símbol', pw_c_min: 'Almenys {n} caràcters', pw_weak: 'Contrasenya insegura', pw_ok: 'Contrasenya acceptable', pw_strong: 'Contrasenya segura', pw_empty: 'Escriu una contrasenya per veure’n la seguretat', pw_applies: 'S’aplica a les contrasenyes noves o canviades. Les actuals continuen funcionant.', set_pwpolicy: 'Contrasenyes', set_pwpolicy_sub: 'Tria quins requisits han de complir les contrasenyes.', set_logs: 'Registre d’activitat', set_logs_sub: 'Tot el que s’ha fet a l’inventari: canvis, inicis de sessió i còpies de seguretat.', lg_all: 'Tota l’activitat', lg_devices: 'Dispositius', lg_people: 'Empleats', lg_access: 'Accessos i comptes', lg_system: 'Configuració i sistema', lg_anyone: 'Qualsevol usuari', lg_nobody: 'Sense usuari (sistema)', lg_from: 'Des de', lg_to: 'Fins a', lg_search: 'Cerca per nom, etiqueta, adreça IP…', lg_more: 'Carrega’n més', lg_none: 'No hi ha activitat amb aquests filtres.', lg_loading: 'Carregant…', lg_clear: 'Treu els filtres', lg_limit: 'Mida màxima', lg_limit_ph: 'Sense límit', lg_limit_hint: 'En passar-la s’esborren les entrades més antigues. Deixa-ho buit per no posar límit (de 10 MB a 1 TB).', lg_usage: 'Ara ocupa uns {size} ({n} entrades).', lg_limit_save: 'Desa el límit', lg_limit_sure: 'S’esborraran entrades antigues ara. Prem un altre cop', lg_limit_saved: 'Límit desat', lg_pruned_now: 'Límit desat: s’han esborrat {n} entrades antigues', log_pruned: 'S’han esborrat les {n} entrades més antigues del registre (límit: {mb} MB)', err_log_limit: 'El límit ha de ser de 10 MB a 1 TB, o quedar buit.', th_when: 'Quan', th_who: 'Qui', th_what: 'Què', log_login: '{name} ha iniciat la sessió', log_login_failed: 'Inici de sessió fallit: {who}', log_logout: '{name} ha tancat la sessió', log_edited_ch: "{tag}: canvis a {parts}", log_agent_updated_ch: "{tag} actualitzat per l’aplicació de dispositius: {parts}", log_agent_same: "{tag} llegit de nou per l’aplicació de dispositius, sense canvis", log_emp_edited_ch: "Dades de {name} modificades: {parts}", log_user_created_r: "Usuari {name} creat ({rol})", log_user_edited_ch: "Usuari {name} modificat: {ch}", log_setting_ch: "Configuració · {x}: {ch}", log_item_added: "Afegit a {x}: {name}", log_item_edited_ch: "{x} · {name}: {ch}", log_item_deleted: "Eliminat de {x}: {name}", log_logo_set: "Logotip canviat", log_logo_removed: "Logotip tret: es torna a fer servir la icona de l’aplicació", log_backup_export_enc: "Còpia de seguretat exportada (xifrada amb contrasenya)", log_backup_export_plain: "Còpia de seguretat exportada (sense xifrar)", log_backup_restore_m: "Restaurada la còpia de seguretat del {made}", log_backup_restore_mb: "Restaurada la còpia de seguretat del {made}, feta per {by}", log_check_ignored_c: "{tag}: avís «{c}» ignorat", log_update_done: "Versió {v} instal·lada correctament (abans {from})", log_update_done_auto: "Versió {v} instal·lada automàticament (abans {from})", log_update_failed: "No s’ha pogut instal·lar la versió {v}; no s’ha canviat res. {msg}", log_update_rolled_back: "La versió {v} no ha funcionat: s’ha tornat a {from} amb les seves dades. {msg}", lc_none: "cap", lc_password: "contrasenya restablerta", lc_orgName: "nom de l’organització", lc_tagPrefix: "prefix d’etiquetes", lc_tagNumbering: "numeració", lc_dateFmt: "format de data", lc_currency: "moneda", lc_warrantyDays: "avís de garantia (dies)", lc_hostnameIsTag: "hostname com a etiqueta", lc_enforce: "exigir requisits", lc_minOn: "longitud mínima", lc_minLen: "caràcters mínims", lc_upper: "majúscula", lc_number: "número", lc_symbol: "símbol", lc_nombre: "nom", lc_email: "correu", lc_username: "nom d’usuari", lc_rol: "rol", lc_mustChange: "ha de canviar la contrasenya", lc_logMax: "mida màxima del registre", lc_autoUpdate: "actualitzar automàticament", lc_autoHour: "hora", lc_hasScreen: "pantalla", lc_hasBattery: "bateria", lc_usesName: "fa servir nom", lc_code: "codi", lc_match: "paraules", lc_autoChassis: "format automàtic", lc_autoApple: "Apple", lc_tipo: "tipus", lc_direccion: "adreça", lc_fabricante: "fabricant", lc_typeId: "tipus", lc_cores: "nuclis", lc_speed: "velocitat", lc_speedUnit: "unitat", lc_kind: "classe", lc_vram: "memòria", lc_vramUnit: "unitat", lc_distroId: "distribució", lc_type: "tipus", lp_tag: "etiqueta", lp_name: "nom", lp_serial: "número de sèrie", lp_model: "model", lp_status: "estat", lp_loc: "ubicació", lp_purchase: "compra", lp_warranty: "garantia", lp_disposal: "retirada", lp_notes: "notes", lp_cpu: "processador", lp_ram: "memòria", lp_gpu: "gràfica", lp_screen: "pantalla", lp_battery: "bateria", lp_os: "sistema operatiu", lp_enc: "xifratge", lp_ad: "domini", lp_disks: "emmagatzematge", lp_nics: "xarxa", lp_nombre: "nom", lp_email: "correu", lp_depts: "departaments", lp_locs: "oficines", lp_alta: "data d’alta", lp_estado: "estat", lp_contrato: "contracte", log_user_created: 'Usuari {name} creat', log_user_edited: 'Usuari {name} modificat', log_user_on: 'Usuari {name} activat', log_user_off: 'Usuari {name} desactivat', log_emp_created: 'Empleat {name} afegit', log_emp_edited: 'Dades de {name} modificades', err_pw_minlen: 'La longitud mínima ha de ser un número entre 1 i 128.',
+    pw_h: 'Seguretat de les contrasenyes', pw_enforce: 'Exigeix requisits de seguretat', pw_enforce_d: 'Les contrasenyes que no els compleixin no s’acceptaran.', pw_off: 'Sense requisits: s’acceptarà qualsevol contrasenya.', pw_minlabel: 'Longitud mínima', pw_chars: 'caràcters', pw_c_upper: 'Almenys una majúscula', pw_c_number: 'Almenys un número', pw_c_symbol: 'Almenys un símbol', pw_c_min: 'Almenys {n} caràcters', pw_weak: 'Contrasenya insegura', pw_ok: 'Contrasenya acceptable', pw_strong: 'Contrasenya segura', pw_empty: 'Escriu una contrasenya per veure’n la seguretat', pw_applies: 'S’aplica a les contrasenyes noves o canviades. Les actuals continuen funcionant.', set_pwpolicy: 'Contrasenyes', set_pwpolicy_sub: 'Tria quins requisits han de complir les contrasenyes.', set_logs: 'Registre d’activitat', set_logs_sub: 'Tot el que s’ha fet a l’inventari: canvis, inicis de sessió i còpies de seguretat.', lg_all: 'Tota l’activitat', lg_devices: 'Dispositius', lg_people: 'Empleats', lg_access: 'Accessos i comptes', lg_system: 'Configuració i sistema', lg_anyone: 'Qualsevol usuari', lg_nobody: 'Sense usuari (sistema)', lg_from: 'Des de', lg_to: 'Fins a', lg_search: 'Cerca per nom, etiqueta, adreça IP…', lg_more: 'Carrega’n més', lg_none: 'No hi ha activitat amb aquests filtres.', lg_loading: 'Carregant…', lg_clear: 'Treu els filtres', lg_limit: 'Mida màxima', lg_limit_ph: 'Sense límit', lg_limit_hint: 'En passar-la s’esborren les entrades més antigues. Deixa-ho buit per no posar límit (de 10 MB a 1 TB).', lg_usage: 'Ara ocupa uns {size} ({n} entrades).', lg_limit_save: 'Desa el límit', lg_limit_sure: 'S’esborraran entrades antigues ara. Prem un altre cop', lg_limit_saved: 'Límit desat', lg_pruned_now: 'Límit desat: s’han esborrat {n} entrades antigues', log_pruned: 'S’han esborrat les {n} entrades més antigues del registre (límit: {mb} MB)', err_log_limit: 'El límit ha de ser de 10 MB a 1 TB, o quedar buit.', th_when: 'Quan', th_who: 'Qui', th_what: 'Què', log_login: '{name} ha iniciat la sessió', log_login_failed: 'Inici de sessió fallit: {who}', log_logout: '{name} ha tancat la sessió', qs_label: "Cerca", qs_ph: "Cerca equips, persones, configuració…", qs_hint: "↑↓ per moure’t · Retorn per obrir · Esc per tancar · / o Ctrl+K per cercar", qs_none: "Cap resultat", qs_recent: "Vistos fa poc", qs_pages: "Pàgines", qs_devices: "Dispositius", qs_people: "Empleats", qs_settings: "Configuració", qs_actions: "Accions", kb_title: "Dreceres de teclat", kb_search: "Cerca a qualsevol lloc", kb_slash: "Cerca a la llista (o a tot)", kb_help: "Mostra aquestes dreceres", kb_esc: "Tanca", recent_title: "Vistos fa poc", btn_duplicate: "Duplica", dup_title: "Equip nou com {tag}", dup_note: "Còpia de {tag}: revisa el número de sèrie, el nom i les adreces MAC.", hist_title: "Historial de canvis", hist_loading: "Carregant…", hist_none: "Encara no hi ha res registrat.", hist_more: "Carrega’n més", btn_share: "Comparteix", share_title: "Comparteix {tag}", share_d: "Un enllaç de només lectura amb el maquinari, la garantia i les avaries de l’equip, per a algú sense compte (un taller, un auditor). No mostra a qui està assignat ni què va costar.", share_for: "Per a qui (opcional)", share_for_ph: "Taller, auditor…", share_days: "Vàlid durant", share_d1: "1 dia", share_d7: "7 dies", share_d30: "30 dies", share_d90: "90 dies", share_make: "Crea l’enllaç", share_made: "Enllaç creat. Copia’l ara: per seguretat no es torna a mostrar.", share_copy: "Copia", share_copied: "Enllaç copiat", share_links: "Enllaços", share_none: "Encara no hi ha enllaços.", share_until: "Caduca el {d}", share_ended: "Caducat el {d}", share_revoked: "Anul·lat", share_views: a => a.n === 1 ? "1 visita" : a.n + " visites", share_revoke: "Anul·la", share_revoked_ok: "Enllaç anul·lat", lv_title: "Llista de sortida", lv_done: "{n} de {t} fet", lv_dev: "Retornar {tag}", lv_dev_done: "Cap equip pendent de retornar", lv_accounts: "Desactivar els seus comptes (correu, aplicacions)", lv_mail: "Reenviar o arxivar el seu correu", lv_licences: "Alliberar les seves llicències de programari", lv_access: "Recuperar claus, targetes i acreditació", lv_files: "Desar o traspassar els seus fitxers", lv_on: "Fet el {d}", al_leaver: "La llista de sortida de {name} no està acabada", al_leaver_s: a => `${a.n === 1 ? "Falta 1 tasca" : "Falten " + a.n + " tasques"} · va marxar el ${a.d}`, menu_sessions: "Dispositius amb sessió", ss_title: "On has iniciat la sessió", ss_d: "Cada navegador amb què has entrat. Tanca la sessió dels que no reconeguis.", ss_this: "Aquest dispositiu", ss_last: "Darrer ús: {d}", ss_since: "Des del {d}", ss_end: "Tanca la sessió", ss_end_all: "Tanca la sessió a tots els altres", ss_ended: "Sessió tancada", ss_ended_all: "S’ha tancat la sessió als altres dispositius", ss_only: "Només tens la sessió d’aquest dispositiu.", ss_unknown: "Navegador desconegut", ss_on: "{b} a {o}", bk_auto_h: "Còpies automàtiques", bk_auto_d: "Cada dia el servidor desa una còpia completa de la base de dades i conserva les més recents. Es queden al servidor (no es baixen): serveixen per recuperar les dades si alguna cosa va malament.", bk_auto_on: "Fes una còpia cada dia", bk_auto_hour: "A les", bk_auto_keep: "Conserva", bk_auto_keep_u: "còpies", bk_auto_last_ok: "Darrera còpia: {d}", bk_auto_last_fail: "La darrera còpia ha fallat ({d}): {msg}", bk_auto_never: "Encara no s’ha fet cap còpia automàtica.", bk_auto_noupd: "Aquest servidor no té el servei d’actualitzacions (deploy/install.sh), que és qui fa les còpies automàtiques. Fes servir les còpies manuals de dalt.", bk_auto_files: "Còpies desades", bk_auto_restore: "Per restaurar-ne una, a la carpeta d’instal·lació del servidor:", lc_autoBackup: "còpies automàtiques", lc_autoBackupHour: "hora de les còpies", lc_autoBackupKeep: "còpies conservades", log_share_created: "Enllaç per compartir {tag} creat ({days} dies)", log_share_revoked: "Enllaç per compartir {tag} anul·lat", log_sessions_ended: a => `${a.name} ha tancat ${a.n === 1 ? "1 sessió" : a.n + " sessions"} en altres dispositius`, log_leaver_done: "Llista de sortida de {name}: «{taskT}» fet", log_leaver_undone: "Llista de sortida de {name}: «{taskT}» desmarcat", err_not_left: "Aquesta persona no ha deixat l’empresa.", err_this_session: "Per tancar aquesta sessió, fes servir «Tanca la sessió».", log_edited_ch: "{tag}: canvis a {parts}", log_agent_updated_ch: "{tag} actualitzat per l’aplicació de dispositius: {parts}", log_agent_same: "{tag} llegit de nou per l’aplicació de dispositius, sense canvis", log_emp_edited_ch: "Dades de {name} modificades: {parts}", log_user_created_r: "Usuari {name} creat ({rol})", log_user_edited_ch: "Usuari {name} modificat: {ch}", log_setting_ch: "Configuració · {x}: {ch}", log_item_added: "Afegit a {x}: {name}", log_item_edited_ch: "{x} · {name}: {ch}", log_item_deleted: "Eliminat de {x}: {name}", log_logo_set: "Logotip canviat", log_logo_removed: "Logotip tret: es torna a fer servir la icona de l’aplicació", log_backup_export_enc: "Còpia de seguretat exportada (xifrada amb contrasenya)", log_backup_export_plain: "Còpia de seguretat exportada (sense xifrar)", log_backup_restore_m: "Restaurada la còpia de seguretat del {made}", log_backup_restore_mb: "Restaurada la còpia de seguretat del {made}, feta per {by}", log_check_ignored_c: "{tag}: avís «{c}» ignorat", log_update_done: "Versió {v} instal·lada correctament (abans {from})", log_update_done_auto: "Versió {v} instal·lada automàticament (abans {from})", log_update_failed: "No s’ha pogut instal·lar la versió {v}; no s’ha canviat res. {msg}", log_update_rolled_back: "La versió {v} no ha funcionat: s’ha tornat a {from} amb les seves dades. {msg}", lc_none: "cap", lc_password: "contrasenya restablerta", lc_orgName: "nom de l’organització", lc_tagPrefix: "prefix d’etiquetes", lc_tagNumbering: "numeració", lc_dateFmt: "format de data", lc_currency: "moneda", lc_warrantyDays: "avís de garantia (dies)", lc_hostnameIsTag: "hostname com a etiqueta", lc_enforce: "exigir requisits", lc_minOn: "longitud mínima", lc_minLen: "caràcters mínims", lc_upper: "majúscula", lc_number: "número", lc_symbol: "símbol", lc_nombre: "nom", lc_email: "correu", lc_username: "nom d’usuari", lc_rol: "rol", lc_mustChange: "ha de canviar la contrasenya", lc_logMax: "mida màxima del registre", lc_autoUpdate: "actualitzar automàticament", lc_autoHour: "hora", lc_hasScreen: "pantalla", lc_hasBattery: "bateria", lc_usesName: "fa servir nom", lc_code: "codi", lc_match: "paraules", lc_autoChassis: "format automàtic", lc_autoApple: "Apple", lc_tipo: "tipus", lc_direccion: "adreça", lc_fabricante: "fabricant", lc_typeId: "tipus", lc_cores: "nuclis", lc_speed: "velocitat", lc_speedUnit: "unitat", lc_kind: "classe", lc_vram: "memòria", lc_vramUnit: "unitat", lc_distroId: "distribució", lc_type: "tipus", lp_tag: "etiqueta", lp_name: "nom", lp_serial: "número de sèrie", lp_model: "model", lp_status: "estat", lp_loc: "ubicació", lp_purchase: "compra", lp_warranty: "garantia", lp_disposal: "retirada", lp_notes: "notes", lp_cpu: "processador", lp_ram: "memòria", lp_gpu: "gràfica", lp_screen: "pantalla", lp_battery: "bateria", lp_os: "sistema operatiu", lp_enc: "xifratge", lp_ad: "domini", lp_disks: "emmagatzematge", lp_nics: "xarxa", lp_nombre: "nom", lp_email: "correu", lp_depts: "departaments", lp_locs: "oficines", lp_alta: "data d’alta", lp_estado: "estat", lp_contrato: "contracte", log_user_created: 'Usuari {name} creat', log_user_edited: 'Usuari {name} modificat', log_user_on: 'Usuari {name} activat', log_user_off: 'Usuari {name} desactivat', log_emp_created: 'Empleat {name} afegit', log_emp_edited: 'Dades de {name} modificades', err_pw_minlen: 'La longitud mínima ha de ser un número entre 1 i 128.',
     su_title: 'Configuració inicial', su_sub: 'Deixa l’aplicació a punt en tres passos.', su_step: 'Pas {n} de 3', su_org_h: 'La teva organització', su_org: 'Nom de l’organització', su_prefix: 'Prefix de les etiquetes', su_date: 'Format de data', su_currency: 'Moneda', su_token: 'Codi d’instal·lació', su_token_hint: 'El defineix qui ha desplegat l’aplicació (DJANGO_SETUP_TOKEN).', su_places_h: 'Oficines i departaments', su_locs: 'Ubicacions', su_locs_hint: 'On són els equips. Marca’n una com a magatzem perquè els equips retornats hi tornin.', su_depts: 'Departaments', su_depts_hint: 'Opcional: també els pots afegir després a Configuració.', su_add_loc: 'Afegeix una ubicació', su_add_dept: 'Afegeix un departament', su_name: 'Nom', su_remove: 'Treu', su_admin_h: 'El teu compte d’administrador', su_admin_sub: 'Amb aquest compte entraràs i podràs crear els de la resta de l’equip.', su_fullname: 'Nom complet', su_email: 'Correu electrònic', su_pass: 'Contrasenya', su_pass2: 'Repeteix la contrasenya', su_back: 'Enrere', su_next: 'Següent', su_finish: 'Acaba', su_blocked_t: 'Falta el codi d’instal·lació', su_blocked_b: 'La instal·lació encara no es pot completar: defineix la variable DJANGO_SETUP_TOKEN al servidor i recarrega aquesta pàgina.', su_done: 'Tot a punt! Ja pots afegir els teus dispositius.', err_su_org: 'Indica el nom de l’organització.', err_su_loc: 'Afegeix almenys una ubicació amb nom.', err_su_admin: 'Omple el teu nom i un correu vàlid.', err_su_mismatch: 'Les contrasenyes no coincideixen.', err_setup_token: 'El codi d’instal·lació no és correcte.', err_setup_done: 'L’aplicació ja està configurada. Inicia sessió.', log_setup: 'Instal·lació inicial completada',
     err_network: 'No s’ha pogut connectar amb el servidor. Torna-ho a provar.', err_forbidden: 'No tens permís per fer això.', err_invalid: 'Hi ha dades no vàlides. Revisa el formulari.', err_conflict: 'El dispositiu ha canviat. Recarrega la pàgina i torna-ho a provar.', err_not_found: 'Aquest registre ja no existeix.', err_dates: 'La data de fi no pot ser anterior a la d’inici.', err_asg_dates: 'La data de lliurament no pot ser anterior a l’última devolució d’aquest equip.', err_fix_dates: 'La data de resolució no pot ser anterior a la de l’avaria.', err_serial_dup: 'Ja hi ha un altre dispositiu amb aquest número de sèrie.', err_os_number: 'La versió exacta només porta números i punts, com 26.2.1.', err_auth: 'La sessió ha caducat. Torna a iniciar sessió.', err_pass_weak: 'La contrasenya no compleix els requisits de seguretat.', login_locked: 'Massa intents. Espera 15 minuts i torna-ho a provar.',
     brand: 'Inventari d’equips', nav_summary: 'Resum', nav_devices: 'Dispositius', nav_people: 'Empleats', nav_activity: 'Activitat', see_all_activity: 'Mostra tota l’activitat', no_perm_activity: 'Només els administradors poden veure l’activitat.', set_loglimit: 'Registre d’activitat', set_security: "Seguretat dels equips", set_security_sub: "Què es considera un problema als equips", sec_enc: "Exigeix el xifratge del disc", sec_enc_d: "Els equips sense xifratge (BitLocker, FileVault o LUKS) apareixen com un problema al Resum i a la seva pàgina. Desactivat, només s’indica a les seves dades.", sec_saved: "Ajust desat", lc_requireEncryption: "exigir xifratge del disc", set_loglimit_sub: 'Quant pot ocupar el registre d’activitat',
@@ -621,9 +621,9 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     by_dept: 'Equips en ús per departament', activity: 'Activitat recent',
 
     devices_title: 'Dispositius', devices_sub: 'Equips de l’empresa',
-    search_dev: 'Cerca per etiqueta, nom, núm. de sèrie, MAC, model o persona', lbl_search_in: 'Cerca a', search_in: 'Cerca a «{x}»', sf_all: 'Totes les dades', sf_tag: 'Etiqueta', sf_name: 'Nom de l’equip', sf_serial: 'Núm. de sèrie', sf_model: 'Model', sf_cpu: 'Processador', sf_ram: 'Memòria', sf_disk: 'Emmagatzematge', sf_gpu: 'Gràfics', sf_os: 'Sistema', sf_mac: 'MAC', sf_person: 'Assignat a', lbl_search: 'Cerca', lbl_status: 'Estat', lbl_dept: 'Departament', lbl_type: 'Tipus',
+    search_dev: 'Cerca per etiqueta, nom, núm. de sèrie, MAC, model o persona', lbl_search_in: 'Cerca a', search_in: 'Cerca a «{x}»', sf_all: 'Cerca a: totes les dades', fn_main: "Identificació", fn_sections: "Seccions del formulari", fn_required: "* obligatori", ag_recover: "Equips per recuperar", ag_faulty: "Equips avariats", ag_disk: "Discos amb problemes", ag_enc: "Sense xifratge de disc", ag_places: "Dades per restaurar", ag_faults: "Avaries obertes", ag_leaver: "Llistes de sortida", ag_warranty: "Garanties que vencen", ag_battery: "Bateries gastades", ag_checks: "Dades per revisar", ag_more: "Mostra’n {n} més", ag_less: "Mostra’n menys", btn_more: "Més", dev_count: "{n} dispositius", dev_count_of: "{n} de {t} dispositius", emp_count: "{n} persones", emp_count_of: "{n} de {t} persones", f_status_all: "Situació: totes", still_has: "Encara té: ", clear_filters: "Treu els filtres", today_at: "Avui {h}", yesterday_at: "Ahir {h}", no_inc_act: "Si s’espatlla, registra-ho aquí per tenir l’historial de reparacions.", no_dev_yet: "Encara no hi ha dispositius.", sf_tag: 'Etiqueta', sf_name: 'Nom de l’equip', sf_serial: 'Núm. de sèrie', sf_model: 'Model', sf_cpu: 'Processador', sf_ram: 'Memòria', sf_disk: 'Emmagatzematge', sf_gpu: 'Gràfics', sf_os: 'Sistema', sf_mac: 'MAC', sf_person: 'Assignat a', lbl_search: 'Cerca', lbl_status: 'Estat', lbl_dept: 'Departament', lbl_type: 'Tipus',
     f_active: 'Tots els actius', f_all: 'Tots', f_alldepts: 'Tots els departaments', f_alltypes: 'Tots els tipus',
-    th_tag: 'Etiqueta', th_device: 'Equip', th_assigned: 'Assignat a', th_status: 'Estat', th_warranty: 'Garantia',
+    th_tag: 'Etiqueta', sort_by: "Ordena per", sort_default: "Ordre normal", sort_asc: "ascendent", sort_desc: "descendent", th_devcount: "Equips", bulk_n: a => a.n === 1 ? "1 seleccionat" : a.n + " seleccionats", bulk_status: "Canvia l’estat", bulk_loc: "Canvia la ubicació", bulk_clear: "Treu la selecció", "bulk_status_s": "Estat", "bulk_loc_s": "Ubicació", bulk_all: "Selecciona tots els mostrats", bulk_one: "Selecciona", bulk_status_t: a => a.n === 1 ? "Canvia l’estat d’1 equip" : `Canvia l’estat de ${a.n} equips`, bulk_loc_t: a => a.n === 1 ? "Canvia la ubicació d’1 equip" : `Canvia la ubicació de ${a.n} equips`, bulk_no_use: "«En ús» no hi és: necessita una assignació, que es fa equip a equip.", bulk_done: a => a.n === 1 ? "1 equip canviat" : a.n + " equips canviats", bulk_skipped: "{n} sense canviar: {list}", bulk_loc_new: "Nova ubicació", bulk_err_err_bulk_same: "ja estava així", bulk_err_err_conflict: "no es pot amb la seva assignació actual", th_device: 'Equip', th_assigned: 'Assignat a', th_status: 'Estat', th_warranty: 'Garantia',
     left_badge: 'ha deixat l’empresa', no_match_dev: 'Cap dispositiu no coincideix amb els filtres.',
     w_expired: 'Vençuda', w_expired_on: 'Vençuda el {d}', w_soon: 'Venç d’aquí a {n} dies',
 
@@ -1016,6 +1016,14 @@ const assignMenu = d => `<div class="menuwrap"><button class="btn primary" type=
     <button class="mi" type="button" data-act="asignar" data-id="${d.id}"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><span class="txt"><span>${T('mi_to_emp')}</span><small>${T('mi_to_emp_d')}</small></span></button>
     <button class="mi" type="button" data-act="asignarDepto" data-id="${d.id}"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.2.6 3.5 2.6 3.5 6"/></svg><span class="txt"><span>${T('mi_to_dept')}</span><small>${T('mi_to_dept_d')}</small></span></button>
   </div></div>`;
+/* a device's less frequent actions, behind "More" so the page leads with the main one (Assign / Record return) and Edit */
+const moreMenu = (d, retired) => `<div class="menuwrap"><button class="btn" type="button" id="moreBtn" data-menu="devMoreMenu" aria-haspopup="true" aria-expanded="false">${T('btn_more')}<svg class="i chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="menu right" id="devMoreMenu" hidden>
+    ${retired ? '' : `<button class="mi" type="button" data-act="incidencia" data-id="${d.id}"><svg class="i" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>${T('btn_fault')}</span></button>`}
+    <button class="mi" type="button" data-act="estado" data-id="${d.id}"><svg class="i" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg><span>${T('btn_status')}</span></button>
+    <button class="mi" type="button" data-act="duplicar" data-id="${d.id}"><svg class="i" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>${T('btn_duplicate')}</span></button>
+    <button class="mi" type="button" data-act="compartir" data-id="${d.id}"><svg class="i" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>${T('btn_share')}</span></button>
+  </div></div>`;
 const holderName = a => !a ? '' : a.deptId ? deptName(a.deptId) : (emp(a.employeeId)?.nombre || '—');
 const holderCell = a => {
   if (!a) return '';
@@ -1031,6 +1039,13 @@ const isRetired = d => d.estado === 'descartado' || d.estado === 'perdido';
 const storageLoc = () => S.locations.find(l => l.tipo === 'storage')?.id;
 const pill = (k, label) => `<span class="pill st-${k}">${esc(label || st(k))}</span>`;
 const tagLink = d => `<a class="tag" href="#dispositivo-${d.id}">${esc(d.tag)}</a>`;
+/* when something happened, as people say it: "Today 10:17", "Yesterday 18:02", or the date */
+function when(l) {
+  if (!l.at) return fmt(l.fecha);
+  const at = new Date(l.at), h = at.toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' });
+  const days = Math.round((new Date(today() + 'T12:00:00') - new Date(l.fecha + 'T12:00:00')) / 864e5);
+  return days === 0 ? t('today_at', { h }) : days === 1 ? t('yesterday_at', { h }) : fmt(l.fecha);
+}
 /* a changed value as the log shows it */
 function chVal(f, v) {
   if (v === true || v === false) return t(v ? 'yes' : 'no');
@@ -1039,7 +1054,7 @@ function chVal(f, v) {
   if (f === 'tagNumbering') return t('num_' + v);
   if (f === 'dateFmt') return t('df_' + v);
   if (f === 'logMax') return v ? fmtBytes(v * 1048576) : t('lg_limit_ph');
-  if (f === 'autoHour') return String(v).padStart(2, '0') + ':00';
+  if (f === 'autoHour' || f === 'autoBackupHour') return String(v).padStart(2, '0') + ':00';
   if (f === 'logoShape') return t('shape_' + (v || ''));
   if (f === 'typeId') return listName('types', v) || String(v);
   if (f === 'distroId') return listName('linuxDistros', v) || String(v);
@@ -1063,6 +1078,7 @@ const logText = l => {
   if (k === 'log_backup_restore' && raw.made) { a.made = fmt(raw.made); k += raw.by ? '_mb' : '_m'; }
   if (k === 'log_check_ignored' && raw.chk) { a.c = t('chk_' + raw.chk, {}).replace(/[\s:]+$/, ''); k += '_c'; }
   if (k === 'log_update_done' && raw.auto) k += '_auto';
+  if (raw.task) a.taskT = t('lv_' + raw.task);
   if (k.startsWith('log_update')) { for (const x of ['v', 'from']) if (a[x]) a[x] = String(a[x]).replace(/^v/i, ''); }   // "v1.19.0" and "1.18.1" alike
   if (!a.from && 'from' in raw) a.from = '?';
   if (a.xKey) a.x = t(a.xKey); if (a.cond) a.cond = cd(a.cond).toLowerCase(); if (a.st) a.st = st(a.st);
@@ -1891,7 +1907,35 @@ function settingsData() {
         <div><button class="btn primary" type="submit" id="bkExport">${T('bk_export_btn')}</button></div></form></section>
     <section class="panel"><div><h2>${T('bk_restore_h')}</h2><p class="sub">${T('bk_restore_d')}</p></div>
       <p class="notice bad" style="margin:0">${T('bk_restore_warn')}</p>
-      <div><button class="btn danger" type="button" id="bkRestore">${T('bk_restore_btn')}</button><input type="file" id="bkFile" accept=".invbackup" hidden></div></section>`;
+      <div><button class="btn danger" type="button" id="bkRestore">${T('bk_restore_btn')}</button><input type="file" id="bkFile" accept=".invbackup" hidden></div></section>
+    <section class="panel" id="bkAutoPanel"><div><h2>${T('bk_auto_h')}</h2><p class="sub">${T('bk_auto_d')}</p></div><div id="bkAuto"><p class="muted" style="margin:0">${T('hist_loading')}</p></div></section>`;
+}
+/* Settings > Backups: the server's automatic backups, made every day by the updater service */
+async function loadAutoBackups() {
+  const box = $('#bkAuto'); if (!box) return;
+  let a;
+  try { a = await api('GET', 'backups/auto'); } catch (err) { if (!(err instanceof ApiFail)) throw err; return; }
+  if (!$('#bkAuto')) return;
+  const when = iso => { const d = new Date(iso); return isNaN(d) ? '' : `${fmt(iso.slice(0, 10))} ${d.toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' })}`; };
+  const status = !a.updater ? `<p class="notice info" style="margin:0">${T('bk_auto_noupd')}</p>`
+    : !a.last.at ? `<p class="muted" style="margin:0">${T('bk_auto_never')}</p>`
+    : a.last.status === 'failed' ? `<p class="notice bad" style="margin:0">${T('bk_auto_last_fail', { d: when(a.last.at), msg: a.last.message })}</p>`
+    : `<p class="notice" style="margin:0;background:var(--ok-bg);color:var(--ok)">${T('bk_auto_last_ok', { d: when(a.last.at) })}</p>`;
+  const example = a.files[0] ? a.files[0].name : 'auto-YYYYMMDD-HHMM.sql.gz';
+  box.innerHTML = `<form id="bkAutoForm" class="regionform" novalidate>
+      <label class="check"><input type="checkbox" name="enabled"${a.enabled ? ' checked' : ''}> ${T('bk_auto_on')}</label>
+      <label>${T('bk_auto_hour')}<select name="hour">${opts(UP_HOURS, String(a.hour))}</select></label>
+      <label>${T('bk_auto_keep')}<span class="row tight"><input type="number" name="keep" min="1" max="90" step="1" value="${a.keep}" style="width:90px"> ${T('bk_auto_keep_u')}</span></label>
+      <div><button class="btn primary" type="submit">${T('save')}</button></div></form>
+    ${status}
+    ${a.files.length ? `<h3 style="margin:6px 0 0;font-size:15px">${T('bk_auto_files')}</h3><ul class="sharelist">${a.files.map(f => `<li><span><b class="mono">${esc(f.name)}</b><small>${esc(when(f.at))} · ${esc(fmtBytes(f.size))}</small></span></li>`).join('')}</ul>` : ''}
+    ${a.updater ? `<p class="muted" style="margin:0;font-size:13px">${T('bk_auto_restore')}</p><pre class="upd-notes">gunzip -c backups/${esc(example)} | docker compose exec -T db psql -U inventario -d inventario</pre>` : ''}`;
+  $('#bkAutoForm').onsubmit = async e => {
+    e.preventDefault();
+    const v = new FormData(e.target);
+    try { await api('PUT', 'backups/auto', { enabled: !!v.get('enabled'), hour: Number(v.get('hour')), keep: Number(v.get('keep')) }); toast(t('saved'), true); loadAutoBackups(); }
+    catch (err) { if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); }
+  };
 }
 const backupForm = (f, password) => { const fd = new FormData(); fd.append('file', f); if (password) fd.append('password', password); return fd; };
 function backupSummary(s) {
@@ -1905,6 +1949,7 @@ function backupSummary(s) {
 }
 function bindData() {
   const form = $('#bkForm'); if (!form) return;
+  loadAutoBackups();
   const enc = $('#bkEncrypt'), meter = () => drawMeter($('#bkMeter'), $('#bk-pw1').value, BK_POLICY);
   const sync = () => { $('#bkPw').hidden = !enc.checked; $('#bkPlain').hidden = enc.checked; };
   enc.onchange = sync; $('#bk-pw1').oninput = meter; sync(); meter();
@@ -2346,6 +2391,99 @@ function bindLogs() {
   if (!LOG.loaded) loadLogs(false);
 }
 
+/* ================= recently viewed (this browser, per account) ================= */
+const recentKey = () => 'inv-recent-' + (cur ? cur.id : '');
+function recentList() {
+  let list = [];
+  try { list = JSON.parse(localStorage.getItem(recentKey()) || '[]'); } catch (e) { list = []; }
+  return Array.isArray(list) ? list.filter(x => x && (x.t === 'd' ? dev(x.id) : x.t === 'e' ? emp(x.id) : null)) : [];
+}
+function noteRecent(type, id) {
+  if (!cur || !(type === 'd' ? dev(id) : emp(id))) return;
+  try { localStorage.setItem(recentKey(), JSON.stringify([{ t: type, id }, ...recentList().filter(x => !(x.t === type && x.id === id))].slice(0, 8))); } catch (e) {}
+}
+function recentChips() {
+  const list = recentList().slice(0, 6);
+  if (!list.length) return '';
+  return `<div class="recent"><span class="muted">${T('recent_title')}</span>${list.map(x => {
+    if (x.t === 'd') { const d = dev(x.id); return `<a class="rchip" href="#dispositivo-${d.id}"><span class="tag">${esc(d.tag)}</span>${esc(devTitle(d))}</a>`; }
+    const e = emp(x.id); return `<a class="rchip" href="#empleado-${e.id}">${esc(e.nombre)}</a>`;
+  }).join('')}</div>`;
+}
+
+/* ================= quick search (Ctrl+K or /) and keyboard shortcuts ================= */
+const QS = { items: [], i: 0 };
+const fold = v => String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+function qsResults(q) {
+  const out = [], add = (group, label, sub, href, run) => out.push({ group, label, sub, href, run });
+  const nq = fold(q.trim());
+  const pages = [['#panel', 'nav_summary'], ['#dispositivos', 'nav_devices'], ['#empleados', 'nav_people'], ...(can('admin') ? [['#actividad', 'nav_activity'], ['#ajustes', 'set_title']] : [])];
+  if (!nq) {
+    recentList().forEach(x => { if (x.t === 'd') { const d = dev(x.id); add('qs_recent', `${d.tag} · ${devTitle(d)}`, typeName(devType(d)), '#dispositivo-' + d.id); } else { const e = emp(x.id); add('qs_recent', e.nombre, deptNames(e), '#empleado-' + e.id); } });
+    pages.forEach(([h, k]) => add('qs_pages', t(k), '', h));
+    return out;
+  }
+  const score = (fields) => { let best = 0; fields.forEach((f, n) => { const v = fold(f); if (!v) return; if (v === nq) best = Math.max(best, 100 - n); else if (v.startsWith(nq)) best = Math.max(best, 80 - n); else if (v.includes(nq)) best = Math.max(best, 50 - n); }); return best; };
+  S.devices.map(d => { const a = openAsg(d.id); return [score([d.tag, d.serial, hostOf(d), devTitle(d), a ? holderName(a) : '', specLine(d)]), d]; })
+    .filter(([n]) => n).sort((x, y) => y[0] - x[0]).slice(0, 8)
+    .forEach(([, d]) => { const a = openAsg(d.id); add('qs_devices', `${d.tag} · ${devTitle(d)}`, [a ? holderName(a) : '', st(d.estado)].filter(Boolean).join(' · '), '#dispositivo-' + d.id); });
+  S.employees.map(e => [score([e.nombre, e.email, deptNames(e)]), e]).filter(([n]) => n).sort((x, y) => y[0] - x[0]).slice(0, 5)
+    .forEach(([, e]) => add('qs_people', e.nombre, [deptNames(e), e.email].filter(Boolean).join(' · '), '#empleado-' + e.id));
+  pages.filter(([, k]) => fold(t(k)).includes(nq)).forEach(([h, k]) => add('qs_pages', t(k), '', h));
+  if (can('admin')) SET_SECTIONS.filter(([, lab]) => fold(t(lab)).includes(nq)).slice(0, 5).forEach(([key, lab]) => add('qs_settings', t(lab), t(lab + '_sub'), '#ajustes-' + key));
+  if (can('edit')) {
+    if (fold(t('new_device')).includes(nq)) add('qs_actions', t('new_device'), '', null, () => ACTIONS.nuevoDispositivo());
+    if (fold(t('new_person')).includes(nq)) add('qs_actions', t('new_person'), '', null, () => ACTIONS.nuevoEmpleado());
+  }
+  return out;
+}
+function qsDraw() {
+  const list = $('#qsList'), items = QS.items;
+  if (!items.length) { list.innerHTML = `<li class="qsnone">${T('qs_none')}</li>`; return; }
+  let group = '';
+  list.innerHTML = items.map((x, n) => { const head = x.group !== group ? `<li class="qsgroup" role="presentation">${T(x.group)}</li>` : ''; group = x.group;
+    return `${head}<li role="option" id="qs-${n}" class="qsitem${n === QS.i ? ' on' : ''}" aria-selected="${n === QS.i}" data-n="${n}"><b>${esc(x.label)}</b>${x.sub ? `<small>${esc(x.sub)}</small>` : ''}</li>`; }).join('');
+  $('#qsInput').setAttribute('aria-activedescendant', 'qs-' + QS.i);
+  const on = list.querySelector('.qsitem.on'); if (on) on.scrollIntoView({ block: 'nearest' });
+}
+function qsOpen(text = '') {
+  if (!cur || cur.mustChange) return;
+  closeMenus();
+  const box = $('#qs'); if (box.open) return;
+  $('#qsInput').placeholder = t('qs_ph'); $('#qsHint').textContent = t('qs_hint');
+  $('#qsInput').value = text; QS.items = qsResults(text); QS.i = 0; qsDraw();
+  box.showModal(); $('#qsInput').focus();
+}
+function qsGo(n) {
+  const x = QS.items[n]; if (!x) return;
+  $('#qs').close();
+  if (x.run) x.run(); else location.hash = x.href;
+}
+$('#qsInput').addEventListener('input', e => { QS.items = qsResults(e.target.value); QS.i = 0; qsDraw(); });
+$('#qsInput').addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (QS.items.length) { QS.i = (QS.i + (e.key === 'ArrowDown' ? 1 : -1) + QS.items.length) % QS.items.length; qsDraw(); } }
+  else if (e.key === 'Enter') { e.preventDefault(); qsGo(QS.i); }
+});
+$('#qsList').addEventListener('click', e => { const li = e.target.closest('.qsitem'); if (li) qsGo(Number(li.dataset.n)); });
+$('#qs').addEventListener('click', e => { if (e.target === $('#qs')) $('#qs').close(); });   // outside the box
+$('#qsBtn').onclick = () => qsOpen();
+const typing = el => el && (el.isContentEditable || /^(input|textarea|select)$/i.test(el.tagName));
+document.addEventListener('keydown', e => {
+  if (!cur || cur.mustChange) return;
+  if ((e.ctrlKey || e.metaKey) && !e.altKey && e.key.toLowerCase() === 'k') { e.preventDefault(); if ($('#qs').open) $('#qs').close(); else if (!document.querySelector('dialog[open]')) qsOpen(); return; }
+  if (typing(e.target) || document.querySelector('dialog[open]') || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === '/') {
+    e.preventDefault();
+    const field = $('#fq') || $('#eq') || document.querySelector('#logForm input[name="q"]');   // the list's own search, if the page has one
+    if (field) { field.focus(); field.select(); } else qsOpen();
+  } else if (e.key === '?') {
+    e.preventDefault();
+    const mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+    openDialog(t('kb_title'), `<dl class="kv kbd">${[[(mac ? '⌘' : 'Ctrl') + ' K', 'kb_search'], ['/', 'kb_slash'], ['?', 'kb_help'], ['Esc', 'kb_esc']]
+      .map(([k, l]) => `<dt><kbd>${esc(k)}</kbd></dt><dd>${T(l)}</dd>`).join('')}</dl>`, null);
+  }
+});
+
 /* ================= profile picture ================= */
 /* a big photo is shrunk here first (at most 1024 pixels a side), so little is sent; the server makes the final
    256-pixel square from it */
@@ -2385,6 +2523,41 @@ function bindPhoto() {
   };
   const rm = $('#phRemove'); if (rm) rm.onclick = () => done('DELETE', undefined, 'photo_removed');
 }
+/* Signed-in devices: where this account is signed in, and signing others out */
+function agentName(ua) {
+  if (!ua) return t('ss_unknown');
+  const os = /iPhone/.test(ua) ? 'iPhone' : /iPad/.test(ua) ? 'iPad' : /Android/.test(ua) ? 'Android' : /Mac OS X|Macintosh/.test(ua) ? 'macOS' : /Windows/.test(ua) ? 'Windows' : /Linux/.test(ua) ? 'Linux' : '';
+  const b = /Edg\//.test(ua) ? 'Edge' : /OPR\//.test(ua) ? 'Opera' : /Firefox\//.test(ua) ? 'Firefox' : /Chrome\//.test(ua) ? 'Chrome' : /Safari\//.test(ua) ? 'Safari' : '';
+  return b && os ? t('ss_on', { b, o: os }) : (b || os || t('ss_unknown'));
+}
+function sessionsBody(list) {
+  const when = iso => { const d = new Date(iso); return `${fmt(iso.slice(0, 10))} ${d.toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' })}`; };
+  const others = list.filter(x => !x.current);
+  return `<p class="muted" style="margin:0 0 12px;font-size:13.5px">${T('ss_d')}</p><ul class="sharelist">${list.map(x => `<li><span><b>${esc(agentName(x.agent))}</b>${x.current ? ` <span class="chip">${T('ss_this')}</span>` : ''}
+      <small>${x.ip ? esc(x.ip) + ' · ' : ''}${T('ss_last', { d: when(x.lastSeen) })} · ${T('ss_since', { d: fmt(x.createdAt.slice(0, 10)) })}</small></span>
+      ${x.current ? '' : `<button class="btn small danger" type="button" data-endsess="${esc(x.id)}">${T('ss_end')}</button>`}</li>`).join('')}</ul>
+    ${others.length ? `<div class="row" style="margin-top:14px"><button class="btn danger" type="button" id="ssAll">${T('ss_end_all')}</button></div>` : `<p class="muted" style="margin:12px 0 0">${T('ss_only')}</p>`}`;
+}
+async function openSessions() {
+  closeMenus();
+  let list;
+  try { list = (await api('GET', 'account/sessions')).sessions; } catch (err) { if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); return; }
+  openDialog(t('ss_title'), sessionsBody(list), null);
+  const bind = () => {
+    document.querySelectorAll('#dlgBody [data-endsess]').forEach(b => b.onclick = async () => {
+      b.disabled = true;
+      try { await api('DELETE', 'account/sessions/' + b.dataset.endsess); list = (await api('GET', 'account/sessions')).sessions; $('#dlgBody').innerHTML = sessionsBody(list); bind(); toast(t('ss_ended'), true); }
+      catch (err) { b.disabled = false; if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); }
+    });
+    const all = $('#ssAll'); if (all) all.onclick = async () => {
+      all.disabled = true;
+      try { list = (await api('DELETE', 'account/sessions')).sessions; $('#dlgBody').innerHTML = sessionsBody(list); bind(); toast(t('ss_ended_all'), true); }
+      catch (err) { all.disabled = false; if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); }
+    };
+  };
+  bind();
+}
+$('#miSessions').onclick = openSessions;
 $('#miPhoto').onclick = () => {
   closeMenus();
   openDialog(t('menu_photo'), photoBody(), null);
@@ -2443,29 +2616,49 @@ function renderPwChange() {
 
 function renderLogin(err, email) { view.innerHTML = viewLogin(err); bindLogin(); const em = $('#login-email'); if (email) { em.value = email; $('#login-pass').focus(); } else em.focus(); }
 
+/* Needs attention, in groups (most urgent first): each with its count and first few items, the rest on demand */
+const ALERT_GROUPS = ['recover', 'faulty', 'disk', 'enc', 'places', 'faults', 'leaver', 'warranty', 'battery', 'checks'];
+const ALERT_SHOWN = 3;
+const OPEN_GROUPS = new Set();
+function alertGroups(alerts) {
+  return ALERT_GROUPS.map(g => {
+    const items = alerts.filter(a => a.g === g);
+    if (!items.length) return '';
+    const open = OPEN_GROUPS.has(g), bad = items.some(a => a.k === 'bad');
+    const shown = open ? items : items.slice(0, ALERT_SHOWN);
+    return `<div class="agroup"><div class="agroup-h"><span class="dot" style="background:var(--${bad ? 'bad' : 'warn'})"></span><b>${T('ag_' + g)}</b><span class="muted">${items.length}</span></div>
+      ${shown.map(a => `<a class="alert" href="${a.d ? '#dispositivo-' + a.d.id : a.href}"><span class="bar" style="background:var(--${a.k})"></span><span class="txt"><b>${esc(a.t)}</b><small>${esc(a.s)}</small></span></a>`).join('')}
+      ${items.length > ALERT_SHOWN ? `<button class="linkbtn agroup-more" type="button" data-agroup="${g}">${open ? T('ag_less') : T('ag_more', { n: items.length - ALERT_SHOWN })}</button>` : ''}</div>`;
+  }).join('');
+}
 function viewPanel() {
   const activos = S.devices.filter(d => !isRetired(d));
   const c = k => S.devices.filter(d => d.estado === k).length;
   const alerts = [], wd = S.settings.warrantyDays;
   S.assignments.filter(a => !a.hasta).forEach(a => {
     const e = emp(a.employeeId), d = dev(a.deviceId);
-    if (e && hasLeft(e) && d) alerts.push({ k: 'bad', d, t: t('al_recover', { tag: d.tag }), s: t('al_recover_s', { name: e.nombre, date: fmt(e.estadoFecha) }) });
+    if (e && hasLeft(e) && d) alerts.push({ k: 'bad', d, g: 'recover', t: t('al_recover', { tag: d.tag }), s: t('al_recover_s', { name: e.nombre, date: fmt(e.estadoFecha) }) });
   });
-  S.incidents.filter(i => i.estado === 'abierta').forEach(i => { const d = dev(i.deviceId); if (d) alerts.push({ k: 'warn', d, t: t('al_inc', { tag: d.tag }), s: t('al_inc_s', { desc: tx(i.descripcion), date: fmt(i.fecha) }) }); });
+  S.incidents.filter(i => i.estado === 'abierta').forEach(i => { const d = dev(i.deviceId); if (d) alerts.push({ k: 'warn', d, g: 'faults', t: t('al_inc', { tag: d.tag }), s: t('al_inc_s', { desc: tx(i.descripcion), date: fmt(i.fecha) }) }); });
   activos.filter(d => d.garantia && daysUntil(d.garantia) >= 0 && daysUntil(d.garantia) <= wd).sort((a, b) => a.garantia.localeCompare(b.garantia))
-    .forEach(d => alerts.push({ k: 'warn', d, t: t('al_war', { tag: d.tag, n: daysUntil(d.garantia) }), s: `${devTitle(d)} · ${fmt(d.garantia)}` }));
-  if (encRequired()) activos.filter(d => d.enc === 'no').forEach(d => alerts.push({ k: 'bad', d, t: t('al_enc', { tag: d.tag }), s: t('al_enc_s') }));
+    .forEach(d => alerts.push({ k: 'warn', d, g: 'warranty', t: t('al_war', { tag: d.tag, n: daysUntil(d.garantia) }), s: `${devTitle(d)} · ${fmt(d.garantia)}` }));
+  if (encRequired()) activos.filter(d => d.enc === 'no').forEach(d => alerts.push({ k: 'bad', d, g: 'enc', t: t('al_enc', { tag: d.tag }), s: t('al_enc_s') }));
   // restoring a backup made by 1.10.0 to 1.15.0 dropped every employee's departments and offices
   if (S.employees.length > 1 && (S.depts.length || S.locations.length) && S.employees.every(e => !(e.depts || []).length && !(e.locs || []).length))
-    alerts.push({ k: 'bad', href: '#empleados', t: t('al_places_lost'), s: t('al_places_lost_s') });
-  S.devices.filter(d => d.estado === 'averiado').forEach(d => alerts.push({ k: 'bad', d, t: t('al_faulty', { tag: d.tag }), s: t('al_faulty_s') }));
+    alerts.push({ k: 'bad', href: '#empleados', g: 'places', t: t('al_places_lost'), s: t('al_places_lost_s') });
+  S.devices.filter(d => d.estado === 'averiado').forEach(d => alerts.push({ k: 'bad', d, g: 'faulty', t: t('al_faulty', { tag: d.tag }), s: t('al_faulty_s') }));
   activos.forEach(d => (d.disks || []).forEach(k => {
-    if (k.health === 'failing') alerts.push({ k: 'bad', d, t: t('al_disk_fail', { tag: d.tag }), s: t('al_disk_fail_s', { x: driveLabel(k) }) });
-    else if (k.health === 'warning') alerts.push({ k: 'warn', d, t: t('al_disk_warn', { tag: d.tag }), s: t('al_disk_warn_s', { x: driveLabel(k) }) });
-    else if (k.wear !== null && k.wear !== undefined && k.wear >= 80) alerts.push({ k: 'warn', d, t: t('al_disk_wear', { tag: d.tag, n: nf(k.wear) }), s: t('al_disk_wear_s', { x: driveLabel(k) }) });
+    if (k.health === 'failing') alerts.push({ k: 'bad', d, g: 'disk', t: t('al_disk_fail', { tag: d.tag }), s: t('al_disk_fail_s', { x: driveLabel(k) }) });
+    else if (k.health === 'warning') alerts.push({ k: 'warn', d, g: 'disk', t: t('al_disk_warn', { tag: d.tag }), s: t('al_disk_warn_s', { x: driveLabel(k) }) });
+    else if (k.wear !== null && k.wear !== undefined && k.wear >= 80) alerts.push({ k: 'warn', d, g: 'disk', t: t('al_disk_wear', { tag: d.tag, n: nf(k.wear) }), s: t('al_disk_wear_s', { x: driveLabel(k) }) });
   }));
-  S.devices.forEach(d => { const cs = dataChecks(d); if (cs.length) alerts.push({ k: 'warn', d, t: t('al_check', { tag: d.tag, n: cs.length }), s: t('chk_' + cs[0].k, cs[0].args) }); });
-  activos.filter(d => hasBattery(devType(d)) && has(d.batHealth) && d.batHealth < 80).forEach(d => alerts.push({ k: 'warn', d, t: t('al_bat', { tag: d.tag, p: nf(d.batHealth) }), s: t('al_bat_s') }));
+  S.devices.forEach(d => { const cs = dataChecks(d); if (cs.length) alerts.push({ k: 'warn', d, g: 'checks', t: t('al_check', { tag: d.tag, n: cs.length }), s: t('chk_' + cs[0].k, cs[0].args) }); });
+  // leavers of the last 90 days whose checklist is not finished (older ones are not brought up again)
+  S.employees.filter(e => hasLeft(e) && e.estadoFecha && daysUntil(e.estadoFecha) >= -90).forEach(e => {
+    const left = LEAVER_TASKS.filter(k => !(e.leaverChecks || {})[k]).length;
+    if (left) alerts.push({ k: 'warn', href: '#empleado-' + e.id, g: 'leaver', t: t('al_leaver', { name: e.nombre }), s: t('al_leaver_s', { n: left, d: fmt(e.estadoFecha) }) });
+  });
+  activos.filter(d => hasBattery(devType(d)) && has(d.batHealth) && d.batHealth < 80).forEach(d => alerts.push({ k: 'warn', d, g: 'battery', t: t('al_bat', { tag: d.tag, p: nf(d.batHealth) }), s: t('al_bat_s') }));
 
   const byDept = S.depts.map(x => [tx(x.nombre), S.assignments.filter(a => !a.hasta && (a.deptId === x.id || (emp(a.employeeId)?.depts || []).includes(x.id))).length]).sort((a, b) => b[1] - a[1]);
   const max = Math.max(1, ...byDept.map(x => x[1]));
@@ -2475,20 +2668,21 @@ function viewPanel() {
 
   return `
   <div class="head"><div><h1>${T('summary_title')}</h1><p class="sub">${T('summary_sub', { n: activos.length, v: money(valor) })}</p></div>${reloadBtn()}</div>
+  ${recentChips()}
   <div class="stats">
     ${['uso', 'disponible', 'reparacion', 'averiado'].map(k => `<a class="stat" href="#dispositivos" data-filter="${k}"><b>${c(k)}</b><span><i class="dot" style="background:${col[k]}"></i>${esc(st(k))}</span></a>`).join('')}
     <a class="stat" href="#dispositivos" data-filter="retirados"><b>${c('descartado') + c('perdido')}</b><span><i class="dot" style="background:var(--mute)"></i>${T('retired_stat')}</span></a>
   </div>
   <div class="grid2">
     <section class="panel"><h2>${T('attention')} <span class="muted" style="font-weight:500">· ${alerts.length}</span></h2>
-      <div class="alerts">${alerts.length ? alerts.map(a => `<a class="alert" href="${a.d ? '#dispositivo-' + a.d.id : a.href}"><span class="bar" style="background:var(--${a.k})"></span><span class="txt"><b>${esc(a.t)}</b><small>${esc(a.s)}</small></span>${a.d ? `<span class="tag">${esc(a.d.tag)}</span>` : ''}</a>`).join('') : `<p class="muted">${T('nothing')}</p>`}</div>
+      <div class="alerts">${alerts.length ? alertGroups(alerts) : `<p class="muted">${T('nothing')}</p>`}</div>
     </section>
     <div class="stack">
       <section class="panel"><h2>${T('by_dept')}</h2>
         <div class="bars">${byDept.map(([n2, n]) => `<div class="barrow"><span>${esc(n2)}</span><span class="track"><span class="fill" style="width:${n / max * 100}%"></span></span><b>${n}</b></div>`).join('')}</div>
       </section>
       ${(() => {   // administrators open the whole activity from here
-        const feed = `<ul class="feed">${S.log.slice(0, 7).map(l => `<li><time>${fmt(l.fecha)}</time><span>${esc(logText(l))}${uname(l.by) ? ` <span class="by">· ${esc(uname(l.by))}</span>` : ''}</span></li>`).join('')}</ul>`;
+        const feed = `<ul class="feed">${S.log.slice(0, 7).map(l => `<li><time>${esc(when(l))}</time><span>${esc(logText(l))}${uname(l.by) ? ` <span class="by">· ${esc(uname(l.by))}</span>` : ''}</span></li>`).join('')}</ul>`;
         return can('admin')
           ? `<a class="panel feedlink" href="#actividad" aria-label="${T('see_all_activity')}"><h2>${T('activity')}</h2>${feed}</a>`
           : `<section class="panel"><h2>${T('activity')}</h2>${feed}</section>`;
@@ -2497,7 +2691,37 @@ function viewPanel() {
   </div>`;
 }
 
-const F = { q: '', estado: 'activos', dept: '', tipo: '', campo: '' };
+const F = { q: '', estado: 'activos', dept: '', tipo: '', campo: '', sort: '', dir: 1 };
+/* sorting the lists: a column (or the phone's "Sort by" menu) and its direction; '' keeps the normal order */
+const cmpText = (a, b) => (a || '').localeCompare(b || '', lang, { numeric: true, sensitivity: 'base' });
+/* each column: how to read the value to sort by; '' (nothing to show) always goes last, whichever the direction */
+const DEV_SORT = {
+  tag: d => d.tag,
+  device: d => devTitle(d),
+  assigned: d => holderName(openAsg(d.id)),
+  status: d => ST.indexOf(d.estado),
+  warranty: d => d.garantia || (d.garantiaEnded ? '0000-00-00' : ''),   // ended on an unknown date: the earliest
+};
+function sortRows(rows, table, f) {
+  const key = table[f.sort];
+  if (!key) return rows;
+  const keyed = rows.map(r => [key(r), r]);
+  keyed.sort(([a], [b]) => {
+    const blankA = a === '' || a == null, blankB = b === '' || b == null;
+    if (blankA || blankB) return blankA === blankB ? 0 : blankA ? 1 : -1;
+    return f.dir * (typeof a === 'number' && typeof b === 'number' ? a - b : cmpText(String(a), String(b)));
+  });
+  return keyed.map(([, r]) => r);
+}
+function syncSortSelect() {
+  document.querySelectorAll('.sortsel').forEach(sel => { const f = sel.dataset.scope === 'emp' ? FE : F; sel.value = f.sort ? f.sort + ':' + f.dir : ''; });
+}
+/* a header that sorts its column; aria-sort tells screen readers how the list is ordered */
+const sortTh = (f, key, label, scope) => `<th aria-sort="${f.sort === key ? (f.dir > 0 ? 'ascending' : 'descending') : 'none'}"><button type="button" class="sortbtn" data-sort="${key}" data-scope="${scope}">${T(label)}<span class="arr" aria-hidden="true">${f.sort === key ? (f.dir > 0 ? '↑' : '↓') : '↕'}</span></button></th>`;
+const sortSelect = (f, keys, scope) => `<select class="sortsel" data-scope="${scope}" aria-label="${T('sort_by')}">${opts([['', t('sort_by') + ': ' + t('sort_default')], ...keys.flatMap(([k, lab]) => [[k + ':1', `${t(lab)} · ${t('sort_asc')}`], [k + ':-1', `${t(lab)} · ${t('sort_desc')}`]])], f.sort ? f.sort + ':' + f.dir : '')}</select>`;
+const DEV_SORT_KEYS = [['tag', 'th_tag'], ['device', 'th_device'], ['assigned', 'th_assigned'], ['status', 'th_status'], ['warranty', 'th_warranty']];
+/* bulk actions: the devices ticked in the list (only ones it shows) */
+const SEL = new Set();
 /* what the device search looks in: everything, or one detail (so "16" in Memory finds 16 GB, not a serial number) */
 const SEARCH_IN = {
   tag: d => d.tag,
@@ -2524,8 +2748,11 @@ function viewDevices() {
     <select id="festado" aria-label="${T('lbl_status')}">${opts([['activos', t('f_active')], ['', t('f_all')], ...ST.map(k => [k, st(k)]), ['retirados', t('retired_stat')], ['revisar', t('f_review')]], F.estado)}</select>
     <select id="fdept" aria-label="${T('lbl_dept')}">${opts([['', t('f_alldepts')], ...S.depts.map(x => [x.id, tx(x.nombre)])], F.dept)}</select>
     <select id="ftipo" aria-label="${T('lbl_type')}">${opts([['', t('f_alltypes')], ...S.types.map(x => [x.id, tx(x.nombre)])], F.tipo)}</select>
+    ${sortSelect(F, DEV_SORT_KEYS, 'dev')}
+    <span class="listcount" id="devCount" aria-live="polite"></span>
   </div>
-  <div class="tablebox" id="devTable"></div>`;
+  <div class="tablebox" id="devTable"></div>
+  <div class="bulkbar" id="bulkBar" hidden role="region" aria-label="${T('bulk_status')}"></div>`;
 }
 function drawDeviceRows() {
   const q = F.q.trim().toLowerCase();
@@ -2540,15 +2767,69 @@ function drawDeviceRows() {
     if (q && !(F.campo ? found(SEARCH_IN[F.campo](d), q) : found([d.tag, hostOf(d), d.serial, osText(d), cpuOf(d)?.nombre, ...(d.nics || []).map(n => n.mac + ' ' + listName('nicModels', n.modelId)), gpuOf(d)?.nombre, devTitle(d), e?.nombre, a?.deptId ? deptName(a.deptId) : '', specLine(d)].join(' '), q))) return false;
     return true;
   });
-  $('#devTable').innerHTML = rows.length ? `<table><thead><tr><th>${T('th_tag')}</th><th>${T('th_device')}</th><th>${T('th_assigned')}</th><th>${T('th_status')}</th><th>${T('th_warranty')}</th></tr></thead><tbody>
-    ${rows.map(d => { const a = openAsg(d.id), e = a && emp(a.employeeId), m = model(d.modelId);
-      return `<tr class="click" data-go="dispositivo-${d.id}"><td>${tagLink(d)}</td>
+  const sorted = sortRows(rows, DEV_SORT, F), bulk = can('edit');
+  const shown = new Set(sorted.map(d => d.id));
+  [...SEL].forEach(id => { if (!shown.has(id)) SEL.delete(id); });   // only what the list shows stays ticked
+  const all = sorted.length && sorted.every(d => SEL.has(d.id));
+  $('#devTable').classList.toggle('bulk', bulk);
+  $('#devTable').classList.toggle('selecting', SEL.size > 0);
+  const dc = $('#devCount'); if (dc) dc.textContent = sorted.length === S.devices.length ? t('dev_count', { n: sorted.length }) : t('dev_count_of', { n: sorted.length, t: S.devices.length });
+  $('#devTable').innerHTML = rows.length ? `<table><thead><tr>${bulk ? `<th class="selcol"><input type="checkbox" class="selall" aria-label="${T('bulk_all')}"${all ? ' checked' : ''}></th>` : ''}${sortTh(F, 'tag', 'th_tag', 'dev')}${sortTh(F, 'device', 'th_device', 'dev')}${sortTh(F, 'assigned', 'th_assigned', 'dev')}${sortTh(F, 'status', 'th_status', 'dev')}${sortTh(F, 'warranty', 'th_warranty', 'dev')}</tr></thead><tbody>
+    ${sorted.map(d => { const a = openAsg(d.id), e = a && emp(a.employeeId), m = model(d.modelId);
+      return `<tr class="click${SEL.has(d.id) ? ' sel' : ''}" data-go="dispositivo-${d.id}">${bulk ? `<td class="selcol"><input type="checkbox" class="selone" data-id="${d.id}" aria-label="${T('bulk_one')} ${esc(d.tag)}"${SEL.has(d.id) ? ' checked' : ''}></td>` : ''}<td>${tagLink(d)}</td>
         <td><b>${esc(devTitle(d))}</b>${specLine(d) ? `<span class="t2 spec">${specHtml(d)}</span>` : ''}<span class="t2">${[esc(typeName(devType(d))), hostExtra(d), `<span class="mono">${esc(d.serial)}</span>`].filter(Boolean).join(' · ')}</span></td>
         <td>${e ? `${esc(e.nombre)}<span class="t2">${esc(deptNames(e))}${hasLeft(e) ? ` · <span class="w-past">${T('left_badge')}</span>` : ''}</span>` : a?.deptId ? `${esc(deptName(a.deptId))}<span class="t2">${T('shared_dept')}</span>` : '<span class="muted">—</span>'}</td>
         <td>${pill(d.estado)}</td><td>${warranty(d)}</td></tr>`; }).join('')}
-  </tbody></table>` : `<div class="empty">${T('no_match_dev')}</div>`;
+  </tbody></table>` : S.devices.length ? `<div class="empty">${T('no_match_dev')}<div><button class="btn small" type="button" data-clearf="dev">${T('clear_filters')}</button></div></div>`
+    : `<div class="empty">${T('no_dev_yet')}${can('edit') ? `<div><button class="btn small primary" type="button" data-act="nuevoDispositivo">${T('new_device')}</button></div>` : ''}</div>`;
+  drawBulkBar();
 }
+function drawBulkBar() {
+  const bar = $('#bulkBar'); if (!bar) return;
+  bar.hidden = !SEL.size;
+  if (!SEL.size) return;
+  bar.innerHTML = `<b>${T('bulk_n', { n: SEL.size })}</b><div class="row">
+    <button class="btn small primary" type="button" data-bulk="status"><span class="lng">${T('bulk_status')}</span><span class="sht">${T('bulk_status_s')}</span></button>
+    <button class="btn small" type="button" data-bulk="loc"><span class="lng">${T('bulk_loc')}</span><span class="sht">${T('bulk_loc_s')}</span></button>
+    <button class="btn small" type="button" data-bulk="clear" aria-label="${T('bulk_clear')}" title="${T('bulk_clear')}"><span class="lng">${T('bulk_clear')}</span><span class="sht" aria-hidden="true">✕</span></button></div>`;
+}
+/* runs a bulk change and says how it went: how many changed, and which were left as they were and why */
+async function runBulk(body) {
+  const ids = [...SEL];
+  const r = await mutate('POST', 'devices/bulk', { ids, ...body });
+  r.done.forEach(id => SEL.delete(id));
+  if (r.skipped.length) {
+    const list = r.skipped.slice(0, 6).map(x => `${x.tag || '?'} (${t('bulk_err_' + x.error) !== 'bulk_err_' + x.error ? t('bulk_err_' + x.error) : t(x.error)})`).join(', ') + (r.skipped.length > 6 ? '…' : '');
+    toast((r.done.length ? t('bulk_done', { n: r.done.length }) + ' · ' : '') + t('bulk_skipped', { n: r.skipped.length, list }));
+  } else toast(t('bulk_done', { n: r.done.length }), true);
+  return true;
+}
+const BULK = {
+  clear() { SEL.clear(); drawDeviceRows(); },
+  status() {
+    const n = SEL.size, choices = ST.filter(k => k !== 'uso');
+    openDialog(t('bulk_status_t', { n }), `<div class="fields">
+      <label class="full">${T('fc_new')}<select name="estado" id="bk-estado">${kopts(choices, st)}</select></label>
+      <p class="full muted" style="margin:0;font-size:13px">${T('bulk_no_use')}</p>
+      <div class="sect" id="bk-dispsect">${T('sect_disposal')}</div>
+      <label id="bk-dispwrap">${T('fc_dest')}<select name="metodo">${kopts(DISPOSAL, dsp)}</select></label>
+      <label id="bk-certwrap">${T('fc_cert')}<input name="cert" placeholder="BR-2026-0XX"></label>
+      <label class="full">${T('fc_reason')}<input name="motivo"></label></div>`, async v => {
+      const extra = v.estado === 'descartado' ? t('disc_note', { d: fmt(today()), m: dsp(v.metodo), c: (v.cert || '').trim() }) : '';
+      return runBulk({ action: 'status', estado: v.estado, metodo: v.estado === 'descartado' ? v.metodo : '', cert: (v.cert || '').trim(), motivo: (v.motivo || '').trim(), note: extra });
+    }, t('bulk_status'));
+    const disp = () => { const r = $('#bk-estado').value === 'descartado'; ['#bk-dispsect', '#bk-dispwrap', '#bk-certwrap'].forEach(x => { $(x).hidden = !r; }); };
+    $('#bk-estado').onchange = disp; disp();
+  },
+  loc() {
+    const n = SEL.size;
+    openDialog(t('bulk_loc_t', { n }), `<div class="fields"><label class="full">${T('bulk_loc_new')}<select name="loc">${opts(S.locations.map(x => [x.id, tx(x.nombre)]), '')}</select></label></div>`,
+      async v => runBulk({ action: 'location', loc: v.loc }), t('bulk_loc'));
+  },
+};
 
+/* the device page's lower half: tabs for its assignments, faults and change history (the last one chosen stays) */
+let DTAB = 'hist';
 function viewDevice(id) {
   const d = dev(id);
   if (!d) return `<p>${T('not_found_dev')} <a href="#dispositivos">${T('back_list')}</a></p>`;
@@ -2574,9 +2855,8 @@ function viewDevice(id) {
     </div>
     ${ed ? `<div class="row">
       ${retired ? '' : (a ? `<button class="btn primary" type="button" data-act="devolver" data-id="${d.id}">${T('btn_return')}</button>` : d.estado === 'averiado' ? '' : assignMenu(d))}
-      ${retired ? '' : `<button class="btn" type="button" data-act="incidencia" data-id="${d.id}">${T('btn_fault')}</button>`}
-      <button class="btn" type="button" data-act="estado" data-id="${d.id}">${T('btn_status')}</button>
       <button class="btn" type="button" data-act="editar" data-id="${d.id}">${T('btn_edit')}</button>
+      ${moreMenu(d, retired)}
     </div>` : ''}
   </div>
   ${e && hasLeft(e) ? `<div class="notice bad">${T('n_left', { name: e.nombre, date: fmt(e.estadoFecha) })}</div>` : ''}
@@ -2584,12 +2864,8 @@ function viewDevice(id) {
   ${d.estado === 'descartado' && d.destino ? `<div class="notice info">${T('k_dest')}: ${esc(dsp(d.destino))} · ${T('fc_cert')}: ${d.wipeCert ? `<span class="mono">${esc(d.wipeCert)}</span>` : T('no_cert')}</div>` : ''}
   ${d.enc === 'no' && !retired && encRequired() ? `<div class="notice bad">${T('n_noenc')}</div>` : ''}
   ${checksBox(d)}
-  <div class="grid3">
-    <section class="panel"><h2>${T('current')}</h2>
-      ${e ? `<div class="current"><b><a href="#empleado-${e.id}">${esc(e.nombre)}</a></b><span class="muted">${esc(deptNames(e))} · ${esc(locNames(e))}</span><span>${T('since', { d: fmt(a.desde), age: age(a.desde) })}</span>${tx(a.notas) ? `<span class="muted">${T('delivered_with', { x: tx(a.notas) })}</span>` : ''}</div>`
-        : a?.deptId ? `<div class="current"><b>${esc(deptName(a.deptId))}</b><span class="muted">${T('shared_dept')} · ${esc(locName(d.loc))}</span><span>${T('since', { d: fmt(a.desde), age: age(a.desde) })}</span>${tx(a.notas) ? `<span class="muted">${T('delivered_with', { x: tx(a.notas) })}</span>` : ''}</div>`
-        : `<p class="muted">${retired ? T('out_service') : T('unassigned_at', { loc: locName(d.loc) })}</p>`}
-    </section>
+  <div class="devgrid">
+  <div class="devcol devmain">
     <section class="panel"><h2>${T('hw')}</h2>
       <dl class="kv">
         <dt>${T('k_cpu')}</dt><dd>${c ? esc(c.nombre) : '—'}${sub(cpuDetail(c))}${chips([repChip(d.cpuRep)])}</dd>
@@ -2601,44 +2877,81 @@ function viewDevice(id) {
         <dt>${T('k_ad')}</dt><dd>${d.ad === 'yes' ? T('yes') : d.ad === 'no' ? T('no') : '—'}</dd>
         <dt>${T('k_loc')}</dt><dd>${esc(locName(d.loc))}</dd></dl>
     </section>
+    <section class="panel"><h2>${T('net')}</h2>
+      ${nics.length ? `<dl class="kv">${nics.map(n => `<dt>${n.type === 'wifi' ? 'Wi-Fi' : 'Ethernet'}</dt><dd>${esc(listName('nicModels', n.modelId)) || '—'}${n.mac ? `<span class="mono" style="display:block;font-size:12px">${esc(n.mac)}</span>` : ''}${chips(n.type === 'wifi' ? [chip(listName('wifiGens', n.wifiGen)), chip(listName('btVers', n.btVer))] : [chip(withUnit(n.speed, n.speedUnit))])}</dd>`).join('')}</dl>` : `<p class="muted">${T('no_nics')}</p>`}
+    </section>
+  </div>
+  <div class="devcol devside">
+    <section class="panel"><h2>${T('current')}</h2>
+      ${e ? `<div class="current"><b><a href="#empleado-${e.id}">${esc(e.nombre)}</a></b><span class="muted">${esc(deptNames(e))} · ${esc(locNames(e))}</span><span>${T('since', { d: fmt(a.desde), age: age(a.desde) })}</span>${tx(a.notas) ? `<span class="muted">${T('delivered_with', { x: tx(a.notas) })}</span>` : ''}</div>`
+        : a?.deptId ? `<div class="current"><b>${esc(deptName(a.deptId))}</b><span class="muted">${T('shared_dept')} · ${esc(locName(d.loc))}</span><span>${T('since', { d: fmt(a.desde), age: age(a.desde) })}</span>${tx(a.notas) ? `<span class="muted">${T('delivered_with', { x: tx(a.notas) })}</span>` : ''}</div>`
+        : `<p class="muted">${retired ? T('out_service') : T('unassigned_at', { loc: locName(d.loc) })}</p>`}
+    </section>
     ${scr || batt ? `<section class="panel"><h2>${esc(screenTitle(devType(d)))}</h2>
       <dl class="kv">
         ${scr ? `<dt>${T('k_screen')}</dt><dd>${has(d.screen) ? esc(nf(d.screen) + '"') : '—'}${chips([d.touch === 'yes' ? chip(t('touch_s')) : d.touch === 'no' ? chip(t('notouch_s'), 'no') : ''])}</dd>` : ''}
         ${batt ? `<dt>${T('k_battery')}</dt><dd>${bat !== null ? `<span class="${bat < 80 ? 'w-soon' : ''}">${esc(nf(bat))} %</span>${sub(d.batDate ? t('bat_measured', { d: fmt(d.batDate) }) : '')}` : '—'}${has(d.batCycles) ? sub(t('bat_cycles', { n: nf(d.batCycles) })) : ''}${(d.batLog || []).length ? sub(t('bat_prev', { x: d.batLog.map(r => `${nf(r.salud)} %${has(r.ciclos) ? ', ' + t('bat_cycles', { n: nf(r.ciclos) }) : ''} (${fmt(r.fecha)})`).join('; ') })) : ''}</dd>` : ''}
       </dl></section>` : ''}
-    <section class="panel"><h2>${T('net')}</h2>
-      ${nics.length ? `<dl class="kv">${nics.map(n => `<dt>${n.type === 'wifi' ? 'Wi-Fi' : 'Ethernet'}</dt><dd>${esc(listName('nicModels', n.modelId)) || '—'}${n.mac ? `<span class="mono" style="display:block;font-size:12px">${esc(n.mac)}</span>` : ''}${chips(n.type === 'wifi' ? [chip(listName('wifiGens', n.wifiGen)), chip(listName('btVers', n.btVer))] : [chip(withUnit(n.speed, n.speedUnit))])}</dd>`).join('')}</dl>` : `<p class="muted">${T('no_nics')}</p>`}
-    </section>
     <section class="panel"><h2>${T('purchase')}</h2>
       <dl class="kv"><dt>${T('k_bought')}</dt><dd>${fmt(d.compra)}</dd><dt>${T('k_age')}</dt><dd>${d.compra ? esc(age(d.compra)) : '—'}</dd><dt>${T('k_wend')}</dt><dd>${warranty(d, true)}</dd><dt>${T('fd_wext')}</dt><dd>${d.garantiaExt === 'yes' ? T('yes') : d.garantiaExt === 'no' ? T('no') : dash}</dd><dt>${T('k_supplier')}</dt><dd>${esc(tx(d.proveedor)) || '—'}</dd><dt>${T('k_invoice')}</dt><dd class="mono">${esc(d.factura) || '—'}</dd><dt>${T('k_price')}</dt><dd>${d.precio ? money(d.precio) : '—'}</dd><dt>${T('k_repcost')}</dt><dd>${money(gasto)}</dd></dl>
     </section>
   </div>
+  </div>
   ${tx(d.notas) ? `<section class="panel"><h2>${T('notes')}</h2><p style="margin:0;white-space:pre-line">${esc(tx(d.notas))}</p></section>` : ''}
-  <section class="panel"><h2>${T('user_hist')}</h2>
+  <div class="dtabs" role="tablist" aria-label="${T('user_hist')}">${[['hist', T('user_hist'), hist.length], ['faults', T('inc_hist'), incs.length], ['log', T('hist_title'), '']].map(([k, lab, n]) => `<button type="button" role="tab" class="dtab${DTAB === k ? ' on' : ''}" aria-selected="${DTAB === k}" data-dtab="${k}">${lab}${n !== '' ? ` <span class="muted">${n}</span>` : ''}</button>`).join('')}</div>
+  <section class="panel dpanel" data-dpanel="hist"${DTAB === 'hist' ? '' : ' hidden'}><h2>${T('user_hist')}</h2>
     ${hist.length ? `<div class="tablebox"><table><thead><tr><th>${T('th_person')}</th><th>${T('th_from')}</th><th>${T('th_to')}</th><th>${T('th_dur')}</th><th>${T('th_faults')}</th><th>${T('th_handover')}</th></tr></thead><tbody>
       ${hist.map(h => { const fs = faultsIn(d.id, h.desde, h.hasta); return `<tr><td>${holderCell(h)}</td><td>${fmt(h.desde)}</td><td>${h.hasta ? fmt(h.hasta) : `<b>${T('current_lbl')}</b>`}</td><td>${esc(age(h.desde, h.hasta))}</td>
         <td>${fs.length ? `<b>${fs.length}</b>${fs.map(f => `<span class="t2">${fmt(f.fecha)} · ${esc(tx(f.descripcion))}</span>`).join('')}` : dash}</td>
         <td>${esc(tx(h.notas)) || dash}${h.condicion ? `<span class="t2">${T('returned_cond', { c: cd(h.condicion) })}</span>` : ''}</td></tr>`; }).join('')}
     </tbody></table></div>` : `<p class="muted">${T('never_assigned')}</p>`}
   </section>
-  <section class="panel"><h2>${T('inc_hist')}</h2>
+  <section class="panel dpanel" data-dpanel="faults"${DTAB === 'faults' ? '' : ' hidden'}><h2>${T('inc_hist')}</h2>
     ${incs.length ? `<div class="tablebox"><table><thead><tr><th>${T('th_date')}</th><th>${T('th_kind')}</th><th>${T('th_desc')}</th><th>${T('th_holder')}</th><th>${T('th_parts')}</th><th>${T('th_cost')}</th><th>${T('th_status')}</th></tr></thead><tbody>
       ${incs.map(i => { const h = holderAt(d.id, i.fecha), p = h && !h.deptId && emp(h.employeeId); return `<tr><td>${fmt(i.fecha)}</td><td>${esc(itp(i.tipo))}</td><td>${esc(tx(i.descripcion))}${tx(i.proveedor) ? `<span class="t2">${esc(tx(i.proveedor))}</span>` : ''}</td>
         <td>${p ? `<a href="#empleado-${p.id}">${esc(p.nombre)}</a>` : h?.deptId ? esc(deptName(h.deptId)) : `<span class="muted">${T('nobody')}</span>`}</td><td>${esc(tx(i.piezas)) || dash}</td><td>${money(i.coste)}</td>
         <td>${i.estado === 'abierta' ? `<div class="row">${pill('abierta', t('open'))}${ed ? `<button class="btn small" type="button" data-act="resolver" data-id="${i.id}">${T('mark_resolved')}</button>` : ''}</div>` : `${pill('resuelta', t('resolved'))}<span class="t2">${fmt(i.resuelta)}</span>`}</td></tr>`; }).join('')}
-    </tbody></table></div>` : `<p class="muted">${T('no_inc')}</p>`}
-  </section>`;
+    </tbody></table></div>` : `<div class="empty-inline"><p class="muted" style="margin:0">${T('no_inc')} ${ed && !retired ? T('no_inc_act') : ''}</p>${ed && !retired ? `<button class="btn small" type="button" data-act="incidencia" data-id="${d.id}">${T('btn_fault')}</button>` : ''}</div>`}
+  </section>
+  <section class="panel dpanel" data-dpanel="log"${DTAB === 'log' ? '' : ' hidden'} id="devHist" data-id="${d.id}"><h2>${T('hist_title')}</h2><ul class="feed histfeed" id="devHistList"><li class="muted">${T('hist_loading')}</li></ul>
+    <div class="row" style="justify-content:center"><button class="btn small" type="button" id="devHistMore" hidden>${T('hist_more')}</button></div></section>`;
+}
+/* a device's change history, from the server (all of it, a page at a time) */
+async function loadDevHistory(id, more) {
+  const box = $('#devHist'); if (!box || box.dataset.id !== id) return;
+  const list = $('#devHistList'), btn = $('#devHistMore');
+  const last = more ? list.querySelector('li[data-id]:last-of-type') : null;
+  let d;
+  try { d = await api('GET', `devices/${id}/history` + (last ? `?before=${last.dataset.id}` : '')); }
+  catch (err) { if (!(err instanceof ApiFail)) throw err; if (err.status !== 401 && $('#devHist')) list.innerHTML = `<li class="muted">${T(err.code)}</li>`; return; }
+  if (!$('#devHist') || $('#devHist').dataset.id !== id) return;   // the person moved on
+  const uname = u => byId('users', u)?.nombre;
+  const rows = d.events.map(l => { const at = new Date(l.at);
+    return `<li data-id="${esc(l.id)}"><time>${fmt(l.fecha)}<span class="t2">${esc(at.toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' }))}</span></time><span>${esc(logText(l))}${uname(l.by) ? ` <span class="by">· ${esc(uname(l.by))}</span>` : ''}</span></li>`; }).join('');
+  if (more) list.insertAdjacentHTML('beforeend', rows); else list.innerHTML = rows || `<li class="muted">${T('hist_none')}</li>`;
+  btn.hidden = !d.more; btn.disabled = false;
+  btn.onclick = () => { btn.disabled = true; loadDevHistory(id, true); };
 }
 
-const FE = { q: '', activos: 'todos', contrato: 'todos' };
+const FE = { q: '', activos: 'todos', contrato: 'todos', sort: '', dir: 1 };
+const EMP_SORT = {
+  name: e => e.nombre,
+  dept: e => deptNames(e),
+  loc: e => locNames(e),
+  devs: e => S.assignments.filter(x => x.employeeId === e.id && !x.hasta).length,
+  sit: e => EMP_STATES.indexOf(empState(e)),
+};
+const EMP_SORT_KEYS = [['name', 'th_name'], ['dept', 'lbl_dept'], ['loc', 'th_loc'], ['devs', 'th_devcount'], ['sit', 'th_sit']];
 function viewEmployees() {
   return `
   <div class="head"><div><h1>${T('people_title')}</h1><p class="sub">${T('people_sub')}</p></div>
     <div class="row">${reloadBtn()}${can('edit') ? `<button class="btn primary" type="button" data-act="nuevoEmpleado">${T('new_person')}</button>` : ''}</div></div>
   <div class="toolbar">
     <input type="search" id="eq" placeholder="${T('search_people')}" value="${esc(FE.q)}" aria-label="${T('lbl_search')}">
-    <select id="eactivos" aria-label="${T('lbl_situation')}">${opts([['todos', t('f_all')], ...EMP_STATES.map(s => [s, t('es_' + s)])], FE.activos)}</select>
+    <select id="eactivos" aria-label="${T('lbl_situation')}">${opts([['todos', t('f_status_all')], ...EMP_STATES.map(s => [s, t('es_' + s)])], FE.activos)}</select>
     <select id="econtrato" aria-label="${T('k_contract')}">${opts([['todos', t('ct_all')], ...CONTRACTS.map(c => [c || 'unset', t(ctKey(c))])], FE.contrato)}</select>
+    ${sortSelect(FE, EMP_SORT_KEYS, 'emp')}
+    <span class="listcount" id="empCount" aria-live="polite"></span>
   </div>
   <div class="tablebox" id="empTable"></div>`;
 }
@@ -2646,14 +2959,31 @@ function drawEmpRows() {
   const q = FE.q.trim().toLowerCase();
   const rows = S.employees.filter(e => (FE.activos === 'todos' || empState(e) === FE.activos) && (FE.contrato === 'todos' || (e.contrato || 'unset') === FE.contrato) && (!q || [e.nombre, e.email, deptNames(e), locNames(e)].join(' ').toLowerCase().includes(q)))
     .sort((a, b) => a.nombre.localeCompare(b.nombre, lang));
-  $('#empTable').innerHTML = rows.length ? `<table><thead><tr><th>${T('th_name')}</th><th>${T('lbl_dept')}</th><th>${T('th_loc')}</th><th>${T('th_curdev')}</th><th>${T('th_sit')}</th></tr></thead><tbody>
-    ${rows.map(e => { const ds = S.assignments.filter(a => a.employeeId === e.id && !a.hasta).map(a => dev(a.deviceId)).filter(Boolean);
+  const sorted = sortRows(rows, EMP_SORT, FE);
+  const ec = $('#empCount'); if (ec) ec.textContent = sorted.length === S.employees.length ? t('emp_count', { n: sorted.length }) : t('emp_count_of', { n: sorted.length, t: S.employees.length });
+  $('#empTable').innerHTML = rows.length ? `<table><thead><tr>${sortTh(FE, 'name', 'th_name', 'emp')}${sortTh(FE, 'dept', 'lbl_dept', 'emp')}${sortTh(FE, 'loc', 'th_loc', 'emp')}${sortTh(FE, 'devs', 'th_curdev', 'emp')}${sortTh(FE, 'sit', 'th_sit', 'emp')}</tr></thead><tbody>
+    ${sorted.map(e => { const ds = S.assignments.filter(a => a.employeeId === e.id && !a.hasta).map(a => dev(a.deviceId)).filter(Boolean);
       return `<tr class="click" data-go="empleado-${e.id}"><td><b>${esc(e.nombre)}</b>${tempChip(e)}<span class="t2">${esc(e.email)}</span></td><td>${esc(deptNames(e))}</td><td>${esc(locNames(e))}</td>
-      <td><div class="row">${ds.length ? ds.map(tagLink).join('') : `<span class="muted">${T('none')}</span>`}</div></td>
+      <td>${ds.length && hasLeft(e) ? `<span class="w-past" style="display:block;font-size:12.5px;font-weight:600">${T('still_has')}</span>` : ''}<div class="row">${ds.length ? ds.map(tagLink).join('') : `<span class="muted">${T('none')}</span>`}</div></td>
       <td>${empPill(e)}${empState(e) !== 'activo' && e.estadoFecha ? `<span class="t2">${T('since_d', { d: fmt(e.estadoFecha) })}</span>` : ''}</td></tr>`; }).join('')}
-  </tbody></table>` : `<div class="empty">${T('no_match_people')}</div>`;
+  </tbody></table>` : `<div class="empty">${T('no_match_people')}<div><button class="btn small" type="button" data-clearf="emp">${T('clear_filters')}</button></div></div>`;
 }
 
+/* someone who has left: their devices to get back, and the usual tasks, ticked off as they are done */
+const LEAVER_TASKS = ['accounts', 'mail', 'licences', 'access', 'files'];
+function leaverChecklist(e, held) {
+  const checks = e.leaverChecks || {}, ed = can('edit');
+  const done = LEAVER_TASKS.filter(k => checks[k]).length + (held.length ? 0 : 1), total = LEAVER_TASKS.length + 1;
+  const devs = held.map(a => dev(a.deviceId)).filter(Boolean);
+  return `<section class="panel leaver"><h2>${T('lv_title')} <span class="muted" style="font-weight:500">· ${T('lv_done', { n: done, t: total })}</span></h2>
+    <ul class="checklist">
+      ${devs.length ? devs.map(d => `<li class="todo"><span class="mark" aria-hidden="true"></span><span class="what">${T('lv_dev', { tag: d.tag })} <span class="muted">${esc(devTitle(d))}</span></span>
+        ${ed ? `<button class="btn small" type="button" data-act="devolver" data-id="${d.id}">${T('btn_return')}</button>` : ''}</li>`).join('')
+        : `<li class="done"><span class="mark" aria-hidden="true"></span><span class="what">${T('lv_dev_done')}</span></li>`}
+      ${LEAVER_TASKS.map(k => `<li class="${checks[k] ? 'done' : 'todo'}"><label class="what"><input type="checkbox" class="lvtick" data-task="${k}" data-id="${e.id}"${checks[k] ? ' checked' : ''}${ed ? '' : ' disabled'}>
+        <span>${T('lv_' + k)}${checks[k] ? `<span class="t2">${T('lv_on', { d: fmt(checks[k]) })}</span>` : ''}</span></label></li>`).join('')}
+    </ul></section>`;
+}
 function viewEmployee(id) {
   const e = emp(id);
   if (!e) return `<p>${T('not_found_person')} <a href="#empleados">${T('back_list')}</a></p>`;
@@ -2673,6 +3003,7 @@ function viewEmployee(id) {
   </div>
   ${st === 'salida' && cur2.length ? `<div class="notice bad">${T('n_person_left', cur2.length)}</div>` : ''}
   ${st === 'baja' ? `<div class="notice">${T('n_onleave', { name: e.nombre, d: fmt(e.estadoFecha) })}</div>` : ''}
+  ${st === 'salida' ? leaverChecklist(e, cur2) : ''}
   <section class="panel"><h2>${T('cur_devices')}</h2>
     ${cur2.length ? `<div class="tablebox"><table>${head('th_status')}<tbody>${cur2.map(row).join('')}</tbody></table></div>` : `<p class="muted">${T('no_cur')}</p>`}
   </section>
@@ -2729,7 +3060,7 @@ function viewSettings(sec) {
   else body = settingsList(sec);
   const crumb = found ? `<p class="crumb"><a href="#ajustes">${T('set_title')}</a> <span>/</span> ${T('grp_' + found[3])}</p>` : '';
   return `<div class="head"><div><h1>${T('set_title')}</h1><p class="sub">${T('set_sub', { org: S.settings.orgName })}</p></div></div>
-    <div class="settings"><nav class="setnav" aria-label="${T('set_title')}">${nav}</nav><div class="stack">${crumb}${body}</div></div>`;
+    <div class="settings${found ? '' : ' home'}">${found ? `<nav class="setnav" aria-label="${T('set_title')}">${nav}</nav>` : ''}<div class="stack">${crumb}${body}</div></div>`;
 }
 function settingsHome() {
   return `<div class="setcards">${SET_GROUPS.map(g => `<section class="panel setcard">
@@ -3104,6 +3435,43 @@ const CONTRACTS = ['', 'indefinido', 'temporal', 'practicas'];
 const ctKey = c => c ? 'ct_' + c : 'ct_unset';
 const tempChip = e => e.contrato === 'temporal' || e.contrato === 'practicas' ? ` <span class="chip">${T('ct_' + e.contrato)}</span>` : '';
 
+/* the device form is long: a bar of its sections at the top (jumps there, follows the scroll) and the required
+   fields marked */
+function enhanceDeviceForm() {
+  const body = $('#dlgBody'), sects = [...body.querySelectorAll('.sect')].filter(x => !x.closest('[hidden]'));
+  ['#f-tag', '#f-serial', '#f-modelId'].forEach(sel => {
+    const input = $(sel); if (!input || input.closest('[hidden]')) return;
+    const label = input.closest('label'); if (!label || label.querySelector('.reqmark')) return;
+    input.setAttribute('aria-required', 'true');
+    // the mark joins the label's own text (labels are grids: a loose element would take a line of its own)
+    const text = [...label.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+    if (!text) return;
+    const wrap = document.createElement('span');
+    wrap.append(text.textContent.trim(), Object.assign(document.createElement('span'), { className: 'reqmark', textContent: ' *', ariaHidden: 'true' }));
+    label.replaceChild(wrap, text);
+  });
+  if (sects.length < 3) return;
+  const items = [{ el: body.querySelector('.fields > *'), label: t('fn_main') }, ...sects.map(x => ({ el: x, label: x.textContent.trim() }))];
+  const nav = document.createElement('nav'); nav.className = 'formnav'; nav.setAttribute('aria-label', t('fn_sections'));
+  nav.innerHTML = items.map((x, i) => `<button type="button" data-fn="${i}">${esc(x.label)}</button>`).join('') + `<span class="fnreq">${T('fn_required')}</span>`;
+  body.prepend(nav);
+  nav.onclick = e => { const b = e.target.closest('[data-fn]'); if (b) items[Number(b.dataset.fn)].el.scrollIntoView({ block: 'start', behavior: motionOK() ? 'smooth' : 'auto' }); };
+  // the section being read: the last one whose heading has gone under the bar (or the last, at the very end)
+  const scroller = (() => { for (let el = nav.parentElement; el; el = el.parentElement) { const o = getComputedStyle(el).overflowY; if ((o === 'auto' || o === 'scroll') && el.scrollHeight > el.clientHeight) return el; } return $('#dlg'); })();
+  const mark = () => {
+    const line = nav.getBoundingClientRect().bottom + 32;   // a heading just below the bar counts as reached
+    let i = 0;
+    items.forEach((x, n) => { if (x.el.getBoundingClientRect().top <= line) i = n; });
+    if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4) i = items.length - 1;
+    nav.querySelectorAll('[data-fn]').forEach((b, n) => {
+      b.classList.toggle('on', n === i);
+      // keep the highlighted one in view along the bar (sideways only: never moves the form itself)
+      if (n === i && (b.offsetLeft < nav.scrollLeft || b.offsetLeft + b.offsetWidth > nav.scrollLeft + nav.clientWidth)) nav.scrollLeft = b.offsetLeft - 20;
+    });
+  };
+  scroller.addEventListener('scroll', mark, { passive: true });
+  mark();
+}
 const ACTIONS = {
   nuevoDispositivo() {
     openDialog(t('new_device'), deviceForm(), async (v, fd) => {
@@ -3111,8 +3479,63 @@ const ACTIONS = {
       const { device } = await mutate('POST', 'devices', data);
       location.hash = 'dispositivo-' + device.id; return t('created', { tag: device.tag });
     }, t('add'));
-    bindHwForm();
+    bindHwForm(); enhanceDeviceForm();
     const tag = $('#f-tag'); tag.dataset.auto = tag.value;
+  },
+  /* a new device like this one: the form opens with what they share filled in, and only what is unique to the new
+     one to fill (tag suggested; serial, hostname and MAC addresses empty, highlighted) */
+  duplicar(id) {
+    const src = dev(id); if (!src) return;
+    const d = JSON.parse(JSON.stringify(src));
+    ['id', 'checksIgnored', 'batLog', 'diskLog', 'batHealth', 'batDate', 'batCycles'].forEach(k => { delete d[k]; });
+    Object.assign(d, { tag: nextTag(d.typeId), nombre: '', serial: '', notas: '', estado: 'disponible',
+      nics: (src.nics || []).map(n => ({ ...n, mac: '' })), disks: (src.disks || []).map(k => ({ ...k, health: '', wear: null, hours: null, checked: null })) });
+    openDialog(t('dup_title', { tag: src.tag }), `<p class="notice info" style="margin:0 0 14px">${T('dup_note', { tag: src.tag })}</p>${deviceForm(d)}`, async (v, fd) => {
+      const data = readDevice(v, fd); if (!data) return false;
+      const { device } = await mutate('POST', 'devices', data);
+      location.hash = 'dispositivo-' + device.id; return t('created', { tag: device.tag });
+    }, t('add'));
+    bindHwForm(); enhanceDeviceForm();
+    const tag = $('#f-tag'); if (tag) tag.dataset.auto = tag.value;
+    const fill = ['#f-tag', '#f-serial', '#f-nombre', ...[...document.querySelectorAll('#dlgBody input[name="nic_mac"]')].map(x => '#' + x.id)];
+    fill.forEach(sel => { const el = $(sel); if (el) el.classList.add('tofill'); });
+    const first = $('#f-serial'); if (first) first.focus();
+  },
+  /* read-only links to this device for someone without an account */
+  async compartir(id) {
+    const d = dev(id); if (!d) return;
+    const draw = (links, made) => {
+      const now = Date.now();
+      return `${made ? `<div class="notice ok-note" style="margin:0 0 14px"><p style="margin:0 0 8px">${T('share_made')}</p>
+          <div class="row"><input class="mono" id="shUrl" value="${esc(made)}" readonly style="flex:1;min-width:0"><button class="btn small primary" type="button" id="shCopy">${T('share_copy')}</button></div></div>` : ''}
+        <p class="muted" style="margin:0 0 12px;font-size:13.5px">${T('share_d')}</p>
+        <div class="fields">
+          <label>${T('share_for')}<input name="note" maxlength="100" placeholder="${T('share_for_ph')}"></label>
+          <label>${T('share_days')}<select name="days">${[1, 7, 30, 90].map(n => `<option value="${n}"${n === 7 ? ' selected' : ''}>${T('share_d' + n)}</option>`).join('')}</select></label>
+        </div>
+        <h3 style="margin:18px 0 8px;font-size:15px">${T('share_links')}</h3>
+        ${links.length ? `<ul class="sharelist">${links.map(l => { const ended = !l.active;
+          return `<li><span><b>${esc(l.note || '—')}</b><small>${l.revoked ? T('share_revoked') : Date.parse(l.expiresAt) < now ? T('share_ended', { d: fmt(l.expiresAt.slice(0, 10)) }) : T('share_until', { d: fmt(l.expiresAt.slice(0, 10)) })} · ${T('share_views', { n: l.views })}</small></span>
+            ${ended ? '' : `<button class="btn small danger" type="button" data-revoke="${esc(l.id)}">${T('share_revoke')}</button>`}</li>`; }).join('')}</ul>` : `<p class="muted" style="margin:0">${T('share_none')}</p>`}`;
+    };
+    let links = [];
+    try { links = (await api('GET', `devices/${d.id}/share`)).links; } catch (err) { if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); return; }
+    const bind = () => {
+      const copy = $('#shCopy');
+      if (copy) copy.onclick = async () => { const url = $('#shUrl').value; try { await navigator.clipboard.writeText(url); } catch (e) { $('#shUrl').select(); document.execCommand('copy'); } toast(t('share_copied'), true); };
+      document.querySelectorAll('#dlgBody [data-revoke]').forEach(b => b.onclick = async () => {
+        b.disabled = true;
+        try { await api('DELETE', 'share/' + b.dataset.revoke); links = (await api('GET', `devices/${d.id}/share`)).links; $('#dlgBody').innerHTML = draw(links); bind(); toast(t('share_revoked_ok'), true); }
+        catch (err) { b.disabled = false; if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); }
+      });
+    };
+    openDialog(t('share_title', { tag: d.tag }), draw(links), async v => {
+      const r = await api('POST', `devices/${d.id}/share`, { days: Number(v.days), note: (v.note || '').trim() });
+      links = (await api('GET', `devices/${d.id}/share`)).links;
+      $('#dlgBody').innerHTML = draw(links, r.url); bind(); $('#shUrl').select();
+      return null;   // stays open, showing the new link to copy
+    }, t('share_make'));
+    bind();
   },
   editar(id) {
     const d = dev(id);
@@ -3120,7 +3543,7 @@ const ACTIONS = {
       const data = readDevice(v, fd, d); if (!data) return false;
       await mutate('PUT', 'devices/' + d.id, data); return t('saved');
     });
-    bindHwForm();
+    bindHwForm(); enhanceDeviceForm();
   },
   asignarDepto(id) { ACTIONS.asignar(id, 'dept'); },
   asignar(id, to = 'emp') {
@@ -3263,10 +3686,15 @@ function applyChrome() {
   $('#miAddDev').textContent = t('new_device'); $('#miAddDevD').textContent = t('add_device_d');
   $('#miAddPer').textContent = t('new_person'); $('#miAddPerD').textContent = t('add_person_d');
   $('#miPhotoTxt').textContent = t('menu_photo');
+  $('#miSessionsTxt').textContent = t('menu_sessions');
+  $('#qsBtn').hidden = !cur || !!cur.mustChange;
+  $('#qsLbl').textContent = t('qs_label'); $('#qsBtn').setAttribute('aria-label', t('qs_label'));
+  $('#qsKbd').textContent = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent) ? '⌘K' : 'Ctrl K';
   if (!cur) { UPD.session = false; UPD.tag = null; }
   else if (!UPD.session && can('admin') && !cur.mustChange) { UPD.session = true; setTimeout(backgroundUpdateCheck, 1500); }
   applyUpdateDots();
   $('#tabActivity').hidden = !can('admin');
+  $('#tabSettings').hidden = !can('admin');
   if (cur) { $('#whoAvatar').innerHTML = avatarHtml(cur); $('#whoName').textContent = cur.nombre; $('#whoRole').textContent = rl(cur.rol); $('#mName').textContent = cur.nombre; $('#mEmail').textContent = cur.email; }
 }
 $('#langSeg').addEventListener('click', e => {
@@ -3311,6 +3739,40 @@ view.addEventListener('click', ev => {
   if (act) { closeMenus(); if (can('edit')) ACTIONS[act.dataset.act](act.dataset.id); return; }
   const s = ev.target.closest('[data-set]');
   if (s) { if (can('admin')) SET_ACTIONS[s.dataset.set](s.dataset.list, s.dataset.id); return; }
+  const sel = ev.target.closest('input.selone, input.selall, td.selcol, th.selcol');
+  if (sel) {   // ticking never opens the device
+    if (ev.target.matches('input.selone')) { ev.target.checked ? SEL.add(ev.target.dataset.id) : SEL.delete(ev.target.dataset.id); drawDeviceRows(); }
+    else if (ev.target.matches('input.selall')) { const ids = [...document.querySelectorAll('#devTable input.selone')].map(x => x.dataset.id); ev.target.checked ? ids.forEach(id => SEL.add(id)) : ids.forEach(id => SEL.delete(id)); drawDeviceRows(); }
+    else { const box = sel.querySelector('input'); if (box) box.click(); }
+    return;
+  }
+  const lv = ev.target.closest('input.lvtick');
+  if (lv) {
+    if (!can('edit')) return;
+    lv.disabled = true;
+    mutate('POST', `employees/${lv.dataset.id}/leaver`, { task: lv.dataset.task, done: lv.checked })
+      .then(() => route()).catch(err => { lv.checked = !lv.checked; lv.disabled = false; if (!(err instanceof ApiFail)) throw err; if (err.status !== 401) toast(t(err.code)); });
+    return;
+  }
+  const dt = ev.target.closest('[data-dtab]');
+  if (dt) {
+    DTAB = dt.dataset.dtab;
+    document.querySelectorAll('.dtab').forEach(b => { const on = b.dataset.dtab === DTAB; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
+    document.querySelectorAll('.dpanel').forEach(p => { p.hidden = p.dataset.dpanel !== DTAB; });
+    return;
+  }
+  const ag = ev.target.closest('[data-agroup]');
+  if (ag) { const g = ag.dataset.agroup; OPEN_GROUPS.has(g) ? OPEN_GROUPS.delete(g) : OPEN_GROUPS.add(g); route(); return; }
+  const cf = ev.target.closest('[data-clearf]');
+  if (cf) {
+    if (cf.dataset.clearf === 'dev') Object.assign(F, { q: '', estado: 'activos', dept: '', tipo: '', campo: '' });
+    else Object.assign(FE, { q: '', activos: 'todos', contrato: 'todos' });
+    route(); return;
+  }
+  const sb = ev.target.closest('[data-sort]');
+  if (sb) { const f = sb.dataset.scope === 'emp' ? FE : F; if (f.sort === sb.dataset.sort) f.dir = -f.dir; else { f.sort = sb.dataset.sort; f.dir = 1; } sb.dataset.scope === 'emp' ? drawEmpRows() : drawDeviceRows(); syncSortSelect(); return; }
+  const bk = ev.target.closest('[data-bulk]');
+  if (bk) { if (can('edit')) BULK[bk.dataset.bulk](); return; }
   const f = ev.target.closest('[data-filter]');
   if (f) { F.estado = f.dataset.filter; F.q = ''; F.dept = ''; F.tipo = ''; F.campo = ''; }
   if (ev.target.closest('a')) return;
@@ -3327,17 +3789,19 @@ function route() {
   if (h === 'dispositivos') {
     view.innerHTML = viewDevices(); drawDeviceRows();
     $('#fq').oninput = e => { F.q = e.target.value; drawDeviceRows(); };
+    view.querySelector('.sortsel').onchange = e => { const [k, d] = e.target.value.split(':'); F.sort = k || ''; F.dir = Number(d) || 1; drawDeviceRows(); };
     $('#festado').onchange = e => { F.estado = e.target.value; drawDeviceRows(); };
     $('#fdept').onchange = e => { F.dept = e.target.value; drawDeviceRows(); };
     $('#ftipo').onchange = e => { F.tipo = e.target.value; drawDeviceRows(); };
     $('#fcampo').onchange = e => { F.campo = e.target.value; $('#fq').placeholder = F.campo ? t('search_in', { x: t('sf_' + F.campo) }) : t('search_dev'); drawDeviceRows(); $('#fq').focus(); };
-  } else if (h.startsWith('dispositivo-')) view.innerHTML = viewDevice(h.slice(12));
+  } else if (h.startsWith('dispositivo-')) { view.innerHTML = viewDevice(h.slice(12)); noteRecent('d', h.slice(12)); loadDevHistory(h.slice(12)); }
   else if (h === 'empleados') {
     view.innerHTML = viewEmployees(); drawEmpRows();
     $('#eq').oninput = e => { FE.q = e.target.value; drawEmpRows(); };
+    view.querySelector('.sortsel').onchange = e => { const [k, d] = e.target.value.split(':'); FE.sort = k || ''; FE.dir = Number(d) || 1; drawEmpRows(); };
     $('#eactivos').onchange = e => { FE.activos = e.target.value; drawEmpRows(); };
     $('#econtrato').onchange = e => { FE.contrato = e.target.value; drawEmpRows(); };
-  } else if (h.startsWith('empleado-')) view.innerHTML = viewEmployee(h.slice(9));
+  } else if (h.startsWith('empleado-')) { view.innerHTML = viewEmployee(h.slice(9)); noteRecent('e', h.slice(9)); }
   else if (h === 'actividad') { view.innerHTML = viewActivity(); if (can('admin')) bindLogs(); }
   else if (sec === 'ajustes') { view.innerHTML = viewSettings(h.slice(8)); bindRegion(); bindPwForm(); bindBrand(); bindData(); bindAbout(); bindUpdates(); bindLogLimit(); bindSecurity(); }
   else view.innerHTML = viewPanel();

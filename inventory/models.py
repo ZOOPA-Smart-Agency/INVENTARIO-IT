@@ -86,6 +86,10 @@ class AppSettings(models.Model):
     hostname_is_tag = models.BooleanField(default=False)
     # Devices without disk encryption are shown as a problem (Overview, the device's page); off: only noted.
     require_encryption = models.BooleanField(default=True)
+    # Automatic backups, made by the updater service (deploy/updater) every day at this hour, keeping the last ones
+    auto_backup = models.BooleanField(default=True)
+    auto_backup_hour = models.PositiveSmallIntegerField(default=2)
+    auto_backup_keep = models.PositiveSmallIntegerField(default=14)
     # The activity log's largest size in MB (0: no limit); past it the oldest entries are deleted (see logsize.py).
     log_max_mb = models.PositiveIntegerField(default=0)
 
@@ -260,6 +264,8 @@ class Employee(models.Model):
     alta = models.DateField()
     estado = models.CharField(max_length=10, choices=State.choices, default=State.ACTIVE)
     estado_fecha = models.DateField(null=True, blank=True)
+    # Leaver checklist: the tasks ticked off once someone has left ({"accounts": "2026-11-23", ...})
+    leaver_checks = models.JSONField(default=dict, blank=True)
     class Contract(models.TextChoices):
         UNSET = "", "Not defined"
         PERMANENT = "indefinido"
@@ -456,6 +462,39 @@ class AuditEvent(models.Model):
         indexes = [models.Index(fields=["-at", "-id"], name="auditevent_newest")]
 
 
+class ShareLink(models.Model):
+    """A read-only link to one device's details for someone without an account (a repair shop, an auditor). Only a
+    hash of its token is kept: the link itself is shown once, when it is made. Not part of backups."""
+
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, related_name="share_links")
+    token_hash = models.CharField(max_length=64, unique=True)
+    note = models.CharField(max_length=100, blank=True)  # who it is for
+    created_at = models.DateTimeField(default=timezone.now)
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    expires_at = models.DateTimeField()
+    revoked_at = models.DateTimeField(null=True, blank=True)
+    views = models.PositiveIntegerField(default=0)
+    last_view_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["-id"]
+
+
+class UserSession(models.Model):
+    """Where an account is signed in: one per browser session, so people can see them and sign others out.
+    Not part of backups (a restore signs everyone out)."""
+
+    session_key = models.CharField(max_length=40, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sessions")
+    created_at = models.DateTimeField(default=timezone.now)
+    last_seen = models.DateTimeField(default=timezone.now)
+    ip = models.CharField(max_length=45, blank=True)
+    agent = models.CharField(max_length=300, blank=True)
+
+    class Meta:
+        ordering = ["-last_seen"]
+
+
 class Maintenance(models.Model):
     """Single row (pk=1): set while a restore runs, so everyone else sees a maintenance page. Not part of backups."""
 
@@ -485,6 +524,12 @@ class UpdaterState(models.Model):
     check_status = models.CharField(max_length=20, blank=True)
     checked_at = models.DateTimeField(null=True, blank=True)
     check_requested = models.BooleanField(default=False)
+    # automatic backups (written by the updater)
+    backup_at = models.DateTimeField(null=True, blank=True)
+    # defaults in the database too: the updater's own INSERT does not name these columns
+    backup_status = models.CharField(max_length=10, blank=True, default="", db_default="")  # "ok" or "failed"
+    backup_message = models.TextField(blank=True, default="", db_default="")
+    backup_files = models.TextField(blank=True, default="", db_default="")  # JSON: [{"name", "size", "at"}], newest first
 
 
 class UpdateJob(models.Model):

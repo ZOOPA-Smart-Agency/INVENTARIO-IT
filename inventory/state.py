@@ -1,5 +1,6 @@
 """Builds the JSON snapshot the interface renders from."""
 from django.conf import settings as django_settings
+from django.utils import timezone
 
 from .models import AppSettings, Assignment, AuditEvent, Device, Employee, Incident, ProfilePhoto, User
 from .registry import LISTS
@@ -75,6 +76,7 @@ def employee_json(e):
     return {
         "id": str(e.pk),
         "nombre": e.nombre,
+        "leaverChecks": e.leaver_checks or {},
         "email": e.email,
         "depts": sorted((str(x.pk) for x in e.depts.all()), key=int),
         "locs": sorted((str(x.pk) for x in e.locs.all()), key=int),
@@ -139,7 +141,8 @@ SIGN_IN_KEYS = ("log_login", "log_login_failed", "log_logout")
 
 def log_json(e):
     return {
-        "fecha": e.at.date().isoformat(), "k": e.key, "a": e.args,
+        # the local date (not UTC: just after midnight in Spain is still the previous day in UTC), and the moment
+        "fecha": timezone.localtime(e.at).date().isoformat(), "at": e.at.isoformat(), "k": e.key, "a": e.args,
         "deviceId": sid(e.device_id) or None, "by": sid(e.user_id) or None,
     }
 

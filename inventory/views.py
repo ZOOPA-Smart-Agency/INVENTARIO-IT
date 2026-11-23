@@ -7,6 +7,7 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET
+from django.utils import timezone
 
 from .models import AppSettings, ProfilePhoto
 
@@ -74,6 +75,92 @@ def user_photo(request, pk):
     # the address changes with every new picture (?v=), so the browser can keep it; not shared caches
     response["Cache-Control"] = "private, max-age=31536000, immutable"
     response["X-Content-Type-Options"] = "nosniff"
+    return response
+
+
+# ---- read-only share link for one device (/s/<token>) ------------------------------------------
+
+SHARE_TEXT = {
+    "es": {"title": "Ficha del equipo", "shared": "Compartido en modo solo lectura. Este enlace caduca el {d}.", "gone": "Este enlace ha caducado o ya no existe.",
+           "tag": "Etiqueta", "type": "Tipo", "model": "Modelo", "serial": "Número de serie", "cpu": "Procesador", "ram": "Memoria", "disks": "Almacenamiento",
+           "gpu": "Gráficos", "screen": "Pantalla", "os": "Sistema operativo", "battery": "Salud de la batería", "bought": "Fecha de compra",
+           "warranty": "Garantía hasta", "faults": "Averías y reparaciones", "none": "Ninguna", "open": "Abierta", "done": "Resuelta", "parts": "Piezas"},
+    "en": {"title": "Device details", "shared": "Shared read-only. This link expires on {d}.", "gone": "This link has expired or no longer exists.",
+           "tag": "Tag", "type": "Type", "model": "Model", "serial": "Serial number", "cpu": "Processor", "ram": "Memory", "disks": "Storage",
+           "gpu": "Graphics", "screen": "Screen", "os": "Operating system", "battery": "Battery health", "bought": "Purchase date",
+           "warranty": "Warranty until", "faults": "Faults and repairs", "none": "None", "open": "Open", "done": "Resolved", "parts": "Parts"},
+    "ca": {"title": "Fitxa de l’equip", "shared": "Compartit en mode només lectura. Aquest enllaç caduca el {d}.", "gone": "Aquest enllaç ha caducat o ja no existeix.",
+           "tag": "Etiqueta", "type": "Tipus", "model": "Model", "serial": "Número de sèrie", "cpu": "Processador", "ram": "Memòria", "disks": "Emmagatzematge",
+           "gpu": "Gràfics", "screen": "Pantalla", "os": "Sistema operatiu", "battery": "Salut de la bateria", "bought": "Data de compra",
+           "warranty": "Garantia fins a", "faults": "Avaries i reparacions", "none": "Cap", "open": "Oberta", "done": "Resolta", "parts": "Peces"},
+}
+
+
+def _share_lang(request):
+    for part in request.META.get("HTTP_ACCEPT_LANGUAGE", "").lower().split(","):
+        code = part.split(";")[0].strip()[:2]
+        if code in SHARE_TEXT:
+            return code
+    return "es"
+
+
+def _name(value, lang):
+    """A catalogue name, which may be kept in several languages."""
+    if value is None:
+        return ""
+    value = getattr(value, "nombre", value)
+    if isinstance(value, dict):
+        return str(value.get(lang) or value.get("es") or value.get("en") or "")
+    return str(value or "")
+
+
+def _num(value):
+    return "" if value is None else (f"{value:g}" if isinstance(value, float) else str(value))
+
+
+def _shared_rows(d, lang, tx):
+    """What the link shows: the hardware, its warranty and faults. Never who has it, where, or what it cost."""
+    model = f"{d.model.fabricante} {d.model.nombre}".strip() if d.model else d.custom_name
+    os_name = {"mac": "macOS", "win": "Windows", "linux": _name(d.linux_distro, lang) or "Linux"}.get(d.os_family, "")
+    os_ver = _name(d.mac_version or d.win_version or d.linux_version, lang)
+    ram = " ".join(x for x in (f"{_num(d.ram_size)} {d.ram_unit}" if d.ram_size else "", _name(d.ram_gen, lang)) if x)
+    disks = ", ".join(" ".join(x for x in (f"{_num(k.size)} {k.unit}" if k.size else "", _name(k.type, lang), _name(k.conn, lang)) if x) for k in d.disks.all())
+    rows = [("tag", d.tag), ("type", _name(d.type, lang)), ("model", model), ("serial", d.serial), ("cpu", _name(d.cpu, lang)),
+            ("ram", ram), ("disks", disks), ("gpu", _name(d.gpu, lang)), ("screen", f'{_num(d.screen)}"' if d.screen else ""),
+            ("os", " ".join(x for x in (os_name, d.os_number or os_ver) if x)),
+            ("battery", f"{_num(d.bat_health)} %" if d.bat_health is not None else ""),
+            ("bought", d.compra.strftime("%d/%m/%Y") if d.compra else ""), ("warranty", d.garantia.strftime("%d/%m/%Y") if d.garantia else "")]
+    return [(tx[k], v) for k, v in rows if v]
+
+
+@require_GET
+def shared_device(request, token):
+    """A device's details for someone without an account, through a link someone made for them. Read-only."""
+    import hashlib
+
+    from django.db.models import F
+
+    from .models import ShareLink
+
+    lang = _share_lang(request)
+    tx = SHARE_TEXT[lang]
+    link = ShareLink.objects.select_related("device").filter(token_hash=hashlib.sha256(token.encode()).hexdigest()[:64]).first()
+    now = timezone.now()
+    if link is None or link.revoked_at is not None or link.expires_at <= now:
+        response = render(request, "inventory/shared.html", {"tx": tx, "lang": lang, "gone": True}, status=404)
+    else:
+        ShareLink.objects.filter(pk=link.pk).update(views=F("views") + 1, last_view_at=now)
+        d = link.device
+        faults = [{"date": i.fecha.strftime("%d/%m/%Y"), "text": _name(i.descripcion, lang), "parts": i.piezas,
+                   "status": tx["done"] if i.estado == "resuelta" else tx["open"]} for i in d.incidents.order_by("-fecha")]
+        title = (f"{d.model.fabricante} {d.model.nombre}".strip() if d.model else d.custom_name) or d.tag
+        response = render(request, "inventory/shared.html", {
+            "tx": tx, "lang": lang, "title": title, "tag": d.tag, "rows": _shared_rows(d, lang, tx), "faults": faults,
+            "shared": tx["shared"].replace("{d}", timezone.localtime(link.expires_at).strftime("%d/%m/%Y %H:%M"))})
+    response["Cache-Control"] = "no-store"
+    response["X-Robots-Tag"] = "noindex, nofollow"
+    response["Referrer-Policy"] = "no-referrer"
+    response["Content-Security-Policy"] = "default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; frame-ancestors 'none'"
     return response
 
 

@@ -139,3 +139,19 @@ class IconFallbackTests(TestCase):
             self.assertFalse(json.loads(self.client.get("/api/bootstrap").content)["settings"]["ownCert"])
         compose = open("deploy/docker-compose.yml").read()
         self.assertIn("DJANGO_TLS_MODE: ${TLS_MODE:-internal}", compose)  # the web app is told how the server's certificate is made
+
+
+class PageOrderTests(TestCase):
+    def test_everything_the_script_uses_comes_before_it(self):
+        """The script runs where it is included: elements it looks up at start must already be in the page."""
+        import re
+        html = Client().get("/").content.decode()
+        script_at = html.index('inventory/app.js')
+        script = open("inventory/static/inventory/app.js", encoding="utf-8").read()
+        # ids looked up while the script loads: $('#x').addEventListener / .onclick = … at the start of a line
+        ids = set(re.findall(r"^\$\('#([A-Za-z][\w-]*)'\)\.(?:addEventListener|onclick|onsubmit|onchange|oninput)", script, re.M))
+        self.assertTrue(ids)
+        for name in ids:
+            at = html.find(f'id="{name}"')
+            self.assertNotEqual(at, -1, name)
+            self.assertLess(at, script_at, f"#{name} comes after the script")

@@ -40,12 +40,17 @@ class FakeDb:
         self.calls, self.jobs, self.maint = [], {}, []
         self.state_value = {"check_requested": False, "checked_at": 0.0, "latest_tag": ""}
         self.schedule_value, self.auto_today, self.saved = (False, 3), False, []
+        self.backup_value, self.backup_at, self.backups = (True, 2, 3), 0.0, []
 
     def heartbeat(self, running): self.calls.append(("heartbeat", running))
     def state(self): return dict(self.state_value)
     def save_check(self, status, release=None): self.saved.append((status, (release or {}).get("tag")))
     def schedule(self): return self.schedule_value
     def next_job(self): return None
+    def backup_schedule(self): return self.backup_value
+    def last_backup(self): return self.backup_at
+    def save_backup(self, status, message, files): self.backups.append((status, message, [f["name"] for f in files])); self.backup_at = self.now_for_backup()
+    now_for_backup = staticmethod(lambda: 0.0)
     def automatic_job_since(self, since): self.calls.append(("since", since)); return self.auto_today
     def queue_automatic(self, target, running): self.calls.append(("queue", target, running))
     def job(self, job_id, **changes): self.jobs.setdefault(job_id, []).append({k: v for k, v in changes.items() if v not in (None, False)})
@@ -236,6 +241,53 @@ class InstallTests(UpdaterTestCase):
         self.make(FakeGitHub(files=files)).install(self.job, "1.0.0")
         self.assertEqual((self.dir / "updater" / "updater.py").read_text(), "new updater")
         self.assertTrue(any(c.startswith("docker run --rm -d") and "up -d --no-deps updater" in c for c in self.commands()))
+
+
+class AutoBackupTests(UpdaterTestCase):
+    """A database backup every day from the chosen hour, keeping the newest few; update backups are left alone."""
+
+    def at(self, day, hour, minute=0):
+        self.clock[0] = datetime(2026, 11, day, hour, minute, tzinfo=MADRID).timestamp()
+        self.db.now_for_backup = lambda: self.clock[0]
+
+    def test_daily_from_the_hour(self):
+        updater = self.make()
+        self.at(20, 1, 30)
+        updater.maybe_backup()
+        self.assertEqual(self.db.backups, [], "before the hour")
+        self.at(20, 2, 0)
+        updater.maybe_backup()
+        self.assertEqual(self.db.backups[-1][:2], ("ok", ""))
+        files = sorted(p.name for p in (self.dir / "backups").glob("auto-*.sql.gz"))
+        self.assertEqual(files, ["auto-20261120-0200.sql.gz"])
+        self.assertEqual(gzip.decompress((self.dir / "backups" / files[0]).read_bytes()), b"-- database dump --")
+        self.at(20, 15)
+        updater.maybe_backup()
+        self.assertEqual(len(self.db.backups), 1, "once a day")
+        (self.dir / "backups" / "before-v1.1.0-from-v1.0.0-x.sql.gz").write_bytes(b"x")
+        for day in (21, 22, 23, 24):
+            self.at(day, 3)
+            updater.maybe_backup()
+        kept = sorted(p.name for p in (self.dir / "backups").glob("*.sql.gz"))
+        self.assertEqual(kept, ["auto-20261122-0300.sql.gz", "auto-20261123-0300.sql.gz", "auto-20261124-0300.sql.gz",
+                                "before-v1.1.0-from-v1.0.0-x.sql.gz"])
+        self.assertEqual(self.db.backups[-1][2], ["auto-20261124-0300.sql.gz", "auto-20261123-0300.sql.gz", "auto-20261122-0300.sql.gz"])
+
+    def test_off_old_app_and_failure(self):
+        updater = self.make()
+        self.at(20, 5)
+        self.db.backup_value = (False, 2, 3)
+        updater.maybe_backup()
+        self.db.backup_value = None  # the app's database is from before automatic backups
+        updater.maybe_backup()
+        self.assertEqual(self.db.backups, [])
+        self.db.backup_value = (True, 2, 3)
+        self.server.fail_on = "pg_dump"
+        updater.maybe_backup()
+        self.assertEqual(self.db.backups[-1][0], "failed")
+        self.assertIn("pg_dump failed", self.db.backups[-1][1])
+        updater.maybe_backup()
+        self.assertEqual(len(self.db.backups), 1, "tried again tomorrow, not every few seconds")
 
 
 class ScheduleTests(UpdaterTestCase):

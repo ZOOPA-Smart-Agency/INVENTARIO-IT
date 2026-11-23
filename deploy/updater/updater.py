@@ -152,6 +152,26 @@ class Db:
         rows = self.sql("SELECT auto_update, auto_update_hour FROM inventory_appsettings WHERE id = 1;")
         return (rows[0][0] == "t", int(rows[0][1])) if rows else (False, 3)
 
+    def backup_schedule(self):
+        """(on, hour, how many to keep) for automatic backups; None if the app's database does not have them yet."""
+        try:
+            rows = self.sql("SELECT auto_backup, auto_backup_hour, auto_backup_keep FROM inventory_appsettings WHERE id = 1;")
+        except Failed:
+            return None  # an app version from before automatic backups
+        return (rows[0][0] == "t", int(rows[0][1]), int(rows[0][2])) if rows else (True, 2, 14)
+
+    def last_backup(self):
+        """When the last automatic backup was tried (epoch seconds), 0 if never."""
+        try:
+            rows = self.sql("SELECT COALESCE(extract(epoch FROM backup_at), 0) FROM inventory_updaterstate WHERE id = 1;")
+        except Failed:
+            return 0.0
+        return float(rows[0][0]) if rows else 0.0
+
+    def save_backup(self, status, message, files):
+        self.sql("""UPDATE inventory_updaterstate SET backup_at = now(), backup_status = :'status', backup_message = :'message',
+                      backup_files = :'files' WHERE id = 1;""", status=status, message=message, files=json.dumps(files))
+
     def next_job(self):
         rows = self.sql("SELECT id, target, requested_by, automatic FROM inventory_updatejob "
                         "WHERE status = 'queued' ORDER BY id LIMIT 1;")
@@ -298,6 +318,7 @@ class Updater:
             self.install(job, running)
             return
         self.maybe_schedule(running, latest_tag)
+        self.maybe_backup()
 
     def check(self, running):
         if not self.config.repo:
@@ -327,6 +348,52 @@ class Updater:
             return  # one automatic attempt a day, even if it failed
         log(f"automatic update to {latest_tag} queued")
         self.db.queue_automatic(latest_tag, running)
+
+    # -- automatic backups
+
+    def maybe_backup(self):
+        """Once a day, from the chosen hour: a backup of the whole database (like the one made before each update),
+        keeping the newest ones. A failed day is reported and tried again the next day."""
+        schedule = self.db.backup_schedule()
+        if not schedule:
+            return
+        enabled, hour, keep = schedule
+        if not enabled:
+            return
+        local = datetime.fromtimestamp(self.now(), self.config.timezone)
+        if local.hour < hour:
+            return
+        due = local.replace(hour=hour, minute=0, second=0, microsecond=0).timestamp()
+        if self.db.last_backup() >= due:
+            return  # done (or tried) today
+        folder = self.config.install_dir / "backups"
+        try:
+            folder.mkdir(parents=True, exist_ok=True)
+            dump = self.run([*self.config.compose, "exec", "-T", "db", "pg_dump", "-U", self.config.db_user, "-d", self.config.db_name,
+                             "--clean", "--if-exists", "--no-owner"], timeout=3600)
+            if not dump.strip():
+                raise Failed("the database backup came out empty")
+            path = folder / f"auto-{local.strftime('%Y%m%d-%H%M')}.sql.gz"
+            path.write_bytes(gzip.compress(dump))
+        except (Failed, OSError) as e:
+            log(f"automatic backup failed: {e}")
+            self.db.save_backup("failed", str(e)[:500], self.backup_files(folder))
+            return
+        for old in sorted(folder.glob("auto-*.sql.gz"))[:-keep]:  # the newest `keep` stay; update backups are apart
+            old.unlink(missing_ok=True)
+        log(f"automatic backup: {path.name}")
+        self.db.save_backup("ok", "", self.backup_files(folder))
+
+    def backup_files(self, folder):
+        """The automatic backups on disk, newest first, for the app's Backups page."""
+        out = []
+        for path in sorted(folder.glob("auto-*.sql.gz"), reverse=True):
+            try:
+                st = path.stat()
+            except OSError:
+                continue
+            out.append({"name": path.name, "size": st.st_size, "at": datetime.fromtimestamp(st.st_mtime, self.config.timezone).isoformat()})
+        return out
 
     # -- installing a release
 

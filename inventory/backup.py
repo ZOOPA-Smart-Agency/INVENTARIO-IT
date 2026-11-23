@@ -59,6 +59,8 @@ SKIP = {(m.AppSettings, "logo")}  # stored as its own file
 NOT_BACKED_UP = {
     m.User.groups.through, m.User.user_permissions.through,  # Django's permission groups, which the app does not use
     m.Maintenance, m.UpdaterState, m.UpdateJob,  # the progress of the running restore or update, not inventory data
+    m.ShareLink,  # temporary links for outsiders: a restored backup must not bring back ones that were revoked
+    m.UserSession,  # where people are signed in: a restore signs everyone out
 }
 
 

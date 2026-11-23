@@ -32,7 +32,7 @@ from .models import Assignment, AuditEvent, Device, Employee, Incident, User, cl
 from .registry import LISTS
 from .tags import SCOPES
 from .tags import conflict as tag_conflict
-from .state import (assignment_json, device_json, employee_json, full_state, incident_json, list_item_json, log_json,
+from .state import (assignment_json, device_json, employee_json, full_state, incident_json, list_item_json, log_json, sid,
                     me_json, password_policy_json, settings_json)
 
 LOGIN_MAX_ATTEMPTS = 10
@@ -274,6 +274,7 @@ def session_login(request, body):
         raise ApiError("login_err", 401)
     cache.delete(key)
     login(request, user)
+    record_session(request, user)
     AuditEvent.objects.create(key="log_login", user=user, args={"name": user.nombre, "ip": _client_ip(request)})
     logsize.enforce()
     if user.must_change_password:  # nothing else until a new password is chosen
@@ -285,6 +286,7 @@ def session_login(request, body):
 def session_logout(request, body):
     if request.user.is_authenticated:
         audit(request, "log_logout", {"name": request.user.nombre})
+        m.UserSession.objects.filter(session_key=request.session.session_key or "").delete()
     logout(request)
 
 
@@ -548,7 +550,12 @@ def incident_resolve(request, body, pk):
 
 @endpoint("POST", role="edit")
 def device_status(request, body, pk):
-    device = get_or_404(Device, pk)
+    _set_status(request, get_or_404(Device, pk), body)
+
+
+def _set_status(request, device, body):
+    """A device's new status, with what goes with it (ends the assignment, disposal details, a note). Shared by one
+    device's Change status and the device list's bulk change, so both follow the same rules."""
     new_state = body.get("estado")
     if new_state not in Device.State.values or new_state == device.estado:
         raise ApiError("err_invalid")
@@ -568,6 +575,48 @@ def device_status(request, body, pk):
         device.notas = append_note(device.notas, note, "\n")
     device.save()
     audit(request, "log_status", {"tag": device.tag, "st": new_state, "reason": reason}, device)
+
+
+BULK_MAX = 500
+
+
+@endpoint("POST", role="edit")
+def devices_bulk(request, body):
+    """The device list's bulk actions: {ids, action: "status" (estado, motivo, metodo, cert) or "location" (loc)}.
+    Each device is changed as on its own page; those that cannot be are left as they were and reported with why."""
+    ids = body.get("ids")
+    if not isinstance(ids, list) or not ids or len(ids) > BULK_MAX or not all(isinstance(i, (str, int)) and str(i).isdigit() for i in ids):
+        raise ApiError("err_invalid")
+    action = body.get("action")
+    if action not in ("status", "location"):
+        raise ApiError("err_invalid")
+    loc = fk(body, "loc", m.Location) if action == "location" else None
+    if action == "location" and loc is None:
+        raise ApiError("err_invalid")
+    devices = {str(d.pk): d for d in Device.objects.select_for_update().filter(pk__in={int(i) for i in ids})}
+    done, skipped = [], []
+    for key in dict.fromkeys(str(i) for i in ids):  # in the order given, once each
+        device = devices.get(key)
+        if device is None:
+            skipped.append({"id": key, "tag": "", "error": "err_not_found"})
+            continue
+        try:
+            with transaction.atomic():  # one device's failure leaves the others' changes in place
+                if action == "status":
+                    if body.get("estado") == device.estado:
+                        raise ApiError("err_bulk_same")
+                    _set_status(request, device, body)
+                else:
+                    if device.loc_id == loc.pk:
+                        raise ApiError("err_bulk_same")
+                    device.loc = loc
+                    device.save(update_fields=["loc"])
+                    audit(request, "log_edited", {"tag": device.tag, "parts": ["loc"]}, device)
+        except ApiError as e:
+            skipped.append({"id": key, "tag": device.tag, "error": e.code})
+        else:
+            done.append(key)
+    return {"done": done, "skipped": skipped}
 
 
 CHECK_KEY = re.compile(r"[a-z_]{2,40}")
@@ -628,6 +677,31 @@ def employee_update(request, body, pk):
     parts = [k for k in ("nombre", "email", "depts", "locs", "alta", "estado", "contrato") if before.get(k) != after.get(k)]
     if parts:
         audit(request, "log_emp_edited", {"name": employee.nombre, "parts": parts})
+    return {"employee": employee_json(employee)}
+
+
+LEAVER_TASKS = ("accounts", "mail", "licences", "access", "files")
+
+
+@endpoint("POST", role="edit")
+def employee_leaver(request, body, pk):
+    """Ticks (or unticks) one task of a leaver's checklist: {task, done}."""
+    employee = get_or_404(Employee, pk)
+    task = body.get("task")
+    if task not in LEAVER_TASKS or not isinstance(body.get("done"), bool):
+        raise ApiError("err_invalid")
+    if employee.estado != Employee.State.LEFT:
+        raise ApiError("err_not_left", 409)
+    checks = dict(employee.leaver_checks or {})
+    if body["done"] == (task in checks):
+        return {"employee": employee_json(employee)}
+    if body["done"]:
+        checks[task] = timezone.localdate().isoformat()
+    else:
+        checks.pop(task)
+    employee.leaver_checks = checks
+    employee.save(update_fields=["leaver_checks"])
+    audit(request, "log_leaver_done" if body["done"] else "log_leaver_undone", {"name": employee.nombre, "task": task})
     return {"employee": employee_json(employee)}
 
 
@@ -980,6 +1054,162 @@ def account_password(request, body):
     cache.delete(key)
     audit(request, "log_pwchanged", {"name": user.nombre})
     return {"me": me_json(user), "state": full_state(user)}
+
+
+# ---- a device's history (its page) -------------------------------------------------------
+
+HISTORY_PAGE = 100
+
+
+@endpoint("GET")
+def device_history(request, body, pk):
+    """Everything recorded about one device, newest first, a page at a time (?before=<id>). For everyone who can see
+    the device: these entries hold no sign-in details."""
+    device = Device.objects.filter(pk=pk).first()
+    if device is None:
+        raise ApiError("err_not_found", 404)
+    events = AuditEvent.objects.filter(device=device).order_by("-at", "-id")
+    before = request.GET.get("before", "")
+    if before:
+        last = AuditEvent.objects.filter(pk=int(before), device=device).values_list("at", flat=True).first() if before.isdigit() else None
+        if last is None:
+            raise ApiError("err_invalid")
+        events = events.filter(Q(at__lt=last) | Q(at=last, id__lt=int(before)))
+    rows = list(events[:HISTORY_PAGE + 1])
+    return {"events": [{**log_json(e), "id": str(e.id), "at": e.at.isoformat()} for e in rows[:HISTORY_PAGE]], "more": len(rows) > HISTORY_PAGE}
+
+
+# ---- read-only share links for one device ---------------------------------------------------
+
+SHARE_DAYS = (1, 7, 30, 90)
+
+
+def _share_json(link):
+    now = timezone.now()
+    return {"id": str(link.pk), "note": link.note, "createdAt": link.created_at.isoformat(), "expiresAt": link.expires_at.isoformat(),
+            "by": sid(link.created_by_id), "views": link.views, "lastView": link.last_view_at.isoformat() if link.last_view_at else None,
+            "active": link.revoked_at is None and link.expires_at > now, "revoked": link.revoked_at is not None}
+
+
+@endpoint("GET", "POST", role="edit")
+def device_share(request, body, pk):
+    """GET: the device's links. POST {days, note}: a new link, whose address is only shown now."""
+    import hashlib
+    import secrets
+
+    device = Device.objects.filter(pk=pk).first()
+    if device is None:
+        raise ApiError("err_not_found", 404)
+    if request.method == "GET":
+        return {"links": [_share_json(x) for x in device.share_links.all()[:50]]}
+    days = body.get("days")
+    if days not in SHARE_DAYS:
+        raise ApiError("err_invalid")
+    token = secrets.token_urlsafe(24)
+    link = m.ShareLink.objects.create(device=device, token_hash=hashlib.sha256(token.encode()).hexdigest(), note=text(body, "note", 100),
+                                      created_by=request.user, expires_at=timezone.now() + dt.timedelta(days=days))
+    audit(request, "log_share_created", {"tag": device.tag, "days": days, "note": link.note}, device)
+    return {"link": _share_json(link), "url": request.build_absolute_uri(f"/s/{token}")}
+
+
+@endpoint("DELETE", role="edit")
+def share_revoke(request, body, pk):
+    link = get_or_404(m.ShareLink, pk)
+    if link.revoked_at is None:
+        link.revoked_at = timezone.now()
+        link.save(update_fields=["revoked_at"])
+        audit(request, "log_share_revoked", {"tag": link.device.tag, "note": link.note}, link.device)
+    return {"link": _share_json(link)}
+
+
+# ---- where your account is signed in ----------------------------------------------------------
+
+
+def record_session(request, user):
+    """Notes this browser's session after a sign-in (address and browser), for Signed-in devices."""
+    key = request.session.session_key
+    if not key:
+        request.session.save()
+        key = request.session.session_key
+    m.UserSession.objects.update_or_create(session_key=key, defaults={
+        "user": user, "ip": _client_ip(request), "agent": str(request.META.get("HTTP_USER_AGENT", ""))[:300],
+        "created_at": timezone.now(), "last_seen": timezone.now()})
+
+
+def _live_sessions(user):
+    """The account's sessions that are still valid; the records of ended ones are tidied away."""
+    from django.contrib.sessions.models import Session
+
+    rows = list(m.UserSession.objects.filter(user=user))
+    live = set(Session.objects.filter(session_key__in=[r.session_key for r in rows], expire_date__gt=timezone.now()).values_list("session_key", flat=True))
+    m.UserSession.objects.filter(pk__in=[r.pk for r in rows if r.session_key not in live]).delete()
+    return [r for r in rows if r.session_key in live]
+
+
+@endpoint("GET", "DELETE", allow_pending=True)
+def account_sessions(request, body):
+    """GET: where you are signed in. DELETE: signs out everywhere except here."""
+    from django.contrib.sessions.models import Session
+
+    mine = request.session.session_key
+    if not m.UserSession.objects.filter(session_key=mine or "").exists():
+        record_session(request, request.user)  # signed in before sessions were recorded
+        mine = request.session.session_key
+    sessions = _live_sessions(request.user)
+    if request.method == "DELETE":
+        others = [s.session_key for s in sessions if s.session_key != mine]
+        Session.objects.filter(session_key__in=others).delete()
+        m.UserSession.objects.filter(session_key__in=others).delete()
+        if others:
+            audit(request, "log_sessions_ended", {"name": request.user.nombre, "n": len(others)})
+        sessions = [s for s in sessions if s.session_key == mine]
+    return {"sessions": [{"id": str(s.pk), "current": s.session_key == mine, "ip": s.ip, "agent": s.agent,
+                          "createdAt": s.created_at.isoformat(), "lastSeen": s.last_seen.isoformat()} for s in sessions]}
+
+
+@endpoint("DELETE", allow_pending=True)
+def account_session_end(request, body, pk):
+    """Signs out one of your other sessions."""
+    from django.contrib.sessions.models import Session
+
+    session = m.UserSession.objects.filter(pk=pk, user=request.user).first()
+    if session is None:
+        raise ApiError("err_not_found", 404)
+    if session.session_key == request.session.session_key:
+        raise ApiError("err_this_session", 409)  # Sign out is for this one
+    Session.objects.filter(session_key=session.session_key).delete()
+    session.delete()
+    audit(request, "log_sessions_ended", {"name": request.user.nombre, "n": 1})
+    return {"ok": True}
+
+
+# ---- automatic backups (made by the updater) -------------------------------------------------
+
+
+@endpoint("GET", "PUT", role="admin")
+def backups_auto(request, body):
+    """Automatic backups: on/off, the hour and how many to keep (PUT); and what the updater made (GET)."""
+    s = m.AppSettings.load()
+    if request.method == "PUT":
+        hour, keep = number(body, "hour", 0, 23), number(body, "keep", 1, 90)
+        if hour is None or hour != int(hour) or keep is None or keep != int(keep) or not isinstance(body.get("enabled"), bool):
+            raise ApiError("err_invalid")
+        before = {"autoBackup": s.auto_backup, "autoBackupHour": s.auto_backup_hour, "autoBackupKeep": s.auto_backup_keep}
+        s.auto_backup, s.auto_backup_hour, s.auto_backup_keep = body["enabled"], int(hour), int(keep)
+        s.save(update_fields=["auto_backup", "auto_backup_hour", "auto_backup_keep"])
+        changes = _diff(before, {"autoBackup": s.auto_backup, "autoBackupHour": s.auto_backup_hour, "autoBackupKeep": s.auto_backup_keep})
+        if changes:
+            audit(request, "log_setting", {"xKey": "bk_auto_h", "ch": changes})
+    state = _updater()
+    files = []
+    if state is not None and state.backup_files:
+        try:
+            files = [f for f in json.loads(state.backup_files) if isinstance(f, dict)][:90]
+        except ValueError:
+            files = []
+    return {"enabled": s.auto_backup, "hour": s.auto_backup_hour, "keep": s.auto_backup_keep, "updater": state is not None,
+            "last": {"at": state.backup_at.isoformat() if state and state.backup_at else None, "status": state.backup_status if state else "",
+                     "message": state.backup_message if state else ""}, "files": files}
 
 
 # ---- activity log (Settings > Logs) ---------------------------------------------------
