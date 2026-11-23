@@ -853,3 +853,9 @@ dialog#busy::backdrop { background: var(--bg); }
   .stat, [data-ui="glass"] .stat { padding: 10px 14px; }
   .stat b, [data-ui="glass"] .stat b { font-size: 26px; }
 }
+
+/* a new version is available: a dot by Settings (account menu) and by Updates */
+.has-dot { position: relative; }
+#miSettings.has-dot::after, .setnav a.has-dot::after, .setlinks a.has-dot .txt b::after {
+  content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-left: 8px; vertical-align: 1px; }
+#miSettings.has-dot::after { margin-left: auto; }
