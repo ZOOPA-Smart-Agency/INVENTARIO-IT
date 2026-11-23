@@ -1091,6 +1091,20 @@ def _logo_matches(kind, data):
         return False
 
 
+@endpoint("PUT", role="admin")
+def security_update(request, body):
+    """Settings > Device security: whether devices without disk encryption are shown as a problem."""
+    value = body.get("requireEncryption")
+    if not isinstance(value, bool):
+        raise ApiError("err_invalid")
+    s = m.AppSettings.load()
+    if value != s.require_encryption:
+        old, s.require_encryption = s.require_encryption, value
+        s.save(update_fields=["require_encryption"])
+        audit(request, "log_setting", {"xKey": "set_security", "ch": [["requireEncryption", old, value]]})
+    return {"settings": settings_json(s)}
+
+
 LOGO_SHAPES = ("", "app", "circle")
 
 

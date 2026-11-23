@@ -29,6 +29,7 @@ def settings_json(s=None):
         "currency": s.currency,
         "warrantyDays": s.warranty_days,
         "hostnameIsTag": s.hostname_is_tag,
+        "requireEncryption": s.require_encryption,
     }
 
 

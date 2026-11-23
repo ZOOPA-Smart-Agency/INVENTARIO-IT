@@ -39,6 +39,7 @@ urlpatterns = [
     path("api/settings/password-policy", api.password_policy_update),
     path("api/settings/logo", api.logo_update),
     path("api/settings/logo-shape", api.logo_shape_update),
+    path("api/settings/security", api.security_update),
     path("api/backup/export", api.backup_export),
     path("api/backup/inspect", api.backup_inspect),
     path("api/backup/restore", api.backup_restore),

@@ -246,3 +246,26 @@ class LogOrderTests(LogsBase):
         second = self.logs(before=first["events"][-1]["id"])
         ids = [e["id"] for e in first["events"] + second["events"]]
         self.assertEqual((len(ids), len(set(ids)), second["more"]), (150, 150, False))
+
+
+class DeviceSecurityTests(LogsBase):
+    def put(self, client, value):
+        return self.send(client, "put", "settings/security", {"requireEncryption": value})
+
+    def test_require_encryption(self):
+        from inventory.models import AppSettings
+        admin = self.client_for(self.admin)
+        self.assertTrue(admin.get("/api/state").json()["state"]["settings"]["requireEncryption"], "on unless turned off")
+        self.assertFalse(self.put(admin, False).json()["settings"]["requireEncryption"])
+        self.assertFalse(AppSettings.load().require_encryption)
+        self.assertEqual(self.last().args, {"xKey": "set_security", "ch": [["requireEncryption", True, False]]})
+        count = AuditEvent.objects.count()
+        self.put(admin, False)
+        self.assertEqual(AuditEvent.objects.count(), count, "no change, nothing recorded")
+        for bad in ("no", 0, None):
+            self.assertEqual(self.put(admin, bad).status_code, 400, bad)
+        self.assertEqual(self.put(self.client_for(self.tech), True).status_code, 403)
+        # the region form leaves it alone
+        from inventory.state import settings_json
+        self.send(admin, "put", "settings", {**settings_json(AppSettings.load()), "currency": "USD"})
+        self.assertFalse(AppSettings.load().require_encryption)

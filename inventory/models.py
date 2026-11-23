@@ -84,6 +84,8 @@ class AppSettings(models.Model):
     currency = models.CharField(max_length=3, default="EUR")
     warranty_days = models.PositiveIntegerField(default=90)
     hostname_is_tag = models.BooleanField(default=False)
+    # Devices without disk encryption are shown as a problem (Overview, the device's page); off: only noted.
+    require_encryption = models.BooleanField(default=True)
     # The activity log's largest size in MB (0: no limit); past it the oldest entries are deleted (see logsize.py).
     log_max_mb = models.PositiveIntegerField(default=0)
 
