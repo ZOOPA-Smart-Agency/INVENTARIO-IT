@@ -971,6 +971,13 @@ dl.kbd dt kbd { font: 600 12px/1 var(--f-mono, ui-monospace, monospace); border:
 .sharelist li:last-child { border-bottom: 0; }
 .sharelist li > span { min-width: 0; display: grid; }
 .sharelist small { color: var(--muted); font-size: 12.5px; overflow-wrap: anywhere; }
+/* Signed-in devices: icon, name with "This device", when; the sign-out button on the right */
+.sesslist li { justify-content: flex-start; }
+.sesslist .ssico { flex: none; width: 36px; height: 36px; border-radius: 10px; background: var(--surface-2); color: var(--accent); display: grid; place-items: center; }
+.sesslist .ssico svg.i { width: 20px; height: 20px; }
+.sesslist .sstxt { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.sesslist .sshead { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; }
+.sesslist li > .btn { flex: none; }
 .ok-note { background: var(--ok-bg) !important; color: var(--ink); }
 .histfeed time .t2 { display: block; font-size: 11.5px; color: var(--muted); }
 

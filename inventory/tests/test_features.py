@@ -121,6 +121,17 @@ class SessionTests(Base):
         self.send(a, "post", "logout")
         self.assertFalse(m.UserSession.objects.filter(user=self.tech).exists())
 
+    def test_sessions_from_before_are_listed(self):
+        """Browsers signed in before sessions were recorded show up once they load anything, not only after
+        signing in again."""
+        laptop, phone = self.sign_in("Mozilla/5.0 (Macintosh) Safari"), self.sign_in("Mozilla/5.0 (iPhone) Mobile Safari")
+        m.UserSession.objects.all().delete()  # as before the feature
+        cache.clear()
+        self.assertEqual(phone.get("/api/state").status_code, 200)
+        sessions = laptop.get("/api/account/sessions").json()["sessions"]
+        self.assertEqual(len(sessions), 2)
+        self.assertIn("iPhone", next(s for s in sessions if not s["current"])["agent"])
+
 
 class LeaverChecklistTests(Base):
     def test_ticks(self):

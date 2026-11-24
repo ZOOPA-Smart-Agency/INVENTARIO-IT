@@ -2533,10 +2533,18 @@ function agentName(ua) {
   return b && os ? t('ss_on', { b, o: os }) : (b || os || t('ss_unknown'));
 }
 function sessionsBody(list) {
-  const when = iso => { const d = new Date(iso); return `${fmt(iso.slice(0, 10))} ${d.toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' })}`; };
+  const day = iso => fmt(new Date(iso).toLocaleDateString('sv'));   // the local day (sv writes YYYY-MM-DD)
+  const when = iso => `${day(iso)} ${new Date(iso).toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' })}`;
+  const phone = ua => /iPhone|Android.*Mobile|Mobile.*Firefox|Windows Phone/.test(ua || '');
+  const icon = ua => phone(ua)
+    ? '<svg class="i" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>'
+    : '<svg class="i" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></svg>';
   const others = list.filter(x => !x.current);
-  return `<p class="muted" style="margin:0 0 12px;font-size:13.5px">${T('ss_d')}</p><ul class="sharelist">${list.map(x => `<li><span><b>${esc(agentName(x.agent))}</b>${x.current ? ` <span class="chip">${T('ss_this')}</span>` : ''}
-      <small>${x.ip ? esc(x.ip) + ' · ' : ''}${T('ss_last', { d: when(x.lastSeen) })} · ${T('ss_since', { d: fmt(x.createdAt.slice(0, 10)) })}</small></span>
+  return `<p class="muted" style="margin:0 0 12px;font-size:13.5px">${T('ss_d')}</p><ul class="sharelist sesslist">${list.map(x => `<li>
+      <span class="ssico">${icon(x.agent)}</span>
+      <span class="sstxt"><span class="sshead"><b>${esc(agentName(x.agent))}</b>${x.current ? `<span class="chip yes">${T('ss_this')}</span>` : ''}</span>
+        <small>${T('ss_last', { d: when(x.lastSeen) })}</small>
+        <small>${x.ip ? esc(x.ip) + ' · ' : ''}${T('ss_since', { d: day(x.createdAt) })}</small></span>
       ${x.current ? '' : `<button class="btn small danger" type="button" data-endsess="${esc(x.id)}">${T('ss_end')}</button>`}</li>`).join('')}</ul>
     ${others.length ? `<div class="row" style="margin-top:14px"><button class="btn danger" type="button" id="ssAll">${T('ss_end_all')}</button></div>` : `<p class="muted" style="margin:12px 0 0">${T('ss_only')}</p>`}`;
 }
