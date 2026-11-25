@@ -509,7 +509,7 @@ footer { color: var(--muted); font-size: 12.5px; padding-block: 0 32px; display:
 @media (max-width: 899px) {
   /* tab bar shifts left so the round button sits beside it, as in recent phone apps */
   html[data-ui="glass"] body.authed nav.tabs { left: calc(16px + env(safe-area-inset-left, 0px)); transform: none; }
-  [data-ui="glass"] #addWrap.fab { right: calc(max(4px, 16px - var(--sbw, 0px)) + env(safe-area-inset-right, 0px)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
+  [data-ui="glass"] #addWrap.fab { right: calc(max(4px, 16px - var(--sbw, 0px)) + env(safe-area-inset-right, 0px)); bottom: calc(15.5px + env(safe-area-inset-bottom, 0px)); }   /* centred on the 67 px bar */
   [data-ui="glass"] body.authed #addWrap.fab .addbtn { width: 60px; height: 60px; }
 }
 /* phones: device and employee tables become list rows */
@@ -577,14 +577,20 @@ footer { color: var(--muted); font-size: 12.5px; padding-block: 0 32px; display:
 /* phones and tablets: floating tab bar at the bottom */
 @media (max-width: 899px) {
   [data-ui="glass"] body.authed header.top { -webkit-backdrop-filter: none; backdrop-filter: none; background: transparent; }
-  [data-ui="glass"] body.authed header.top::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--surface); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%); }
+  /* frosted only once the page is scrolled under it (html.scrolled); it also covers the status bar strip above */
+  [data-ui="glass"] body.authed header.top { border-bottom-color: transparent; transition: border-color 0.2s; }
+  [data-ui="glass"] body.authed header.top::before { content: ""; position: absolute; inset: calc(-1 * env(safe-area-inset-top, 0px)) 0 0 0; z-index: -1; background: var(--surface); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%); opacity: 0; transition: opacity 0.2s; }
+  html.scrolled[data-ui="glass"] body.authed header.top { border-bottom-color: var(--line); }
+  html.scrolled[data-ui="glass"] body.authed header.top::before { opacity: 1; }
   [data-ui="glass"] body.authed nav.tabs { position: fixed; z-index: 8; left: 50%; transform: translateX(-50%); bottom: calc(12px + env(safe-area-inset-bottom, 0px));
     flex-wrap: nowrap; align-items: center; gap: 2px; padding: 6px; border-radius: 999px; background: var(--sheet); border: 1px solid var(--edge);
     box-shadow: inset 0 1px 0 var(--hl), 0 14px 36px rgba(0, 0, 0, 0.2); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%); }
   [data-ui="glass"] body.authed nav.tabs > a { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 16px; font-size: 11px; font-weight: 600; color: var(--muted); border-radius: 999px; }
   [data-ui="glass"] body.authed nav.tabs > a .navi { width: 23px; height: 23px; }
   /* administrators have a fourth tab (Activity): tighter, and the bar stops short of the round + button */
-  [data-ui="glass"] body.authed nav.tabs:has(> #tabActivity:not([hidden])) { max-width: calc(100vw - 32px - 60px - 10px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)); }
+  /* the bar fills the row up to the round + button, leaving the same 12 px gap at any number of tabs */
+  [data-ui="glass"] body.authed nav.tabs { width: min(440px, calc(100vw - 32px - 60px - 12px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px))); }
+  [data-ui="glass"] body.authed nav.tabs > a { flex: 1 1 auto; min-width: 0; }
   [data-ui="glass"] body.authed nav.tabs:has(> #tabActivity:not([hidden])) > a { flex: 1 1 auto; min-width: 0; padding: 6px 7px; font-size: 10.5px; }
   [data-ui="glass"] body.authed nav.tabs:has(> #tabActivity:not([hidden])) > a span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   [data-ui="glass"] body.authed nav.tabs.has-ind > a.on { color: var(--accent); background: transparent; box-shadow: none; }
@@ -931,7 +937,7 @@ header.top .wrap > .qsbtn:not([hidden]) ~ .prefs { margin-left: 0; }
   [data-ui="glass"] body.authed header.top .wrap > nav.tabs { order: 2; }
   [data-ui="glass"] body.authed .qsbtn kbd { margin-left: auto; }
 }
-@media (max-width: 899px) { .qsbtn .qslbl, .qsbtn kbd { display: none; } .qsbtn { padding: 8px; } }
+@media (max-width: 899px) { .qsbtn .qslbl, .qsbtn kbd { display: none; } .qsbtn { padding: 8px; justify-content: center; } }   /* icon only: keep it in the middle when touch screens widen the button */
 dialog.qs { padding: 0; border: 0; background: transparent; width: min(560px, calc(100vw - 24px)); margin: 10vh auto auto; max-height: min(75vh, calc(var(--vvh) - 16px)); }
 dialog.qs::backdrop { background: rgba(10, 12, 20, 0.45); }
 .qsbox { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35); overflow: hidden; display: flex; flex-direction: column; max-height: min(75vh, calc(var(--vvh) - 16px)); }
@@ -1081,3 +1087,11 @@ label.check { display: flex; align-items: center; gap: 10px; color: var(--ink); 
 /* the sign-in page on phones: the header (language, theme, design) scrolls away with the page instead of staying
    pinned, so with the keyboard up there is room for the form */
 @media (max-width: 600px) { body:not(.authed) header.top { position: static; margin-top: env(safe-area-inset-top, 0px); } }   /* the pinned header kept itself clear of the status bar; now the margin does */
+/* pull to refresh (home-screen app): a round arrow drops in below the header, and spins while reloading */
+#ptr { position: fixed; z-index: 6; left: 50%; top: 70px; width: 38px; height: 38px; margin-left: -19px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--sheet, var(--surface)); border: 1px solid var(--line); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); color: var(--muted); opacity: 0; transform: translateY(-40px) scale(0.6); pointer-events: none; }
+#ptr svg.i { width: 19px; height: 19px; stroke-width: 2.2; }
+#ptr.ready, #ptr.spin { color: var(--accent); }
+#ptr.back { transition: transform 0.3s var(--ease-out, ease-out), opacity 0.2s; }
+#ptr.spin svg.i { animation: ptrspin 0.8s linear infinite; }
+@keyframes ptrspin { to { transform: rotate(360deg); } }

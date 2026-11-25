@@ -2610,6 +2610,68 @@ $('#miPhoto').onclick = () => {
   }, 120));
 })();
 
+/* the phone header turns frosted only once something has scrolled under it */
+(function trackScrolled() {
+  const root = document.documentElement;
+  const apply = () => root.classList.toggle('scrolled', window.scrollY > 2);
+  window.addEventListener('scroll', apply, { passive: true });
+  apply();
+})();
+
+/* ================= pull to refresh (home-screen app) =================
+   Safari has its own, but the app added to the home screen has none. Pulling down from the top of a page that has a
+   reload button does what that button does; pages without one (forms in Settings) are left alone, as are open windows
+   and anything while the keyboard is up. */
+(function pullToRefresh() {
+  if (!matchMedia('(pointer: coarse)').matches) return;
+  const el = document.createElement('div');
+  el.id = 'ptr'; el.setAttribute('aria-hidden', 'true');
+  el.innerHTML = '<svg class="i" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>';
+  document.body.appendChild(el);
+  const READY = 70, MAX = 120;
+  let y0 = null, x0 = 0, d = 0, busy = false;
+  const button = () => document.body.classList.contains('authed') && !document.querySelector('dialog[open]')
+    && !document.documentElement.classList.contains('kbd') ? view.querySelector('[data-reload]:not(:disabled)') : null;
+  const show = () => {
+    const p = Math.min(1, d / READY);
+    el.style.opacity = String(p);
+    el.style.transform = `translateY(${Math.min(d, MAX) * 0.6 - 40}px) rotate(${Math.round(d * 3)}deg) scale(${0.6 + 0.4 * p})`;
+    el.classList.toggle('ready', d >= READY);
+  };
+  const reset = () => { el.classList.add('back'); el.classList.remove('ready', 'spin'); el.style.opacity = '0'; el.style.transform = ''; d = 0; };
+  el.addEventListener('transitionend', () => { if (!el.classList.contains('spin')) el.classList.remove('back'); });
+  document.addEventListener('touchstart', e => {
+    y0 = null;
+    if (busy || e.touches.length !== 1 || window.scrollY > 0 || !runningInstalled() || !button()) return;
+    if (e.target.closest('dialog, input, textarea, select, [contenteditable="true"]')) return;
+    y0 = e.touches[0].clientY; x0 = e.touches[0].clientX; d = 0;
+    const h = document.querySelector('header.top');
+    el.classList.remove('back');
+    el.style.top = Math.round((h ? Math.max(0, h.getBoundingClientRect().bottom) : 0) + 10) + 'px';
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (y0 === null) return;
+    const t = e.touches[0], dy = t.clientY - y0, dx = Math.abs(t.clientX - x0);
+    if (d === 0 && (dy <= 0 || dx > dy)) { if (dy < 0 || dx > 10) y0 = null; return; }   // going up or sideways: not a pull
+    if (window.scrollY > 0) { y0 = null; reset(); return; }
+    e.preventDefault();   // instead of the rubber-band bounce, which would drag the header away from the arrow
+    d = dy * 0.55;
+    show();
+  }, { passive: false });
+  const end = e => {
+    if (y0 === null) return;
+    y0 = null;
+    const btn = e.type === 'touchend' && d >= READY ? button() : null;
+    if (!btn) { reset(); return; }
+    busy = true;
+    el.classList.add('back', 'spin'); el.classList.remove('ready');
+    el.style.opacity = '1'; el.style.transform = 'translateY(6px)';
+    reloadNow(btn).finally(() => { busy = false; reset(); });
+  };
+  document.addEventListener('touchend', end);
+  document.addEventListener('touchcancel', end);
+})();
+
 /* ================= tooltips ================= */
 function showTip(target) {
   const tip = $('#tip'); tip.textContent = target.dataset.tip; tip.hidden = false;
