@@ -2574,6 +2574,42 @@ $('#miPhoto').onclick = () => {
   bindPhoto();
 };
 
+/* ================= on-screen keyboard (iPhone) =================
+   Safari on iPhone does not shrink the page when the keyboard comes up, it covers it. This keeps --vvh (visible
+   height), --vvtop (how far Safari has moved the view) and --kb (height covered by the keyboard) up to date, so the
+   windows sit above the keyboard, and sets html.kbd while it is up so the floating bars get out of the way. */
+(function trackViewport() {
+  const vv = window.visualViewport;
+  if (!vv) return;
+  const root = document.documentElement;
+  let raf = 0;
+  const apply = () => {
+    raf = 0;
+    if (vv.scale > 1.01) {   // pinch-zoomed by the person: the measurements are about the zoom, not the keyboard
+      ['--vvh', '--vvtop', '--kb'].forEach(p => root.style.removeProperty(p));
+      root.classList.remove('kbd');
+      return;
+    }
+    const kb = Math.max(0, Math.round(root.clientHeight - vv.height - vv.offsetTop));
+    root.style.setProperty('--vvh', Math.round(vv.height) + 'px');
+    root.style.setProperty('--vvtop', Math.max(0, Math.round(vv.offsetTop)) + 'px');
+    root.style.setProperty('--kb', kb + 'px');
+    root.classList.toggle('kbd', kb > 120);   // smaller gaps are Safari's toolbars, not a keyboard
+  };
+  const later = () => { if (!raf) raf = requestAnimationFrame(apply); };
+  vv.addEventListener('resize', later);
+  vv.addEventListener('scroll', later);
+  apply();
+  // home-screen app on iPhone: when the keyboard goes away the page can stay pushed up, with an empty band at the
+  // bottom, until it is scrolled. Once no field has the focus any more, nudge it back into place.
+  if (matchMedia('(pointer: coarse)').matches) document.addEventListener('focusout', () => setTimeout(() => {
+    const a = document.activeElement;
+    if (a && a.matches && a.matches('input, select, textarea, [contenteditable="true"]')) return;   // moved to the next field
+    window.scrollBy(0, 1); window.scrollBy(0, -1);   // a real scroll makes Safari lay the page out again
+    later();
+  }, 120));
+})();
+
 /* ================= tooltips ================= */
 function showTip(target) {
   const tip = $('#tip'); tip.textContent = target.dataset.tip; tip.hidden = false;
@@ -3736,6 +3772,20 @@ function labelTables(root) {
 }
 // observers run right after the change, before the screen is drawn: the cards show from the first frame
 for (const root of [view, $('#dlgBody')]) new MutationObserver(() => labelTables(root)).observe(root, { childList: true, subtree: true });
+/* phone keyboards: no autocorrect on one-line fields (it turns serial numbers, hostnames and emails into words), and
+   no automatic capital on fields that hold codes and addresses. Names keep their capital; notes (textareas) keep
+   autocorrect. Fields that say otherwise themselves are left alone. */
+const CODE_FIELD = /(^|-)(tag|serial|host|hostname|nicmac|mac|code|email|username|login|prefix|url|cert|match|oclp|ip)/i;
+function tuneFields(root) {
+  root.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([data-tuned])').forEach(i => {
+    i.dataset.tuned = '';
+    if (!i.hasAttribute('autocorrect')) i.setAttribute('autocorrect', 'off');
+    if (!i.hasAttribute('spellcheck')) i.spellcheck = false;
+    if (!i.hasAttribute('autocapitalize') && (i.type === 'email' || i.type === 'url' || CODE_FIELD.test(i.id || i.name || ''))) i.setAttribute('autocapitalize', 'none');
+  });
+}
+tuneFields(document.body);
+new MutationObserver(() => tuneFields(document.body)).observe(document.body, { childList: true, subtree: true });
 view.addEventListener('click', ev => {
   const ig = ev.target.closest('[data-ignore]');
   if (ig) { if (can('edit')) ignoreCheck(ig.dataset.id, ig.dataset.ignore); return; }

@@ -28,6 +28,9 @@
   --mute: #a6ada9; --mute-bg: #2a302d; --scrim: rgba(0, 0, 0, 0.6); color-scheme: dark;
 }
 * { box-sizing: border-box; }
+/* the visible height: the page script keeps it to the part of the screen not covered by the keyboard (iPhone) */
+:root { --vvh: 100vh; --vvtop: 0px; --kb: 0px; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+@supports (height: 100dvh) { :root { --vvh: 100dvh; } }
 [hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 14.5px; line-height: 1.5; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
@@ -285,7 +288,7 @@ dl.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
 .demo button:hover { border-color: var(--accent); }
 .demo button small { color: var(--muted); }
 
-dialog { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); padding: 0; width: min(580px, calc(100vw - 32px)); max-height: calc(100vh - 48px); }
+dialog { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); padding: 0; width: min(580px, calc(100vw - 32px)); max-height: calc(var(--vvh) - 48px); }
 dialog.small { width: min(440px, calc(100vw - 32px)); }
 dialog::backdrop { background: var(--scrim); }
 dialog form { display: grid; gap: 16px; padding: 20px; }
@@ -469,7 +472,7 @@ footer { color: var(--muted); font-size: 12.5px; padding-block: 0 32px; display:
 @keyframes toastLift { to { opacity: 0; transform: translate(-50%, -16px) scale(0.9); } }
 /* sheets: title bar with Cancel and the action at either side */
 [data-ui="glass"] dialog { overflow: hidden; }
-[data-ui="glass"] dialog form { display: flex; flex-direction: column; position: relative; gap: 0; padding: 0; max-height: calc(100vh - 48px); }
+[data-ui="glass"] dialog form { display: flex; flex-direction: column; position: relative; gap: 0; padding: 0; max-height: calc(var(--vvh) - 48px); }
 [data-ui="glass"] dialog h2 { box-sizing: border-box; flex: none; height: 60px; margin: 0; padding: 0 196px; line-height: 60px; text-align: center; font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 600px) { [data-ui="glass"] dialog h2 { height: auto; line-height: 1.3; padding: 60px 20px 14px; text-align: left; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; white-space: normal; } }
 [data-ui="glass"] dialog .dlg-actions { display: contents; }
@@ -929,9 +932,9 @@ header.top .wrap > .qsbtn:not([hidden]) ~ .prefs { margin-left: 0; }
   [data-ui="glass"] body.authed .qsbtn kbd { margin-left: auto; }
 }
 @media (max-width: 899px) { .qsbtn .qslbl, .qsbtn kbd { display: none; } .qsbtn { padding: 8px; } }
-dialog.qs { padding: 0; border: 0; background: transparent; width: min(560px, calc(100vw - 24px)); margin: 10vh auto auto; max-height: 75vh; }
+dialog.qs { padding: 0; border: 0; background: transparent; width: min(560px, calc(100vw - 24px)); margin: 10vh auto auto; max-height: min(75vh, calc(var(--vvh) - 16px)); }
 dialog.qs::backdrop { background: rgba(10, 12, 20, 0.45); }
-.qsbox { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35); overflow: hidden; display: flex; flex-direction: column; max-height: 75vh; }
+.qsbox { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35); overflow: hidden; display: flex; flex-direction: column; max-height: min(75vh, calc(var(--vvh) - 16px)); }
 [data-ui="glass"] .qsbox { background: var(--sheet); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%); border-radius: 20px; }
 .qsfield { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
 .qsfield svg.i { width: 18px; height: 18px; color: var(--muted); flex: none; }
@@ -943,7 +946,7 @@ dialog.qs::backdrop { background: rgba(10, 12, 20, 0.45); }
 .qsitem.on { background: color-mix(in srgb, var(--accent) 14%, transparent); }
 .qsnone { padding: 14px; color: var(--muted); }
 .qshint { margin: 0; padding: 8px 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
-@media (max-width: 600px) { .qshint { display: none; } dialog.qs { margin-top: 8px; } }
+@media (max-width: 600px) { .qshint { display: none; } dialog.qs { margin-top: calc(var(--vvtop) + 8px); } }
 dl.kbd dt kbd { font: 600 12px/1 var(--f-mono, ui-monospace, monospace); border: 1px solid var(--line); border-radius: 6px; padding: 4px 7px; }
 /* recently viewed (Overview) */
 .recent { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -4px 0 4px; font-size: 13px; }
@@ -1057,3 +1060,24 @@ label.check { display: flex; align-items: center; gap: 10px; color: var(--ink); 
   .setnav { max-height: calc(100vh - 104px - env(safe-area-inset-top, 0px)); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
   [data-ui="glass"] body.authed .setnav { max-height: calc(100vh - 150px); }   /* fits from where it starts, under the page title */
 }
+
+/* ---- iPhone: zoom and the on-screen keyboard ---- */
+/* Safari on iPhone zooms in on any field whose text is under 16px, and stays zoomed after: on touch screens
+   fields use 16px (pinch zoom still works) */
+@media (pointer: coarse) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), select, textarea { font-size: 16px !important; }
+}
+@media (max-width: 600px) {
+  /* a window (bottom sheet) sits on top of the keyboard and fits the part of the screen left visible, instead of
+     going under the keyboard and making Safari push the whole page around */
+  [data-ui="glass"] dialog:not(.qs):not(#busy) { inset: var(--vvtop) 0 var(--kb) 0; max-height: calc(var(--vvh) - 12px); }
+  [data-ui="glass"] dialog:not(.qs):not(#busy) form { max-height: calc(var(--vvh) - 12px); }
+  html.kbd[data-ui="glass"] dialog { padding-bottom: 0; }   /* no home-bar gap above the keyboard */
+}
+/* while the keyboard is up, the floating tab bar and add button would sit over the field being typed in */
+@media (max-width: 899px) {
+  html.kbd[data-ui="glass"] body.authed nav.tabs, html.kbd[data-ui="glass"] #addWrap.fab { display: none !important; }
+}
+/* the sign-in page on phones: the header (language, theme, design) scrolls away with the page instead of staying
+   pinned, so with the keyboard up there is room for the form */
+@media (max-width: 600px) { body:not(.authed) header.top { position: static; margin-top: env(safe-area-inset-top, 0px); } }   /* the pinned header kept itself clear of the status bar; now the margin does */
