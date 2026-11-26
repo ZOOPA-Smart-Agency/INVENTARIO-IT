@@ -41,6 +41,8 @@ urlpatterns = [
     path("api/account/sessions/<int:pk>", api.account_session_end),
     path("api/backups/auto", api.backups_auto),
     path("api/incidents/<int:pk>/resolve", api.incident_resolve),
+    path("api/incidents/<int:pk>", api.incident_detail),
+    path("api/assignments/<int:pk>", api.assignment_detail),
     path("api/employees", api.employee_create),
     path("api/employees/<int:pk>", api.employee_update),
     path("api/employees/<int:pk>/status", api.employee_status),

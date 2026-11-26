@@ -158,6 +158,17 @@ created: '{tag} añadido', edit_title: 'Editar {tag}', saved: 'Cambios guardados
     log_created: '{tag} dado de alta en el inventario', log_edited: '{tag}: datos actualizados', log_assigned: '{tag} asignado a {name}', log_loan: '{tag} asignado a {name} (préstamo)',
     log_returned: '{name} devolvió {tag} ({cond})', log_incident: 'Incidencia registrada en {tag}: {desc}', log_repair: '{tag} enviado a reparación: {desc}', log_resolved: 'Incidencia de {tag} resuelta',
     log_status: a => `${a.tag} pasa a «${a.st}»${a.reason ? ': ' + a.reason : ''}`, log_left: a => `${a.name} ha dejado la empresa${a.tags ? '. Pendiente recuperar ' + a.tags : ''}`,
+    err_asg_overlap: 'Esas fechas se solapan con otra asignación de este equipo.', edit_dates: 'Cambiar fechas', th_actions: 'Acciones',
+    asg_edit_title: 'Asignación de {tag} a {name}', asg_open_note: 'Todavía lo tiene: la fecha de fin se pone al devolverlo.', dates_saved: 'Fechas cambiadas',
+    asg_del_title: '¿Eliminar esta asignación?', asg_del_q: a => `${a.name} ${a.to ? 'tuvo' : 'tiene'} ${a.tag} desde el ${a.from}${a.to ? ' hasta el ' + a.to : ''}. Se quitará del historial del equipo y de la persona. El registro de actividad guardará una nota. No se puede deshacer.`,
+    asg_del_cur: 'Todavía lo tiene: el equipo pasará a disponible.', asg_deleted: 'Asignación eliminada',
+    inc_edit_title: 'Avería de {tag}', inc_del_title: '¿Eliminar esta avería?', inc_del_q: a => `«${a.desc}» (${a.date}) se quitará del historial del equipo y de sus gastos de reparación. El registro de actividad guardará una nota. No se puede deshacer.`,
+    inc_del_open: 'Es la única avería abierta: el equipo volverá a estar operativo.', inc_deleted: 'Avería eliminada',
+    lc_desde: 'desde', lc_hasta: 'hasta', lc_fecha: 'fecha', lc_resuelta: 'resuelta',
+    log_asg_edited: '{tag}: fechas de la asignación a {name} cambiadas', log_asg_edited_ch: '{tag}: asignación a {name} corregida: {ch}',
+    log_asg_deleted: a => `${a.tag}: eliminada la asignación a ${a.name} (${fmt(a.from)} – ${a.to ? fmt(a.to) : 'actual'})`,
+    log_inc_edited: '{tag}: avería «{desc}» corregida', log_inc_edited_ch: '{tag}: avería «{desc}» corregida: {ch}',
+    log_inc_deleted: a => `${a.tag}: eliminada la avería del ${fmt(a.date)}: ${a.desc}`,
     log_disposed: '{tag} descartado y entregado a gestor RAEE', log_setting: 'Ajustes: {x}',
     es_activo: 'Activo',
     es_baja: 'Baja temporal',
@@ -448,6 +459,17 @@ created: '{tag} added', edit_title: 'Edit {tag}', saved: 'Changes saved',
     log_created: '{tag} added to the inventory', log_edited: '{tag}: details updated', log_assigned: '{tag} assigned to {name}', log_loan: '{tag} assigned to {name} (loan)',
     log_returned: '{name} returned {tag} ({cond})', log_incident: 'Fault logged on {tag}: {desc}', log_repair: '{tag} sent for repair: {desc}', log_resolved: 'Fault on {tag} resolved',
     log_status: a => `${a.tag} set to “${a.st}”${a.reason ? ': ' + a.reason : ''}`, log_left: a => `${a.name} left the company${a.tags ? '. Still to recover: ' + a.tags : ''}`,
+    err_asg_overlap: 'Those dates overlap another time this device was assigned.', edit_dates: 'Change dates', th_actions: 'Actions',
+    asg_edit_title: 'Assignment of {tag} to {name}', asg_open_note: 'They still have it: the end date is set when it is returned.', dates_saved: 'Dates changed',
+    asg_del_title: 'Delete this assignment?', asg_del_q: a => `${a.name} ${a.to ? 'had' : 'has had'} ${a.tag} since ${a.from}${a.to ? ' until ' + a.to : ''}. It will be removed from the device’s and the person’s history. The activity log will keep a note of it. This cannot be undone.`,
+    asg_del_cur: 'They still have it: the device will show as available.', asg_deleted: 'Assignment deleted',
+    inc_edit_title: 'Fault on {tag}', inc_del_title: 'Delete this fault?', inc_del_q: a => `“${a.desc}” (${a.date}) will be removed from the device’s history and its repair costs. The activity log will keep a note of it. This cannot be undone.`,
+    inc_del_open: 'It is the only open fault: the device will be usable again.', inc_deleted: 'Fault deleted',
+    lc_desde: 'from', lc_hasta: 'to', lc_fecha: 'date', lc_resuelta: 'resolved',
+    log_asg_edited: '{tag}: dates of the assignment to {name} changed', log_asg_edited_ch: '{tag}: assignment to {name} corrected: {ch}',
+    log_asg_deleted: a => `${a.tag}: assignment to ${a.name} deleted (${fmt(a.from)} – ${a.to ? fmt(a.to) : 'now'})`,
+    log_inc_edited: '{tag}: fault “{desc}” corrected', log_inc_edited_ch: '{tag}: fault “{desc}” corrected: {ch}',
+    log_inc_deleted: a => `${a.tag}: fault of ${fmt(a.date)} deleted: ${a.desc}`,
     log_disposed: '{tag} retired and handed to a WEEE recycler', log_setting: 'Settings: {x}',
     es_activo: 'Active',
     es_baja: 'Temporary leave',
@@ -739,6 +761,17 @@ created: '{tag} afegit', edit_title: 'Edita {tag}', saved: 'Canvis desats',
     log_created: '{tag} donat d’alta a l’inventari', log_edited: '{tag}: dades actualitzades', log_assigned: '{tag} assignat a {name}', log_loan: '{tag} assignat a {name} (préstec)',
     log_returned: '{name} ha retornat {tag} ({cond})', log_incident: 'Incidència registrada a {tag}: {desc}', log_repair: '{tag} enviat a reparar: {desc}', log_resolved: 'Incidència de {tag} resolta',
     log_status: a => `${a.tag} passa a «${a.st}»${a.reason ? ': ' + a.reason : ''}`, log_left: a => `${a.name} ha deixat l’empresa${a.tags ? '. Pendent de recuperar ' + a.tags : ''}`,
+    err_asg_overlap: 'Aquestes dates se superposen amb una altra assignació d’aquest equip.', edit_dates: 'Canvia les dates', th_actions: 'Accions',
+    asg_edit_title: 'Assignació de {tag} a {name}', asg_open_note: 'Encara el té: la data de fi es posa en retornar-lo.', dates_saved: 'Dates canviades',
+    asg_del_title: 'Vols eliminar aquesta assignació?', asg_del_q: a => `${a.name} ${a.to ? 'va tenir' : 'té'} ${a.tag} des del ${a.from}${a.to ? ' fins al ' + a.to : ''}. Es traurà de l’historial de l’equip i de la persona. El registre d’activitat en guardarà una nota. No es pot desfer.`,
+    asg_del_cur: 'Encara el té: l’equip passarà a disponible.', asg_deleted: 'Assignació eliminada',
+    inc_edit_title: 'Avaria de {tag}', inc_del_title: 'Vols eliminar aquesta avaria?', inc_del_q: a => `«${a.desc}» (${a.date}) es traurà de l’historial de l’equip i dels seus costos de reparació. El registre d’activitat en guardarà una nota. No es pot desfer.`,
+    inc_del_open: 'És l’única avaria oberta: l’equip tornarà a estar operatiu.', inc_deleted: 'Avaria eliminada',
+    lc_desde: 'des de', lc_hasta: 'fins a', lc_fecha: 'data', lc_resuelta: 'resolta',
+    log_asg_edited: '{tag}: dates de l’assignació a {name} canviades', log_asg_edited_ch: '{tag}: assignació a {name} corregida: {ch}',
+    log_asg_deleted: a => `${a.tag}: eliminada l’assignació a ${a.name} (${fmt(a.from)} – ${a.to ? fmt(a.to) : 'actual'})`,
+    log_inc_edited: '{tag}: avaria «{desc}» corregida', log_inc_edited_ch: '{tag}: avaria «{desc}» corregida: {ch}',
+    log_inc_deleted: a => `${a.tag}: eliminada l’avaria del ${fmt(a.date)}: ${a.desc}`,
     log_disposed: '{tag} retirat i lliurat a un gestor de RAEE', log_setting: 'Configuració: {x}',
     es_activo: 'Actiu',
     es_baja: 'Baixa temporal',
@@ -1056,6 +1089,7 @@ function chVal(f, v) {
   if (f === 'logMax') return v ? fmtBytes(v * 1048576) : t('lg_limit_ph');
   if (f === 'autoHour' || f === 'autoBackupHour') return String(v).padStart(2, '0') + ':00';
   if (f === 'logoShape') return t('shape_' + (v || ''));
+  if (['desde', 'hasta', 'fecha', 'resuelta'].includes(f)) return fmt(v);
   if (f === 'typeId') return listName('types', v) || String(v);
   if (f === 'distroId') return listName('linuxDistros', v) || String(v);
   return String(tx(v));
@@ -1372,6 +1406,8 @@ $('#dlg2Form').addEventListener('submit', async e => {
 });
 const opts = (list, sel) => list.map(o => { const [val, lab] = Array.isArray(o) ? o : [o, o]; return `<option value="${esc(val)}"${val === sel ? ' selected' : ''}>${esc(lab)}</option>`; }).join('');
 const kopts = (keys, fn, sel) => opts(keys.map(k => [k, fn(k)]), sel);
+const EDIT_SVG = '<svg class="i" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>';
+const BIN_SVG = '<svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
 const PLUS_SVG = '<svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
 /* a select with a + button that opens a quick-add form for that list */
 function selPlus(kind, name, id, optionsHtml, nested) {
@@ -2896,10 +2932,11 @@ function drawBulkBar() {
   const bar = $('#bulkBar'); if (!bar) return;
   bar.hidden = !SEL.size;
   if (!SEL.size) return;
-  bar.innerHTML = `<b>${T('bulk_n', { n: SEL.size })}</b><div class="row">
+  // on phones the ✕ comes first, beside the count, where it is easy to find; wider screens have the labelled button at the end
+  bar.innerHTML = `<div class="bulkcount"><button class="iconbtn bclr-s" type="button" data-bulk="clear" aria-label="${T('bulk_clear')}" title="${T('bulk_clear')}">${TRASH_SVG}</button><b>${T('bulk_n', { n: SEL.size })}</b></div><div class="row">
     <button class="btn small primary" type="button" data-bulk="status"><span class="lng">${T('bulk_status')}</span><span class="sht">${T('bulk_status_s')}</span></button>
     <button class="btn small" type="button" data-bulk="loc"><span class="lng">${T('bulk_loc')}</span><span class="sht">${T('bulk_loc_s')}</span></button>
-    <button class="btn small" type="button" data-bulk="clear" aria-label="${T('bulk_clear')}" title="${T('bulk_clear')}"><span class="lng">${T('bulk_clear')}</span><span class="sht" aria-hidden="true">✕</span></button></div>`;
+    <button class="btn small bclr-l" type="button" data-bulk="clear">${T('bulk_clear')}</button></div>`;
 }
 /* runs a bulk change and says how it went: how many changed, and which were left as they were and why */
 async function runBulk(body) {
@@ -2945,8 +2982,11 @@ function viewDevice(id) {
   const hist = S.assignments.filter(x => x.deviceId === d.id).sort((x, y) => y.desde.localeCompare(x.desde));
   const incs = S.incidents.filter(x => x.deviceId === d.id).sort((x, y) => y.fecha.localeCompare(x.fecha));
   const gasto = incs.reduce((s, i) => s + (Number(i.coste) || 0), 0);
-  const retired = isRetired(d), ed = can('edit');
+  const retired = isRetired(d), ed = can('edit'), adm = can('admin');
   const dash = '<span class="muted">—</span>';
+  // administrators can correct the dates of a hand-over or a fault, or delete it (both ask first)
+  const fixCell = (edit, del, id) => adm ? `<td class="rowacts"><div class="row"><button class="iconbtn" type="button" data-act="${edit}" data-id="${id}" aria-label="${T('edit_dates')}" title="${T('edit_dates')}">${EDIT_SVG}</button><button class="iconbtn" type="button" data-act="${del}" data-id="${id}" aria-label="${T('delete')}" title="${T('delete')}">${BIN_SVG}</button></div></td>` : '';
+  const fixHead = adm ? `<th><span class="sr">${T('th_actions')}</span></th>` : '';
   const chip = (txt, cls = '') => txt ? `<span class="chip ${cls}">${esc(txt)}</span>` : '';
   const sub = txt => txt ? `<span class="muted" style="display:block;font-size:12.5px">${esc(txt)}</span>` : '';
   const modules = d.ramRep === 'yes' && has(d.ramModules) && has(d.ramModSize) ? `${d.ramModules} × ${withUnit(d.ramModSize, d.ramModUnit)}` : '';
@@ -3008,17 +3048,17 @@ function viewDevice(id) {
   ${tx(d.notas) ? `<section class="panel"><h2>${T('notes')}</h2><p style="margin:0;white-space:pre-line">${esc(tx(d.notas))}</p></section>` : ''}
   <div class="dtabs" role="tablist" aria-label="${T('user_hist')}">${[['hist', T('user_hist'), hist.length], ['faults', T('inc_hist'), incs.length], ['log', T('hist_title'), '']].map(([k, lab, n]) => `<button type="button" role="tab" class="dtab${DTAB === k ? ' on' : ''}" aria-selected="${DTAB === k}" data-dtab="${k}">${lab}${n !== '' ? ` <span class="muted">${n}</span>` : ''}</button>`).join('')}</div>
   <section class="panel dpanel" data-dpanel="hist"${DTAB === 'hist' ? '' : ' hidden'}><h2>${T('user_hist')}</h2>
-    ${hist.length ? `<div class="tablebox"><table><thead><tr><th>${T('th_person')}</th><th>${T('th_from')}</th><th>${T('th_to')}</th><th>${T('th_dur')}</th><th>${T('th_faults')}</th><th>${T('th_handover')}</th></tr></thead><tbody>
+    ${hist.length ? `<div class="tablebox"><table><thead><tr><th>${T('th_person')}</th><th>${T('th_from')}</th><th>${T('th_to')}</th><th>${T('th_dur')}</th><th>${T('th_faults')}</th><th>${T('th_handover')}</th>${fixHead}</tr></thead><tbody>
       ${hist.map(h => { const fs = faultsIn(d.id, h.desde, h.hasta); return `<tr><td>${holderCell(h)}</td><td>${fmt(h.desde)}</td><td>${h.hasta ? fmt(h.hasta) : `<b>${T('current_lbl')}</b>`}</td><td>${esc(age(h.desde, h.hasta))}</td>
         <td>${fs.length ? `<b>${fs.length}</b>${fs.map(f => `<span class="t2">${fmt(f.fecha)} · ${esc(tx(f.descripcion))}</span>`).join('')}` : dash}</td>
-        <td>${esc(tx(h.notas)) || dash}${h.condicion ? `<span class="t2">${T('returned_cond', { c: cd(h.condicion) })}</span>` : ''}</td></tr>`; }).join('')}
+        <td>${esc(tx(h.notas)) || dash}${h.condicion ? `<span class="t2">${T('returned_cond', { c: cd(h.condicion) })}</span>` : ''}</td>${fixCell('editarAsg', 'borrarAsg', h.id)}</tr>`; }).join('')}
     </tbody></table></div>` : `<p class="muted">${T('never_assigned')}</p>`}
   </section>
   <section class="panel dpanel" data-dpanel="faults"${DTAB === 'faults' ? '' : ' hidden'}><h2>${T('inc_hist')}</h2>
-    ${incs.length ? `<div class="tablebox"><table><thead><tr><th>${T('th_date')}</th><th>${T('th_kind')}</th><th>${T('th_desc')}</th><th>${T('th_holder')}</th><th>${T('th_parts')}</th><th>${T('th_cost')}</th><th>${T('th_status')}</th></tr></thead><tbody>
+    ${incs.length ? `<div class="tablebox"><table><thead><tr><th>${T('th_date')}</th><th>${T('th_kind')}</th><th>${T('th_desc')}</th><th>${T('th_holder')}</th><th>${T('th_parts')}</th><th>${T('th_cost')}</th><th>${T('th_status')}</th>${fixHead}</tr></thead><tbody>
       ${incs.map(i => { const h = holderAt(d.id, i.fecha), p = h && !h.deptId && emp(h.employeeId); return `<tr><td>${fmt(i.fecha)}</td><td>${esc(itp(i.tipo))}</td><td>${esc(tx(i.descripcion))}${tx(i.proveedor) ? `<span class="t2">${esc(tx(i.proveedor))}</span>` : ''}</td>
         <td>${p ? `<a href="#empleado-${p.id}">${esc(p.nombre)}</a>` : h?.deptId ? esc(deptName(h.deptId)) : `<span class="muted">${T('nobody')}</span>`}</td><td>${esc(tx(i.piezas)) || dash}</td><td>${money(i.coste)}</td>
-        <td>${i.estado === 'abierta' ? `<div class="row">${pill('abierta', t('open'))}${ed ? `<button class="btn small" type="button" data-act="resolver" data-id="${i.id}">${T('mark_resolved')}</button>` : ''}</div>` : `${pill('resuelta', t('resolved'))}<span class="t2">${fmt(i.resuelta)}</span>`}</td></tr>`; }).join('')}
+        <td>${i.estado === 'abierta' ? `<div class="row">${pill('abierta', t('open'))}${ed ? `<button class="btn small" type="button" data-act="resolver" data-id="${i.id}">${T('mark_resolved')}</button>` : ''}</div>` : `${pill('resuelta', t('resolved'))}<span class="t2">${fmt(i.resuelta)}</span>`}</td>${fixCell('editarInc', 'borrarInc', i.id)}</tr>`; }).join('')}
     </tbody></table></div>` : `<div class="empty-inline"><p class="muted" style="margin:0">${T('no_inc')} ${ed && !retired ? T('no_inc_act') : ''}</p>${ed && !retired ? `<button class="btn small" type="button" data-act="incidencia" data-id="${d.id}">${T('btn_fault')}</button>` : ''}</div>`}
   </section>
   <section class="panel dpanel" data-dpanel="log"${DTAB === 'log' ? '' : ' hidden'} id="devHist" data-id="${d.id}"><h2>${T('hist_title')}</h2><ul class="feed histfeed" id="devHistList"><li class="muted">${T('hist_loading')}</li></ul>
@@ -3710,6 +3750,45 @@ const ACTIONS = {
       <label class="full">${T('fi_parts')}<input name="piezas" id="s-piezas" value="${esc(tx(i.piezas))}"></label></div>`, async v => {
       await mutate('POST', `incidents/${i.id}/resolve`, { resuelta: v.resuelta, coste: Number(v.coste) || 0, piezas: v.piezas }); return t('resolve_done');
     }, t('ok_resolve'));
+  },
+  editarAsg(id) {
+    const a = S.assignments.find(x => x.id === id), d = a && dev(a.deviceId);
+    if (!d || !can('admin')) return;
+    openDialog(t('asg_edit_title', { tag: d.tag, name: holderName(a) }), `<div class="fields">
+      <label>${T('th_from')}<input type="date" name="desde" required value="${esc(a.desde)}"></label>
+      ${a.hasta ? `<label>${T('th_to')}<input type="date" name="hasta" required value="${esc(a.hasta)}"></label>` : `<p class="full muted" style="margin:0">${T('asg_open_note')}</p>`}</div>`, async v => {
+      if (!v.desde || (a.hasta && !v.hasta)) { toast(t('err_required')); return false; }
+      if (a.hasta && v.hasta < v.desde) { toast(t('err_dates')); return false; }
+      await mutate('PUT', `assignments/${a.id}`, { desde: v.desde, hasta: a.hasta ? v.hasta : null }); return t('dates_saved');
+    });
+  },
+  borrarAsg(id) {
+    const a = S.assignments.find(x => x.id === id), d = a && dev(a.deviceId);
+    if (!d || !can('admin')) return;
+    openDialog(t('asg_del_title'), `<p style="margin:0">${T('asg_del_q', { name: holderName(a), tag: d.tag, from: fmt(a.desde), to: a.hasta ? fmt(a.hasta) : '' })}</p>
+      ${!a.hasta && d.estado === 'uso' ? `<p class="muted" style="margin:12px 0 0">${T('asg_del_cur')}</p>` : ''}`, async () => {
+      await mutate('DELETE', `assignments/${a.id}`); return t('asg_deleted');
+    }, t('delete'), true);
+  },
+  editarInc(id) {
+    const i = S.incidents.find(x => x.id === id), d = i && dev(i.deviceId);
+    if (!d || !can('admin')) return;
+    openDialog(t('inc_edit_title', { tag: d.tag }), `<p class="muted" style="margin:0 0 12px">${esc(tx(i.descripcion))}</p><div class="fields">
+      <label>${T('fi_date')}<input type="date" name="fecha" required value="${esc(i.fecha)}"></label>
+      ${i.resuelta ? `<label>${T('fs_date')}<input type="date" name="resuelta" required value="${esc(i.resuelta)}"></label>` : ''}</div>`, async v => {
+      if (!v.fecha || (i.resuelta && !v.resuelta)) { toast(t('err_required')); return false; }
+      if (i.resuelta && v.resuelta < v.fecha) { toast(t('err_fix_dates')); return false; }
+      await mutate('PUT', `incidents/${i.id}`, { fecha: v.fecha, resuelta: i.resuelta ? v.resuelta : null }); return t('dates_saved');
+    });
+  },
+  borrarInc(id) {
+    const i = S.incidents.find(x => x.id === id), d = i && dev(i.deviceId);
+    if (!d || !can('admin')) return;
+    const lastOpen = i.estado === 'abierta' && ['reparacion', 'averiado'].includes(d.estado) && !S.incidents.some(x => x.deviceId === d.id && x.id !== i.id && x.estado === 'abierta');
+    openDialog(t('inc_del_title'), `<p style="margin:0">${T('inc_del_q', { desc: tx(i.descripcion), date: fmt(i.fecha) })}</p>
+      ${lastOpen ? `<p class="muted" style="margin:12px 0 0">${T('inc_del_open')}</p>` : ''}`, async () => {
+      await mutate('DELETE', `incidents/${i.id}`); return t('inc_deleted');
+    }, t('delete'), true);
   },
   estado(id) {
     const d = dev(id), a = openAsg(id);

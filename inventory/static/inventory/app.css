@@ -900,8 +900,12 @@ tr.sel td { background: color-mix(in srgb, var(--accent) 9%, transparent) !impor
 [data-ui="glass"] .bulkbar { border-radius: 18px; background: var(--sheet); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%); }
 .bulkbar .row { gap: 8px; flex-wrap: wrap; }
 .bulkbar .sht { display: none; }
-/* phones: one line, short labels, ✕ to clear */
+.bulkcount { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.bulkbar .bclr-s { display: none; flex: none; }
+/* phones: one line, short labels, ✕ to clear at the start */
 @media (max-width: 600px) {
+  .bulkbar .bclr-s { display: inline-grid; }
+  .bulkbar .bclr-l { display: none; }
   .bulkbar { flex-wrap: nowrap; padding: 8px 10px; gap: 8px; }
   .bulkbar b { font-size: 13.5px; white-space: nowrap; }
   .bulkbar .row { flex-wrap: nowrap; gap: 6px; }
@@ -1095,3 +1099,9 @@ label.check { display: flex; align-items: center; gap: 10px; color: var(--ink); 
 #ptr.back { transition: transform 0.3s var(--ease-out, ease-out), opacity 0.2s; }
 #ptr.spin svg.i { animation: ptrspin 0.8s linear infinite; }
 @keyframes ptrspin { to { transform: rotate(360deg); } }
+/* administrators' Change dates / Delete on a device's assignment and fault rows */
+td.rowacts { width: 1%; white-space: nowrap; }
+td.rowacts { padding-left: 4px; padding-right: 8px; }
+td.rowacts .row { flex-direction: column; gap: 6px; flex-wrap: nowrap; align-items: flex-end; }   /* stacked: the tables are wide already */
+td.rowacts .iconbtn svg.i { width: 15px; height: 15px; }
+td.rowacts .iconbtn[data-act^="borrar"]:hover { color: var(--bad); border-color: var(--bad); }

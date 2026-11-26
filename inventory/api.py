@@ -548,6 +548,83 @@ def incident_resolve(request, body, pk):
     audit(request, "log_resolved", {"tag": device.tag}, device)
 
 
+def _settle_after_fault(device):
+    """Once no fault is open any more, a device in repair or marked faulty is usable again (as when one is resolved)."""
+    if device.estado in (Device.State.REPAIR, Device.State.FAULTY) and not device.incidents.filter(estado="abierta").exists():
+        device.estado = Device.State.IN_USE if open_assignment(device) else Device.State.AVAILABLE
+        device.save()
+
+
+@endpoint("PUT", "DELETE", role="admin")
+def assignment_detail(request, body, pk):
+    """Corrects a past or current hand-over: PUT {desde, hasta (only once it was given back)} changes its dates; DELETE
+    removes it from the device's history. Administrators only; both are kept in the activity log."""
+    assignment = get_or_404(Assignment, pk)
+    device = Device.objects.select_for_update().get(pk=assignment.device_id)
+    name = assignment.holder_name
+    if request.method == "DELETE":
+        was_open = assignment.hasta is None
+        args = {"tag": device.tag, "name": name, "from": assignment.desde.isoformat(),
+                "to": assignment.hasta.isoformat() if assignment.hasta else ""}
+        assignment.delete()
+        if was_open and device.estado == Device.State.IN_USE:  # nobody has it now
+            device.estado = Device.State.AVAILABLE
+            device.save()
+        audit(request, "log_asg_deleted", args, device)
+        return {}
+    before = (assignment.desde, assignment.hasta)
+    desde = date(body, "desde")
+    if desde is None:
+        raise ApiError("err_required")
+    hasta = date(body, "hasta") if assignment.hasta is not None else None  # a current one stays open: Return ends it
+    if assignment.hasta is not None and hasta is None:
+        raise ApiError("err_required")
+    if hasta is not None and hasta < desde:
+        raise ApiError("err_dates")
+    # the periods of a device's holders may touch (given back and handed out the same day) but not overlap
+    end = hasta or dt.date.max
+    for other in device.assignments.exclude(pk=assignment.pk):
+        if other.desde < end and desde < (other.hasta or dt.date.max):
+            raise ApiError("err_asg_overlap")
+    assignment.desde, assignment.hasta = desde, hasta
+    assignment.save()
+    changes = [[k, str(old) if old else "", str(new) if new else ""]
+               for k, old, new in (("desde", before[0], desde), ("hasta", before[1], hasta)) if old != new]
+    if changes:
+        audit(request, "log_asg_edited", {"tag": device.tag, "name": name, "ch": changes}, device)
+    return {"assignment": assignment_json(assignment)}
+
+
+@endpoint("PUT", "DELETE", role="admin")
+def incident_detail(request, body, pk):
+    """Corrects a fault: PUT {fecha, resuelta (only once resolved)} changes its dates; DELETE removes it. Administrators
+    only; both are kept in the activity log."""
+    incident = get_or_404(Incident, pk)
+    device = Device.objects.select_for_update().get(pk=incident.device_id)
+    if request.method == "DELETE":
+        args = {"tag": device.tag, "desc": incident.descripcion[:200], "date": incident.fecha.isoformat()}
+        incident.delete()
+        _settle_after_fault(device)
+        audit(request, "log_inc_deleted", args, device)
+        return {}
+    before = (incident.fecha, incident.resuelta)
+    fecha = date(body, "fecha")
+    if fecha is None:
+        raise ApiError("err_required")
+    resuelta = date(body, "resuelta") if incident.resuelta is not None else None
+    if incident.resuelta is not None and resuelta is None:
+        raise ApiError("err_required")
+    if resuelta is not None and resuelta < fecha:
+        raise ApiError("err_fix_dates")
+    incident.fecha, incident.resuelta = fecha, resuelta
+    incident.save()
+    changes = [[k, str(old) if old else "", str(new) if new else ""]
+               for k, old, new in (("fecha", before[0], fecha), ("resuelta", before[1], resuelta)) if old != new]
+    if changes:
+        audit(request, "log_inc_edited", {"tag": device.tag, "desc": incident.descripcion[:200], "ch": changes}, device)
+    return {"incident": incident_json(incident)}
+
+
 @endpoint("POST", role="edit")
 def device_status(request, body, pk):
     _set_status(request, get_or_404(Device, pk), body)
@@ -1216,7 +1293,7 @@ def backups_auto(request, body):
 
 LOG_KINDS = {
     "devices": ("log_created", "log_edited", "log_assigned", "log_returned", "log_incident", "log_repair", "log_resolved",
-                "log_status", "log_check_ignored", "log_check_reset", "log_agent_created", "log_agent_updated"),
+                "log_status", "log_asg_edited", "log_asg_deleted", "log_inc_edited", "log_inc_deleted", "log_check_ignored", "log_check_reset", "log_agent_created", "log_agent_updated"),
     "people": ("log_emp_created", "log_emp_edited", "log_left", "log_back", "log_onleave"),
     "access": ("log_login", "log_login_failed", "log_logout", "log_user_created", "log_user_edited", "log_user_on",
                "log_user_off", "log_pwchanged", "log_photo_removed"),

@@ -165,3 +165,56 @@ class AutoBackupSettingsTests(Base):
                                       backup_files=json.dumps([{"name": "auto-20261123-0200.sql.gz", "size": 1234, "at": "2026-11-23T02:00:00+01:00"}]))
         r = admin.get("/api/backups/auto").json()
         self.assertEqual((r["updater"], r["last"]["status"], r["files"][0]["name"]), (True, "ok", "auto-20261123-0200.sql.gz"))
+
+
+class HistoryCorrectionTests(Base):
+    """Administrators can correct the dates of a hand-over or a fault, or delete one; nobody else can."""
+
+    def test_assignment_dates_and_delete(self):
+        admin, tech = self.client_for(self.admin), self.client_for(self.tech)
+        device = Device.objects.create(tag="FIX-1", serial="S-FIX-1", type=m.DeviceType.objects.first(), loc=m.Location.objects.first(), estado="uso")
+        people = list(Employee.objects.filter(estado="activo")[:2])
+        old = Assignment.objects.create(device=device, employee=people[0], desde="2025-01-10", hasta="2025-06-30")
+        cur = Assignment.objects.create(device=device, employee=people[1], desde="2025-07-01")
+        url = f"assignments/{old.pk}"
+        self.assertEqual(self.send(tech, "put", url, {"desde": "2025-01-05", "hasta": "2025-06-30"}).status_code, 403)
+        self.assertEqual(self.send(tech, "delete", url).status_code, 403)
+        r = self.send(admin, "put", url, {"desde": "2025-01-05", "hasta": "2025-07-01"})   # may touch the next one
+        self.assertEqual(r.json()["assignment"]["desde"], "2025-01-05")
+        self.assertEqual(AuditEvent.objects.filter(key="log_asg_edited").first().args["ch"],
+                         [["desde", "2025-01-10", "2025-01-05"], ["hasta", "2025-06-30", "2025-07-01"]])
+        for bad, code in (({"desde": "2025-01-05", "hasta": "2025-07-02"}, "err_asg_overlap"),
+                          ({"desde": "2025-08-01", "hasta": "2025-07-01"}, "err_dates"),
+                          ({"desde": "2025-01-05"}, "err_required"), ({"desde": "nope", "hasta": "2025-07-01"}, "err_invalid")):
+            self.assertEqual(self.send(admin, "put", url, bad).json()["error"], code, bad)
+        # the current one keeps no end date, and cannot start before the last one was given back
+        self.assertEqual(self.send(admin, "put", f"assignments/{cur.pk}", {"desde": "2025-06-15"}).json()["error"], "err_asg_overlap")
+        self.assertIsNone(self.send(admin, "put", f"assignments/{cur.pk}", {"desde": "2025-07-03", "hasta": "2025-08-01"}).json()["assignment"]["hasta"])
+        # deleting the current one: nobody has it, so it is available
+        self.assertEqual(self.send(admin, "delete", f"assignments/{cur.pk}").json(), {})
+        device.refresh_from_db()
+        self.assertEqual(device.estado, "disponible")
+        self.assertEqual(AuditEvent.objects.filter(key="log_asg_deleted").first().args, {"tag": "FIX-1", "name": people[1].nombre, "from": "2025-07-03", "to": ""})
+        self.send(admin, "delete", url)
+        self.assertFalse(device.assignments.exists())
+        self.assertEqual(self.send(admin, "delete", url).status_code, 404)
+
+    def test_fault_dates_and_delete(self):
+        admin = self.client_for(self.admin)
+        device = Device.objects.create(tag="FIX-2", serial="S-FIX-2", type=m.DeviceType.objects.first(), loc=m.Location.objects.first(), estado="reparacion")
+        done = m.Incident.objects.create(device=device, fecha="2025-03-01", tipo="fault", descripcion="Pantalla", estado="resuelta", resuelta="2025-03-10")
+        a = m.Incident.objects.create(device=device, fecha="2025-09-01", tipo="fault", descripcion="Teclado")
+        b = m.Incident.objects.create(device=device, fecha="2025-09-02", tipo="fault", descripcion="Batería")
+        self.assertEqual(self.send(self.client_for(self.tech), "delete", f"incidents/{a.pk}").status_code, 403)
+        self.assertEqual(self.send(admin, "put", f"incidents/{done.pk}", {"fecha": "2025-03-11", "resuelta": "2025-03-10"}).json()["error"], "err_fix_dates")
+        r = self.send(admin, "put", f"incidents/{done.pk}", {"fecha": "2025-02-27", "resuelta": "2025-03-12"}).json()["incident"]
+        self.assertEqual((r["fecha"], r["resuelta"]), ("2025-02-27", "2025-03-12"))
+        self.assertIsNone(self.send(admin, "put", f"incidents/{a.pk}", {"fecha": "2025-08-30", "resuelta": "2025-09-01"}).json()["incident"]["resuelta"])
+        self.send(admin, "delete", f"incidents/{a.pk}")
+        device.refresh_from_db()
+        self.assertEqual(device.estado, "reparacion", "another fault is still open")
+        self.send(admin, "delete", f"incidents/{b.pk}")
+        device.refresh_from_db()
+        self.assertEqual(device.estado, "disponible")
+        self.assertEqual(AuditEvent.objects.filter(key="log_inc_deleted").count(), 2)
+        self.assertEqual(list(device.incidents.all()), [done])
