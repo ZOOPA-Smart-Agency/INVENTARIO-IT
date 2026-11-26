@@ -555,10 +555,23 @@ def _settle_after_fault(device):
         device.save()
 
 
+def _ch_value(v):
+    """A value as the activity log keeps it in a list of changes: dates as text, amounts as numbers, long text cut short."""
+    if v is None or v == "":
+        return ""
+    if isinstance(v, dict):  # a department's name in each language
+        return v
+    if isinstance(v, dt.date):
+        return v.isoformat()
+    if isinstance(v, Decimal):
+        return float(v)
+    return str(v)[:200]
+
+
 @endpoint("PUT", "DELETE", role="admin")
 def assignment_detail(request, body, pk):
-    """Corrects a past or current hand-over: PUT {desde, hasta (only once it was given back)} changes its dates; DELETE
-    removes it from the device's history. Administrators only; both are kept in the activity log."""
+    """Corrects a past or current hand-over: PUT {employeeId or deptId, desde, hasta and condicion (only once it was
+    given back), notas}; DELETE removes it from the device's history. Administrators only; both are kept in the activity log."""
     assignment = get_or_404(Assignment, pk)
     device = Device.objects.select_for_update().get(pk=assignment.device_id)
     name = assignment.holder_name
@@ -572,32 +585,46 @@ def assignment_detail(request, body, pk):
             device.save()
         audit(request, "log_asg_deleted", args, device)
         return {}
-    before = (assignment.desde, assignment.hasta)
+    # who had it: a person (any, also someone who has since left) or a department; exactly one of the two
+    employee, dept = fk(body, "employeeId", Employee), fk(body, "deptId", m.Department)
+    if (employee is None) == (dept is None):
+        raise ApiError("err_invalid")
     desde = date(body, "desde")
     if desde is None:
         raise ApiError("err_required")
-    hasta = date(body, "hasta") if assignment.hasta is not None else None  # a current one stays open: Return ends it
-    if assignment.hasta is not None and hasta is None:
+    returned = assignment.hasta is not None
+    hasta = date(body, "hasta") if returned else None  # a current one stays open: Return ends it
+    if returned and hasta is None:
         raise ApiError("err_required")
     if hasta is not None and hasta < desde:
         raise ApiError("err_dates")
+    condicion = (body.get("condicion") or "") if returned else assignment.condicion
+    if not isinstance(condicion, str) or condicion not in CONDITIONS | {""}:  # older returns may have none
+        raise ApiError("err_invalid")
+    notas = text(body, "notas", 2000)
     # the periods of a device's holders may touch (given back and handed out the same day) but not overlap
     end = hasta or dt.date.max
     for other in device.assignments.exclude(pk=assignment.pk):
         if other.desde < end and desde < (other.hasta or dt.date.max):
             raise ApiError("err_asg_overlap")
-    assignment.desde, assignment.hasta = desde, hasta
+    holder_before = (assignment.employee_id, assignment.dept_id)
+    before = {"holder": assignment.holder_name, "desde": assignment.desde, "hasta": assignment.hasta,
+              "notas": assignment.notas, "condicion": assignment.condicion}
+    assignment.employee, assignment.dept = employee, dept
+    assignment.desde, assignment.hasta, assignment.condicion, assignment.notas = desde, hasta, condicion, notas
     assignment.save()
-    changes = [[k, str(old) if old else "", str(new) if new else ""]
-               for k, old, new in (("desde", before[0], desde), ("hasta", before[1], hasta)) if old != new]
+    after = {"holder": assignment.holder_name, "desde": desde, "hasta": hasta, "notas": notas, "condicion": condicion}
+    changed = lambda k: (holder_before != (assignment.employee_id, assignment.dept_id)) if k == "holder" else before[k] != after[k]
+    changes = [[k, _ch_value(before[k]), _ch_value(after[k])] for k in before if changed(k)]
     if changes:
-        audit(request, "log_asg_edited", {"tag": device.tag, "name": name, "ch": changes}, device)
+        audit(request, "log_asg_edited", {"tag": device.tag, "name": assignment.holder_name, "ch": changes}, device)
     return {"assignment": assignment_json(assignment)}
 
 
 @endpoint("PUT", "DELETE", role="admin")
 def incident_detail(request, body, pk):
-    """Corrects a fault: PUT {fecha, resuelta (only once resolved)} changes its dates; DELETE removes it. Administrators
+    """Corrects a fault: PUT {fecha, resuelta (only once resolved), tipo, descripcion, piezas, coste, proveedor}; DELETE
+    removes it. Administrators
     only; both are kept in the activity log."""
     incident = get_or_404(Incident, pk)
     device = Device.objects.select_for_update().get(pk=incident.device_id)
@@ -607,19 +634,25 @@ def incident_detail(request, body, pk):
         _settle_after_fault(device)
         audit(request, "log_inc_deleted", args, device)
         return {}
-    before = (incident.fecha, incident.resuelta)
     fecha = date(body, "fecha")
     if fecha is None:
         raise ApiError("err_required")
-    resuelta = date(body, "resuelta") if incident.resuelta is not None else None
-    if incident.resuelta is not None and resuelta is None:
+    resolved = incident.resuelta is not None
+    resuelta = date(body, "resuelta") if resolved else None
+    if resolved and resuelta is None:
         raise ApiError("err_required")
     if resuelta is not None and resuelta < fecha:
         raise ApiError("err_fix_dates")
-    incident.fecha, incident.resuelta = fecha, resuelta
+    tipo = choice(body, "tipo", INCIDENT_TYPES)
+    after = {"fecha": fecha, "resuelta": resuelta, "incTipo": tipo,
+             "descripcion": text(body, "descripcion", 5000, required=True, error="err_desc"),
+             "piezas": text(body, "piezas"), "coste": money(body, "coste"), "proveedor": text(body, "proveedor", 200)}
+    before = {"fecha": incident.fecha, "resuelta": incident.resuelta, "incTipo": incident.tipo, "descripcion": incident.descripcion,
+              "piezas": incident.piezas, "coste": incident.coste, "proveedor": incident.proveedor}
+    incident.fecha, incident.resuelta, incident.tipo, incident.descripcion = fecha, resuelta, tipo, after["descripcion"]
+    incident.piezas, incident.coste, incident.proveedor = after["piezas"], after["coste"], after["proveedor"]
     incident.save()
-    changes = [[k, str(old) if old else "", str(new) if new else ""]
-               for k, old, new in (("fecha", before[0], fecha), ("resuelta", before[1], resuelta)) if old != new]
+    changes = [[k, _ch_value(before[k]), _ch_value(after[k])] for k in before if before[k] != after[k]]
     if changes:
         audit(request, "log_inc_edited", {"tag": device.tag, "desc": incident.descripcion[:200], "ch": changes}, device)
     return {"incident": incident_json(incident)}
