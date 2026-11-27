@@ -3216,7 +3216,7 @@ function viewSettings(sec) {
 function settingsHome() {
   return `<div class="setcards">${SET_GROUPS.map(g => `<section class="panel setcard">
     <div class="sethead" data-g="${g.id}">${gIcon(g.id)}<div><h2>${T('grp_' + g.id)}</h2><p class="sub">${T('grp_' + g.id + '_d')}</p></div></div>
-    <div class="setlinks">${g.items.map(([k, lab, n]) => `<a href="#ajustes-${k}"${k === 'actualizaciones' && UPD.tag ? ' class="has-dot"' : ''}><span class="txt"><b>${T(lab)}</b><small>${T(lab + '_sub')}</small></span>${n ? `<span class="count">${n()}</span>` : '<span class="count">›</span>'}</a>`).join('')}</div>
+    <div class="setlinks">${g.items.map(([k, lab, n]) => `<a href="#ajustes-${k}"${k === 'actualizaciones' && UPD.tag ? ' class="has-dot"' : ''}><span class="txt"><b>${T(lab)}</b><small>${T(lab + '_sub')}</small></span><span class="count">${n ? `<span>${n()}</span>` : ''}<span class="go" aria-hidden="true">›</span></span></a>`).join('')}</div>
   </section>`).join('')}</div>`;
 }
 function settingsList(key) {
